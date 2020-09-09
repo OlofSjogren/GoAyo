@@ -3,17 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/signUpFragment">
+    app:startDestination="@id/activityFragment">
 
-    <fragment
-        android:id="@+id/signUpFragment"
-        android:name="com.goayo.debtify.view.SignUpFragment"
-        android:label="SignUpFragment"
-        tools:layout="@layout/sign_up_fragment">
-        <action
-            android:id="@+id/action_signUpFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
-    </fragment>
     <fragment
         android:id="@+id/activityFragment"
         android:name="com.goayo.debtify.view.ActivityFragment"
@@ -59,18 +50,6 @@
         android:name="com.goayo.debtify.view.SettleUpFragment"
         android:label="SettleUpFragment"
         tools:layout="@layout/settle_up_fragment"/>
-    <fragment
-        android:id="@+id/signInFragment"
-        android:name="com.goayo.debtify.view.SignInFragment"
-        android:label="SignInFragment"
-        tools:layout="@layout/sign_in_fragment">
-        <action
-            android:id="@+id/action_signInFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
-        <action
-            android:id="@+id/action_signInFragment_to_activityFragment"
-            app:destination="@id/activityFragment" />
-    </fragment>
     <fragment
         android:id="@+id/groupFragment"
         android:name="com.goayo.debtify.view.GroupFragment"

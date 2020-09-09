@@ -1,6 +1,7 @@
 package com.goayo.debtify.view;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ public class SignUpFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.d("SIGNUP", "DO YOU EXIST?");
+
         return inflater.inflate(R.layout.sign_up_fragment, container, false);
     }
 }
