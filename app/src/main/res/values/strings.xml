@@ -3,4 +3,6 @@
     <string name="tab_text_1">Activity</string>
     <string name="tab_text_2">Groups</string>
     <string name="tab_text_3">History</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
 </resources>
