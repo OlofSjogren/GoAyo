@@ -5,7 +5,7 @@ import android.util.Log;
 import androidx.fragment.app.Fragment;
 
 import com.goayo.debtify.view.ActivityFragment;
-import com.goayo.debtify.view.GroupsFragment;
+import com.goayo.debtify.view.MyGroupsFragment;
 import com.goayo.debtify.view.HistoryFragment;
 
 /**
@@ -26,7 +26,7 @@ public class TabsFactory {
             case 0:
                 return new ActivityFragment();
             case 1:
-                return new GroupsFragment();
+                return new MyGroupsFragment();
             case 2:
                 return new HistoryFragment();
             default:

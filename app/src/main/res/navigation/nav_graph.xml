@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/signUpFragment">
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.goayo.debtify.view.SignUpFragment"
+        android:label="SignUpFragment"
+        tools:layout="@layout/sign_up_fragment">
+        <action
+            android:id="@+id/action_signUpFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/activityFragment"
+        android:name="com.goayo.debtify.view.ActivityFragment"
+        android:label="ActivityFragment"
+        tools:layout="@layout/activity_fragment">
+        <action
+            android:id="@+id/action_activityFragment_to_myProfileFragment"
+            app:destination="@id/myProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addExpenseFragment"
+        android:name="com.goayo.debtify.view.AddExpenseFragment"
+        android:label="AddExpenseFragment"
+        tools:layout="@layout/add_expense_fragment"/>
+    <fragment
+        android:id="@+id/myGroupsFragment"
+        android:name="com.goayo.debtify.view.MyGroupsFragment"
+        android:label="GroupsFragment"
+        tools:layout="@layout/my_groups_fragment">
+        <action
+            android:id="@+id/action_groupsFragment_to_myProfileFragment"
+            app:destination="@id/myProfileFragment" />
+        <action
+            android:id="@+id/action_groupsFragment_to_groupFragment"
+            app:destination="@id/groupFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.goayo.debtify.view.HistoryFragment"
+        android:label="HistoryFragment"
+        tools:layout="@layout/history_fragment">
+        <action
+            android:id="@+id/action_historyFragment_to_myProfileFragment"
+            app:destination="@id/myProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myProfileFragment"
+        android:name="com.goayo.debtify.view.MyProfileFragment"
+        android:label="MyProfileFragment"
+        tools:layout="@layout/my_profile_fragment"/>
+    <fragment
+        android:id="@+id/settleUpFragment"
+        android:name="com.goayo.debtify.view.SettleUpFragment"
+        android:label="SettleUpFragment"
+        tools:layout="@layout/settle_up_fragment"/>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.goayo.debtify.view.SignInFragment"
+        android:label="SignInFragment"
+        tools:layout="@layout/sign_in_fragment">
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_activityFragment"
+            app:destination="@id/activityFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/groupFragment"
+        android:name="com.goayo.debtify.view.GroupFragment"
+        android:label="GroupFragment"
+        tools:layout="@layout/group_fragment">
+        <action
+            android:id="@+id/action_groupFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
+        <action
+            android:id="@+id/action_groupFragment_to_settleUpFragment"
+            app:destination="@id/settleUpFragment" />
+    </fragment>
+</navigation>

@@ -15,13 +15,13 @@ import com.goayo.debtify.R;
  * @author Alex Phu, Yenan Wang
  * @date 2020-09-09
  * <p>
- * Second tab of the main screen.
+ * Sign up page.
  */
-public class GroupsFragment extends Fragment {
+public class GroupFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.groups_fragment, container, false);
+        return inflater.inflate(R.layout.group_fragment, container, false);
     }
 }
