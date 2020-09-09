@@ -2,8 +2,11 @@ package com.goayo.debtify.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -13,6 +16,7 @@ import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.ActivityMainBinding;
 import com.goayo.debtify.view.handler.TabsPagerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
@@ -22,7 +26,7 @@ import com.google.android.material.tabs.TabLayout;
  * <p>
  * Entry point of the application.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityMainBinding binding;
 
@@ -35,9 +39,22 @@ public class MainActivity extends AppCompatActivity {
         initTabs();
         initFloatingActionButton();
         initToolbar();
-
-        //Todo ("Fix listener for drawerlayout items")
+        setNavigationViewListener();
     }
+
+    /**
+     * Temporary way of starting login activity.
+     * <p>
+     * TODO: Create a class that handles activities.
+     */
+    private void startLoginActivity() {
+        Intent loginIntent = new Intent(this, LoginActivity.class);
+        startActivity(loginIntent);
+    }
+
+    //================================================================================
+    // Initialization
+    //================================================================================
 
     /**
      * Initializes toolbar.
@@ -51,19 +68,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Temporary way of starting login activity.
-     *
-     * TODO: Create a class that handles activities.
-     */
-    private void startLoginActivity() {
-        Intent loginIntent = new Intent(this, LoginActivity.class);
-        startActivity(loginIntent);
-    }
-
-    /**
      * Initializes tabs.
      */
-    private void initTabs(){
+    private void initTabs() {
         TabsPagerAdapter tabsPagerAdapter = new TabsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = binding.viewPager;
         viewPager.setAdapter(tabsPagerAdapter);
@@ -74,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Initializes floating action button.
      */
-    private void initFloatingActionButton(){
+    private void initFloatingActionButton() {
         FloatingActionButton fab = binding.fab;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,5 +90,29 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    //================================================================================
+    // DrawerLayout
+    //================================================================================
+
+    /**
+     * Sets custom listener for the DrawerLayout
+     */
+    private void setNavigationViewListener() {
+        binding.navView.setNavigationItemSelectedListener(this);
+    }
+
+    /**
+     * TODO ____________________________________________________________WHAT DOES IT DO?____________________________________________________________
+     *
+     * @param item The menu item that is clicked by the user.
+     * @return Returns a boolean value depending on if the navigation was successfully executed.
+     */
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        //Todo ("Logic for when menu item is selected")
+        Toast.makeText(this, "MENU_ITEM_CLICKED", Toast.LENGTH_SHORT).show();
+        return false;
     }
 }
