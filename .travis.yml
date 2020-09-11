@@ -2,7 +2,7 @@ sudo: false
 language: android
 
 jdk:
-  - oraclejdk14
+  - oraclejdk8
 
 before_install:
   - chmod +x gradlew
