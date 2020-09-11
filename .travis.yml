@@ -2,9 +2,10 @@ sudo: false
 language: android
 
 jdk:
-  - oraclejdk8
+  - oraclejdk14
 
 before_install:
+  - chmod +x gradlew
   # Install the rest of tools (e.g., avdmanager)
   - yes | sdkmanager tools
   # Install the system image
