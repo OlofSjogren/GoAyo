@@ -7,7 +7,7 @@ jdk:
 before_install:
   - chmod +x gradlew
   # Install the rest of tools (e.g., avdmanager)
- - yes | sdkmanager "platforms;android-30"
+  - yes | sdkmanager "platforms;android-30"
   # Install the system image
   - yes | sdkmanager "system-images;android-30;default;armeabi-v7a"
   # Create and start emulator for the script. Meant to race the install task.
