@@ -7,7 +7,7 @@ import java.util.List;
  * @author Alex Phu, Olof Sjögren
  * @date 2020-09-15
  * <p>
- * Class representing user.
+ * Class representing group.
  */
 public class Group {
 

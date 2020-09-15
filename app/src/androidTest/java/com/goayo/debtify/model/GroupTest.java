@@ -8,11 +8,11 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 
 public class GroupTest {
 
-    static Group group;
     static List<User> userList;
     static User user;
 
@@ -34,19 +34,68 @@ public class GroupTest {
     }
 
     @Test
+    public void testAddMultipleUsers() {
+        Group tempGroup = new Group("Belgien resa", "2345", userList);
+
+        assertTrue(tempGroup.getGroupMembers().containsAll(userList));
+
+        List<User> secondUserList = new ArrayList<>();
+        secondUserList.add(new User("12345566", "Lars"));
+        secondUserList.add(new User("987654", "Holme"));
+        secondUserList.add(new User("12345566", "Bengt"));
+        secondUserList.add(new User("987654", "Felix"));
+
+        tempGroup.addUser(secondUserList);
+        assertTrue(tempGroup.getGroupMembers().containsAll(secondUserList));
+    }
+
+    @Test
     public void testRemoveUser() {
         Group tempGroup = new Group("Tyskland resa", "1234", user);
         User testUser = new User("4321", "Åke");
+
+        int sizebefore = tempGroup.getGroupMembers().size();
         tempGroup.addUser(testUser);
+        assertTrue(tempGroup.getGroupMembers().contains(testUser));
+
         tempGroup.removeUser(testUser);
+        int sizeAfter = tempGroup.getGroupMembers().size();
+        assertEquals(sizebefore, sizeAfter);
+
         assertFalse(tempGroup.getGroupMembers().contains(testUser));
     }
 
     @Test
-    public void testCreateDebt() {
+    public void testRemoveMultipleUsers() {
+        Group tempGroup = new Group("Belgien resa", "2345", userList);
+
+        List<User> secondUserList = new ArrayList<>();
+        secondUserList.add(new User("12345566", "Lars"));
+        secondUserList.add(new User("987654", "Holme"));
+        secondUserList.add(new User("12345566", "Bengt"));
+        secondUserList.add(new User("987654", "Felix"));
+
+        tempGroup.addUser(secondUserList);
+        tempGroup.removeUser(userList);
+
+        for(User u: userList) {
+            assertFalse(tempGroup.getGroupMembers().contains(u));
+        }
+
+        tempGroup.removeUser(secondUserList);
+        assertTrue(tempGroup.getGroupMembers().isEmpty());
     }
 
     @Test
-    public void testPayOffDebt() {
+    public void testRemoveNonExistingUser() {
+        Group tempGroup = new Group("Belgien resa", "2345", userList);
+
+        List<User> secondUserList = new ArrayList<>();
+        secondUserList.add(new User("12345566", "Lars"));
+        secondUserList.add(new User("987654", "Holme"));
+        secondUserList.add(new User("12345566", "Bengt"));
+        secondUserList.add(new User("987654", "Felix"));
+
+        assertFalse(tempGroup.removeUser(secondUserList));
     }
 }
