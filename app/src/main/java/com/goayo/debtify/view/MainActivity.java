@@ -25,6 +25,8 @@ import com.google.android.material.tabs.TabLayout;
  * @date 2020-09-09
  * <p>
  * Entry point of the application.
+ *
+ * 2020-09-15 Modified by Alex Phu and Olof Sjögren. Removed default floatingActionButton.
  */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
