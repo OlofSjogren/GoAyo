@@ -128,25 +128,84 @@ public class ModelEngine {
     }
 
     /**
-     * 
-     * @param phoneNumber
-     * @param groupID
-     * @return
+     * Method for adding a user to a group, online and in the program.
+     *
+     * Precondition: The phone number is registered to a user in the database.
+     * Precondition: A group with the given group id exists.
+     * Precondition: The user is not already in the group with the given ID.
+     *
+     * @param phoneNumber The phone number of the user to be added to the group.
+     * @param groupID The ID of the group into which the user will be added.
+     *
+     * @return True if the operation was successful, server side and in the program.
+     * False if the preconditions aren't met, or if some form of connection error occurs.
      */
     public boolean addUserToGroup(String phoneNumber, int groupID){
         return false;
     }
+
+    /**
+     * Removes a user from a group.
+     *
+     * Precondition: The user is in the group associated to the group ID that's sent in
+     *               via parameter.
+     *
+     * @param phoneNumber The phone number associated to the user who is to be removed from
+     *                    the group
+     * @param groupID The group ID of the group that the user will be removed from.
+     *
+     * @return True if the operation was successful, server side and in the program.
+     * False if the precondition isn't met, or if some form of connection error occurs.
+     */
     public boolean removeUserFromGroup(String phoneNumber, int groupID){
         return false;
     }
 
+    /**
+     * Creates a new debt on the server and in the application between one lender and one
+     * or more borrowers. A debt associated to a group. The sum specified by the owed
+     * parameter is devised equally across the list of borrowers, leading to one actual debt per
+     * borrower.
+     *
+     * Precondition: lender and borrower(s) exists in the database.
+     * Precondition: The group ID exists in the database.
+     * Precondition: Owed has a positive value.
+     *
+     * @param groupID The ID of the group to which the debt is associated.
+     * @param lender The phone number of the user lending the money.
+     * @param borrower A list of one or more users.
+     * @param owed A positive double, representing the whole value spent by the lender.
+     *
+     * @return True if the operation was successful, server side and in the program.
+     * False if the preconditions aren't met, or if some form of connection error occurs.
+     */
     public boolean createDebt(int groupID, String lender, List<String> borrower, double owed){
         return false;
     }
+
+    /**
+     * Crates one payment towards a debt owed by the logged in user.
+     *
+     * Precondition: The debt with the specified debt ID exists in the application.
+     * Precondition: The payment is smaller than or equals to the whole value of the debt.
+     * Precondition: The amount is a positive double.
+     *
+     * @param amount A positive double.
+     * @param debtID The ID of the debt towards which the payment will be done.
+     *
+     * @return True if the operation was successful, server side and in the program.
+     * False if the preconditions aren't met, or if some form of connection error occurs.
+     */
     public boolean payOffDebt(double amount, String debtID){
         return false;
     }
 
+    /**
+     * Makes a call to the database to make sure the entity with the specified ID exists.
+     *
+     * @param id the ID to be found.
+     * @return True if the entity exist. Else false.
+     */
     private boolean isThisInDatabase(String id){
         return false;
     }
