@@ -1,4 +1,4 @@
-package com.goayo.debtify.model;
+package com.goayo.debtify.model.debt;
 
 import java.util.Date;
 
@@ -10,15 +10,15 @@ import java.util.Date;
  */
 public class Debt {
     private final Date date;
-    private double owed;
+    private final double owed;
 
     public Debt(double owed) {
-        this.date = new Date("YYYY-MM-DD");
+        this.date = new Date();
         this.owed = owed;
     }
 
     public Date getDate() {
-        return new Date(date.toString());
+        return (Date)date.clone();
     }
 
     public double getOwed() {
