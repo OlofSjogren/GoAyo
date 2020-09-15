@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public interface IGroupData {
     String getGroupID();
-    Set<IUserData> getNamesAndPhonenumbersMap();
+    Set<IUserData> getIUserDataSet();
     String getGroupName();
     Set<IDebtData> getDebts();
 }
