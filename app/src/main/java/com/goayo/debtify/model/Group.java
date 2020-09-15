@@ -1,7 +1,14 @@
 package com.goayo.debtify.model;
 
+import com.goayo.debtify.modelaccess.IGroupData;
+import com.goayo.debtify.modelaccess.IUserData;
+
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Alex Phu, Olof Sjögren
@@ -9,14 +16,14 @@ import java.util.List;
  * <p>
  * Class representing group.
  */
-public class Group {
+public class Group implements IGroupData {
 
     private String groupName;
     private Ledger groupLedger;
     private final String groupId;
-    private List<User> groupMembers = new ArrayList<>();
+    private Set<User> groupMembers = new HashSet<>();
 
-    public Group(String groupName, String groupId, List<User> groupMembers) {
+    public Group(String groupName, String groupId, HashSet<User> groupMembers) {
         this.groupName = groupName;
         this.groupId = groupId;
         this.groupMembers = groupMembers;
@@ -54,5 +61,25 @@ public class Group {
 
     public List<User> getGroupMembers() {
         return new ArrayList<>(groupMembers);
+    }
+
+    @Override
+    public String getGroupID() {
+        return groupId;
+    }
+
+    @Override
+    public Set<IUserData> getNamesAndPhonenumbersMap() {
+        return new HashSet<IUserData>((Set<? extends IUserData>) groupMembers);
+    }
+
+    @Override
+    public String getGroupName() {
+        return groupName;
+    }
+
+    @Override
+    public Set<IDebtData> getDebts() {
+        return new HashSet<IdebtData>(groupMembers);
     }
 }
