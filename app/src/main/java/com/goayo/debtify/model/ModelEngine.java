@@ -2,12 +2,28 @@ package com.goayo.debtify.model;
 
 import java.util.List;
 
+/**
+ * A facade class for the model package. The purpose of the class is to be the face outwards towards other
+ * packages depending on the model. This class aims to keep the model loosely coupled with other packages.
+ *
+ * @Author Oscar Sanner
+ *
+ */
+
 public class ModelEngine {
 
     private Account account;
+    private static ModelEngine instance;
 
-    public ModelEngine(Account account){
+    private ModelEngine(Account account){
         this.account = account;
+    }
+
+    public static ModelEngine getInstance(){
+        if(instance == null){
+            instance = new ModelEngine(new Account());
+        }
+        return instance;
     }
 
     public boolean registerUser(String phoneNumber, String name, String password){
