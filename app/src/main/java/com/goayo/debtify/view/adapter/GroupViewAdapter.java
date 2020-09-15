@@ -32,7 +32,7 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
      * @param context The context which is linked to the Activity (in our case MainActivity) and its lifecycle.
      * @param groupData The data to be displayed.
      */
-    public GroupViewAdapter(Context context, HashSet<IGroupData> groupData) {
+    public GroupViewAdapter(Context context, Set<IGroupData> groupData) {
         this.context = context;
         this.groupData = groupData;
     }
