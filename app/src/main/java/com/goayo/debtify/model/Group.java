@@ -14,7 +14,7 @@ public class Group {
     private String groupName;
     private Ledger groupLedger;
     private final String groupId;
-    private List<User> groupMembers;
+    private List<User> groupMembers = new ArrayList<>();
 
     public Group(String groupName, String groupId, List<User> groupMembers) {
         this.groupName = groupName;
