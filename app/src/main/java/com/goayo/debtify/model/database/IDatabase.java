@@ -6,6 +6,8 @@ import java.util.List;
 
 /**
  * @Author Oscar Sanner
+ * @date 2020-09-15
+ * <p>
  *
  * An interface implemented by database classes.
  */

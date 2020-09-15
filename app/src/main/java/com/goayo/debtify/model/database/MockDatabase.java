@@ -8,9 +8,10 @@ import java.util.List;
 /**
  *
  * @Author Oscar Sanner
+ * @date 2020-09-15
  *
+ * <p>
  * A mock class to try different database calls on, without connecting to an actual database.
- *
  */
 
 class MockDatabase implements IDatabase {
