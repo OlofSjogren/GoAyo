@@ -1,8 +1,10 @@
 package com.goayo.debtify.model.database;
 
+import com.goayo.debtify.model.Group;
 import com.goayo.debtify.model.User;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Author Oscar Sanner
@@ -13,8 +15,9 @@ import java.util.List;
  */
 
 public interface IDatabase {
-    Group getGroups(String phoneNumber);
+    Set<Group> getGroups(String phoneNumber);
     User getUser(String phoneNumber);
     boolean registerUser(String phoneNumber, String password, String name);
-    boolean registerGroup(String name, List<User> users);
+    boolean registerGroup(String name, Set<User> users);
+    User getUserToBeLoggedIn(String phoneNumber, String password);
 }

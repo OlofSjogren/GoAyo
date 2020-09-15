@@ -1,9 +1,10 @@
 package com.goayo.debtify.model.database;
 
+import com.goayo.debtify.model.Group;
 import com.goayo.debtify.model.User;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -16,8 +17,21 @@ import java.util.List;
 
 class MockDatabase implements IDatabase {
 
-    private List<Group> groups;
-    private List<User> users;
+    private Set<Group> groups;
+    private Set<User> users;
+
+    public MockDatabase(){
+        users = new HashSet<>();
+        users.add(new User("0704345621", "Olle Johansson"));
+        users.add(new User("0735216752", "Rickard Nicklasson"));
+        users.add(new User("0734355982", "Gabriel Phu"));
+        users.add(new User("0773345654", "Yenan Sjögren"));
+
+        groups = new HashSet<>();
+        groups.add(new Group("Afterwork", "1002", users));
+        groups.add(new Group("Trip To Spain", "1003", users));
+        groups.add(new Group("School friends", "1004", users));
+    }
 
 
     /**
@@ -28,12 +42,7 @@ class MockDatabase implements IDatabase {
      * @return All groups associated with the phone number sent into the method.
      */
     @Override
-    public List<Group> getGroups(String phoneNumber) {
-
-        groups = new ArrayList<>();
-        for(int i = 0; i < 3; i ++){
-            groups.add(new Group());
-        }
+    public Set<Group> getGroups(String phoneNumber) {
         return groups;
     }
 
@@ -46,7 +55,12 @@ class MockDatabase implements IDatabase {
      */
     @Override
     public User getUser(String phoneNumber) {
-        return new User(phoneNumber, "Erik Andersson");
+        for (User u : users){
+            if(u.getPhoneNumber().equals(phoneNumber)){
+                return u;
+            }
+        }
+        return null;
     }
 
     /**
@@ -60,6 +74,7 @@ class MockDatabase implements IDatabase {
      */
     @Override
     public boolean registerUser(String phoneNumber, String password, String name) {
+        users.add(new User(phoneNumber, name));
         return true;
     }
 
@@ -71,9 +86,23 @@ class MockDatabase implements IDatabase {
      *
      * @return True if the creation was successful.
      */
+
     @Override
-    public boolean registerGroup(String name, List<User> users) {
-        groups.add(new Group());
+    public boolean registerGroup(String name, Set<User> users) {
+        groups.add(new Group(name, "1234" ,users));
         return true;
+    }
+
+    /**
+     * Get a user based on the provided phone number and password. If they match.
+     *
+     * @param phoneNumber The phone number of the user.
+     * @param password The password of the user.
+     *
+     * @return The user with the provided credentials.
+     */
+    @Override
+    public User getUserToBeLoggedIn(String phoneNumber, String password) {
+        return new User("0756415987", "Rolf Broberg");
     }
 }
