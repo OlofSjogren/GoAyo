@@ -18,7 +18,7 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addGroup_floatingActionButton"
-            android:backgroundTint="@color/pink"
+            android:backgroundTint="@color/colorPrimaryDark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="40dp"
@@ -26,7 +26,9 @@
             android:clickable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@android:drawable/ic_input_add">
+            app:srcCompat="@drawable/ic_baseline_add_24"
+            app:fabCustomSize="60dp"
+            app:maxImageSize="45dp">
 
 
         </com.google.android.material.floatingactionbutton.FloatingActionButton>
