@@ -2,6 +2,9 @@ package com.goayo.debtify.model.debt;
 
 
 import com.goayo.debtify.model.User;
+import com.goayo.debtify.modelaccess.IDebtData;
+import com.goayo.debtify.modelaccess.IPaymentData;
+import com.goayo.debtify.modelaccess.IUserData;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,6 +39,14 @@ public class DebtTracker implements IDebtData {
         this.debtTrackerID = "TEMP ID";
     }
 
+    public DebtTracker(DebtTracker debtTracker) {
+        this.debt = debtTracker.debt;
+        this.payments = new ArrayList<>(debtTracker.payments);
+        this.lender = debtTracker.lender;
+        this.borrower = debtTracker.borrower;
+        this.debtTrackerID = debtTracker.debtTrackerID;
+    }
+
     public double getSumOfPayments() {
         double sum = 0;
         for (Payment p : payments) {
@@ -51,7 +62,7 @@ public class DebtTracker implements IDebtData {
      * @return false if payOffAmount is more than debt left, else true
      */
     public boolean payOffDebt(double payOffAmount) {
-       if (debt.getOwed() - getSumOfPayments() > payOffAmount) {
+       if (debt.getDebtAmount() - getSumOfPayments() > payOffAmount) {
            payments.add(new Payment(payOffAmount));
            return true;
        }
@@ -82,10 +93,14 @@ public class DebtTracker implements IDebtData {
     }
 
     @Override
-    public double getOwed() {
-        return debt.getOwed();
+    public double getAmountOwed() {
+        return debt.getDebtAmount() - getSumOfPayments();
     }
 
+    @Override
+    public double getOriginalDebt() {
+        return debt.getDebtAmount();
+    }
 
     @Override
     public Date getDate() {

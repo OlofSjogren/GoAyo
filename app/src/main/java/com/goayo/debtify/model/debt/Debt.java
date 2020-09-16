@@ -21,7 +21,7 @@ public class Debt {
         return (Date)date.clone();
     }
 
-    public double getOwed() {
+    public double getDebtAmount() {
         return owed;
     }
 }

@@ -1,8 +1,10 @@
-package com.goayo.debtify.model;
+package com.goayo.debtify.model.debt;
 
 import android.util.Pair;
 
+import com.goayo.debtify.model.User;
 import com.goayo.debtify.model.debt.DebtTracker;
+import com.goayo.debtify.modelaccess.IPaymentData;
 
 import org.junit.Test;
 
@@ -34,9 +36,9 @@ public class DebtTrackerTest {
         DebtTracker dt = new DebtTracker(350, new User("244","bob"), new User("afa", "afaf"));
         dt.payOffDebt(35);
         dt.payOffDebt(47);
-        List<Pair<Date, Double>> listOfPair = dt.getPaymentHistory();
-        assertEquals(35, listOfPair.get(0).second, 0.01);
-        assertEquals(47, listOfPair.get(1).second, 0.01);
+        List<IPaymentData> listOfPaymentData = dt.getPaymentHistory();
+        assertEquals(35, listOfPaymentData.get(0).getPaidAmount(), 0.01);
+        assertEquals(47, listOfPaymentData.get(1).getPaidAmount(), 0.01);
 
     }
 }
