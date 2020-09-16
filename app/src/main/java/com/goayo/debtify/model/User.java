@@ -11,7 +11,7 @@ import com.goayo.debtify.modelaccess.IUserData;
  * Class representing user.
  *
  * ---
- * 2020-09-16 : class implements IUserData, modified by Olof & Alex
+ * 2020-09-16 Modified by Olof & Alex: class implements IUserData,
  */
 public class User implements IUserData {
 
