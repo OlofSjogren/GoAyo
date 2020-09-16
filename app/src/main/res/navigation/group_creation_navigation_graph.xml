@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/group_creation_navigation_graph"
-    app:startDestination="@id/groupCreationActivity">
+    app:startDestination="@id/createGroupFragment">
 
-    <activity
-        android:id="@+id/groupCreationActivity"
-        android:name="com.goayo.debtify.view.GroupCreationActivity"
-        android:label="GroupCreationActivity"
-        tools:layout="@layout/activity_group_creation"/>
+    <fragment
+        android:id="@+id/createGroupFragment"
+        android:name="com.goayo.debtify.view.CreateGroupFragment"
+        android:label="CreateGroupFragment"
+        tools:layout="@layout/create_group_fragment"/>
 </navigation>
