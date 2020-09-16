@@ -2,13 +2,18 @@ package com.goayo.debtify.model;
 
 import androidx.annotation.Nullable;
 
+import com.goayo.debtify.modelaccess.IUserData;
+
 /**
  * @author Alex Phu, Olof Sjögren
  * @date 2020-09-15
  * <p>
  * Class representing user.
+ *
+ * ---
+ * 2020-09-16 : class implements IUserData, modified by Olof & Alex
  */
-public class User {
+public class User implements IUserData {
 
     private final String phoneNumber;
     private final String name;
