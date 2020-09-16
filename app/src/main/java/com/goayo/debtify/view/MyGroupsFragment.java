@@ -1,5 +1,6 @@
 package com.goayo.debtify.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,7 +57,8 @@ public class MyGroupsFragment extends Fragment {
         binding.addGroupFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO ("Implement the navigation to group-creation-view")
+                Intent createGroupIntent = new Intent(getContext(), GroupCreationActivity.class);
+                startActivity(createGroupIntent);
             }
         });
     }
