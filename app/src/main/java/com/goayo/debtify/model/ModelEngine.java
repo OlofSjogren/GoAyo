@@ -46,7 +46,7 @@ public class ModelEngine {
      * is not met, or if some form of connection error occurs.
      */
     public boolean registerUser(String phoneNumber, String name, String password){
-        return false;
+        return Account.registerUser(phoneNumber, name, password);
     }
 
     /**
@@ -63,7 +63,7 @@ public class ModelEngine {
      * if some form of connection error occurs.
      */
     public boolean logInUser(String phoneNumber, String password){
-        return false;
+        return Account.logInUser(phoneNumber, password);
     }
 
     /**
@@ -73,7 +73,7 @@ public class ModelEngine {
      * @return True if the operation was successful, server side.
      */
     public boolean addContact(String phoneNumber){
-        return false;
+        return Account.addContact(phoneNumber);
     }
 
     /**
@@ -88,7 +88,7 @@ public class ModelEngine {
      * is not met, or if some form of connection error occurs.
      */
     public boolean removeContact(String phoneNumber){
-        return false;
+        return Account.removeContact(phoneNumber);
     }
 
     /**
@@ -103,7 +103,7 @@ public class ModelEngine {
      * @return True if the operation was successful, server side.
      */
     public boolean createGroup(String groupName, List<String> phoneNumberList){
-        return false;
+        return Account.createGroup(groupName, phoneNumberList);
     }
 
     /**
