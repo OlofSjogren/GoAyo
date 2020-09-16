@@ -16,9 +16,11 @@ public class ModelEngine {
 
     private Account account;
     private static ModelEngine instance;
+    private IDatabase database;
 
     private ModelEngine(Account account){
         this.account = account;
+        this.database = new MockDatabase();
     }
 
     /**
@@ -46,7 +48,7 @@ public class ModelEngine {
      * is not met, or if some form of connection error occurs.
      */
     public boolean registerUser(String phoneNumber, String name, String password){
-        return Account.registerUser(phoneNumber, name, password);
+        return account.registerUser(phoneNumber, name, password);
     }
 
     /**
@@ -63,8 +65,9 @@ public class ModelEngine {
      * if some form of connection error occurs.
      */
     public boolean logInUser(String phoneNumber, String password){
-        return Account.logInUser(phoneNumber, password);
+        return account.logInUser(phoneNumber, password);
     }
+
 
     /**
      * Adds a contact to the users contact book.
@@ -73,7 +76,7 @@ public class ModelEngine {
      * @return True if the operation was successful, server side.
      */
     public boolean addContact(String phoneNumber){
-        return Account.addContact(phoneNumber);
+        return account.addContact(phoneNumber);
     }
 
     /**
@@ -88,7 +91,7 @@ public class ModelEngine {
      * is not met, or if some form of connection error occurs.
      */
     public boolean removeContact(String phoneNumber){
-        return Account.removeContact(phoneNumber);
+        return account.removeContact(phoneNumber);
     }
 
     /**
@@ -103,7 +106,7 @@ public class ModelEngine {
      * @return True if the operation was successful, server side.
      */
     public boolean createGroup(String groupName, List<String> phoneNumberList){
-        return Account.createGroup(groupName, phoneNumberList);
+        return account.createGroup(groupName, phoneNumberList);
     }
 
     /**
@@ -117,7 +120,7 @@ public class ModelEngine {
      * is not met, or if some form of connection error occurs.
      */
     public boolean removeGroup(int groupID){
-        return false;
+        return account.removeGroup(groupID);
     }
 
     /**
@@ -126,7 +129,7 @@ public class ModelEngine {
      * @return an Immutable copy of the type "IGroupInformation".
      */
     public List<IGroupInformation> getGroups(){
-        return
+        return (IGroupInformation)account.getGroups();
     }
 
     /**
@@ -143,7 +146,7 @@ public class ModelEngine {
      * False if the preconditions aren't met, or if some form of connection error occurs.
      */
     public boolean addUserToGroup(String phoneNumber, int groupID){
-        return false;
+        return account.addUserToGroup(phoneNumber, groupID);
     }
 
     /**
@@ -160,7 +163,7 @@ public class ModelEngine {
      * False if the precondition isn't met, or if some form of connection error occurs.
      */
     public boolean removeUserFromGroup(String phoneNumber, int groupID){
-        return false;
+        return account.removeUserFromGroup(phoneNumber, groupID);
     }
 
     /**
@@ -182,7 +185,7 @@ public class ModelEngine {
      * False if the preconditions aren't met, or if some form of connection error occurs.
      */
     public boolean createDebt(int groupID, String lender, List<String> borrower, double owed){
-        return false;
+        return account.createDebt(groupID, lender, borrower, owed);
     }
 
     /**
@@ -199,16 +202,7 @@ public class ModelEngine {
      * False if the preconditions aren't met, or if some form of connection error occurs.
      */
     public boolean payOffDebt(double amount, String debtID){
-        return false;
+        return account.payOffDebt(amount,debtID);
     }
-
-    /**
-     * Makes a call to the database to make sure the entity with the specified ID exists.
-     *
-     * @param id the ID to be found.
-     * @return True if the entity exist. Else false.
-     */
-    private boolean isThisInDatabase(String id){
-        return false;
-    }
+    
 }
