@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.MyGroupsFragmentBinding;
-import com.google.android.material.snackbar.Snackbar;
 
 /**
  * @author Alex Phu, Yenan Wang
@@ -23,6 +22,8 @@ import com.google.android.material.snackbar.Snackbar;
  * Second tab of the main screen.
  * <p>
  * 2020/09/15 Modified by Alex Phu. Added init function for RecyclerView. Will be activated when backend is resolved.
+ *
+ * 2020/09/16 Modified by Alex Phu. Added listener for FloatingActionButton.
  */
 public class MyGroupsFragment extends Fragment {
 
@@ -32,19 +33,12 @@ public class MyGroupsFragment extends Fragment {
         //Binding instead of relying on findViewById
         MyGroupsFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.my_groups_fragment, container, false);
 
-        //Testing binding on fab
-        binding.addGroupFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "TESTING BINDING", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         return binding.getRoot();
     }
 
     /**
      * Initializes RecyclerView in MyGroups.
+     *
      * @param binding Variable which can access the elements in the layout file.
      */
     private void initRecyclerView(MyGroupsFragmentBinding binding) {
@@ -52,5 +46,18 @@ public class MyGroupsFragment extends Fragment {
         //GroupViewAdapter groupViewAdapter = new GroupViewAdapter(getContext(), DATA);
         //recyclerView.setAdapter(groupViewAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
+    }
+
+    /**
+     * Sets listener to the floatingActionButton.
+     * @param binding Variable which can access the elements in the layout file.
+     */
+    private void AddListenerToFloatingActionButton(MyGroupsFragmentBinding binding) {
+        binding.addGroupFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO ("Implement the navigation to group-creation-view")
+            }
+        });
     }
 }
