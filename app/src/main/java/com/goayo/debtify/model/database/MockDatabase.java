@@ -74,7 +74,11 @@ class MockDatabase implements IDatabase {
      */
     @Override
     public boolean registerUser(String phoneNumber, String password, String name) {
-        users.add(new User(phoneNumber, name));
+        if (users.contains(new User(phoneNumber, name))){
+            return false;
+        } else {
+            users.add(new User(phoneNumber, name));
+        }
         return true;
     }
 
