@@ -42,12 +42,15 @@ public class Account {
 
     /**
      * Logs in the user if logged in information is matched in the database.
+     * Also initializes contactList and associatedGroups for the user.
      * @param phoneNumber Phonenumber input.
      * @param password    Password input.
      * @throws Exception Thrown if user input is not valid.
      */
     public void loginUser(String phoneNumber, String password) throws Exception {
         loggedInUser = database.getUserToBeLoggedIn(phoneNumber, password);
+        contactList = initContactList(phoneNumber);
+        associatedGroups = initAssociatedGroups(phoneNumber);
     }
 
     /**
@@ -120,10 +123,11 @@ public class Account {
         Group tempGroup = getGroupFromID(groupID);
         User lenderUser = getUserFromID(lender);
         Set<User> borrowerUsers = new HashSet<>();
-
+        //TODO ("Create method for creating a set of users given a set of ID's")
         for(String s: borrower){
             borrowerUsers.add(getUserFromID(s));
         }
+        //TODO ("Check database if debt is created before delegating task to tempGroup")
         tempGroup.createDebt(lenderUser, borrowerUsers, owed);
     }
 
@@ -136,6 +140,7 @@ public class Account {
      */
     public void payOffDebt(double amount, String debtID, String groupID) throws Exception {
         Group tempGroup = getGroupFromID(groupID);
+        //TODO ("Check database if payment is registered")
         tempGroup.payOffDebt(amount, debtID);
     }
 
@@ -154,5 +159,13 @@ public class Account {
             throw new Exception();
         }
         return group;
+    }
+
+    private Set<User> initContactList(String phoneNumber) throws Exception {
+        return database.getContactList(phoneNumber);
+    }
+
+    private Set<Group> initAssociatedGroups(String phoneNumber) throws Exception {
+        return database.getGroups(phoneNumber);
     }
 }
