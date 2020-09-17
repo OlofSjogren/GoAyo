@@ -1,4 +1,4 @@
-package com.goayo.debtify.model.database;
+package com.goayo.debtify.model;
 
 import com.goayo.debtify.model.Group;
 import com.goayo.debtify.model.User;
@@ -108,5 +108,14 @@ class MockDatabase implements IDatabase {
     @Override
     public User getUserToBeLoggedIn(String phoneNumber, String password) {
         return new User("0756415987", "Rolf Broberg");
+    }
+
+    @Override
+    public Set<User> getContactList(String phoneNumber) {
+        Set<User> contacts = new HashSet<>();
+        contacts.add(new User("0874656355", "Rickard Bernstsson"));
+        contacts.add(new User("0473644551", "Ols Braun"));
+        contacts.add(new User("8557266345", "Berit Nordström"));
+        return contacts;
     }
 }
