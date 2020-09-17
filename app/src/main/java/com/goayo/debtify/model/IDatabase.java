@@ -1,9 +1,5 @@
 package com.goayo.debtify.model;
 
-import com.goayo.debtify.model.Group;
-import com.goayo.debtify.model.User;
-
-import java.util.List;
 import java.util.Set;
 
 /**

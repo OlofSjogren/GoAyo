@@ -1,6 +1,4 @@
-package com.goayo.debtify.model.debt;
-
-import com.goayo.debtify.model.Debt;
+package com.goayo.debtify.model;
 
 import org.junit.Test;
 

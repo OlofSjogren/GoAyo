@@ -14,6 +14,7 @@ import java.util.List;
  * @date 2020-09-15
  * <p>
  * DebtTracker holds debts and keeps track of debt
+ * 2020-09-17 Modified by Yenan & Gabriel : Updated comments. Added exception on payOffDebt instead of boolean false as return.
  */
 class DebtTracker implements IDebtData {
     private final Debt debt;
@@ -38,6 +39,11 @@ class DebtTracker implements IDebtData {
         this.debtTrackerID = "TEMP ID";
     }
 
+    /**
+     * constructor for creating a clone of this DebtTracker for defensive copying
+     *
+     * @param debtTracker the debtTracker to clone
+     */
     public DebtTracker(DebtTracker debtTracker) {
         this.debt = debtTracker.debt;
         this.payments = new ArrayList<>(debtTracker.payments);
@@ -46,6 +52,25 @@ class DebtTracker implements IDebtData {
         this.debtTrackerID = debtTracker.debtTrackerID;
     }
 
+    /**
+     * Adds a new payment to the list of payments
+     *
+     * @param payOffAmount the amount to pay off
+     * @exception if payOffAmount exceeds debt left to pay
+     */
+    public void payOffDebt(double payOffAmount) throws Exception {
+       if (debt.getDebtAmount() - getSumOfPayments() > payOffAmount) {
+           payments.add(new Payment(payOffAmount));
+       }
+       else {
+           //TODO: Sepcify what exception this is.
+           throw new Exception();
+       }
+    }
+
+    /**
+     * @return sum of all payments done
+     */
     public double getSumOfPayments() {
         double sum = 0;
         for (Payment p : payments) {
@@ -55,25 +80,16 @@ class DebtTracker implements IDebtData {
     }
 
     /**
-     * Adds a new payment to the list of payments
-     *
-     * @param payOffAmount the amount to pay off
-     * @return false if payOffAmount is more than debt left, else true
-     */
-    public boolean payOffDebt(double payOffAmount) {
-       if (debt.getDebtAmount() - getSumOfPayments() > payOffAmount) {
-           payments.add(new Payment(payOffAmount));
-           return true;
-       }
-       return false;
-    }
-
-    /**
-     * @return a list of pair containing payment history
+     * @return a list of all payment history
      */
     @Override
     public List<IPaymentData> getPaymentHistory() {
         return new ArrayList<IPaymentData>(payments);
+    }
+
+    @Override
+    public double getAmountOwed() {
+        return debt.getDebtAmount() - getSumOfPayments();
     }
 
     @Override
@@ -89,11 +105,6 @@ class DebtTracker implements IDebtData {
     @Override
     public IUserData getBorrower() {
         return borrower;
-    }
-
-    @Override
-    public double getAmountOwed() {
-        return debt.getDebtAmount() - getSumOfPayments();
     }
 
     @Override

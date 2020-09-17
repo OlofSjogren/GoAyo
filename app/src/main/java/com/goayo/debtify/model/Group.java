@@ -83,6 +83,7 @@ class Group implements IGroupData {
         return groupMembers.removeAll(removeUsers);
     }
 
+    //TODO: Update List to Set and method signature.
     public boolean createDebt(User lender, List<User> borrower, double owed) {
         return groupLedger.createDebt(lender, borrower, owed);
     }
