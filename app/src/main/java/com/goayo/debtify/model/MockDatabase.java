@@ -1,7 +1,4 @@
-package com.goayo.debtify.model.database;
-
-import com.goayo.debtify.model.Group;
-import com.goayo.debtify.model.User;
+package com.goayo.debtify.model;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,10 +1,10 @@
-package com.goayo.debtify.model.debt;
+package com.goayo.debtify.model;
 
-import com.goayo.debtify.model.User;
-import com.goayo.debtify.model.DebtTracker;
 import com.goayo.debtify.modelaccess.IPaymentData;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.List;
 
@@ -12,8 +12,11 @@ import static org.junit.Assert.*;
 
 public class DebtTrackerTest {
 
+    @Rule
+    public ExpectedException exceptionRule = ExpectedException.none();
+
     @Test
-    public void getSumOfPayments() {
+    public void getSumOfPayments() throws Exception {
         DebtTracker dt = new DebtTracker(350, new User("244","bob"), new User("afa", "afaf"));
         dt.payOffDebt(50);
         dt.payOffDebt(25);
@@ -22,14 +25,17 @@ public class DebtTrackerTest {
     }
 
     @Test
-    public void payOffDebt() {
+    public void payOffDebt() throws Exception {
+        exceptionRule.expect(Exception.class);
+        exceptionRule.expectMessage("PayOffDebt failed.");
+
         DebtTracker dt = new DebtTracker(350, new User("244","bob"), new User("afa", "afaf"));
-        assertFalse(dt.payOffDebt(400));
-        assertTrue(dt.payOffDebt(349.9));
+        dt.payOffDebt(400);
+        dt.payOffDebt(349.9);
     }
 
     @Test
-    public void getPaymentHistory() {
+    public void getPaymentHistory() throws Exception {
         DebtTracker dt = new DebtTracker(350, new User("244","bob"), new User("afa", "afaf"));
         dt.payOffDebt(35);
         dt.payOffDebt(47);
