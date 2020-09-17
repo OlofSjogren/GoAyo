@@ -13,7 +13,7 @@ import com.goayo.debtify.modelaccess.IUserData;
  * ---
  * 2020-09-16 Modified by Olof & Alex: class implements IUserData,
  */
-public class User implements IUserData {
+class User implements IUserData {
 
     private final String phoneNumber;
     private final String name;

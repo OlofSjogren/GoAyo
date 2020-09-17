@@ -1,9 +1,11 @@
 package com.goayo.debtify.model;
 
+import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -11,10 +13,14 @@ import java.util.Set;
  * @date 2020-09-15
  * <p>
  * Class representing group.
+<<<<<<< HEAD
  *
  * 2020-09-17 Modified by Alex Phu and Olof Sjögren: Changed List type to Set in method parameters.
+=======
+ * 2020-09-16 Modified by Gabriel & Yenan : Added real ledger. Changed types on getDebts. Delegated to ledger.
+>>>>>>> c8c7657ee4e7d82387fd7d2da555925f4d2838aa
  */
-public class Group implements IGroupData {
+class Group implements IGroupData {
 
     private String groupName;
     private Ledger groupLedger;
@@ -31,6 +37,7 @@ public class Group implements IGroupData {
         this.groupName = groupName;
         this.groupId = groupId;
         this.groupMembers = groupMembers;
+        this.groupLedger = new Ledger();
     }
 
     /**
@@ -109,7 +116,7 @@ public class Group implements IGroupData {
     }
 
     @Override
-    public Set<IDebtData> getDebts() {
-        return new HashSet<IdebtData>(groupMembers);
+    public List<IDebtData> getDebts() {
+        return groupLedger.getDebtDataList();
     }
 }
