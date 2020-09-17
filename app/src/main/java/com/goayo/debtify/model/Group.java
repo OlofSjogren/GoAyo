@@ -3,11 +3,7 @@ package com.goayo.debtify.model;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -15,6 +11,8 @@ import java.util.Set;
  * @date 2020-09-15
  * <p>
  * Class representing group.
+ *
+ * 2020-09-17 Modified by Alex Phu and Olof Sjögren: Changed List type to Set in method parameters.
  */
 public class Group implements IGroupData {
 
@@ -61,7 +59,7 @@ public class Group implements IGroupData {
      * @param newUsers multiple users to add.
      * @return Returns true if successfully added all the users to the grouplist, otherwise returns false.
      */
-    public boolean addUser(List<User> newUsers) {
+    public boolean addUser(Set<User> newUsers) {
         return groupMembers.addAll(newUsers);
     }
 
@@ -79,11 +77,11 @@ public class Group implements IGroupData {
      * @param removeUsers multiple users to remove.
      * @return Returns true if successfully removed the all users from the grouplist, otherwise returns false.
      */
-    public boolean removeUser(List<User> removeUsers) {
+    public boolean removeUser(Set<User> removeUsers) {
         return groupMembers.removeAll(removeUsers);
     }
 
-    public boolean createDebt(User lender, List<User> borrower, double owed) {
+    public boolean createDebt(User lender, Set<User> borrower, double owed) {
         return groupLedger.createDebt(lender, borrower, owed);
     }
 
