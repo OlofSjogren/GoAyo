@@ -1,6 +1,6 @@
-package com.goayo.debtify.model;
+package com.goayo.debtify.model.debt;
 
-import com.goayo.debtify.model.debt.Debt;
+import com.goayo.debtify.model.Debt;
 
 import org.junit.Test;
 
@@ -13,7 +13,7 @@ public class DebtTest {
     @Test
     public void testDebtCreation() {
         Debt debt = new Debt(50);
-        assertEquals(50, debt.getOwed(), 0.01);
+        assertEquals(50, debt.getDebtAmount(), 0.01);
     }
 
     @Test

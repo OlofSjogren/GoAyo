@@ -1,5 +1,7 @@
-package com.goayo.debtify.model.debt;
+package com.goayo.debtify.model;
 
+
+import com.goayo.debtify.modelaccess.IPaymentData;
 
 import java.util.Date;
 
@@ -9,13 +11,13 @@ import java.util.Date;
  * <p>
  * Value object for Payment
  */
-public class Payment implements IPaymentData{
+class Payment implements IPaymentData {
     private final Date date;
-    private final double paid;
+    private final double paidAmount;
 
-    public Payment(double paid) {
+    public Payment(double paidAmount) {
         this.date = new Date();
-        this.paid = paid;
+        this.paidAmount = paidAmount;
     }
 
     public Date getDate() {
@@ -23,6 +25,6 @@ public class Payment implements IPaymentData{
     }
 
     public double getPaidAmount() {
-        return paid;
+        return paidAmount;
     }
 }

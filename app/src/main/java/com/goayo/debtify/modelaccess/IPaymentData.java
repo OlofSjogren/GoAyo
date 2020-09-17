@@ -1,4 +1,4 @@
-package com.goayo.debtify.model.debt;
+package com.goayo.debtify.modelaccess;
 
 import java.util.Date;
 
