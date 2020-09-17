@@ -16,4 +16,5 @@ public interface IDatabase {
     boolean registerUser(String phoneNumber, String password, String name);
     boolean registerGroup(String name, Set<User> users);
     User getUserToBeLoggedIn(String phoneNumber, String password);
+    Set<User> getContactList(String phoneNumber);
 }
