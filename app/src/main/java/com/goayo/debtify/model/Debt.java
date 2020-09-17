@@ -1,4 +1,4 @@
-package com.goayo.debtify.model.debt;
+package com.goayo.debtify.model;
 
 import java.util.Date;
 
@@ -8,7 +8,7 @@ import java.util.Date;
  * <p>
  * Value object for debt
  */
-public class Debt {
+class Debt {
     private final Date date;
     private final double owed;
 

@@ -1,7 +1,6 @@
-package com.goayo.debtify.model.debt;
+package com.goayo.debtify.model;
 
 
-import com.goayo.debtify.model.User;
 import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.modelaccess.IPaymentData;
 import com.goayo.debtify.modelaccess.IUserData;
@@ -16,7 +15,7 @@ import java.util.List;
  * <p>
  * DebtTracker holds debts and keeps track of debt
  */
-public class DebtTracker implements IDebtData {
+class DebtTracker implements IDebtData {
     private final Debt debt;
     private final List<Payment> payments;
     private final User lender;

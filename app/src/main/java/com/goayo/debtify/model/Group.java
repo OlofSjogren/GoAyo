@@ -1,15 +1,11 @@
 package com.goayo.debtify.model;
 
-import com.goayo.debtify.model.debt.Ledger;
 import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -19,7 +15,7 @@ import java.util.Set;
  * Class representing group.
  * 2020-09-16 Modified by Gabriel & Yenan : Added real ledger. Changed types on getDebts. Delegated to ledger.
  */
-public class Group implements IGroupData {
+class Group implements IGroupData {
 
     private String groupName;
     private Ledger groupLedger;

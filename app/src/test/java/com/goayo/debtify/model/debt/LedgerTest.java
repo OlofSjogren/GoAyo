@@ -1,5 +1,6 @@
 package com.goayo.debtify.model.debt;
 
+import com.goayo.debtify.model.Ledger;
 import com.goayo.debtify.model.User;
 
 import org.junit.Test;

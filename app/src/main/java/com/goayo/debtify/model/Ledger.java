@@ -1,7 +1,6 @@
-package com.goayo.debtify.model.debt;
+package com.goayo.debtify.model;
 
 
-import com.goayo.debtify.model.User;
 import com.goayo.debtify.modelaccess.IDebtData;
 
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ import java.util.List;
  *
  * 2020-09-16 Modified by Gabriel & Yenan : Implemented methods.
  */
-public class Ledger {
+class Ledger {
 
     // TODO: Add comments on all methods.
 

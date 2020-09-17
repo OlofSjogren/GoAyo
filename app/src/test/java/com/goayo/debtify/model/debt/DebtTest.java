@@ -1,5 +1,7 @@
 package com.goayo.debtify.model.debt;
 
+import com.goayo.debtify.model.Debt;
+
 import org.junit.Test;
 
 import java.util.Date;

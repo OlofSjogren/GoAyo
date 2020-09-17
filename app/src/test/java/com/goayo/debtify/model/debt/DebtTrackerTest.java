@@ -1,14 +1,11 @@
 package com.goayo.debtify.model.debt;
 
-import android.util.Pair;
-
 import com.goayo.debtify.model.User;
-import com.goayo.debtify.model.debt.DebtTracker;
+import com.goayo.debtify.model.DebtTracker;
 import com.goayo.debtify.modelaccess.IPaymentData;
 
 import org.junit.Test;
 
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
