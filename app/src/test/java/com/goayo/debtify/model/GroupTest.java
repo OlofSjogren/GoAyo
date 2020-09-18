@@ -1,10 +1,15 @@
 package com.goayo.debtify.model;
 
+import com.goayo.debtify.modelaccess.IGroupData;
+import com.goayo.debtify.modelaccess.IUserData;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -13,33 +18,35 @@ import static org.junit.Assert.assertTrue;
 
 public class GroupTest {
 
-    static List<User> userList;
+    static Set<User> userSet;
     static User user;
 
     @BeforeClass
     public static void beforeClass() {
         user = new User("0760430079", "Karl");
-        userList = new ArrayList<>();
-        userList.add(user);
-        userList.add(new User("12345566", "Sven"));
-        userList.add(new User("987654", "Anna"));
+        userSet = new HashSet<>();
+        userSet.add(user);
+        userSet.add(new User("12345566", "Sven"));
+        userSet.add(new User("987654", "Anna"));
     }
 
     @Test
     public void testAddUser() {
         Group tempGroup = new Group("Tyskland resa", "1234", user);
         User testUser = new User("4321", "Åke");
+        int setSizeBefore = tempGroup.getGroupMembers().size();
         tempGroup.addUser(testUser);
-        assertEquals(tempGroup.getGroupMembers().get(1), testUser);
+        int setSizeAfter = tempGroup.getGroupMembers().size();
+        assertTrue(setSizeBefore < setSizeAfter);
     }
 
     @Test
     public void testAddMultipleUsers() {
-        Group tempGroup = new Group("Belgien resa", "2345", userList);
+        Group tempGroup = new Group("Belgien resa", "2345", userSet);
 
-        assertTrue(tempGroup.getGroupMembers().containsAll(userList));
+        assertTrue(tempGroup.getGroupMembers().containsAll(userSet));
 
-        List<User> secondUserList = new ArrayList<>();
+        Set<User> secondUserList = new HashSet<>();
         secondUserList.add(new User("12345566", "Lars"));
         secondUserList.add(new User("987654", "Holme"));
         secondUserList.add(new User("12345566", "Bengt"));
@@ -67,18 +74,18 @@ public class GroupTest {
 
     @Test
     public void testRemoveMultipleUsers() {
-        Group tempGroup = new Group("Belgien resa", "2345", userList);
+        Group tempGroup = new Group("Belgien resa", "2345", userSet);
 
-        List<User> secondUserList = new ArrayList<>();
+        Set<User> secondUserList = new HashSet<>();
         secondUserList.add(new User("12345566", "Lars"));
         secondUserList.add(new User("987654", "Holme"));
         secondUserList.add(new User("12345566", "Bengt"));
         secondUserList.add(new User("987654", "Felix"));
 
         tempGroup.addUser(secondUserList);
-        tempGroup.removeUser(userList);
+        tempGroup.removeUser(userSet);
 
-        for(User u: userList) {
+        for(User u: userSet) {
             assertFalse(tempGroup.getGroupMembers().contains(u));
         }
 
@@ -88,9 +95,9 @@ public class GroupTest {
 
     @Test
     public void testRemoveNonExistingUser() {
-        Group tempGroup = new Group("Belgien resa", "2345", userList);
+        Group tempGroup = new Group("Belgien resa", "2345", userSet);
 
-        List<User> secondUserList = new ArrayList<>();
+        Set<User> secondUserList = new HashSet<>();
         secondUserList.add(new User("12345566", "Lars"));
         secondUserList.add(new User("987654", "Holme"));
         secondUserList.add(new User("12345566", "Bengt"));
