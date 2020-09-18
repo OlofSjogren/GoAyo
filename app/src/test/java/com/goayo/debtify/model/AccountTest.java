@@ -25,7 +25,9 @@ public class AccountTest {
 
     @Test
     public void loginUser() throws Exception {
-        //TODO ("To be tested")
+        account.loginUser("123", "123");
+
+        assert();
     }
 
     @Test
