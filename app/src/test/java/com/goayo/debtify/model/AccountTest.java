@@ -1,9 +1,14 @@
 package com.goayo.debtify.model;
 
+import com.goayo.debtify.modelaccess.IGroupData;
+import com.goayo.debtify.modelaccess.IUserData;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -55,19 +60,64 @@ public class AccountTest {
     }
 
     @Test
-    public void addUserToGroup() {
+    public void addUserToGroup() throws Exception {
+        IGroupData g;
+        //
+        int i = 1002;
+        List<Integer> beforeSizes = new ArrayList<>();
+        List<Integer> afterSizes = new ArrayList<>();
+        List<Integer> assertionAtOne = new ArrayList<>();
 
+        for(IGroupData group : account.getAssociatedGroups()){
+            beforeSizes.add(group.getIUserDataSet().size());
+        }
+
+        for(IGroupData groupData : account.getAssociatedGroups()){
+            account.addUserToGroup("0876123221", Integer.toString(i));
+            i++;
+        }
+
+        for(IGroupData group : account.getAssociatedGroups()){
+            afterSizes.add(group.getIUserDataSet().size());
+        }
+
+        for(int t = 0; t < beforeSizes.size(); t++){
+            assertionAtOne.add((afterSizes.get(t)) - beforeSizes.get(t));
+        }
+
+        for (Integer integer : assertionAtOne){
+            assert(integer == 1);
+        }
     }
 
     @Test
-    public void removeUserFromGroup() {
+    public void removeUserFromGroup()  throws Exception{
+        int sizeBefore = 0;
+        int sizeAfter = 0;
+
+        for(IGroupData g : account.getAssociatedGroups()){
+            if(g.getGroupID() == "1003"){
+                sizeBefore = g.getIUserDataSet().size();
+            }
+        }
+        account.removeUserFromGroup("0735216752", "1003");
+        for(IGroupData g : account.getAssociatedGroups()){
+            if(g.getGroupID() == "1003"){
+                sizeAfter = g.getIUserDataSet().size();
+            }
+        }
+        assert(sizeAfter < sizeBefore);
     }
 
+    //TODO: Awaiting a more testable model.
+    
     @Test
     public void createDebt() {
+
     }
 
     @Test
     public void payOffDebt() {
+
     }
 }
