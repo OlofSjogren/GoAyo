@@ -1,6 +1,8 @@
 package com.goayo.debtify.model;
 
 import com.goayo.debtify.model.database.IDatabase;
+import com.goayo.debtify.modelaccess.IGroupData;
+import com.goayo.debtify.modelaccess.IUserData;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,8 +15,10 @@ import java.util.Set;
  *
  * 2020-09-17 Modified by Alex Phu and Olof Sjögren: Continued implementing methods.
  * Changed boolean functions to throw exceptions instead.
+ *
  * 2020-09-18 Modified by Oscar Sanner: Added method to check if loggedInUser is set before
- * running methods requiring the user to be logged in.
+ * running methods requiring the user to be logged in. Added getters needed by high level
+ * classes and by extension, the view and controller package.
  */
 public class Account {
 
@@ -179,6 +183,25 @@ public class Account {
         Group tempGroup = getGroupFromID(groupID);
         //TODO ("Check database if payment is registered")
         tempGroup.payOffDebt(amount, debtID);
+    }
+
+    /**
+     * Getter for the logged in user. Returns the abstract type IUserData.
+     *
+     * Precondition: The user is logged in via the logInUser method, before calling
+     *               this method.
+     *
+     * @return the logged in user in the shape of "IUserData".
+     */
+    public IUserData getLoggedInUser(){
+        IUserData abstractUser = loggedInUser;
+        return abstractUser;
+    }
+
+    public Set<IGroupData> getAssociatedGroups(){
+        Set<IGroupData> retGroup = new HashSet<>();
+        retGroup.addAll(associatedGroups);
+        return retGroup;
     }
 
     private User getUserFromID(String phoneNumber) {

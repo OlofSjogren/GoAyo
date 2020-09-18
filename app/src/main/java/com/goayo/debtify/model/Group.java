@@ -13,12 +13,9 @@ import java.util.Set;
  * @date 2020-09-15
  * <p>
  * Class representing group.
-<<<<<<< HEAD
  *
  * 2020-09-17 Modified by Alex Phu and Olof Sjögren: Changed List type to Set in method parameters.
-=======
  * 2020-09-16 Modified by Gabriel & Yenan : Added real ledger. Changed types on getDebts. Delegated to ledger.
->>>>>>> c8c7657ee4e7d82387fd7d2da555925f4d2838aa
  */
 class Group implements IGroupData {
 

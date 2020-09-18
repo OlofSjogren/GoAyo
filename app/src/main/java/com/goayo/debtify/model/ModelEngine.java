@@ -1,6 +1,10 @@
 package com.goayo.debtify.model;
 
+import com.goayo.debtify.modelaccess.IGroupData;
+import com.goayo.debtify.modelaccess.IUserData;
+
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Author Oscar Sanner
@@ -128,8 +132,8 @@ public class ModelEngine {
      *
      * @return an Immutable copy of the type "IGroupInformation".
      */
-    public List<IGroupInformation> getGroups(){
-        return (IGroupInformation)account.getGroups();
+    public Set<IGroupData> getGroups(){
+        return account.getAssociatedGroups();
     }
 
     /**
@@ -203,6 +207,18 @@ public class ModelEngine {
      */
     public boolean payOffDebt(double amount, String debtID){
         return account.payOffDebt(amount,debtID);
+    }
+
+    /**
+     * Getter for the logged in user. Returns a specific set of data in form of a
+     * IUserData typed object.
+     *
+     * Precondition: The user is logged in.
+     *
+     * @return the logged in user, typed as an IUserData object.
+     */
+    public IUserData getLoggedInUser(){
+        return account.getLoggedInUser();
     }
 
 }
