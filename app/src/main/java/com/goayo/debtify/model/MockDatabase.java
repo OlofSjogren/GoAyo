@@ -16,6 +16,7 @@ class MockDatabase implements IDatabase {
 
     private Set<Group> groups;
     private Set<User> users;
+    private User noFriendsUser;
 
     public MockDatabase(){
         users = new HashSet<>();
@@ -23,11 +24,13 @@ class MockDatabase implements IDatabase {
         users.add(new User("0735216752", "Rickard Nicklasson"));
         users.add(new User("0734355982", "Gabriel Phu"));
         users.add(new User("0773345654", "Yenan Sjögren"));
+        noFriendsUser = new User("0876123221", "Bo Lean");
 
         groups = new HashSet<>();
         groups.add(new Group("Afterwork", "1002", users));
         groups.add(new Group("Trip To Spain", "1003", users));
         groups.add(new Group("School friends", "1004", users));
+        users.add(noFriendsUser);
     }
 
 

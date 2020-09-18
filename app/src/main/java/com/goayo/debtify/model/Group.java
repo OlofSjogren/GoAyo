@@ -4,6 +4,7 @@ import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,7 +14,10 @@ import java.util.Set;
  * @date 2020-09-15
  * <p>
  * Class representing group.
+ *
+ * 2020-09-17 Modified by Alex Phu and Olof Sjögren: Changed List type to Set in method parameters.
  * 2020-09-16 Modified by Gabriel & Yenan : Added real ledger. Changed types on getDebts. Delegated to ledger.
+ * 2020-09-18 Modified by Oscar & Alex : Switched over List types to Set, also added JDocs and switch boolean returns to exceptions.
  */
 class Group implements IGroupData {
 
@@ -61,7 +65,7 @@ class Group implements IGroupData {
      * @param newUsers multiple users to add.
      * @return Returns true if successfully added all the users to the grouplist, otherwise returns false.
      */
-    public boolean addUser(List<User> newUsers) {
+    public boolean addUser(Set<User> newUsers) {
         return groupMembers.addAll(newUsers);
     }
 
@@ -79,17 +83,33 @@ class Group implements IGroupData {
      * @param removeUsers multiple users to remove.
      * @return Returns true if successfully removed the all users from the grouplist, otherwise returns false.
      */
-    public boolean removeUser(List<User> removeUsers) {
+    public boolean removeUser(Set<User> removeUsers) {
         return groupMembers.removeAll(removeUsers);
     }
 
-    //TODO: Update List to Set and method signature.
-    public boolean createDebt(User lender, List<User> borrower, double owed) {
-        return groupLedger.createDebt(lender, borrower, owed);
+    /**
+     * Creates a debtTracker and adds it to the list of debtTrackers.
+     *
+     * @param lender the user who lends out money
+     * @param borrowers either a single or several users who borrow from the lender
+     * @param owed total amount lent out by the lender to the borrowers
+     * @throws Exception
+     */
+    // TODO: Specify exception.
+    public void createDebt(User lender, Set<User> borrowers, double owed) throws Exception {
+        groupLedger.createDebt(lender, borrowers, owed);
     }
 
-    public boolean payOffDebt(double amount, String debtID) {
-        return groupLedger.payOffDebt(amount, debtID);
+    /**
+     * Adds a new payment to a specific debtTracker.
+     *
+     * @param amount Amount being paid back against the debt.
+     * @param debtTrackerID ID used to retrieve the specific debtTracker.
+     * @throws
+     */
+    // TODO: Specify exception.
+    public void payOffDebt(double amount, String debtTrackerID) throws Exception {
+        groupLedger.payOffDebt(amount, debtTrackerID);
     }
 
     public Set<User> getGroupMembers() {
@@ -103,7 +123,7 @@ class Group implements IGroupData {
 
     @Override
     public Set<IUserData> getIUserDataSet() {
-        return new HashSet<IUserData>((Set<? extends IUserData>) groupMembers);
+        return new HashSet<IUserData>(groupMembers);
     }
 
     @Override
@@ -113,6 +133,6 @@ class Group implements IGroupData {
 
     @Override
     public List<IDebtData> getDebts() {
-        return groupLedger.getDebtDataList();
+        return new ArrayList<>(groupLedger.getDebtDataList());
     }
 }
