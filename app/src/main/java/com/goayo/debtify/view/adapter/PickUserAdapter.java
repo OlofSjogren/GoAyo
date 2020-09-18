@@ -16,7 +16,7 @@ import com.goayo.debtify.modelaccess.IUserData;
 /**
  * @author Alex Phu, Olof Sjögren
  * @date 2020-09-18
- *
+ * <p>
  * RecyclerView adapter for the pickUsers cardviews. Ensures that the correct information are shown on each cardItem and its respective listeners.
  */
 public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUserViewHolder> {
@@ -25,17 +25,19 @@ public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUs
 
     /**
      * Constructor for GroupViewAdapter
-     * @param context The context which is linked to the Activity (in our case MainActivity) and its lifecycle.
+     *
+     * @param context  The context which is linked to the Activity (in our case MainActivity) and its lifecycle.
      * @param userData The data to be displayed.
      */
-    public PickUserAdapter(Context context, IUserData[] userData){
+    public PickUserAdapter(Context context, IUserData[] userData) {
         this.context = context;
         this.userData = userData;
     }
 
     /**
      * Creates a new ViewHolder object whenever the RecyclerView needs a new one.
-     * @param parent Parent-view
+     *
+     * @param parent   Parent-view
      * @param viewType View type
      * @return A new instance of GroupViewHolder
      */
@@ -49,7 +51,8 @@ public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUs
 
     /**
      * Binds the data to the ViewHolder
-     * @param holder ViewHolder
+     *
+     * @param holder   ViewHolder
      * @param position Position in the dataArray.
      */
     @Override
@@ -75,6 +78,7 @@ public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUs
 
         /**
          * Binds the elements in the layout file to a variable
+         *
          * @param itemView In this case, pick_user_cardview
          */
         public PickUserViewHolder(@NonNull View itemView) {
@@ -86,8 +90,9 @@ public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUs
 
         /**
          * Sets the values of the layout's elements.
+         *
          * @param context The context which is linked to the Activity (in our case MainActivity) and its lifecycle.
-         * @param user Current user data
+         * @param user    Current user data
          */
         public void setUserData(Context context, IUserData user) {
             username.setText(user.getName());

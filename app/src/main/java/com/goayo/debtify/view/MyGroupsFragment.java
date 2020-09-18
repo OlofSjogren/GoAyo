@@ -37,6 +37,7 @@ public class MyGroupsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //Binding instead of relying on findViewById
         MyGroupsFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.my_groups_fragment, container, false);
+        addListenerToFloatingActionButton(binding);
 
         return binding.getRoot();
     }
@@ -58,7 +59,7 @@ public class MyGroupsFragment extends Fragment {
      * Sets listener to the floatingActionButton.
      * @param binding Variable which can access the elements in the layout file.
      */
-    private void AddListenerToFloatingActionButton(MyGroupsFragmentBinding binding) {
+    private void addListenerToFloatingActionButton(MyGroupsFragmentBinding binding) {
         binding.addGroupFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

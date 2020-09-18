@@ -34,7 +34,6 @@ public class GroupCreationActivity extends AppCompatActivity {
         setSupportActionBar(binding.groupCreationToolbar);
     }
 
-
     /**
      * TRY WITHOUT FIRST
      *

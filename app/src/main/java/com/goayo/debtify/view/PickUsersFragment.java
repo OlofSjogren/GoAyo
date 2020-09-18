@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,7 +40,7 @@ public class PickUsersFragment extends Fragment {
      * Initializes RecyclerView in PickUsers.
      *
      * @param userData Set of userdata to be displayed.
-     * @param binding Variable which can access the elements in the layout file.
+     * @param binding  Variable which can access the elements in the layout file.
      */
     private void initRecyclerView(PickUsersFragmentBinding binding, Set<IUserData> userData) {
         RecyclerView recyclerView = binding.pickuserRecyclerView;
@@ -51,6 +52,7 @@ public class PickUsersFragment extends Fragment {
 
     /**
      * Converts a Set to an Array.
+     *
      * @param userDataSet Set of Users.
      * @return Returns an Array of Users.
      */
@@ -58,5 +60,18 @@ public class PickUsersFragment extends Fragment {
         IUserData[] tempData = new IUserData[userDataSet.size()];
         userDataSet.toArray(tempData);
         return tempData;
+    }
+
+    /**
+     * Initializes the continue button to navigate to the next view.
+     * @param binding Variable which can access the elements in the layout file.
+     */
+    private void initContinueButton(PickUsersFragmentBinding binding) {
+        binding.pickuserContinueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_pickUsersFragment_to_createGroupFragment);
+            }
+        });
     }
 }
