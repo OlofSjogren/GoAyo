@@ -27,7 +27,7 @@ public class AccountTest {
 
     @Test
     public void registerUser() throws Exception {
-        account.registerUser("123", "Åke", "asd");
+        account.registerUser("123", "asd", "Åke");
         assertEquals("Åke", database.getUser("123").getName());
     }
 

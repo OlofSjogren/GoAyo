@@ -64,7 +64,7 @@ class DebtTracker implements IDebtData {
        }
        else {
            //TODO: Sepcify what exception this is.
-           throw new Exception();
+           throw new Exception("PayOffDebt failed.");
        }
     }
 

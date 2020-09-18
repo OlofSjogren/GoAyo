@@ -42,8 +42,8 @@ public class Account {
      * @param password    the registered user's password.
      * @throws Exception  Thrown if registration failed.
      **/
-    public void registerUser(String phoneNumber, String name, String password) throws Exception {
-        database.registerUser(phoneNumber, name, password);
+    public void registerUser(String phoneNumber, String password, String name) throws Exception {
+        database.registerUser(phoneNumber, password, name);
     }
 
     /**
