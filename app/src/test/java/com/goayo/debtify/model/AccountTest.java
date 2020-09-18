@@ -26,7 +26,6 @@ public class AccountTest {
     @Test
     public void loginUser() throws Exception {
         account.loginUser("123", "123");
-
         assert();
     }
 

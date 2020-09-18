@@ -13,6 +13,8 @@ import java.util.Set;
  *
  * 2020-09-17 Modified by Alex Phu and Olof Sjögren: Continued implementing methods.
  * Changed boolean functions to throw exceptions instead.
+ * 2020-09-18 Modified by Oscar Sanner: Added method to check if loggedInUser is set before
+ * running methods requiring the user to be logged in.
  */
 public class Account {
 
@@ -60,6 +62,12 @@ public class Account {
      * @throws Exception Thrown if user is not found in the database.
      */
     public void createGroup(String groupName, Set<String> phoneNumberSet) throws Exception {
+        try {
+            userIsLoggedIn();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
         Set<User> usersToBeAdded = new HashSet<>();
         for (String s : phoneNumberSet) {
             usersToBeAdded.add(database.getUser(s));
@@ -73,6 +81,12 @@ public class Account {
      * @throws Exception Thrown if the user is not found, or if the user is already in the contactList.
      */
     public void addContact(String phoneNumber) throws Exception {
+        try {
+            userIsLoggedIn();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
         User tempUser = database.getUser(phoneNumber);
         if(!contactList.contains(tempUser)){
             contactList.add(tempUser);
@@ -91,6 +105,12 @@ public class Account {
      * already in the group.
      */
     public void addUserToGroup(String phoneNumber, String groupID) throws Exception {
+        try {
+            userIsLoggedIn();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
         Group tempGroup = getGroupFromID(groupID);
         tempGroup.addUser(getUserFromID(phoneNumber));
     }
@@ -102,7 +122,12 @@ public class Account {
      * @throws Exception Thrown if group is not found given the groupID, or if the user is not found,
      * or if the user is not found given the group.
      */
-    public void removeUserFromGroup(String phoneNumber, String groupID) throws Exception {
+    public void removeUserFromGroup(String phoneNumber, String groupID) throws Exception {        try {
+        userIsLoggedIn();
+    } catch (Exception e) {
+        e.printStackTrace();
+        return;
+    }
         Group tempGroup = getGroupFromID(groupID);
         tempGroup.removeUser(getUserFromID(phoneNumber));
     }
@@ -116,6 +141,12 @@ public class Account {
      * @throws Exception Thrown if group or users are not found, or if the set of borrower is empty.
      */
     public void createDebt(String groupID, String lender, Set<String> borrower, double owed) throws Exception {
+        try {
+            userIsLoggedIn();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
         if(borrower.isEmpty()){
             //TODO ("Specify Exception")
             throw new Exception();
@@ -139,6 +170,12 @@ public class Account {
      * @throws Exception Thrown if group is not found, or if....
      */
     public void payOffDebt(double amount, String debtID, String groupID) throws Exception {
+        try {
+            userIsLoggedIn();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
         Group tempGroup = getGroupFromID(groupID);
         //TODO ("Check database if payment is registered")
         tempGroup.payOffDebt(amount, debtID);
@@ -167,5 +204,11 @@ public class Account {
 
     private Set<Group> initAssociatedGroups(String phoneNumber) throws Exception {
         return database.getGroups(phoneNumber);
+    }
+
+    private void userIsLoggedIn() throws Exception {
+        if (loggedInUser == null){
+            throw new Exception();
+        }
     }
 }
