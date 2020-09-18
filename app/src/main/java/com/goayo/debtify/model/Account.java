@@ -78,6 +78,7 @@ public class Account {
             usersToBeAdded.add(database.getUser(s));
         }
         database.registerGroup(groupName, usersToBeAdded);
+        associatedGroups = database.getGroups(loggedInUser.getPhoneNumber());
     }
 
     /**
