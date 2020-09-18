@@ -221,4 +221,8 @@ public class ModelEngine {
         return account.getLoggedInUser();
     }
 
+    public Set<IUserData> getContacts(){
+        return account.getContacts();
+    }
+
 }

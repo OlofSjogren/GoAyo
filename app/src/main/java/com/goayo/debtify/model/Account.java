@@ -4,6 +4,7 @@ import com.goayo.debtify.model.database.IDatabase;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -198,10 +199,24 @@ public class Account {
         return abstractUser;
     }
 
+    /**
+     * The public getter for the groups associated to the logged in user.
+     *
+     * @return A set with objects typed IGroupData, providing group information.
+     */
     public Set<IGroupData> getAssociatedGroups(){
         Set<IGroupData> retGroup = new HashSet<>();
         retGroup.addAll(associatedGroups);
         return retGroup;
+    }
+
+    /**
+     * The public getter for the contact list of the logged in user.
+     */
+    public Set<IUserData> getContacts() {
+        Set<IUserData> returnList = new HashSet<>();
+        returnList.addAll(contactList);
+        return returnList;
     }
 
     private User getUserFromID(String phoneNumber) {
@@ -234,4 +249,6 @@ public class Account {
             throw new Exception();
         }
     }
+
+
 }

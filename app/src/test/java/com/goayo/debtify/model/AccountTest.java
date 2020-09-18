@@ -26,7 +26,9 @@ public class AccountTest {
     @Test
     public void loginUser() throws Exception {
         account.loginUser("123", "123");
-        assert();
+        assert(account.getLoggedInUser() != null);
+        assert(account.getContacts() != null);
+        assert()
     }
 
     @Test
