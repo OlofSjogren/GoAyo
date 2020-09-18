@@ -85,7 +85,7 @@ class Group implements IGroupData {
 
     //TODO: Update List to Set and method signature.
     public boolean createDebt(User lender, List<User> borrower, double owed) {
-        return  groupLedger.createDebt(lender, borrower, owed);
+        return groupLedger.createDebt(lender, borrower, owed);
     }
 
     public boolean payOffDebt(double amount, String debtID) {
