@@ -13,26 +13,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.goayo.debtify.R;
 import com.goayo.debtify.modelaccess.IGroupData;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * @author Alex Phu, Olof Sjögren
  * @date 2020-09-15
  * <p>
  * RecyclerView adapter for the group cardviews. Ensures that the correct information are shown on each cardItem and its respective listeners.
+ *
+ * 2020/09/18 Modified by Alex Phu and Olof Sjögren. Changed type Set to Array, conversion is done outside instead.
  */
 public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.GroupViewHolder> {
 
     private final Context context;
-    private Set<IGroupData> groupData = new HashSet<>();
+    private IGroupData[] groupData;
 
     /**
      * Constructor for GroupViewAdapter
      * @param context The context which is linked to the Activity (in our case MainActivity) and its lifecycle.
      * @param groupData The data to be displayed.
      */
-    public GroupViewAdapter(Context context, Set<IGroupData> groupData) {
+    public GroupViewAdapter(Context context, IGroupData[] groupData) {
         this.context = context;
         this.groupData = groupData;
     }
@@ -58,16 +57,14 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
      */
     @Override
     public void onBindViewHolder(@NonNull GroupViewHolder holder, int position) {
+        //TODO ("Change set to array for userData (constructor)")
         //Temporary solution of converting the HashSet to Array, so that we can index it.
-        IGroupData[] tempData = new IGroupData[groupData.size()];
-        groupData.toArray(tempData);
-
-        holder.setGroupData(context, tempData[position]);
+        holder.setGroupData(context, groupData[position]);
     }
 
     @Override
     public int getItemCount() {
-        return groupData.size();
+        return groupData.length;
     }
 
     /**
@@ -87,7 +84,7 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
          */
         public GroupViewHolder(@NonNull View itemView) {
             super(itemView);
-            groupName = itemView.findViewById(R.id.group_card_name_textview);
+            groupName = itemView.findViewById(R.id.pickuser_card_name_textview);
             balance = itemView.findViewById(R.id.group_card_balance_textview);
             cardView = itemView.findViewById(R.id.group_cardView);
         }
@@ -99,6 +96,7 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
          */
         public void setGroupData(Context context, IGroupData group) {
             groupName.setText(group.getGroupName());
+            //TODO ("SET BALANCE IN GROUP_CARDVIEW")
             balance.setText("YET_TO_BE_SET");
         }
 

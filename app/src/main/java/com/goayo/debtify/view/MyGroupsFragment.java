@@ -15,6 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.MyGroupsFragmentBinding;
+import com.goayo.debtify.modelaccess.IGroupData;
+import com.goayo.debtify.view.adapter.GroupViewAdapter;
+
+import java.util.Set;
 
 /**
  * @author Alex Phu, Yenan Wang
@@ -40,12 +44,13 @@ public class MyGroupsFragment extends Fragment {
     /**
      * Initializes RecyclerView in MyGroups.
      *
+     * @param groupData Set of groupdata to be displayed.
      * @param binding Variable which can access the elements in the layout file.
      */
-    private void initRecyclerView(MyGroupsFragmentBinding binding) {
+    private void initRecyclerView(MyGroupsFragmentBinding binding, Set<IGroupData> groupData) {
         RecyclerView recyclerView = binding.groupRecyclerView;
-        //GroupViewAdapter groupViewAdapter = new GroupViewAdapter(getContext(), DATA);
-        //recyclerView.setAdapter(groupViewAdapter);
+        GroupViewAdapter groupViewAdapter = new GroupViewAdapter(getContext(), convertSetToArray(groupData));
+        recyclerView.setAdapter(groupViewAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
     }
 
@@ -61,5 +66,16 @@ public class MyGroupsFragment extends Fragment {
                 startActivity(createGroupIntent);
             }
         });
+    }
+
+    /**
+     * Converts a Set to an Array.
+     * @param groupDataSet Set of Groups.
+     * @return Returns an Array of Groups.
+     */
+    private IGroupData[] convertSetToArray(Set<IGroupData> groupDataSet) {
+        IGroupData[] tempData = new IGroupData[groupDataSet.size()];
+        groupDataSet.toArray(tempData);
+        return tempData;
     }
 }
