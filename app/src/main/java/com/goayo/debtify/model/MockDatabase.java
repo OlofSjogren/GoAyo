@@ -12,6 +12,8 @@ import java.util.Set;
  *
  * <p>
  * A mock class to try different database calls on, without connecting to an actual database.
+ * 
+ * 2020-09-21 Modified by Oscar Sanner: Added functionality to remove a user from a group.
  */
 
 class MockDatabase implements IDatabase {
