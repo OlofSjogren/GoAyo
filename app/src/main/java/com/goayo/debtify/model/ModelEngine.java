@@ -95,7 +95,6 @@ public class ModelEngine {
      * is not met, or if some form of connection error occurs.
      */
     public void removeContact(String phoneNumber) throws Exception {
-        //TODO implement in account
         account.removeContact(phoneNumber);
     }
 
