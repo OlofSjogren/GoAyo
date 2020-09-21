@@ -1,5 +1,7 @@
 package com.goayo.debtify.model;
 
+import com.goayo.debtify.modelaccess.IUserData;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,13 +20,16 @@ class MockDatabase implements IDatabase {
     private Set<User> users;
     private Set<User> contactList;
     private User noFriendsUser;
+    private User userToBeLoggedIn;
 
     public MockDatabase(){
         users = new HashSet<>();
+        userToBeLoggedIn = new User("0756415987", "Rolf Broberg");
         users.add(new User("0704345621", "Olle Johansson"));
         users.add(new User("0735216752", "Rickard Nicklasson"));
         users.add(new User("0734355982", "Gabriel Phu"));
         users.add(new User("0773345654", "Yenan Sjögren"));
+        users.add(userToBeLoggedIn);
         noFriendsUser = new User("0876123221", "Bo Lean");
 
         groups = new HashSet<>();
@@ -38,6 +43,8 @@ class MockDatabase implements IDatabase {
         users.add(new User("0765483856", "Karl Cool"));
         users.add(new User("0769974574", "Emil Lin"));
         users.add(new User("0733517869", "Dante Alighieri"));
+
+        userToBeLoggedIn = new User("0756415987", "Rolf Broberg");
     }
 
 
@@ -50,7 +57,15 @@ class MockDatabase implements IDatabase {
      */
     @Override
     public Set<Group> getGroups(String phoneNumber) {
-        return groups;
+        Set<Group> groupsWithSentInPhoneNumber = new HashSet<>();
+        for(Group g : groups){
+            for(IUserData user : g.getIUserDataSet()){
+                if(user.getPhoneNumber().equals(phoneNumber)){
+                    groupsWithSentInPhoneNumber.add(g);
+                }
+            }
+        }
+        return groupsWithSentInPhoneNumber;
     }
 
     /**
@@ -117,7 +132,7 @@ class MockDatabase implements IDatabase {
      */
     @Override
     public User getUserToBeLoggedIn(String phoneNumber, String password) {
-        return new User("0756415987", "Rolf Broberg");
+        return userToBeLoggedIn;
     }
 
     public void removeUserFromGroup(String phoneNumber, String groupID){
@@ -145,10 +160,6 @@ class MockDatabase implements IDatabase {
     @Override
     public Set<User> getContactList(String phoneNumber) {
         return contactList;
-    }
-
-    public void addUserToGroup(String phoneNumber, String groupID){
-        
     }
 
 }
