@@ -3,7 +3,6 @@ package com.goayo.debtify.model;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,6 +18,8 @@ import java.util.Set;
  * 2020-09-18 Modified by Oscar Sanner: Added method to check if loggedInUser is set before
  * running methods requiring the user to be logged in. Added getters needed by high level
  * classes and by extension, the view and controller package.
+ *
+ * 2020-09-21 Modified by Alex and Oscar: Implemented Leave and remove feature.
  */
 public class Account {
 
@@ -217,6 +218,28 @@ public class Account {
         Set<IUserData> returnList = new HashSet<>();
         returnList.addAll(contactList);
         return returnList;
+    }
+
+    /**
+     * Removes a user from the contactList.
+     * @param phoneNumber The to be removed user's phoneNumber.
+     * @throws Exception Thrown if the user is not found in the contact list.
+     */
+    public void removeContact(String phoneNumber) throws Exception {
+        try {
+            userIsLoggedIn();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+        User userToBeRemoved = database.getUser(phoneNumber);
+        if(contactList.contains(userToBeRemoved)){
+            contactList.remove(userToBeRemoved);
+        }
+        else {
+            //Todo ("Create a more specific exception")
+            throw new Exception();
+        }
     }
 
     private User getUserFromID(String phoneNumber) {
