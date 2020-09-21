@@ -122,9 +122,8 @@ public class ModelEngine {
      * @return True if the operation was successful, server side.  False if the precondition
      * is not met, or if some form of connection error occurs.
      */
-    public void leaveGroup(int groupID) {
-        //TODO Need to implement in account.
-        // account.removeGroup(groupID);
+    public void leaveGroup(String groupID) throws Exception {
+        account.leaveGroup(groupID);
     }
 
     /**

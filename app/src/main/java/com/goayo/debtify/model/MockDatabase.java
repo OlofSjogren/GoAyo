@@ -113,6 +113,28 @@ class MockDatabase implements IDatabase {
         return new User("0756415987", "Rolf Broberg");
     }
 
+    public void removeUserFromGroup(String phoneNumber, String groupID){
+        User userToBeRemoved = null;
+        for(User u : users){
+            if(u.getPhoneNumber().equals(phoneNumber)){
+                userToBeRemoved = u;
+            }
+        }
+
+        for (Group g : getGroups(phoneNumber)){
+            if(g.getGroupID().equals(groupID)){
+                if(userToBeRemoved != null){
+                    groups.remove(userToBeRemoved);
+                    g.removeUser(userToBeRemoved); //Todo, wrong dependency order??
+                }
+                else {
+                    //Todo: SomeKind Of exeption??
+                }
+            }
+            //Todo: User not in group exeption.
+        }
+    }
+
     @Override
     public Set<User> getContactList(String phoneNumber) {
         Set<User> contacts = new HashSet<>();
@@ -121,4 +143,9 @@ class MockDatabase implements IDatabase {
         contacts.add(new User("8557266345", "Berit Nordström"));
         return contacts;
     }
+
+    public void addUserToGroup(String phoneNumber, String groupID){
+        
+    }
+
 }

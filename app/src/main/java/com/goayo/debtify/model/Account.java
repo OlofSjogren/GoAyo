@@ -57,7 +57,7 @@ public class Account {
     public void loginUser(String phoneNumber, String password) throws Exception {
         loggedInUser = database.getUserToBeLoggedIn(phoneNumber, password);
         contactList = initContactList(phoneNumber);
-        associatedGroups = initAssociatedGroups(phoneNumber);
+        associatedGroups = loadAssociatedGroups();
     }
 
     /**
@@ -242,6 +242,11 @@ public class Account {
         }
     }
 
+    public void leaveGroup(String groupID) throws Exception{
+        database.removeUserFromGroup(loggedInUser.getPhoneNumber(), groupID);
+        loadAssociatedGroups();
+    }
+
     private User getUserFromID(String phoneNumber) {
         return database.getUser(phoneNumber);
     }
@@ -263,8 +268,8 @@ public class Account {
         return database.getContactList(phoneNumber);
     }
 
-    private Set<Group> initAssociatedGroups(String phoneNumber) throws Exception {
-        return database.getGroups(phoneNumber);
+    private Set<Group> loadAssociatedGroups() throws Exception {
+        return database.getGroups(loggedInUser.getPhoneNumber());
     }
 
     private void userIsLoggedIn() throws Exception {

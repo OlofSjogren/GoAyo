@@ -109,6 +109,14 @@ public class AccountTest {
         assert(sizeAfter < sizeBefore);
     }
 
+    @Test
+    public void leaveGroup() throws Exception {
+        Set<IGroupData> groupsBefore = account.getAssociatedGroups();
+        account.leaveGroup("1002");
+        Set<IGroupData> groupsAfter = account.getAssociatedGroups();
+        assert(groupsBefore.size() < groupsAfter.size());
+    }
+
     //TODO: Awaiting a more testable model.
     
     @Test
