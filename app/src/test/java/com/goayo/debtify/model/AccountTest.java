@@ -1,7 +1,6 @@
 package com.goayo.debtify.model;
 
 import com.goayo.debtify.modelaccess.IGroupData;
-import com.goayo.debtify.modelaccess.IUserData;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -11,7 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class AccountTest {
 
@@ -110,7 +109,15 @@ public class AccountTest {
     }
 
     //TODO: Awaiting a more testable model.
-    
+
+    @Test(expected = Exception.class)
+    public void removeContact() throws Exception {
+        Account acc = new Account(database);
+        acc.loginUser("123", "asd");
+        acc.removeContact("0704345621");
+        acc.removeContact("0704345621");
+    }
+
     @Test
     public void createDebt() {
 

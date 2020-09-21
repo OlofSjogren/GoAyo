@@ -115,10 +115,6 @@ class MockDatabase implements IDatabase {
 
     @Override
     public Set<User> getContactList(String phoneNumber) {
-        Set<User> contacts = new HashSet<>();
-        contacts.add(new User("0874656355", "Rickard Bernstsson"));
-        contacts.add(new User("0473644551", "Ols Braun"));
-        contacts.add(new User("8557266345", "Berit Nordström"));
-        return contacts;
+        return users;
     }
 }
