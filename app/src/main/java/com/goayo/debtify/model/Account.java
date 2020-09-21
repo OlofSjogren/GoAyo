@@ -57,7 +57,7 @@ public class Account {
     public void loginUser(String phoneNumber, String password) throws Exception {
         loggedInUser = database.getUserToBeLoggedIn(phoneNumber, password);
         contactList = initContactList(phoneNumber);
-        associatedGroups = loadAssociatedGroups();
+        loadAssociatedGroups();
     }
 
     /**
@@ -269,8 +269,8 @@ public class Account {
         return database.getContactList(phoneNumber);
     }
 
-    private Set<Group> loadAssociatedGroups() throws Exception {
-        return database.getGroups(loggedInUser.getPhoneNumber());
+    private void loadAssociatedGroups() throws Exception {
+        associatedGroups = database.getGroups(loggedInUser.getPhoneNumber());
     }
 
     private void userIsLoggedIn() throws Exception {

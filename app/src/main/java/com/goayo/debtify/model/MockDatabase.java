@@ -125,7 +125,7 @@ class MockDatabase implements IDatabase {
 
     @Override
     public boolean registerGroup(String name, Set<User> users) {
-        groups.add(new Group(name, "1234" ,users));
+        groups.add(new Group(name, "1234", users));
         return true;
     }
 
@@ -153,7 +153,6 @@ class MockDatabase implements IDatabase {
         for (Group g : getGroups(phoneNumber)){
             if(g.getGroupID().equals(groupID)){
                 if(userToBeRemoved != null){
-                    groups.remove(userToBeRemoved);
                     g.removeUser(userToBeRemoved); //Todo, wrong dependency order??
                 }
                 else {

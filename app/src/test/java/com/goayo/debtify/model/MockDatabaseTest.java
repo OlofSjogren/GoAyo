@@ -49,9 +49,11 @@ public class MockDatabaseTest {
     @Test
     public void registerGroup() {
         Group g = null;
-        database.registerGroup("testgroup", new HashSet<User>());
-        for(Group group : database.getGroups("1")){
-            if(group.getGroupName() == "testgroup"){
+        Set<User> justUserToBeLoggedIn = new HashSet<>();
+        justUserToBeLoggedIn.add(database.getUser("0756415987"));
+        database.registerGroup("testgroup", justUserToBeLoggedIn);
+        for(Group group : database.getGroups("0756415987")){
+            if(group.getGroupName().equals("testgroup")){
                 g = group;
             }
         }

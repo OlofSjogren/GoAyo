@@ -42,7 +42,7 @@ public class AccountTest {
     public void createGroup() throws Exception {
         int groupSizeBefore = account.getAssociatedGroups().size();
         Set<String> userToNewGroup = new HashSet<>();
-        userToNewGroup.add("0945837563");
+        userToNewGroup.add("0876123221");
         account.createGroup("test", userToNewGroup);
         int groupSizeAfter = account.getAssociatedGroups().size();
 
@@ -112,7 +112,7 @@ public class AccountTest {
         Set<IGroupData> groupsBefore = account.getAssociatedGroups();
         account.leaveGroup("1002");
         Set<IGroupData> groupsAfter = account.getAssociatedGroups();
-        assert(groupsBefore.size() < groupsAfter.size());
+        assert(groupsBefore.size() > groupsAfter.size());
     }
 
     //TODO: Awaiting a more testable model.
