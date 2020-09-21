@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class MockDatabaseTest {
 
@@ -67,6 +67,6 @@ public class MockDatabaseTest {
     @Test
     public void getContactList() {
         Set<User> contacts = database.getContactList("1");
-        assert(contacts.size() == 3);
+        assertEquals(4, contacts.size());
     }
 }

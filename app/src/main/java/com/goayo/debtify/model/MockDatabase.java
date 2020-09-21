@@ -39,12 +39,19 @@ class MockDatabase implements IDatabase {
         users.add(noFriendsUser);
 
         contactList = new HashSet<>();
+
         users.add(new User("0762435058", "Benny Svensson"));
         users.add(new User("0765483856", "Karl Cool"));
         users.add(new User("0769974574", "Emil Lin"));
         users.add(new User("0733517869", "Dante Alighieri"));
 
         userToBeLoggedIn = new User("0756415987", "Rolf Broberg");
+
+        contactList.add(new User("0762435058", "Benny Svensson"));
+        contactList.add(new User("0765483856", "Karl Cool"));
+        contactList.add(new User("0769974574", "Emil Lin"));
+        contactList.add(new User("0733517869", "Dante Alighieri"));
+
     }
 
 
