@@ -16,6 +16,7 @@ class MockDatabase implements IDatabase {
 
     private Set<Group> groups;
     private Set<User> users;
+    private Set<User> contactList;
     private User noFriendsUser;
 
     public MockDatabase(){
@@ -31,6 +32,12 @@ class MockDatabase implements IDatabase {
         groups.add(new Group("Trip To Spain", "1003", users));
         groups.add(new Group("School friends", "1004", users));
         users.add(noFriendsUser);
+
+        contactList = new HashSet<>();
+        users.add(new User("0762435058", "Benny Svensson"));
+        users.add(new User("0765483856", "Karl Cool"));
+        users.add(new User("0769974574", "Emil Lin"));
+        users.add(new User("0733517869", "Dante Alighieri"));
     }
 
 
@@ -115,6 +122,6 @@ class MockDatabase implements IDatabase {
 
     @Override
     public Set<User> getContactList(String phoneNumber) {
-        return users;
+        return contactList;
     }
 }

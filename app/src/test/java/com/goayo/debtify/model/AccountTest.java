@@ -52,9 +52,8 @@ public class AccountTest {
     @Test
     public void addContact() throws Exception {
         int contactSizeBefore = account.getContacts().size();
-        account.addContact("0704345621");
+        account.addContact("0735216752");
         int contactSizeAfter = account.getContacts().size();
-
         assert (contactSizeAfter > contactSizeBefore);
     }
 
@@ -114,9 +113,11 @@ public class AccountTest {
     public void removeContact() throws Exception {
         Account acc = new Account(database);
         acc.loginUser("123", "asd");
-        acc.removeContact("0704345621");
-        acc.removeContact("0704345621");
+        acc.removeContact("0765483856");
+        acc.removeContact("0765483856");
     }
+
+
 
     @Test
     public void createDebt() {
