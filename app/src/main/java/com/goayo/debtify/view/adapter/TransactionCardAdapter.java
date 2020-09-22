@@ -43,6 +43,12 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
     @Override
     public void onBindViewHolder(@NonNull TransactionCardViewHolder holder, int position) {
         holder.setTransactionTypeData(context, transactionData[position]);
+        if(transactionData[position].transactionType.equals("Payment")){
+            holder.setCardViewColor(context.getResources().getColor(R.color.greenTransactionCard));
+            //TODO: DOES THIS WORK? IF COLORS WONT CHANGE, DEBUG FROM HERE.
+        } else {
+            holder.setCardViewColor(context.getResources().getColor(R.color.redTransactionCard));
+        }
     }
 
     @Override
@@ -95,9 +101,8 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
             return format.format(date);
         }
 
-        private void setCardViewColor(Color color){
-            //TODO ("FIX HEXCODE")
-            cardView.setBackgroundColor();
+        private void setCardViewColor(int color){
+            cardView.setBackgroundColor(color);
         }
     }
 
