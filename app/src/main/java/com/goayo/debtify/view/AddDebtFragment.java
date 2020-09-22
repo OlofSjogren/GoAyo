@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.AddDebtFragmentBinding;
@@ -34,17 +35,27 @@ public class AddDebtFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.add_debt_fragment, container, false);
         model = ModelEngine.getInstance();
+       // getParentFragmentManager().popBackStack();
 
 
 
-        binding.createDebtButton.setOnClickListener(new View.OnClickListener() {
+        binding.pickBorrowerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // model.createDebt(parameters)
-                Toast.makeText(getContext(), "clicked", Toast.LENGTH_SHORT).show();
+                openPickUser();
             }
         });
 
         return binding.getRoot();
+    }
+
+    private void openPickUser() {
+        NavHostFragment.findNavController(this)
+                .navigate(R.id.action_addDebtFragment_to_pickUsersFragment2);
+    }
+
+
+    public void onBackPressed() {
+
     }
 }
