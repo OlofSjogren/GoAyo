@@ -26,21 +26,45 @@
             android:id="@+id/detailed_group_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/detailed_group_bottom_navigation"
+            android:layout_above="@+id/constraintlayout"
             android:layout_below="@+id/detailed_group_app_bar" />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/detailed_group_bottom_navigation"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginBottom="1dp"
-            app:itemBackground="@color/colorPrimary"
-            app:itemIconTint="@android:color/white"
-            app:itemTextColor="@android:color/white"
-            app:menu="@menu/detailed_group_bottom_navigation_menu" />
+            android:background="@color/design_default_color_surface">
+
+            <Button
+                android:id="@+id/detailed_group_add_payment_button"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:text="Add payment"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/detailed_group_add_debt_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/detailed_group_add_debt_button"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:text="Add debt"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/detailed_group_add_payment_button"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>
 </layout>
