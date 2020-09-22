@@ -22,16 +22,37 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author Oscar Sanner, Alex Phu
+ * @date 2020-09-22
+ * <p>
+ *
+ * RecyclerView adapter for the tranaction cardviews. Ensures that the correct information are shown on each cardItem.
+ */
+
 public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCardAdapter.TransactionCardViewHolder> {
 
     private final Context context;
     private TransactionData[] transactionData;
 
+    /**
+     * Contructor for TransactionCardAdapter.
+     *
+     * @param context The context which is linked to the Activity (in our case MainActivity) and its lifecycle.
+     * @param debtData The data to be displayed.
+     */
     public TransactionCardAdapter(Context context, IDebtData[] debtData) {
         this.context = context;
         transactionData = createTransactionDataSet(debtData);
     }
 
+    /**
+     * Creates a new ViewHolder object whenever the RecyclerView needs a new one.
+     *
+     * @param parent   Parent-view
+     * @param viewType View type
+     * @return A new instance of TransactionCardViewHolder.
+     */
     @NonNull
     @Override
     public TransactionCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -40,6 +61,12 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
         return new TransactionCardViewHolder(view);
     }
 
+    /**
+     * Binds the data to the ViewHolder
+     *
+     * @param holder   ViewHolder
+     * @param position Position in the dataArray.
+     */
     @Override
     public void onBindViewHolder(@NonNull TransactionCardViewHolder holder, int position) {
         holder.setTransactionTypeData(context, transactionData[position]);
@@ -70,6 +97,12 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
         return transactionData;
     }
 
+    /**
+     * @author Alex Phu, Oscar Sanner
+     * @date 2020-09-18
+     * <p>
+     * ViewHolder for PickUser
+     */
     class TransactionCardViewHolder extends RecyclerView.ViewHolder{
         private TextView transactionType;
         private TextView lenderBorrowerDescription;
@@ -77,8 +110,12 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
         private TextView balance;
         private CardView cardView;
 
-        //TODO (CONVERT DATE, balance)
 
+        /**
+         * Binds the elements in the layout file to a variable
+         *
+         * @param itemView In this case, pick_user_cardview
+         */
         public TransactionCardViewHolder(@NonNull View itemView) {
             super(itemView);
             transactionType = itemView.findViewById(R.id.detailed_group_card_transaction_type_textView);
@@ -88,6 +125,12 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
             cardView = itemView.findViewById(R.id.detailed_group_cardView);
         }
 
+        /**
+         * Sets the values of the layout's elements.
+         *
+         * @param context     The context which is linked to the Activity (in our case MainActivity) and its lifecycle.
+         * @param transaction Current transaction data
+         */
         public void setTransactionTypeData(Context context, TransactionData transaction) {
             transactionType.setText(transaction.transactionType);
             lenderBorrowerDescription.setText(transaction.lenderBorrowerDescription);
