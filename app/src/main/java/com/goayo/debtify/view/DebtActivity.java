@@ -28,6 +28,21 @@ public class DebtActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_debt);
         navController = Navigation.findNavController(this, R.id.debtNavHostFragment);
 
+        String action = getIntent().getStringExtra("DEBT_CREATE");
+        try {
+            if (action.equals("ADD_DEBT")) {
+                navController.setGraph(R.navigation.add_debt_navigation_graph);
+            } else if (action.equals("SETTLE_DEBT")) {
+                navController.setGraph(R.navigation.settle_debt_navigation_graph);
+            } else {
+                finish();
+                // TODO send error message
+            }
+        } catch (NullPointerException e) {
+            finish();
+            // TODO send error message
+        }
+
         this.getSupportActionBar().hide();
     }
 }

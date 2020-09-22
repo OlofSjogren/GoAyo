@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,9 +33,6 @@ public class AddDebtFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.add_debt_fragment, container, false);
         model = ModelEngine.getInstance();
-       // getParentFragmentManager().popBackStack();
-
-
 
         binding.pickBorrowerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,11 +46,6 @@ public class AddDebtFragment extends Fragment {
 
     private void openPickUser() {
         NavHostFragment.findNavController(this)
-                .navigate(R.id.action_addDebtFragment_to_pickUsersFragment2);
-    }
-
-
-    public void onBackPressed() {
-
+                .navigate(R.id.action_addDebtFragment_to_pickUsersFragment);
     }
 }
