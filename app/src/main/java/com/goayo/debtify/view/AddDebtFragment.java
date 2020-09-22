@@ -20,8 +20,9 @@ import com.goayo.debtify.model.ModelEngine;
  * @date 2020-09-09
  * <p>
  * Page for adding a debt to a group.
- *
+ * <p>
  * 2020-09-18 Modified by Yenan & Gabriel: Added AddDebt view, tested with hard-coded value
+ * 2020-09-22 Modified by Yenan & Gabriel: Removed hard-coded values
  */
 public class AddDebtFragment extends Fragment {
 
@@ -33,13 +34,6 @@ public class AddDebtFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.add_debt_fragment, container, false);
         model = ModelEngine.getInstance();
-
-        binding.pickBorrowerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openPickUser();
-            }
-        });
 
         return binding.getRoot();
     }
