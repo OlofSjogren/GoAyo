@@ -33,7 +33,7 @@ public class SettleDebtFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.settle_debt_fragment, container, false);
-        model = new ModelEngine();
+        model = ModelEngine.getInstance();
 
         // TODO: remove hard-coded value
         binding.debtLinearLayout.addView(new Button(getContext()));
