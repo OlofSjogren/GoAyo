@@ -26,7 +26,6 @@ import java.util.List;
  * @author Oscar Sanner, Alex Phu
  * @date 2020-09-22
  * <p>
- *
  * RecyclerView adapter for the tranaction cardviews. Ensures that the correct information are shown on each cardItem.
  */
 
@@ -38,7 +37,7 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
     /**
      * Contructor for TransactionCardAdapter.
      *
-     * @param context The context which is linked to the Activity (in our case MainActivity) and its lifecycle.
+     * @param context  The context which is linked to the Activity (in our case MainActivity) and its lifecycle.
      * @param debtData The data to be displayed.
      */
     public TransactionCardAdapter(Context context, IDebtData[] debtData) {
@@ -70,7 +69,7 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
     @Override
     public void onBindViewHolder(@NonNull TransactionCardViewHolder holder, int position) {
         holder.setTransactionTypeData(context, transactionData[position]);
-        if(transactionData[position].transactionType.equals("Payment")){
+        if (transactionData[position].transactionType.equals("Payment")) {
             holder.setCardViewColor(context.getResources().getColor(R.color.greenTransactionCard));
             //TODO: DOES THIS WORK? IF COLORS WONT CHANGE, DEBUG FROM HERE.
         } else {
@@ -83,11 +82,11 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
         return transactionData.length;
     }
 
-    private TransactionData[] createTransactionDataSet(IDebtData[] debtDataArray){
+    private TransactionData[] createTransactionDataSet(IDebtData[] debtDataArray) {
         List<TransactionData> transactionDataList = new ArrayList<>();
-        for(IDebtData debtData : debtDataArray){
+        for (IDebtData debtData : debtDataArray) {
             transactionDataList.add(new TransactionData(debtData.getDate(), "Debt", debtData.getLender() + " owes " + debtData.getBorrower(), debtData.getOriginalDebt()));
-            for(IPaymentData paymentData : debtData.getPaymentHistory()){
+            for (IPaymentData paymentData : debtData.getPaymentHistory()) {
                 transactionDataList.add(new TransactionData(paymentData.getDate(), "Payment", debtData.getBorrower() + " payed " + debtData.getLender(), paymentData.getPaidAmount()));
             }
         }
@@ -103,7 +102,7 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
      * <p>
      * ViewHolder for PickUser
      */
-    class TransactionCardViewHolder extends RecyclerView.ViewHolder{
+    class TransactionCardViewHolder extends RecyclerView.ViewHolder {
         private TextView transactionType;
         private TextView lenderBorrowerDescription;
         private TextView date;
@@ -144,7 +143,7 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
             return format.format(date);
         }
 
-        private void setCardViewColor(int color){
+        private void setCardViewColor(int color) {
             cardView.setBackgroundColor(color);
         }
     }
