@@ -6,7 +6,7 @@
         android:id="+@id/action_add_payment"
         android:enabled="true"
         android:title="Add payment"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
     <item
         android:id="+@id/action_add_debt"
         android:enabled="true"
