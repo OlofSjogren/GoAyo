@@ -43,6 +43,7 @@ public class AddMembersFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d("SIGNUP", "DO YOU EXIST?");
         AddMembersFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.add_members_fragment, container, false);
+        initRecyclerView(binding);
         return binding.getRoot();
     }
 
