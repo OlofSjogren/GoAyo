@@ -27,10 +27,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Alex Phu, Yenan Wang
- * @date 2020-09-09
+ * @author Alex Phu, Oscar Sanner
+ * @date 2020-09-23
  * <p>
- * Sign up page.
+ * Add members fragment
  */
 public class AddMembersFragment extends Fragment {
 
