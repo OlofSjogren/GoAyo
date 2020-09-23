@@ -16,6 +16,8 @@ import java.util.Set;
  * 2020-09-18 Modfied by Olof, Yenan & Alex : removed booleans returns and replaced with exceptions.
  *
  * 2020-09-21 Modified by Alex and Oscar: Implemented Leave and remove feature.
+ *
+ * 2020-09-23 Modified by Olof: Added getGroup-method provided a specific id.
  */
 
 public class ModelEngine {
@@ -213,6 +215,16 @@ public class ModelEngine {
      */
     public IUserData getLoggedInUser() {
         return account.getLoggedInUser();
+    }
+
+    /**
+     * Getter for a group the logged-in-user is a member of.
+     * @param groupID the id of the group which is returned.
+     * @return group with the provided groupID, wrapped in IGroupData type.
+     * @throws Exception thrown if a group with the groupID couldn't be found in the user's group.
+     */
+    private IGroupData getGroup(String groupID) throws Exception {
+        return account.getGroupFromID(groupID);
     }
 
     public Set<IUserData> getContacts() {

@@ -20,6 +20,8 @@ import java.util.Set;
  * classes and by extension, the view and controller package.
  *
  * 2020-09-21 Modified by Alex and Oscar: Implemented Leave and remove feature.
+ *
+ * 2020-09-23 Modified by Olof: getGroupFromID-method is now public and documented, called upon by ModelEngine to provide data to view.
  */
 public class Account {
 
@@ -252,7 +254,13 @@ public class Account {
         return database.getUser(phoneNumber);
     }
 
-    private Group getGroupFromID(String groupID) throws Exception {
+    /**
+     * Fetches the group with the specific groupID, provided that the user is a member of the group.
+     * @param groupID id of the group to fetch.
+     * @return the group with the given id.
+     * @throws Exception thrown if the logged in user isn't apart of the group, it can't be found.
+     */
+    public Group getGroupFromID(String groupID) throws Exception {
         Group group = null;
         for(Group g: associatedGroups){
             if(g.getGroupID().equals(groupID)){
