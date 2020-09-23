@@ -53,6 +53,7 @@ public class DetailedGroupActivity extends AppCompatActivity {
         setSupportActionBar(binding.detailedGroupToolbar);
     }
 
+    //TODO ("Move bottommenu to GroupFragment?")
     private void initBottomNavigation(ActivityDetailedGroupBinding binding) {
         //Navigation
         binding.detailedGroupAddDebtButton.setOnClickListener(new View.OnClickListener() {

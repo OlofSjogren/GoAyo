@@ -23,11 +23,15 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <fragment
-            android:id="@+id/detailed_group_fragment"
+            android:id="@+id/group_nav_host"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/constraintlayout"
-            android:layout_below="@+id/detailed_group_app_bar" />
+            android:layout_below="@+id/detailed_group_app_bar"
+            app:defaultNavHost="false"
+            app:navGraph="@navigation/group_navigation_graph"
+            tools:layout="@layout/group_fragment" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintlayout"

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/group_navigation_graph"
+    app:startDestination="@id/groupFragment2">
+
+    <fragment
+        android:id="@+id/groupFragment2"
+        tools:layout="@layout/group_fragment"
+        android:name="com.goayo.debtify.view.GroupFragment"
+        android:label="GroupFragment" >
+        <action
+            android:id="@+id/action_groupFragment2_to_addMembersFragment"
+            app:destination="@id/addMembersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addMembersFragment"
+        tools:layout="@layout/add_members_fragment"
+        android:name="com.goayo.debtify.view.AddMembersFragment"
+        android:label="AddMembersFragment" />
+</navigation>
