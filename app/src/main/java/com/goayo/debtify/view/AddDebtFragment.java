@@ -10,10 +10,18 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.AddDebtFragmentBinding;
+import com.goayo.debtify.databinding.PickUsersFragmentBinding;
 import com.goayo.debtify.model.ModelEngine;
+import com.goayo.debtify.modelaccess.IUserData;
+import com.goayo.debtify.view.adapter.PickUserAdapter;
+import com.goayo.debtify.view.adapter.UserCardViewAdapter;
+
+import java.util.Set;
 
 /**
  * @author Alex Phu, Yenan Wang
@@ -36,6 +44,30 @@ public class AddDebtFragment extends Fragment {
         model = ModelEngine.getInstance();
 
         return binding.getRoot();
+    }
+
+
+    private void initRecyclerView(Set<IUserData> userData) {
+        RecyclerView borrowerRecyclerView = binding.borrowerRecyclerView;
+        RecyclerView lenderRecyclerView = binding.lenderRecyclerView;
+
+        UserCardViewAdapter borrowerAdapter = new UserCardViewAdapter("Select borrower", "", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPickUser();
+            }
+        });
+        borrowerRecyclerView.setAdapter(borrowerAdapter);
+        borrowerRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
+
+        UserCardViewAdapter lenderAdapter = new UserCardViewAdapter("Select lender", "", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPickUser();
+            }
+        });
+        lenderRecyclerView.setAdapter(lenderAdapter);
+        lenderRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
     }
 
     private void openPickUser() {

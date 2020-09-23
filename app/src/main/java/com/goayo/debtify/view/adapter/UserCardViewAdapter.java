@@ -27,6 +27,9 @@ import androidx.recyclerview.widget.RecyclerView;
 public class UserCardViewAdapter extends RecyclerView.Adapter<UserCardViewAdapter.UserCardViewHolder> {
 
     private IUserData[] dataSet;
+    private String username;
+    private String phoneNumber;
+    private View.OnClickListener clickListener;
 
     /**
      * Constructor for UserCardViewAdapter.
@@ -35,6 +38,12 @@ public class UserCardViewAdapter extends RecyclerView.Adapter<UserCardViewAdapte
      */
     public UserCardViewAdapter(IUserData[] dataSet) {
         this.dataSet = dataSet;
+    }
+
+    public UserCardViewAdapter(String username, String phoneNumber, View.OnClickListener clickListener) {
+        this.username = username;
+        this.phoneNumber = phoneNumber;
+        this.clickListener = clickListener;
     }
 
     /**
@@ -49,7 +58,7 @@ public class UserCardViewAdapter extends RecyclerView.Adapter<UserCardViewAdapte
     public UserCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         CardView v = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.user_cardview, parent, false);
 
-        UserCardViewHolder vh = new UserCardViewHolder(v);
+        UserCardViewHolder vh = new UserCardViewHolder(v, clickListener);
         return vh;
     }
 
@@ -60,13 +69,21 @@ public class UserCardViewAdapter extends RecyclerView.Adapter<UserCardViewAdapte
      * @param position Position in the dataSet array.
      */
     @Override
-    public void onBindViewHolder(@NonNull UserCardViewHolder holder, int position) {
-        holder.setUserData(dataSet[position]);
+    public void onBindViewHolder(UserCardViewHolder holder, int position) {
+        if (dataSet != null) {
+            holder.setUserData(dataSet[position]);
+        } else {
+            holder.setUserData(username, phoneNumber);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return dataSet.length;
+        try {
+            return dataSet.length;
+        } catch (NullPointerException e) {
+            return 1;
+        }
     }
 
 
@@ -86,10 +103,11 @@ public class UserCardViewAdapter extends RecyclerView.Adapter<UserCardViewAdapte
          *
          * @param itemView The UserCardView to bind data to.
          */
-        UserCardViewHolder(@NonNull View itemView) {
+        UserCardViewHolder(@NonNull View itemView, View.OnClickListener clickListener) {
             super(itemView);
             username = itemView.findViewById(R.id.usernameTextView);
             phoneNumber = itemView.findViewById(R.id.userPhoneNumberTextView);
+            itemView.setOnClickListener(clickListener);
         }
 
         void setUserData(IUserData user) {
@@ -97,9 +115,9 @@ public class UserCardViewAdapter extends RecyclerView.Adapter<UserCardViewAdapte
             phoneNumber.setText(user.getPhoneNumber());
         }
 
-        void setCardViewListener(){
-         //Todo: Implement.
+        void setUserData(String username, String phoneNumber) {
+            this.username.setText(username);
+            this.phoneNumber.setText(phoneNumber);
         }
-
     }
 }
