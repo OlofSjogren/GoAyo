@@ -30,6 +30,9 @@ import java.util.Set;
  * <p>
  * 2020-09-22 Modified by Oscar Sanner and Alex Phu: Added binding methods
  * and initializer for recycler view.
+ *
+ * 2020-09-23 Modified by Alex: Added fetchDebtData method. Will probably be changed later depending on
+ * if IDebtData's type will be changed to Set from List.
  */
 public class GroupFragment extends Fragment {
 
@@ -55,6 +58,7 @@ public class GroupFragment extends Fragment {
         return groupData.getDebts().toArray(debtData);
     }
 
+    //This method will probably be moved to ModelEngine. See issue: https://github.com/OlofSjogren/GoAyo/issues/48
     private IGroupData fetchGroup(String groupID) {
         for (IGroupData gd : ModelEngine.getInstance().getGroups()) {
             if (gd.getGroupID().equals(groupID)) {
