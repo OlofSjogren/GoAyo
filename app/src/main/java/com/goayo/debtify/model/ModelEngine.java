@@ -223,7 +223,7 @@ public class ModelEngine {
      * @return group with the provided groupID, wrapped in IGroupData type.
      * @throws Exception thrown if a group with the groupID couldn't be found in the user's group.
      */
-    private IGroupData getGroup(String groupID) throws Exception {
+    public IGroupData getGroup(String groupID) throws Exception {
         return account.getGroupFromID(groupID);
     }
 
