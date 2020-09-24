@@ -3,7 +3,6 @@ package com.goayo.debtify.model;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -13,8 +12,12 @@ import java.util.Set;
  * <p>
  * A facade class for the model package. The purpose of the class is to be the face outwards towards other
  * packages depending on the model. This class aims to keep the model loosely coupled with other packages.
- *
+ * <p>
  * 2020-09-18 Modfied by Olof, Yenan & Alex : removed booleans returns and replaced with exceptions.
+ *
+ * 2020-09-21 Modified by Alex and Oscar: Implemented Leave and remove feature.
+ *
+ * 2020-09-23 Modified by Olof: Added getGroup-method provided a specific id.
  */
 
 public class ModelEngine {
@@ -93,9 +96,8 @@ public class ModelEngine {
      * @return True if the operation was successful, server side. False if the precondition
      * is not met, or if some form of connection error occurs.
      */
-    public void removeContact(String phoneNumber) {
-        //TODO implement in account
-        // account.removeContact(phoneNumber);
+    public void removeContact(String phoneNumber) throws Exception {
+        account.removeContact(phoneNumber);
     }
 
     /**
@@ -121,9 +123,8 @@ public class ModelEngine {
      * @return True if the operation was successful, server side.  False if the precondition
      * is not met, or if some form of connection error occurs.
      */
-    public void leaveGroup(int groupID) {
-        //TODO Need to implement in account.
-        // account.removeGroup(groupID);
+    public void leaveGroup(String groupID) throws Exception {
+        account.leaveGroup(groupID);
     }
 
     /**
@@ -214,6 +215,16 @@ public class ModelEngine {
      */
     public IUserData getLoggedInUser() {
         return account.getLoggedInUser();
+    }
+
+    /**
+     * Getter for a group the logged-in-user is a member of.
+     * @param groupID the id of the group which is returned.
+     * @return group with the provided groupID, wrapped in IGroupData type.
+     * @throws Exception thrown if a group with the groupID couldn't be found in the user's group.
+     */
+    public IGroupData getGroup(String groupID) throws Exception {
+        return account.getGroupFromID(groupID);
     }
 
     public Set<IUserData> getContacts() {

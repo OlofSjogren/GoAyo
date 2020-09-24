@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class MockDatabaseTest {
 
@@ -49,9 +49,11 @@ public class MockDatabaseTest {
     @Test
     public void registerGroup() {
         Group g = null;
-        database.registerGroup("testgroup", new HashSet<User>());
-        for(Group group : database.getGroups("1")){
-            if(group.getGroupName() == "testgroup"){
+        Set<User> justUserToBeLoggedIn = new HashSet<>();
+        justUserToBeLoggedIn.add(database.getUser("0756415987"));
+        database.registerGroup("testgroup", justUserToBeLoggedIn);
+        for(Group group : database.getGroups("0756415987")){
+            if(group.getGroupName().equals("testgroup")){
                 g = group;
             }
         }
@@ -67,6 +69,6 @@ public class MockDatabaseTest {
     @Test
     public void getContactList() {
         Set<User> contacts = database.getContactList("1");
-        assert(contacts.size() == 3);
+        assertEquals(4, contacts.size());
     }
 }
