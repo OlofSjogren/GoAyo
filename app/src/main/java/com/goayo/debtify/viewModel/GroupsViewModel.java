@@ -12,7 +12,12 @@ import com.goayo.debtify.modelaccess.IGroupData;
 import java.util.Set;
 
 /**
- * View model class that 
+ * View model class responsible for getting group data from the model and
+ * handing it up to the views.
+ *
+ * @author Oscar Sanner and Alex Phu
+ * @date 2020-09-25
+ * 
  */
 
 public class GroupsViewModel extends ViewModel {
