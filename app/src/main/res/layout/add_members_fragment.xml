@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textview1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="Add members"
+            android:textSize="40sp"
+            android:layout_centerInParent="true"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/add_members_recyclerView"
+            android:layout_width="409dp"
+            android:layout_height="710dp"
+            android:layout_below="@+id/textview1"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="20dp"
+            android:layout_above="@+id/cardView1"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/cardView1"
+            android:layout_centerInParent="true">
+
+
+            <Button
+                android:id="@+id/add_members_add_button"
+                android:text="Add members"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:padding="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:background="@color/design_default_color_primary"
+                />
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+</layout>
