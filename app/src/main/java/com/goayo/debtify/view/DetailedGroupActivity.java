@@ -52,7 +52,6 @@ public class DetailedGroupActivity extends AppCompatActivity {
     }
 
     private void initToolBar(ActivityDetailedGroupBinding binding) {
-        //TODO Fix toolbar errors.
-        //setSupportActionBar(binding.detailedGroupToolbar);
+        setSupportActionBar(binding.detailedGroupToolbar);
     }
 }
