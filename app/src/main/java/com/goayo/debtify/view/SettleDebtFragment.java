@@ -34,6 +34,8 @@ import java.util.List;
 public class SettleDebtFragment extends Fragment {
 
     private SettleDebtFragmentBinding binding;
+
+    //TODO: Replace this model instance with GroupViewModel.
     private ModelEngine model;
 
     @Nullable
@@ -42,7 +44,7 @@ public class SettleDebtFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.settle_debt_fragment, container, false);
         model = ModelEngine.getInstance();
 
-        //TODO: Add data from model.getGroup(); Exists in current master.
+        //TODO: Add data from GroupViewModel
         //initRecyclerView();
 
         return binding.getRoot();

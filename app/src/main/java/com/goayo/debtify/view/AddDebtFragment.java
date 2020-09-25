@@ -35,6 +35,8 @@ import java.util.Set;
 public class AddDebtFragment extends Fragment {
 
     private AddDebtFragmentBinding binding;
+
+    //TODO: Replace this model instance with GroupViewModel.
     private ModelEngine model;
 
     @Nullable
