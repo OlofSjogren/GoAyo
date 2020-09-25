@@ -29,6 +29,13 @@ public class ModelEngine {
     private ModelEngine(Account account, IDatabase database) {
         this.account = account;
         this.database = database;
+        //TODO: AUTOMATICALLY LOGS THE USER IN WHEN THIS CLASS IS INSTANTIATED, BECAUSE
+        //TODO LOGIN FUNCTIONALITY IS YET TO BE IMPLEMENTED
+        try {
+            logInUser("123", "123");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +18,7 @@ import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.MyGroupsFragmentBinding;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.view.adapter.GroupViewAdapter;
+import com.goayo.debtify.viewModel.GroupsViewModel;
 
 import java.util.Set;
 
@@ -32,13 +34,17 @@ import java.util.Set;
  */
 public class MyGroupsFragment extends Fragment {
 
+    GroupsViewModel viewModel;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //Binding instead of relying on findViewById
         MyGroupsFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.my_groups_fragment, container, false);
         addListenerToFloatingActionButton(binding);
-
+        //TODO!!!! ViewModels HAS to have a factory!!! The below line will NOT be used!!!!
+        viewModel = ViewModelProviders.of(this).get(GroupsViewModel.class);
+        initRecyclerView(binding, viewModel.getAllGroupsData().getValue());
         return binding.getRoot();
     }
 
