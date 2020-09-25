@@ -13,13 +13,24 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * @author Gabriel Brattgård & Yenan Wang
+ * @date 2020-09-25
+ * <p>
+ * RecyclerView adapter for pick_debt_cardview. Ensures that the correct information are shown on each cardItem and its respective listeners.
+ *
+ */
+
 public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDebtViewHolder> {
-    //Instance variables
+
     private IDebtData[] debtData;
     private int mSelectedDebt = -1;
 
-
-    //Constructor
+    /**
+     * Constructor for PickDebtAdapter
+     *
+     * @param debtData array of IDebtData
+     */
     public PickDebtAdapter(IDebtData[] debtData){
         this.debtData = debtData;
     }
@@ -32,6 +43,12 @@ public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDe
         return new PickDebtViewHolder(v);
     }
 
+    /**
+     * Binds the data to the ViewHolder.
+     *
+     * @param holder ViewHolder
+     * @param position Current position in the debtData array
+     */
     @Override
     public void onBindViewHolder(@NonNull PickDebtViewHolder holder, int position) {
         holder.setDebtData(debtData[position]);
@@ -44,7 +61,9 @@ public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDe
     }
 
 
-    //PickDebtViewHolder
+    /**
+     * Constructor for the internal class PickDebtViewHolder
+     */
     class PickDebtViewHolder extends RecyclerView.ViewHolder {
         private RadioButton debtRadioButton;
         private TextView date;
@@ -53,7 +72,7 @@ public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDe
         private TextView amount;
 
         /**
-         * Binds the elements in the layout file to a variable
+         * Binds the elements in the layout file to variables in this ViewHolder
          *
          * @param itemView In this case, pick_debt_cardview
          */
@@ -64,6 +83,8 @@ public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDe
             lender = itemView.findViewById(R.id.debtLender);
             borrower = itemView.findViewById(R.id.debtBorrower);
             amount = itemView.findViewById(R.id.debtAmount);
+
+            //Makes the radiobutton update when pressed.
             View.OnClickListener listener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -74,7 +95,6 @@ public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDe
             itemView.setOnClickListener(listener);
             debtRadioButton.setOnClickListener(listener);
         }
-
 
         public void setDebtData(IDebtData debtData) {
             date.setText(debtData.getDate().toString());

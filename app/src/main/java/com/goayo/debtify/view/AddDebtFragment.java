@@ -30,7 +30,7 @@ import java.util.Set;
  * Page for adding a debt to a group.
  * <p>
  * 2020-09-18 Modified by Yenan & Gabriel: Added AddDebt view, tested with hard-coded value
- * 2020-09-22 Modified by Yenan & Gabriel: Removed hard-coded values
+ * 2020-09-22 Modified by Yenan & Gabriel: Removed hard-coded values, added defaults.
  */
 public class AddDebtFragment extends Fragment {
 
@@ -46,7 +46,7 @@ public class AddDebtFragment extends Fragment {
         return binding.getRoot();
     }
 
-
+    //TODO: Change implementation. Only made to get defaults values.
     private void initRecyclerView(Set<IUserData> userData) {
         RecyclerView borrowerRecyclerView = binding.borrowerRecyclerView;
         RecyclerView lenderRecyclerView = binding.lenderRecyclerView;
@@ -70,6 +70,10 @@ public class AddDebtFragment extends Fragment {
         lenderRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
     }
 
+
+    /**
+     * Navigates to the PickUsersFragment to select User as lender or borrower.
+     */
     private void openPickUser() {
         NavHostFragment.findNavController(this)
                 .navigate(R.id.action_addDebtFragment_to_pickUsersFragment);
