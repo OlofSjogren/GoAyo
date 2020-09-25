@@ -1,5 +1,6 @@
 package com.goayo.debtify.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,13 +87,16 @@ public class GroupFragment extends Fragment {
         binding.detailedGroupAddDebtButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO ("Navigate to the add-debt-view")
+                Intent intent = new Intent(getContext(), DebtActivity.class).putExtra("DEBT_CREATE", "ADD_DEBT");
+                startActivity(intent);
             }
         });
+        //TODO: Refactor name to "Settle Debt" instead of "Add Payment"
         binding.detailedGroupAddPaymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO ("Navigate to the settle-up-view")
+                Intent intent = new Intent(getContext(), DebtActivity.class).putExtra("DEBT_CREATE", "SETTLE_DEBT");
+                startActivity(intent);
             }
         });
     }
