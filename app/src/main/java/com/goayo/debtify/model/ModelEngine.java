@@ -3,6 +3,7 @@ package com.goayo.debtify.model;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -29,6 +30,35 @@ public class ModelEngine {
     private ModelEngine(Account account, IDatabase database) {
         this.account = account;
         this.database = database;
+        //TODO: AUTOMATICALLY LOGS THE USER IN WHEN THIS CLASS IS INSTANTIATED, BECAUSE
+        //TODO LOGIN FUNCTIONALITY IS YET TO BE IMPLEMENTED
+        try {
+            logInUser("123", "123");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //TODO REMOVE THIS ITS VERY TEMPORARY
+        Set<String> tmp =  new HashSet<>();
+        tmp.add("0735216752");
+        try {
+            createDebt("1003", "0756415987", tmp, 23.90);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Set<String> tmppp =  new HashSet<>();
+        tmp.add("0735216752");
+        try {
+            createDebt("1002", "0756415987", tmppp, 23.90);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Set<String> tmpp =  new HashSet<>();
+        tmp.add("0735216752");
+        try {
+            createDebt("1004", "0756415987", tmpp, 23.90);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

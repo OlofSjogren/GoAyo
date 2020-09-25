@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +18,8 @@ import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.MyGroupsFragmentBinding;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.view.adapter.GroupViewAdapter;
+import com.goayo.debtify.viewModel.GroupViewModelFactory;
+import com.goayo.debtify.viewModel.GroupsViewModel;
 
 import java.util.Set;
 
@@ -29,8 +32,12 @@ import java.util.Set;
  * 2020/09/15 Modified by Alex Phu. Added init function for RecyclerView. Will be activated when backend is resolved.
  *
  * 2020/09/16 Modified by Alex Phu. Added listener for FloatingActionButton.
+ *
+ * 2020/09/25 Modified bt Oscar Sanner, Alex Phu and Olof Sjögren: Added factory to ViewModelProvider.
  */
 public class MyGroupsFragment extends Fragment {
+
+    GroupsViewModel viewModel;
 
     @Nullable
     @Override
@@ -38,8 +45,14 @@ public class MyGroupsFragment extends Fragment {
         //Binding instead of relying on findViewById
         MyGroupsFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.my_groups_fragment, container, false);
         addListenerToFloatingActionButton(binding);
-
+        //TODO!!!! ViewModels HAS to have a factory!!! The below line will NOT be used!!!!
+        viewModel = ViewModelProviders.of(this, new GroupViewModelFactory()).get(GroupsViewModel.class);
+        initRecyclerView(binding, viewModel.getAllGroupsData().getValue());
         return binding.getRoot();
+    }
+
+    public void test() {
+
     }
 
     /**
@@ -50,7 +63,7 @@ public class MyGroupsFragment extends Fragment {
      */
     private void initRecyclerView(MyGroupsFragmentBinding binding, Set<IGroupData> groupData) {
         RecyclerView recyclerView = binding.groupRecyclerView;
-        GroupViewAdapter groupViewAdapter = new GroupViewAdapter(getContext(), convertSetToArray(groupData));
+        GroupViewAdapter groupViewAdapter = new GroupViewAdapter(getContext(), convertSetToArray(groupData), viewModel);
         recyclerView.setAdapter(groupViewAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
     }
