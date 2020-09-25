@@ -100,7 +100,7 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
      * @author Alex Phu, Oscar Sanner
      * @date 2020-09-18
      * <p>
-     * ViewHolder for PickUser
+     * ViewHolder for TransactionCardViewHolder
      */
     class TransactionCardViewHolder extends RecyclerView.ViewHolder {
         private TextView transactionType;
@@ -113,7 +113,7 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
         /**
          * Binds the elements in the layout file to a variable
          *
-         * @param itemView In this case, pick_user_cardview
+         * @param itemView In this case, TransactionCardView
          */
         public TransactionCardViewHolder(@NonNull View itemView) {
             super(itemView);

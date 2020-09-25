@@ -3,20 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/group_navigation_graph"
-    app:startDestination="@id/groupFragment2">
+    app:startDestination="@id/groupFragment">
 
     <fragment
-        android:id="@+id/groupFragment2"
+        android:id="@+id/groupFragment"
         tools:layout="@layout/group_fragment"
         android:name="com.goayo.debtify.view.GroupFragment"
         android:label="GroupFragment" >
         <action
             android:id="@+id/action_groupFragment2_to_addMembersFragment"
             app:destination="@id/addMembersFragment" />
+        <action
+            android:id="@+id/action_groupFragment_to_pickUsersFragment"
+            app:destination="@id/pickUsersFragment" />
     </fragment>
     <fragment
         android:id="@+id/addMembersFragment"
         tools:layout="@layout/add_members_fragment"
         android:name="com.goayo.debtify.view.AddMembersFragment"
         android:label="AddMembersFragment" />
+    <fragment
+        android:id="@+id/pickUsersFragment"
+        android:name="com.goayo.debtify.view.PickUsersFragment"
+        android:label="PickUsersFragment"
+        tools:layout="@layout/pick_users_fragment"/>
 </navigation>
