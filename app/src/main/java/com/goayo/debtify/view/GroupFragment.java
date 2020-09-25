@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
+import com.goayo.debtify.databinding.ActivityDetailedGroupBinding;
 import com.goayo.debtify.databinding.GroupFragmentBinding;
 import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.modelaccess.IDebtData;
@@ -46,6 +47,7 @@ public class GroupFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         GroupFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.group_fragment, container, false);
 
+        initBottomNavigation(binding);
         initRecyclerView(binding, fetchDebtData(fetchGroup(currentGroup.getGroupID())));
 
         return binding.getRoot();
@@ -74,6 +76,23 @@ public class GroupFragment extends Fragment {
         TransactionCardAdapter adapter = new TransactionCardAdapter(getContext(), debtData);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
+    }
+
+    //TODO ("Move bottommenu to GroupFragment?")
+    private void initBottomNavigation(GroupFragmentBinding binding) {
+        //Navigation
+        binding.detailedGroupAddDebtButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO ("Navigate to the add-debt-view")
+            }
+        });
+        binding.detailedGroupAddPaymentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO ("Navigate to the settle-up-view")
+            }
+        });
     }
 
     //TODO ("Keep depending on if IDebtData will be kept as a Set")

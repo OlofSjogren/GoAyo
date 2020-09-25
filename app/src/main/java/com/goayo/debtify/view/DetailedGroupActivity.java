@@ -28,7 +28,6 @@ public class DetailedGroupActivity extends AppCompatActivity {
         ActivityDetailedGroupBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_detailed_group);
 
         initToolBar(binding);
-        initBottomNavigation(binding);
     }
 
     @Override
@@ -51,22 +50,5 @@ public class DetailedGroupActivity extends AppCompatActivity {
 
     private void initToolBar(ActivityDetailedGroupBinding binding) {
         setSupportActionBar(binding.detailedGroupToolbar);
-    }
-
-    //TODO ("Move bottommenu to GroupFragment?")
-    private void initBottomNavigation(ActivityDetailedGroupBinding binding) {
-        //Navigation
-        binding.detailedGroupAddDebtButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO ("Navigate to the add-debt-view")
-            }
-        });
-        binding.detailedGroupAddPaymentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO ("Navigate to the settle-up-view")
-            }
-        });
     }
 }
