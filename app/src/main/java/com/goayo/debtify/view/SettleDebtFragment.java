@@ -23,12 +23,13 @@ import com.goayo.debtify.view.adapter.PickDebtAdapter;
 import java.util.List;
 
 /**
- * @author Alex Phu, Yenan Wang
+ * @author Gabriel Brattgård, Yenan Wang
  * @date 2020-09-09
  * <p>
  * Page for paying off debt.
  *
  * 2020-09-18 Modified by Yenan & Gabriel: Added SettleDebt view, tested with hard-coded value
+ * 2020-09-25 Modified by Yenan & Gabriel: Implemented initRecyclerView
  */
 public class SettleDebtFragment extends Fragment {
 
