@@ -24,5 +24,5 @@ public interface IGroupData {
 
     List<IDebtData> getDebts();
 
-    double getUsersTotal(String phoneNumber) throws UserNotFoundException;
+    double getUserTotal(String phoneNumber) throws UserNotFoundException;
 }

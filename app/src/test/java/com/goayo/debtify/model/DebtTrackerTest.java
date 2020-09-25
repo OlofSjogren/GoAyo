@@ -45,9 +45,4 @@ public class DebtTrackerTest {
         assertEquals(47, listOfPaymentData.get(1).getPaidAmount(), 0.01);
 
     }
-
-    @Test
-    public void testGetRemainingDebt(){
-        //TODO: Write test.
-    }
 }

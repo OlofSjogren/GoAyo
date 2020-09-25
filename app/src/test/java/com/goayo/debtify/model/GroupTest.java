@@ -107,7 +107,7 @@ public class GroupTest {
     }
 
     @Test
-    public void testGetUsersTotal(){
+    public void testGetUserTotal(){
         //TODO: Write test.
     }
 }

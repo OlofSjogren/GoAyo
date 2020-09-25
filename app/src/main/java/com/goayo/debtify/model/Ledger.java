@@ -86,13 +86,13 @@ class Ledger {
      * @param user The user for which the total debt calculations will be made.
      * @return the net total debt.
      */
-    public double getUsersTotal(User user) {
+    public double getUserTotal(User user) {
         double total = 0;
         for (DebtTracker dt : debtTrackerList) {
             if (dt.getLender().equals(user)) {
-                total += dt.getRemainingDebt();
+                total += dt.getAmountOwed();
             } else if (dt.getBorrower().equals(user)) {
-                total -= dt.getRemainingDebt();
+                total -= dt.getAmountOwed();
             }
         }
         return total;

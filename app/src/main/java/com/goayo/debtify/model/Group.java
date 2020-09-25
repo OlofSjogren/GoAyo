@@ -143,14 +143,14 @@ class Group implements IGroupData {
     }
 
     /**
-     * Fetches and calculates the users with the given phonenumbers remaining total debt.
+     * Fetches and calculates the user with the given phone number remaining total debt.
      *
      * @param phoneNumber the phonenumber of the User in group which remainning tatal is returned.
      * @return the remaining total debt. Calcultated according to: totalOwed - totalDebt
      * @throws UserNotFoundException thrown if a User with phoneNumber can't be found in the group.
      */
     @Override
-    public double getUsersTotal(String phoneNumber) throws UserNotFoundException {
+    public double getUserTotal(String phoneNumber) throws UserNotFoundException {
         User user = null;
         for (User member : groupMembers) {
             if (member.getPhoneNumber().equals(phoneNumber)) {
@@ -160,6 +160,6 @@ class Group implements IGroupData {
         if (user == null) {
             throw new UserNotFoundException("A User with that phonenumber doesn't exist in the group.");
         }
-        return groupLedger.getUsersTotal(user);
+        return groupLedger.getUserTotal(user);
     }
 }

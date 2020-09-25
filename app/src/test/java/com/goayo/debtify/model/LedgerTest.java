@@ -40,7 +40,7 @@ public class LedgerTest {
     }
 
     @Test
-    public void testGetUsersTotal(){
+    public void testGetUserTotal(){
         //TODO Write test.
     }
 }

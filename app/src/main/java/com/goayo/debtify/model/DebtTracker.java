@@ -80,15 +80,6 @@ class DebtTracker implements IDebtData {
     }
 
     /**
-     * Calculates remaining debt.
-     *
-     * @return the remaining amount to be payed.
-     */
-    public double getRemainingDebt() {
-        return debt.getDebtAmount() - getSumOfPayments();
-    }
-
-    /**
      * @return a list of all payment history
      */
     @Override
@@ -96,6 +87,12 @@ class DebtTracker implements IDebtData {
         return new ArrayList<IPaymentData>(payments);
     }
 
+
+    /**
+     * Calculates remaining debt.
+     *
+     * @return the remaining amount to be payed.
+     */
     @Override
     public double getAmountOwed() {
         return debt.getDebtAmount() - getSumOfPayments();
