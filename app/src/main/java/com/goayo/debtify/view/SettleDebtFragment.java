@@ -35,25 +35,7 @@ public class SettleDebtFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.settle_debt_fragment, container, false);
         model = ModelEngine.getInstance();
 
-        // TODO: remove hard-coded value
-        binding.debtLinearLayout.addView(new Button(getContext()));
-        binding.debtLinearLayout.addView(new Button(getContext()));
-        binding.debtLinearLayout.addView(new Button(getContext()));
-        binding.debtLinearLayout.addView(new Button(getContext()));
-        binding.debtLinearLayout.addView(new Button(getContext()));
-        binding.debtLinearLayout.addView(new Button(getContext()));
-        binding.debtLinearLayout.addView(new Button(getContext()));
-        binding.debtLinearLayout.addView(new Button(getContext()));
-        binding.debtLinearLayout.addView(new Button(getContext()));
-        binding.debtLinearLayout.addView(new Button(getContext()));
-
-        binding.settleDebtButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // model.settleDebt(parameters)
-                Toast.makeText(getContext(), "clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
+        
 
         return binding.getRoot();
     }
