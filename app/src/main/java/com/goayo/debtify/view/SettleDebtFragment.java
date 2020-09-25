@@ -11,10 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.SettleDebtFragmentBinding;
 import com.goayo.debtify.model.ModelEngine;
+import com.goayo.debtify.modelaccess.IDebtData;
+import com.goayo.debtify.view.adapter.PickDebtAdapter;
+
+import java.util.List;
 
 /**
  * @author Alex Phu, Yenan Wang
@@ -35,8 +41,17 @@ public class SettleDebtFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.settle_debt_fragment, container, false);
         model = ModelEngine.getInstance();
 
-        
+        //TODO: Add data from model.getGroup(); Exists in current master.
+        //initRecyclerView();
 
         return binding.getRoot();
+    }
+
+    private void initRecyclerView(List<IDebtData> dataList){
+        //Maybe fix this explicit conversion.
+        IDebtData[] dataArray = (IDebtData[]) dataList.toArray();
+        RecyclerView recyclerView = binding.settleDebtRecyclerView;
+        recyclerView.setAdapter(new PickDebtAdapter(dataArray));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
     }
 }
