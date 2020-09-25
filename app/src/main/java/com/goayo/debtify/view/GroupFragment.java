@@ -34,6 +34,8 @@ import java.util.Set;
  *
  * 2020-09-23 Modified by Alex: Added fetchDebtData method. Will probably be changed later depending on
  * if IDebtData's type will be changed to Set from List.
+ *
+ * 25-09-2020 Modified by Alex: Refactored bottom-buttons to GroupFragment from DetailedGroupActivity.
  */
 public class GroupFragment extends Fragment {
 

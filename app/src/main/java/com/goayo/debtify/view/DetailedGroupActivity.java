@@ -18,6 +18,8 @@ import com.goayo.debtify.databinding.ActivityDetailedGroupBinding;
  * @date 2020-09-22
  * <p>
  * Activity for the detailed view of a group.
+ *
+ * 25-09-2020 Modified by Alex: Refactored bottom-buttons to GroupFragment.
  */
 public class DetailedGroupActivity extends AppCompatActivity {
 
