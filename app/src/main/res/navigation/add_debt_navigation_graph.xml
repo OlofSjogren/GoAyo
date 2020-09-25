@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_debt_navigation_graph"
+    app:startDestination="@id/addDebtFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/addDebtFragment"
+        android:name="com.goayo.debtify.view.AddDebtFragment"
+        android:label="AddDebtFragment"
+        tools:layout="@layout/add_debt_fragment">
+        <action
+            android:id="@+id/action_addDebtFragment_to_pickUsersFragment"
+            app:destination="@id/pickUsersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pickUsersFragment"
+        android:name="com.goayo.debtify.view.PickUsersFragment"
+        android:label="PickUsersFragment"
+        tools:layout="@layout/pick_users_fragment">
+        <action
+            android:id="@+id/action_pickUsersFragment_to_addDebtFragment"
+            app:destination="@id/addDebtFragment" />
+    </fragment>
+</navigation>

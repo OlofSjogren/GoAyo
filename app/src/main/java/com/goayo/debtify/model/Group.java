@@ -14,7 +14,7 @@ import java.util.Set;
  * @date 2020-09-15
  * <p>
  * Class representing group.
- *
+ * <p>
  * 2020-09-17 Modified by Alex Phu and Olof Sjögren: Changed List type to Set in method parameters.
  * 2020-09-16 Modified by Gabriel & Yenan : Added real ledger. Changed types on getDebts. Delegated to ledger.
  * 2020-09-18 Modified by Oscar & Alex : Switched over List types to Set, also added JDocs and switch boolean returns to exceptions.
@@ -28,8 +28,9 @@ class Group implements IGroupData {
 
     /**
      * Constructor for Group object, this one is for multiple users added on initialization.
-     * @param groupName: name of group.
-     * @param groupId: unique string for group identification.
+     *
+     * @param groupName:    name of group.
+     * @param groupId:      unique string for group identification.
      * @param groupMembers: set of users to be added.
      */
     public Group(String groupName, String groupId, Set<User> groupMembers) {
@@ -41,9 +42,10 @@ class Group implements IGroupData {
 
     /**
      * Constructor for Group object, this one is for no users added on initialization except creator.
+     *
      * @param groupName: name of group.
-     * @param groupId: unique string for group identification.
-     * @param user: creator of the group.
+     * @param groupId:   unique string for group identification.
+     * @param user:      creator of the group.
      */
     public Group(String groupName, String groupId, User user) {
         this.groupName = groupName;
@@ -53,6 +55,7 @@ class Group implements IGroupData {
 
     /**
      * Adding a single user to group.
+     *
      * @param newUser single user to add.
      * @return Returns true if successfully added the user to the grouplist, otherwise returns false.
      */
@@ -62,6 +65,7 @@ class Group implements IGroupData {
 
     /**
      * Adding multiple users to group.
+     *
      * @param newUsers multiple users to add.
      * @return Returns true if successfully added all the users to the grouplist, otherwise returns false.
      */
@@ -71,6 +75,7 @@ class Group implements IGroupData {
 
     /**
      * Removing a single user from group.
+     *
      * @param removeUser single user to remove.
      * @return Returns true if successfully removed the user from the grouplist, otherwise returns false.
      */
@@ -80,6 +85,7 @@ class Group implements IGroupData {
 
     /**
      * Removing multiple users from group.
+     *
      * @param removeUsers multiple users to remove.
      * @return Returns true if successfully removed the all users from the grouplist, otherwise returns false.
      */
@@ -90,9 +96,9 @@ class Group implements IGroupData {
     /**
      * Creates a debtTracker and adds it to the list of debtTrackers.
      *
-     * @param lender the user who lends out money
+     * @param lender    the user who lends out money
      * @param borrowers either a single or several users who borrow from the lender
-     * @param owed total amount lent out by the lender to the borrowers
+     * @param owed      total amount lent out by the lender to the borrowers
      * @throws Exception
      */
     // TODO: Specify exception.
@@ -103,7 +109,7 @@ class Group implements IGroupData {
     /**
      * Adds a new payment to a specific debtTracker.
      *
-     * @param amount Amount being paid back against the debt.
+     * @param amount        Amount being paid back against the debt.
      * @param debtTrackerID ID used to retrieve the specific debtTracker.
      * @throws
      */
@@ -134,5 +140,26 @@ class Group implements IGroupData {
     @Override
     public List<IDebtData> getDebts() {
         return new ArrayList<>(groupLedger.getDebtDataList());
+    }
+
+    /**
+     * Fetches and calculates the user with the given phone number remaining total debt.
+     *
+     * @param phoneNumber the phonenumber of the User in group which remainning tatal is returned.
+     * @return the remaining total debt. Calcultated according to: totalOwed - totalDebt
+     * @throws UserNotFoundException thrown if a User with phoneNumber can't be found in the group.
+     */
+    @Override
+    public double getUserTotal(String phoneNumber) throws UserNotFoundException {
+        User user = null;
+        for (User member : groupMembers) {
+            if (member.getPhoneNumber().equals(phoneNumber)) {
+                user = member;
+            }
+        }
+        if (user == null) {
+            throw new UserNotFoundException("A User with that phonenumber doesn't exist in the group.");
+        }
+        return groupLedger.getUserTotal(user);
     }
 }
