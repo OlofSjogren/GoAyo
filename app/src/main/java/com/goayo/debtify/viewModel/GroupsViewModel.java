@@ -45,7 +45,7 @@ public class GroupsViewModel extends ViewModel {
 
     public void setCurrentGroup(String groupId) {
         try {
-            ModelEngine.getInstance().getGroup(groupId);
+            currentGroup.setValue(ModelEngine.getInstance().getGroup(groupId));
         } catch (Exception e) {
             e.printStackTrace();
             Log.d("GroupsViewModel", "setCurrentGroup: DATABASE ERROR?");

@@ -48,6 +48,10 @@ public class MyGroupsFragment extends Fragment {
         return binding.getRoot();
     }
 
+    public void test() {
+
+    }
+
     /**
      * Initializes RecyclerView in MyGroups.
      *
@@ -56,7 +60,7 @@ public class MyGroupsFragment extends Fragment {
      */
     private void initRecyclerView(MyGroupsFragmentBinding binding, Set<IGroupData> groupData) {
         RecyclerView recyclerView = binding.groupRecyclerView;
-        GroupViewAdapter groupViewAdapter = new GroupViewAdapter(getContext(), convertSetToArray(groupData));
+        GroupViewAdapter groupViewAdapter = new GroupViewAdapter(getContext(), convertSetToArray(groupData), viewModel);
         recyclerView.setAdapter(groupViewAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
     }
