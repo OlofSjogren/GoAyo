@@ -85,9 +85,9 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
     private TransactionData[] createTransactionDataSet(IDebtData[] debtDataArray) {
         List<TransactionData> transactionDataList = new ArrayList<>();
         for (IDebtData debtData : debtDataArray) {
-            transactionDataList.add(new TransactionData(debtData.getDate(), "Debt", debtData.getLender() + " owes " + debtData.getBorrower(), debtData.getOriginalDebt()));
+            transactionDataList.add(new TransactionData(debtData.getDate(), "Debt", debtData.getLender().getName() + " owes " + debtData.getBorrower().getName(), debtData.getOriginalDebt()));
             for (IPaymentData paymentData : debtData.getPaymentHistory()) {
-                transactionDataList.add(new TransactionData(paymentData.getDate(), "Payment", debtData.getBorrower() + " payed " + debtData.getLender(), paymentData.getPaidAmount()));
+                transactionDataList.add(new TransactionData(paymentData.getDate(), "Payment", debtData.getBorrower().getName() + " payed " + debtData.getLender().getName(), paymentData.getPaidAmount()));
             }
         }
 

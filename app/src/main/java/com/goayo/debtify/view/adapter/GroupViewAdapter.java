@@ -101,10 +101,10 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
          * Sets the values of the layout's elements.
          * @param group Current group data
          */
-        public void setGroupData(IGroupData group) {
+        public void setGroupData(IGroupData group, GroupsViewModel viewModel) {
             groupName.setText(group.getGroupName());
             //TODO ("SET BALANCE IN GROUP_CARDVIEW")
-            balance.setText("YET_TO_BE_SET");
+            balance.setText(viewModel.);
         }
 
         /**
@@ -117,6 +117,7 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
                 @Override
                 public void onClick(View view) {
                     viewModel.setCurrentGroup(groupID);
+                    viewModel.setCurrentGroupsDebtData();
                     Intent intent = new Intent(context, DetailedGroupActivity.class);
                     context.startActivity(intent);
                 }

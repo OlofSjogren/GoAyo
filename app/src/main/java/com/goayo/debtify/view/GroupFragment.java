@@ -1,5 +1,6 @@
 package com.goayo.debtify.view;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.GroupFragmentBinding;
+import com.goayo.debtify.model.ModelEngine;
+import com.goayo.debtify.model.UserNotFoundException;
 import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.view.adapter.TransactionCardAdapter;
@@ -55,23 +58,21 @@ public class GroupFragment extends Fragment {
 
         initTextViews(binding, groupData);
         initBottomNavigation(binding);
-        initRecyclerView(binding, fetchDebtData(groupData));
+        initRecyclerView(binding, viewModel.getDebt().getValue());
 
         return binding.getRoot();
     }
 
+    @SuppressLint("SetTextI18n")
     private void initTextViews (GroupFragmentBinding binding, IGroupData group) {
         binding.detailedGroupGroupNameTextView.setText(group.getGroupName());
-        //TODO ("Function to calculate total balance will be implemented later. Insert data below when created.")
-        //binding.detailedGroupBalanceTextView.setText();
-    }
 
-    //TODO ("Extends entity?")
-    private IDebtData[] fetchDebtData(IGroupData groupData) {
-        //TODO ("IGroupData currently has the type List, change to Set or keep?")
-        // If kept, change remove convertSetToArray() method.
-        IDebtData[] debtData = new IDebtData[groupData.getDebts().size()];
-        return groupData.getDebts().toArray(debtData);
+        try {
+            //TODO change dependency on ModelEngine to dependency on a "UserViewModel".
+            binding.detailedGroupBalanceTextView.setText(group.getUserTotal(ModelEngine.getInstance().getLoggedInUser().getPhoneNumber()) + "kr");
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initRecyclerView(GroupFragmentBinding binding, IDebtData[] debtData) {
