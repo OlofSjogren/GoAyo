@@ -1,4 +1,4 @@
-package com.goayo.debtify.database;
+package com.goayo.debtify.model;
 
 /**
  * @author Olof Sjögren
