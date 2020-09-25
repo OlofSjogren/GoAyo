@@ -34,6 +34,7 @@ import java.util.List;
 public class SettleDebtFragment extends Fragment {
 
     private SettleDebtFragmentBinding binding;
+    private PickDebtAdapter pickDebtAdapter;
 
     //TODO: Replace this model instance with GroupViewModel.
     private ModelEngine model;
@@ -57,4 +58,6 @@ public class SettleDebtFragment extends Fragment {
         recyclerView.setAdapter(new PickDebtAdapter(dataArray));
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
     }
+
+    //TODO: Implement onClickListener for Settle button. Should update ViewModel.
 }

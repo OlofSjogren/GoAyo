@@ -60,6 +60,10 @@ public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDe
         return debtData.length;
     }
 
+    public IDebtData getSelectedDebt(){
+        return debtData[mSelectedDebt];
+    }
+
 
     /**
      * Constructor for the internal class PickDebtViewHolder
