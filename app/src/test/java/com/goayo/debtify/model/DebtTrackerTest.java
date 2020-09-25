@@ -32,6 +32,7 @@ public class DebtTrackerTest {
         DebtTracker dt = new DebtTracker(350, new User("244","bob"), new User("afa", "afaf"));
         dt.payOffDebt(400);
         dt.payOffDebt(349.9);
+        assertEquals(0.1, dt.getAmountOwed(), 0.0001);
     }
 
     @Test

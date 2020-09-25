@@ -1,7 +1,6 @@
 package com.goayo.debtify.model;
 
 import com.goayo.debtify.modelaccess.IGroupData;
-import com.goayo.debtify.modelaccess.IUserData;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -11,7 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class AccountTest {
 
@@ -27,7 +26,7 @@ public class AccountTest {
 
     @Test
     public void registerUser() throws Exception {
-        account.registerUser("123", "Åke", "asd");
+        account.registerUser("123", "asd", "Åke");
         assertEquals("Åke", database.getUser("123").getName());
     }
 
@@ -43,7 +42,7 @@ public class AccountTest {
     public void createGroup() throws Exception {
         int groupSizeBefore = account.getAssociatedGroups().size();
         Set<String> userToNewGroup = new HashSet<>();
-        userToNewGroup.add("0945837563");
+        userToNewGroup.add("0876123221");
         account.createGroup("test", userToNewGroup);
         int groupSizeAfter = account.getAssociatedGroups().size();
 
@@ -53,9 +52,8 @@ public class AccountTest {
     @Test
     public void addContact() throws Exception {
         int contactSizeBefore = account.getContacts().size();
-        account.addContact("0704345621");
+        account.addContact("0735216752");
         int contactSizeAfter = account.getContacts().size();
-
         assert (contactSizeAfter > contactSizeBefore);
     }
 
@@ -109,8 +107,26 @@ public class AccountTest {
         assert(sizeAfter < sizeBefore);
     }
 
+    @Test
+    public void leaveGroup() throws Exception {
+        Set<IGroupData> groupsBefore = account.getAssociatedGroups();
+        account.leaveGroup("1002");
+        Set<IGroupData> groupsAfter = account.getAssociatedGroups();
+        assert(groupsBefore.size() > groupsAfter.size());
+    }
+
     //TODO: Awaiting a more testable model.
-    
+
+    @Test(expected = Exception.class)
+    public void removeContact() throws Exception {
+        Account acc = new Account(database);
+        acc.loginUser("123", "asd");
+        acc.removeContact("0765483856");
+        acc.removeContact("0765483856");
+    }
+
+
+
     @Test
     public void createDebt() {
 

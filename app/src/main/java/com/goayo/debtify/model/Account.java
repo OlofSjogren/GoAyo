@@ -3,7 +3,6 @@ package com.goayo.debtify.model;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,6 +18,10 @@ import java.util.Set;
  * 2020-09-18 Modified by Oscar Sanner: Added method to check if loggedInUser is set before
  * running methods requiring the user to be logged in. Added getters needed by high level
  * classes and by extension, the view and controller package.
+ *
+ * 2020-09-21 Modified by Alex and Oscar: Implemented Leave and remove feature.
+ *
+ * 2020-09-23 Modified by Olof: getGroupFromID-method is now public and documented, called upon by ModelEngine to provide data to view.
  */
 public class Account {
 
@@ -42,8 +45,8 @@ public class Account {
      * @param password    the registered user's password.
      * @throws Exception  Thrown if registration failed.
      **/
-    public void registerUser(String phoneNumber, String name, String password) throws Exception {
-        database.registerUser(phoneNumber, name, password);
+    public void registerUser(String phoneNumber, String password, String name) throws Exception {
+        database.registerUser(phoneNumber, password, name);
     }
 
     /**
@@ -56,7 +59,7 @@ public class Account {
     public void loginUser(String phoneNumber, String password) throws Exception {
         loggedInUser = database.getUserToBeLoggedIn(phoneNumber, password);
         contactList = initContactList(phoneNumber);
-        associatedGroups = initAssociatedGroups(phoneNumber);
+        loadAssociatedGroups();
     }
 
     /**
@@ -76,6 +79,7 @@ public class Account {
         for (String s : phoneNumberSet) {
             usersToBeAdded.add(database.getUser(s));
         }
+        usersToBeAdded.add(loggedInUser);
         database.registerGroup(groupName, usersToBeAdded);
         associatedGroups = database.getGroups(loggedInUser.getPhoneNumber());
     }
@@ -219,11 +223,44 @@ public class Account {
         return returnList;
     }
 
+    /**
+     * Removes a user from the contactList.
+     * @param phoneNumber The to be removed user's phoneNumber.
+     * @throws Exception Thrown if the user is not found in the contact list.
+     */
+    public void removeContact(String phoneNumber) throws Exception {
+        try {
+            userIsLoggedIn();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+        User userToBeRemoved = database.getUser(phoneNumber);
+        if(contactList.contains(userToBeRemoved)){
+            contactList.remove(userToBeRemoved);
+        }
+        else {
+            //Todo ("Create a more specific exception")
+            throw new Exception();
+        }
+    }
+
+    public void leaveGroup(String groupID) throws Exception{
+        database.removeUserFromGroup(loggedInUser.getPhoneNumber(), groupID);
+        loadAssociatedGroups();
+    }
+
     private User getUserFromID(String phoneNumber) {
         return database.getUser(phoneNumber);
     }
 
-    private Group getGroupFromID(String groupID) throws Exception {
+    /**
+     * Fetches the group with the specific groupID, provided that the user is a member of the group.
+     * @param groupID id of the group to fetch.
+     * @return the group with the given id.
+     * @throws Exception thrown if the logged in user isn't apart of the group, it can't be found.
+     */
+    public Group getGroupFromID(String groupID) throws Exception {
         Group group = null;
         for(Group g: associatedGroups){
             if(g.getGroupID().equals(groupID)){
@@ -240,8 +277,8 @@ public class Account {
         return database.getContactList(phoneNumber);
     }
 
-    private Set<Group> initAssociatedGroups(String phoneNumber) throws Exception {
-        return database.getGroups(phoneNumber);
+    private void loadAssociatedGroups() throws Exception {
+        associatedGroups = database.getGroups(loggedInUser.getPhoneNumber());
     }
 
     private void userIsLoggedIn() throws Exception {

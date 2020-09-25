@@ -17,4 +17,5 @@ public interface IDatabase {
     boolean registerGroup(String name, Set<User> users);
     User getUserToBeLoggedIn(String phoneNumber, String password);
     Set<User> getContactList(String phoneNumber);
+    public void removeUserFromGroup(String phoneNumber, String groupID);
 }

@@ -35,7 +35,7 @@ class Group implements IGroupData {
     public Group(String groupName, String groupId, Set<User> groupMembers) {
         this.groupName = groupName;
         this.groupId = groupId;
-        this.groupMembers = groupMembers;
+        this.groupMembers = new HashSet<>(groupMembers);
         this.groupLedger = new Ledger();
     }
 
