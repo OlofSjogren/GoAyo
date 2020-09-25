@@ -18,6 +18,7 @@ import com.goayo.debtify.databinding.GroupFragmentBinding;
 import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.view.adapter.TransactionCardAdapter;
+import com.goayo.debtify.viewModel.GroupViewModelFactory;
 import com.goayo.debtify.viewModel.GroupsViewModel;
 
 /**
@@ -35,6 +36,9 @@ import com.goayo.debtify.viewModel.GroupsViewModel;
  * 25-09-2020 Modified by Alex: Refactored bottom-buttons to GroupFragment from DetailedGroupActivity.
  *
  * 25-09-2020 Modified by Alex Phu, Oscar Sanner, Olof Sjögren: Setup communication with ViewModel instead ModelEngine.
+ *
+ * 2020/09/25 Modified bt Oscar Sanner, Alex Phu and Olof Sjögren: Added factory to ViewModelProvider.
+ *
  */
 public class GroupFragment extends Fragment {
 
@@ -45,7 +49,7 @@ public class GroupFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         GroupFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.group_fragment, container, false);
 
-        viewModel = ViewModelProviders.of(this).get(GroupsViewModel.class);
+        viewModel = ViewModelProviders.of(this,  new GroupViewModelFactory()).get(GroupsViewModel.class);
         IGroupData groupData = viewModel.getCurrentGroupData().getValue();
 
         initTextViews(binding, groupData);

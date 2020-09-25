@@ -44,6 +44,9 @@ public class GroupsViewModel extends ViewModel {
     }
 
     public void setCurrentGroup(String groupId) {
+        if(currentGroup == null){
+            currentGroup = new MutableLiveData<IGroupData>();
+        }
         try {
             currentGroup.setValue(ModelEngine.getInstance().getGroup(groupId));
         } catch (Exception e) {

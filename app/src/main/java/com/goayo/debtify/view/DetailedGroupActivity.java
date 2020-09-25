@@ -20,13 +20,14 @@ import com.goayo.debtify.databinding.ActivityDetailedGroupBinding;
  * Activity for the detailed view of a group.
  *
  * 25-09-2020 Modified by Alex: Refactored bottom-buttons to GroupFragment.
+ *
+ * 2020/09/25 Modified bt Oscar Sanner, Alex Phu and Olof Sjögren: Removed duplicate "setContentView".
  */
 public class DetailedGroupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detailed_group);
         ActivityDetailedGroupBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_detailed_group);
 
         initToolBar(binding);
@@ -51,6 +52,7 @@ public class DetailedGroupActivity extends AppCompatActivity {
     }
 
     private void initToolBar(ActivityDetailedGroupBinding binding) {
-        setSupportActionBar(binding.detailedGroupToolbar);
+        //TODO Fix toolbar errors.
+        //setSupportActionBar(binding.detailedGroupToolbar);
     }
 }
