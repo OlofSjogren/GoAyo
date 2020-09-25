@@ -15,6 +15,7 @@ import java.util.List;
  * <p>
  * DebtTracker holds debts and keeps track of debt
  * 2020-09-17 Modified by Yenan & Gabriel : Updated comments. Added exception on payOffDebt instead of boolean false as return.
+ * 2020-09-25 Modified by Olof Sjögren, Alex Phu & Oscar Sanner : Added getRemainingDebt for calculating remaining debt.
  */
 class DebtTracker implements IDebtData {
     private final Debt debt;
@@ -27,8 +28,8 @@ class DebtTracker implements IDebtData {
      * constructor creates a debt and assigns lender and borrower
      *
      * @param debtAmount how much the borrower owe to lender
-     * @param lender the user that lends out money
-     * @param borrower the user that borrows money
+     * @param lender     the user that lends out money
+     * @param borrower   the user that borrows money
      */
     public DebtTracker(double debtAmount, User lender, User borrower) {
         this.debt = new Debt(debtAmount);
@@ -56,16 +57,15 @@ class DebtTracker implements IDebtData {
      * Adds a new payment to the list of payments
      *
      * @param payOffAmount the amount to pay off
-     * @exception if payOffAmount exceeds debt left to pay
+     * @throws if payOffAmount exceeds debt left to pay
      */
     public void payOffDebt(double payOffAmount) throws Exception {
-       if (debt.getDebtAmount() - getSumOfPayments() > payOffAmount) {
-           payments.add(new Payment(payOffAmount));
-       }
-       else {
-           //TODO: Sepcify what exception this is.
-           throw new Exception("PayOffDebt failed.");
-       }
+        if (debt.getDebtAmount() - getSumOfPayments() > payOffAmount) {
+            payments.add(new Payment(payOffAmount));
+        } else {
+            //TODO: Sepcify what exception this is.
+            throw new Exception("PayOffDebt failed.");
+        }
     }
 
     /**
@@ -77,6 +77,15 @@ class DebtTracker implements IDebtData {
             sum += p.getPaidAmount();
         }
         return sum;
+    }
+
+    /**
+     * Calculates remaining debt.
+     *
+     * @return the remaining amount to be payed.
+     */
+    public double getRemainingDebt() {
+        return debt.getDebtAmount() - getSumOfPayments();
     }
 
     /**

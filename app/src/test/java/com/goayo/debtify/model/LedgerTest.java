@@ -38,4 +38,9 @@ public class LedgerTest {
         testLedger.payOffDebt(50, "TEMP ID");
         assertEquals(50,testLedger.getDebtData("TEMP ID").getAmountOwed(), 0.01);
     }
+
+    @Test
+    public void testGetUsersTotal(){
+        //TODO Write test.
+    }
 }

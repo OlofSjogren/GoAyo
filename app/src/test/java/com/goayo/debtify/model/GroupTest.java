@@ -105,4 +105,9 @@ public class GroupTest {
 
         assertFalse(tempGroup.removeUser(secondUserList));
     }
+
+    @Test
+    public void testGetUsersTotal(){
+        //TODO: Write test.
+    }
 }
