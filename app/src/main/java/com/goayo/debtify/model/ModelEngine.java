@@ -19,6 +19,8 @@ import java.util.Set;
  * 2020-09-21 Modified by Alex and Oscar: Implemented Leave and remove feature.
  *
  * 2020-09-23 Modified by Olof: Added getGroup-method provided a specific id.
+ *
+ * 2020-09-28 Modified by Alex: Refactored hardcoded debt data.
  */
 
 public class ModelEngine {
