@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,13 +19,14 @@ import com.goayo.debtify.databinding.ActivityDetailedGroupBinding;
  * Activity for the detailed view of a group.
  *
  * 25-09-2020 Modified by Alex: Refactored bottom-buttons to GroupFragment.
+ *
+ * 2020/09/25 Modified by Oscar Sanner, Alex Phu and Olof Sjögren: Removed duplicate "setContentView".
  */
 public class DetailedGroupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detailed_group);
         ActivityDetailedGroupBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_detailed_group);
 
         initToolBar(binding);
