@@ -1,8 +1,6 @@
 package com.goayo.debtify.view.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,6 @@ import com.goayo.debtify.R;
 import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.modelaccess.IPaymentData;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -108,7 +105,6 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
         private TextView date;
         private TextView balance;
         private CardView cardView;
-
 
         /**
          * Binds the elements in the layout file to a variable

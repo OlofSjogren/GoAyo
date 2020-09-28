@@ -37,25 +37,32 @@ public class ModelEngine {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        //TODO ("REMOVE FUNCTION")
+        HARDCODEDDEBTDATA();
+    }
+
+    //TODO REMOVE HARDCODED_DATA
+    private void HARDCODEDDEBTDATA() {
         //TODO REMOVE THIS ITS VERY TEMPORARY
-        Set<String> tmp =  new HashSet<>();
-        tmp.add("0735216752");
+        Set<String> debtData1 =  new HashSet<>();
+        debtData1.add("0735216752");
         try {
-            createDebt("1003", "0756415987", tmp, 23.90);
+            createDebt("1003", "0756415987", debtData1, 23.90);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Set<String> tmppp =  new HashSet<>();
-        tmp.add("0735216752");
+        Set<String> debtData2 =  new HashSet<>();
+        debtData2.add("0735216752");
         try {
-            createDebt("1002", "0756415987", tmppp, 23.90);
+            createDebt("1002", "0756415987", debtData2, 69.50);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Set<String> tmpp =  new HashSet<>();
-        tmp.add("0735216752");
+        Set<String> debtData3 =  new HashSet<>();
+        debtData3.add("0735216752");
         try {
-            createDebt("1004", "0756415987", tmpp, 23.90);
+            createDebt("1004", "0756415987", debtData3, 79.99);
         } catch (Exception e) {
             e.printStackTrace();
         }
