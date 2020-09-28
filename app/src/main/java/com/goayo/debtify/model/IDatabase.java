@@ -14,7 +14,7 @@ import java.util.Set;
 public interface IDatabase {
     Set<Group> getGroups(String phoneNumber);
     Group getGroupFromId(String groupID);
-    User getUser(String phoneNumber);
+    User getUser(String phoneNumber) throws Exception;
     boolean registerUser(String phoneNumber, String password, String name);
     boolean registerGroup(String name, Set<String> usersPhoneNumber);
     boolean addDebt(String groupID, String lender, Set<String> borrowers, double amount);

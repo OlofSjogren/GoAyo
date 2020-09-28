@@ -53,9 +53,9 @@ class MockDatabase implements IDatabase {
         awSet.add(users.get("naney"));
         awSet.add(users.get("xela"));
 
-        groups.add(new Group("School friends", UUID.randomUUID().toString(), schoolFriendsSet));
-        groups.add(new Group("Trip to Italy", UUID.randomUUID().toString(), italySet));
-        groups.add(new Group("Afterwork", UUID.randomUUID().toString(), awSet));
+        groups.add(new Group("School friends", "1a705586-238d-4a29-b7af-36dc103bd45a", schoolFriendsSet));
+        groups.add(new Group("Trip to Italy", "4116c93e-5542-4b5c-8423-010a901abdce", italySet));
+        groups.add(new Group("Afterwork", "d467b5bc-5fa9-4ac2-890d-29a07803d484", awSet));
     }
 
 
@@ -79,9 +79,15 @@ class MockDatabase implements IDatabase {
         return groupsWithSentInPhoneNumber;
     }
 
+
     @Override
     public Group getGroupFromId(String groupID) {
-        return null;
+        for (Group g : groups){
+            if(g.getGroupID() == groupID){
+                return g;
+            }
+        }
+        throw new NullPointerException("THE GROUP DOESNT EXIST");
     }
 
     /**
@@ -92,34 +98,32 @@ class MockDatabase implements IDatabase {
      * @return The user in the database who has the phone number
      */
     @Override
-    public User getUser(String phoneNumber) {
-        for (User u : users){
-            if(u.getPhoneNumber().equals(phoneNumber)){
-                return u;
-            }
+    public User getUser(String phoneNumber) throws Exception {
+        User user = getUserFromDatabase(phoneNumber);
+        if(user == null){
+            throw new Exception("Cannot get user from database");
+        } else {
+            return user;
         }
-        return null;
     }
 
-    /**
-     * A method registering a user to the database
-     *
-     * @param phoneNumber Phone number for the user to be registered in the database.
-     * @param password Password for the user to be registered in the database.
-     * @param name Name for the user to be registered in the database.
-     *
-     * @return true if the registration was successful.
-     */
+        /**
+         * A method registering a user to the database
+         *
+         * @param phoneNumber Phone number for the user to be registered in the database.
+         * @param password Password for the user to be registered in the database.
+         * @param name Name for the user to be registered in the database.
+         *
+         * @return true if the registration was successful.
+         */
     @Override
     public boolean registerUser(String phoneNumber, String password, String name) {
-
-        for (User u : users){
-            if(u.getPhoneNumber().equals(phoneNumber)){
-                return false;
-            }
+        User user = getUserFromDatabase(phoneNumber);
+        if(user != null){
+            return false;
         }
-
-        users.add(new User(phoneNumber, name));
+        user = new User(phoneNumber, name);
+        users.put(password, user);
         return true;
     }
 
@@ -134,13 +138,25 @@ class MockDatabase implements IDatabase {
 
     @Override
     public boolean registerGroup(String name, Set<String> users) {
-        groups.add(new Group(name, "1234", ));
+        Set<User> usersToBeAdded = new HashSet<>();
+        for(String string : users){
+            User user = getUserFromDatabase(string);
+            if(user == null){
+                return false;
+            }
+            usersToBeAdded.add(user);
+        }
+        groups.add(new Group(name, UUID.randomUUID().toString(), usersToBeAdded));
         return true;
     }
 
     @Override
     public boolean addDebt(String groupID, String lender, Set<String> borrowers, double amount) {
-        return false;
+        Group group = getGroupFromId(groupID);
+        Set<User> borrowersSet = new HashSet<>();
+        
+
+        group.createDebt(getUserFromDatabase(lender), );
     }
 
     @Override
@@ -203,4 +219,12 @@ class MockDatabase implements IDatabase {
         return contactList;
     }
 
+    private User getUserFromDatabase(String phoneNumber){
+        for (Map.Entry<String, User> mapElement : users.entrySet()) {
+            if(mapElement.getValue().getPhoneNumber().equals(phoneNumber)){
+                return mapElement.getValue();
+            }
+        }
+        return null;
+    }
 }
