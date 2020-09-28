@@ -42,7 +42,5 @@ public class DebtActivity extends AppCompatActivity {
             finish();
             // TODO send error message
         }
-
-        this.getSupportActionBar().hide();
     }
 }
