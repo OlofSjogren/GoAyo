@@ -16,7 +16,7 @@ public class LedgerTest {
         Ledger testLedger = new Ledger();
         Set<User> testUserSet = new HashSet<User>();
         testUserSet.add( new User("456", "Bag"));
-        testLedger.createDebt(new User("123", "Gab"), testUserSet, 100.0);
+        testLedger.createDebt(new User("123", "Gab"), testUserSet, 100.0, "abs");
         assertEquals("TEMP ID", testLedger.getDebtData("TEMP ID").getDebtID());
     }
 
@@ -25,7 +25,7 @@ public class LedgerTest {
         Ledger testLedger = new Ledger();
         Set<User> testUserSet = new HashSet<User>();
         testUserSet.add( new User("456", "Bag"));
-        testLedger.createDebt(new User("123", "Gab"), testUserSet, 100.0);
+        testLedger.createDebt(new User("123", "Gab"), testUserSet, 100.0, "abs");
         assertEquals(100, testLedger.getDebtData("TEMP ID").getAmountOwed(), 0.01);
     }
 
@@ -34,7 +34,7 @@ public class LedgerTest {
         Ledger testLedger = new Ledger();
         Set<User> testUserSet = new HashSet<User>();
         testUserSet.add( new User("456", "Bag"));
-        testLedger.createDebt(new User("123", "Gab"), testUserSet, 100.0);
+        testLedger.createDebt(new User("123", "Gab"), testUserSet, 100.0, "abs");
         testLedger.payOffDebt(50, "TEMP ID");
         assertEquals(50,testLedger.getDebtData("TEMP ID").getAmountOwed(), 0.01);
     }

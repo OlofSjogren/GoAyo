@@ -17,7 +17,7 @@ public class DebtTrackerTest {
 
     @Test
     public void getSumOfPayments() throws Exception {
-        DebtTracker dt = new DebtTracker(350, new User("244","bob"), new User("afa", "afaf"));
+        DebtTracker dt = new DebtTracker(350, new User("244","bob"), new User("afa", "afaf"), "abs");
         dt.payOffDebt(50);
         dt.payOffDebt(25);
         dt.payOffDebt(25);
@@ -29,7 +29,7 @@ public class DebtTrackerTest {
         exceptionRule.expect(Exception.class);
         exceptionRule.expectMessage("PayOffDebt failed.");
 
-        DebtTracker dt = new DebtTracker(350, new User("244","bob"), new User("afa", "afaf"));
+        DebtTracker dt = new DebtTracker(350, new User("244","bob"), new User("afa", "afaf"), "abs");
         dt.payOffDebt(400);
         dt.payOffDebt(349.9);
         assertEquals(0.1, dt.getAmountOwed(), 0.0001);
@@ -37,7 +37,7 @@ public class DebtTrackerTest {
 
     @Test
     public void getPaymentHistory() throws Exception {
-        DebtTracker dt = new DebtTracker(350, new User("244","bob"), new User("afa", "afaf"));
+        DebtTracker dt = new DebtTracker(350, new User("244","bob"), new User("afa", "afaf"), "abs");
         dt.payOffDebt(35);
         dt.payOffDebt(47);
         List<IPaymentData> listOfPaymentData = dt.getPaymentHistory();
