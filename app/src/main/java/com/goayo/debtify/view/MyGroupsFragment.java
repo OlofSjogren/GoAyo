@@ -30,9 +30,9 @@ import java.util.Set;
  * Second tab of the main screen.
  * <p>
  * 2020/09/15 Modified by Alex Phu. Added init function for RecyclerView. Will be activated when backend is resolved.
- *
+ * <p>
  * 2020/09/16 Modified by Alex Phu. Added listener for FloatingActionButton.
- *
+ * <p>
  * 2020/09/25 Modified bt Oscar Sanner, Alex Phu and Olof Sjögren: Added factory to ViewModelProvider.
  */
 public class MyGroupsFragment extends Fragment {
@@ -45,21 +45,16 @@ public class MyGroupsFragment extends Fragment {
         //Binding instead of relying on findViewById
         MyGroupsFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.my_groups_fragment, container, false);
         addListenerToFloatingActionButton(binding);
-        //TODO!!!! ViewModels HAS to have a factory!!! The below line will NOT be used!!!!
         viewModel = ViewModelProviders.of(this, new GroupViewModelFactory()).get(GroupsViewModel.class);
         initRecyclerView(binding, viewModel.getAllGroupsData().getValue());
         return binding.getRoot();
-    }
-
-    public void test() {
-
     }
 
     /**
      * Initializes RecyclerView in MyGroups.
      *
      * @param groupData Set of groupdata to be displayed.
-     * @param binding Variable which can access the elements in the layout file.
+     * @param binding   Variable which can access the elements in the layout file.
      */
     private void initRecyclerView(MyGroupsFragmentBinding binding, Set<IGroupData> groupData) {
         RecyclerView recyclerView = binding.groupRecyclerView;
@@ -70,6 +65,7 @@ public class MyGroupsFragment extends Fragment {
 
     /**
      * Sets listener to the floatingActionButton.
+     *
      * @param binding Variable which can access the elements in the layout file.
      */
     private void addListenerToFloatingActionButton(MyGroupsFragmentBinding binding) {
@@ -84,6 +80,7 @@ public class MyGroupsFragment extends Fragment {
 
     /**
      * Converts a Set to an Array.
+     *
      * @param groupDataSet Set of Groups.
      * @return Returns an Array of Groups.
      */
