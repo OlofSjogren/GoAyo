@@ -2,8 +2,13 @@ package com.goayo.debtify.model;
 
 import com.goayo.debtify.modelaccess.IUserData;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  *
@@ -18,42 +23,39 @@ import java.util.Set;
 
 class MockDatabase implements IDatabase {
 
-    private Set<Group> groups;
-    private Set<User> users;
-    private Set<User> contactList;
-    private User noFriendsUser;
-    private User userToBeLoggedIn;
+    private List<Group> groups;
+    private Map<String, User> users;
 
     public MockDatabase(){
-        users = new HashSet<>();
-        userToBeLoggedIn = new User("0756415987", "Rolf Broberg");
-        users.add(new User("0704345621", "Olle Johansson"));
-        users.add(new User("0735216752", "Rickard Nicklasson"));
-        users.add(new User("0734355982", "Gabriel Phu"));
-        users.add(new User("0773345654", "Yenan Sjögren"));
-        users.add(userToBeLoggedIn);
-        noFriendsUser = new User("0876123221", "Bo Lean");
+        users = new HashMap<>();
+        groups = new ArrayList<>();
 
-        groups = new HashSet<>();
-        groups.add(new Group("Afterwork", "1002", users));
-        groups.add(new Group("Trip To Spain", "1003", users));
-        groups.add(new Group("School friends", "1004", users));
-        users.add(noFriendsUser);
+        users.put("racso", new User("0701234546", "Oscar Sanner"));
+        users.put("folo", new User("0786458765", "Olof Sjögren"));
+        users.put("xela", new User("0738980732", "Alex Phu"));
+        users.put("naney", new User("0701094578", "Yenan Wang"));
+        users.put("leirbag", new User("0733387676", "Gabriel Brattgård"));
 
-        contactList = new HashSet<>();
+        HashSet<User> italySet = new HashSet<>();
+        italySet.add(users.get("folo"));
+        italySet.add(users.get("rasco"));
+        italySet.add(users.get("xela"));
 
-        users.add(new User("0762435058", "Benny Svensson"));
-        users.add(new User("0765483856", "Karl Cool"));
-        users.add(new User("0769974574", "Emil Lin"));
-        users.add(new User("0733517869", "Dante Alighieri"));
+        HashSet<User> schoolFriendsSet = new HashSet<>();
+        schoolFriendsSet.add(users.get("rasco"));
+        schoolFriendsSet.add(users.get("folo"));
+        schoolFriendsSet.add(users.get("xela"));
+        schoolFriendsSet.add(users.get("naney"));
+        schoolFriendsSet.add(users.get("leirbag"));
 
-        userToBeLoggedIn = new User("0756415987", "Rolf Broberg");
+        HashSet<User> awSet = new HashSet<>();
+        awSet.add(users.get("leirbag"));
+        awSet.add(users.get("naney"));
+        awSet.add(users.get("xela"));
 
-        contactList.add(new User("0762435058", "Benny Svensson"));
-        contactList.add(new User("0765483856", "Karl Cool"));
-        contactList.add(new User("0769974574", "Emil Lin"));
-        contactList.add(new User("0733517869", "Dante Alighieri"));
-
+        groups.add(new Group("School friends", UUID.randomUUID().toString(), schoolFriendsSet));
+        groups.add(new Group("Trip to Italy", UUID.randomUUID().toString(), italySet));
+        groups.add(new Group("Afterwork", UUID.randomUUID().toString(), awSet));
     }
 
 
@@ -126,8 +128,8 @@ class MockDatabase implements IDatabase {
      */
 
     @Override
-    public boolean registerGroup(String name, Set<User> users) {
-        groups.add(new Group(name, "1234", users));
+    public boolean registerGroup(String name, Set<String> users) {
+        groups.add(new Group(name, "1234", null));
         return true;
     }
 
