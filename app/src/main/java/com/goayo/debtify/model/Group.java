@@ -18,6 +18,7 @@ import java.util.Set;
  * 2020-09-17 Modified by Alex Phu and Olof Sjögren: Changed List type to Set in method parameters.
  * 2020-09-16 Modified by Gabriel & Yenan : Added real ledger. Changed types on getDebts. Delegated to ledger.
  * 2020-09-18 Modified by Oscar & Alex : Switched over List types to Set, also added JDocs and switch boolean returns to exceptions.
+ * 2020-09-28 Modified by Yenan: refactor to add parameter description to createDebt method
  */
 class Group implements IGroupData {
 

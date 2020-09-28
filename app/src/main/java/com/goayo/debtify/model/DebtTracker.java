@@ -16,6 +16,7 @@ import java.util.List;
  * DebtTracker holds debts and keeps track of debt
  * 2020-09-17 Modified by Yenan & Gabriel : Updated comments. Added exception on payOffDebt instead of boolean false as return.
  * 2020-09-25 Modified by Olof Sjögren, Alex Phu & Oscar Sanner : Added getRemainingDebt for calculating remaining debt.
+ * 2020-09-28 Modified by Yenan : refactor to add description parameter to the constructor
  */
 class DebtTracker implements IDebtData {
     private final Debt debt;

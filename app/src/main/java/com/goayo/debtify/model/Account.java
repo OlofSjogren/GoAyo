@@ -20,8 +20,8 @@ import java.util.Set;
  * classes and by extension, the view and controller package.
  *
  * 2020-09-21 Modified by Alex and Oscar: Implemented Leave and remove feature.
- *
  * 2020-09-23 Modified by Olof: getGroupFromID-method is now public and documented, called upon by ModelEngine to provide data to view.
+ * 2020-09-28 Modified by Yenan: refactor to add parameter description to createDebt method
  */
 public class Account {
 

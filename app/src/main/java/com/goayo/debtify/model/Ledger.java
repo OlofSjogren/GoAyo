@@ -17,6 +17,7 @@ import java.util.Set;
  * 2020-09-17 Modified by Gabriel & Yenan : Changed to exception on createDebt. Added comments.
  * 2020-09-25 Modified by Olof Sjögren, Alex Phu & Oscar Sanner : Implemented getUsersTotal for
  * calculating a specific Users net total debt.
+ * 2020-09-28 Modified by Yenan: refactor to add parameter description to createDebt method
  */
 class Ledger {
 

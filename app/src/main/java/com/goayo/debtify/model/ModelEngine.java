@@ -14,10 +14,9 @@ import java.util.Set;
  * packages depending on the model. This class aims to keep the model loosely coupled with other packages.
  * <p>
  * 2020-09-18 Modfied by Olof, Yenan & Alex : removed booleans returns and replaced with exceptions.
- *
  * 2020-09-21 Modified by Alex and Oscar: Implemented Leave and remove feature.
- *
  * 2020-09-23 Modified by Olof: Added getGroup-method provided a specific id.
+ * 2020-09-28 Modified by Yenan: refactor to add parameter description to createDebt method
  */
 
 public class ModelEngine {
