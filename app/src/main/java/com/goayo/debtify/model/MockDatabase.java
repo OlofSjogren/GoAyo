@@ -17,8 +17,11 @@ import java.util.UUID;
  *
  * <p>
  * A mock class to try different database calls on, without connecting to an actual database.
+ *
  * <p>
  * 2020-09-21 Modified by Oscar Sanner: Added functionality to remove a user from a group.
+ * 2020-09-28 Modified by Oscar Sanner and Olof Sjögren: Added methods for debts, payments and contacts.
+ *
  */
 
 class MockDatabase implements IDatabase {
@@ -210,6 +213,7 @@ class MockDatabase implements IDatabase {
      * @param phoneNumber The phone number of the user.
      * @param password    The password of the user.
      * @return The user with the provided credentials.
+     *
      */
     @Override
     public User getUserToBeLoggedIn(String phoneNumber, String password) {
