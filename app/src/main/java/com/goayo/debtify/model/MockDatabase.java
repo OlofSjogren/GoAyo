@@ -39,12 +39,27 @@ class MockDatabase implements IDatabase {
     public MockDatabase() {
         users = new HashMap<>();
         groups = new ArrayList<>();
+        userContactLists = new HashMap<>();
 
-        users.put(pwOscar, new User("0701234546", "Oscar Sanner"));
-        users.put(pwOlof, new User("0786458765", "Olof Sjögren"));
-        users.put(pwAlex, new User("0738980732", "Alex Phu"));
-        users.put(pwYenan, new User("0701094578", "Yenan Wang"));
-        users.put(pwGabriel, new User("0733387676", "Gabriel Brattgård"));
+        registerUser("0701234546", pwOscar, "Oscar Sanner");
+        registerUser("0786458765", pwOlof, "Olof Sjögren");
+        registerUser("0738980732", pwAlex, "Alex Phu");
+        registerUser("0701094578", pwYenan, "Yenan Wang");
+        registerUser("0733387676", pwGabriel, "Gabriel Brattgård");
+
+        addContact(users.get(pwOscar).getPhoneNumber(), users.get(pwAlex).getPhoneNumber());
+        addContact(users.get(pwOscar).getPhoneNumber(), users.get(pwGabriel).getPhoneNumber());
+
+        addContact(users.get(pwOlof).getPhoneNumber(), users.get(pwYenan).getPhoneNumber());
+        addContact(users.get(pwOlof).getPhoneNumber(), users.get(pwOscar).getPhoneNumber());
+
+        addContact(users.get(pwAlex).getPhoneNumber(), users.get(pwOlof).getPhoneNumber());
+        addContact(users.get(pwAlex).getPhoneNumber(), users.get(pwGabriel).getPhoneNumber());
+
+        addContact(users.get(pwYenan).getPhoneNumber(), users.get(pwGabriel).getPhoneNumber());
+        addContact(users.get(pwYenan).getPhoneNumber(), users.get(pwOscar).getPhoneNumber());
+        addContact(users.get(pwYenan).getPhoneNumber(), users.get(pwOlof).getPhoneNumber());
+        addContact(users.get(pwYenan).getPhoneNumber(), users.get(pwAlex).getPhoneNumber());
 
         HashSet<User> italySet = new HashSet<>();
         italySet.add(users.get(pwOlof));
@@ -162,7 +177,6 @@ class MockDatabase implements IDatabase {
             }
         }
         throw new NullPointerException("THE GROUP DOESNT EXIST");
-
     }
 
     /**
@@ -193,6 +207,7 @@ class MockDatabase implements IDatabase {
         }
         user = new User(phoneNumber, name);
         users.put(password, user);
+        userContactLists.put(user, new ArrayList<User>());
         return true;
     }
 

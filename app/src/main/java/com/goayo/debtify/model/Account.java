@@ -22,6 +22,7 @@ import java.util.Set;
  * 2020-09-21 Modified by Alex and Oscar: Implemented Leave and remove feature.
  * <p>
  * 2020-09-23 Modified by Olof: getGroupFromID-method is now public and documented, called upon by ModelEngine to provide data to view.
+ * 2020-09-28 Modified by Oscar Sanner and Olof Sjögren: Reworked methods to depend on the database for calls before mutating model.
  */
 public class Account {
 
@@ -60,6 +61,9 @@ public class Account {
      */
     public void loginUser(String phoneNumber, String password) throws Exception {
         loggedInUser = database.getUserToBeLoggedIn(phoneNumber, password);
+        if (loggedInUser == null) {
+            throw new LoginException("Password or number wrong");
+        }
         contactList = initContactList(phoneNumber);
         loadAssociatedGroups();
     }
@@ -80,11 +84,7 @@ public class Account {
             e.printStackTrace();
             return;
         }
-        Set<User> usersToBeAdded = new HashSet<>();
-        for (String s : phoneNumberSet) {
-            usersToBeAdded.add(database.getUser(s));
-        }
-        usersToBeAdded.add(loggedInUser);
+
         database.registerGroup(groupName, phoneNumberSet);
         associatedGroups = database.getGroups(loggedInUser.getPhoneNumber());
     }
@@ -96,7 +96,6 @@ public class Account {
      * @throws Exception Thrown if the user is not found, or if the user is already in the contactList.
      */
 
-    //Todo: database.addcontact. -> database.getContactList.
     public void addContact(String phoneNumber) throws Exception {
         try {
             userIsLoggedIn();
@@ -104,13 +103,9 @@ public class Account {
             e.printStackTrace();
             return;
         }
-        User tempUser = database.getUser(phoneNumber);
-        if (!contactList.contains(tempUser)) {
-            contactList.add(tempUser);
-        } else {
-            //Todo ("Create a more specific exception")
-            throw new Exception();
-        }
+
+        database.addContact(loggedInUser.getPhoneNumber(), phoneNumber);
+        initContactList(loggedInUser.getPhoneNumber());
     }
 
     /**
@@ -122,7 +117,6 @@ public class Account {
      *                   already in the group.
      */
 
-    //Todo: Database.addUserToGroup -> No need to reload groups because same objects. Reload anyways.
     public void addUserToGroup(String phoneNumber, String groupID) throws Exception {
         try {
             userIsLoggedIn();
@@ -130,8 +124,9 @@ public class Account {
             e.printStackTrace();
             return;
         }
-        Group tempGroup = getGroupFromID(groupID);
-        tempGroup.addUser(getUserFromID(phoneNumber));
+
+        database.addUserToGroup(groupID, phoneNumber);
+        loadAssociatedGroups();
     }
 
     /**
@@ -143,7 +138,6 @@ public class Account {
      *                   or if the user is not found given the group.
      */
 
-    //Todo: Database.removeUserFromGroup. Reload Groups.
     public void removeUserFromGroup(String phoneNumber, String groupID) throws Exception {
         try {
             userIsLoggedIn();
@@ -151,41 +145,37 @@ public class Account {
             e.printStackTrace();
             return;
         }
-        Group tempGroup = getGroupFromID(groupID);
-        tempGroup.removeUser(getUserFromID(phoneNumber));
+
+        database.removeUserFromGroup(phoneNumber, groupID);
+        loadAssociatedGroups();
     }
 
     /**
      * Creates a debt between a lender and one or more borrowers.
      *
-     * @param groupID  The group's ID.
-     * @param lender   The lender.
-     * @param borrower The borrower(s).
-     * @param owed     Amount of owed money.
+     * @param groupID   The group's ID.
+     * @param lender    The lender.
+     * @param borrowers The borrower(s).
+     * @param owed      Amount of owed money.
      * @throws Exception Thrown if group or users are not found, or if the set of borrower is empty.
      */
 
     //Todo: Database.createDebt  -> No need to reload groups because same objects. Reload anyways.
-    public void createDebt(String groupID, String lender, Set<String> borrower, double owed) throws Exception {
+    public void createDebt(String groupID, String lender, Set<String> borrowers, double owed) throws Exception {
         try {
             userIsLoggedIn();
         } catch (Exception e) {
             e.printStackTrace();
             return;
         }
-        if (borrower.isEmpty()) {
+
+        if (borrowers.isEmpty()) {
             //TODO ("Specify Exception")
             throw new Exception();
         }
-        Group tempGroup = getGroupFromID(groupID);
-        User lenderUser = getUserFromID(lender);
-        Set<User> borrowerUsers = new HashSet<>();
-        //TODO ("Create method for creating a set of users given a set of ID's")
-        for (String s : borrower) {
-            borrowerUsers.add(getUserFromID(s));
-        }
-        //TODO ("Check database if debt is created before delegating task to tempGroup")
-        tempGroup.createDebt(lenderUser, borrowerUsers, owed);
+
+        database.addDebt(groupID, lender, borrowers, owed);
+        loadAssociatedGroups();
     }
 
     /**
@@ -199,15 +189,16 @@ public class Account {
 
     //Todo: Database.PayOfDebt -> No need to reload groups because same objects. Reload anyways.
     public void payOffDebt(double amount, String debtID, String groupID) throws Exception {
+
         try {
             userIsLoggedIn();
         } catch (Exception e) {
             e.printStackTrace();
             return;
         }
-        Group tempGroup = getGroupFromID(groupID);
-        //TODO ("Check database if payment is registered")
-        tempGroup.payOffDebt(amount, debtID);
+
+        database.addPayment(groupID, debtID, amount);
+        loadAssociatedGroups();
     }
 
     /**
@@ -219,8 +210,7 @@ public class Account {
      * @return the logged in user in the shape of "IUserData".
      */
     public IUserData getLoggedInUser() {
-        IUserData abstractUser = loggedInUser;
-        return abstractUser;
+        return loggedInUser;
     }
 
     /**
@@ -258,29 +248,16 @@ public class Account {
             e.printStackTrace();
             return;
         }
-        User userToBeRemoved = database.getUser(phoneNumber);
-        if (contactList.contains(userToBeRemoved)) {
-            contactList.remove(userToBeRemoved);
-        } else {
-            //Todo ("Create a more specific exception")
-            throw new Exception();
-        }
+
+        database.removeContact(loggedInUser.getPhoneNumber(), phoneNumber);
+        initContactList(loggedInUser.getPhoneNumber());
     }
 
 
+    //TODO: NEEDS JDOCZ
     public void leaveGroup(String groupID) throws Exception {
         database.removeUserFromGroup(loggedInUser.getPhoneNumber(), groupID);
         loadAssociatedGroups();
-    }
-
-    //Todo: Wrong place to throw exeptions.
-    private User getUserFromID(String phoneNumber) throws Exception {
-        User u = database.getUser(phoneNumber);
-        if (u != null) {
-            return u;
-        } else {
-            throw new Exception("THE USER CAME BACK AS NULL IN THE DATABASE");
-        }
     }
 
     /**
@@ -292,17 +269,8 @@ public class Account {
      */
 
     //Todo: Database call?
-    public Group getGroupFromID(String groupID) throws Exception {
-        Group group = null;
-        for (Group g : associatedGroups) {
-            if (g.getGroupID().equals(groupID)) {
-                group = g;
-            }
-        }
-        if (group == null) {
-            throw new Exception();
-        }
-        return group;
+    public Group getGroupFromID(String groupID) {
+        return database.getGroupFromId(groupID);
     }
 
 
@@ -310,7 +278,7 @@ public class Account {
         return database.getContactList(phoneNumber);
     }
 
-    private void loadAssociatedGroups() throws Exception {
+    private void loadAssociatedGroups() {
         associatedGroups = database.getGroups(loggedInUser.getPhoneNumber());
     }
 
@@ -319,6 +287,4 @@ public class Account {
             throw new Exception();
         }
     }
-
-
 }
