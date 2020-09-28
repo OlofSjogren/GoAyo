@@ -58,7 +58,6 @@ class MockDatabase implements IDatabase {
         groups.add(new Group("Afterwork", "d467b5bc-5fa9-4ac2-890d-29a07803d484", awSet));
     }
 
-
     /**
      * A method for retrieving groups from the database.
      *
@@ -77,7 +76,6 @@ class MockDatabase implements IDatabase {
         }
         return groupsWithSentInPhoneNumber;
     }
-
 
     @Override
     public Group getGroupFromId(String groupID) {
@@ -155,12 +153,28 @@ class MockDatabase implements IDatabase {
 
     @Override
     public boolean addContact(String userPhoneNumber, String contactToBeAdded) {
+        User user = getUserFromDatabase(userPhoneNumber);
+        User userToBeAdded = getUserFromDatabase(contactToBeAdded);
+        for (Map.Entry<User,List<User>> entry : userContactLists.entrySet()){
+            if (entry.getKey().equals(user)){
+                return entry.getValue().add(userToBeAdded);
+            }
+        }
         return false;
+        //TODO Add exception here. User couldn't be added.
     }
 
     @Override
-    public boolean removeContact(String userPhoneNumber, String phoneNumberOfContactToBeRemoved) {
+    public boolean removeContact(String userPhoneNumber, String contactToBeRemoved) {
+        User user = getUserFromDatabase(userPhoneNumber);
+        User userToBeRemoved = getUserFromDatabase(contactToBeRemoved);
+        for (Map.Entry<User,List<User>> entry : userContactLists.entrySet()){
+            if (entry.getKey().equals(user)){
+                return entry.getValue().remove(userToBeRemoved);
+            }
+        }
         return false;
+        //TODO Add exception here. User couldn't be added.
     }
 
     @Override
@@ -211,7 +225,6 @@ class MockDatabase implements IDatabase {
         return groupRemoveSuccess;
     }
 
-
     @Override
     public Set<User> getContactList(String phoneNumber) {
         User user = getUserFromDatabase(phoneNumber);
@@ -224,7 +237,6 @@ class MockDatabase implements IDatabase {
         }
         return contactList;
     }
-
 
     private User getUserFromDatabase(String phoneNumber){
         for (Map.Entry<String, User> mapElement : users.entrySet()) {
