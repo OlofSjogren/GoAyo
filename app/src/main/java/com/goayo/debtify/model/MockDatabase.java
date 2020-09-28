@@ -30,36 +30,66 @@ class MockDatabase implements IDatabase {
     private Map<String, User> users;
     private Map<User, List<User>> userContactLists;
 
+    String pwOscar = "racso";
+    String pwOlof = "folo";
+    String pwAlex = "xela";
+    String pwYenan = "naney";
+    String pwGabriel = "leirbag";
+
     public MockDatabase() {
         users = new HashMap<>();
         groups = new ArrayList<>();
 
-        users.put("racso", new User("0701234546", "Oscar Sanner"));
-        users.put("folo", new User("0786458765", "Olof Sjögren"));
-        users.put("xela", new User("0738980732", "Alex Phu"));
-        users.put("naney", new User("0701094578", "Yenan Wang"));
-        users.put("leirbag", new User("0733387676", "Gabriel Brattgård"));
+        users.put(pwOscar, new User("0701234546", "Oscar Sanner"));
+        users.put(pwOlof, new User("0786458765", "Olof Sjögren"));
+        users.put(pwAlex, new User("0738980732", "Alex Phu"));
+        users.put(pwYenan, new User("0701094578", "Yenan Wang"));
+        users.put(pwGabriel, new User("0733387676", "Gabriel Brattgård"));
 
         HashSet<User> italySet = new HashSet<>();
-        italySet.add(users.get("folo"));
-        italySet.add(users.get("rasco"));
-        italySet.add(users.get("xela"));
+        italySet.add(users.get(pwOlof));
+        italySet.add(users.get(pwOscar));
+        italySet.add(users.get(pwAlex));
 
         HashSet<User> schoolFriendsSet = new HashSet<>();
-        schoolFriendsSet.add(users.get("rasco"));
-        schoolFriendsSet.add(users.get("folo"));
-        schoolFriendsSet.add(users.get("xela"));
-        schoolFriendsSet.add(users.get("naney"));
-        schoolFriendsSet.add(users.get("leirbag"));
+        schoolFriendsSet.add(users.get(pwOscar));
+        schoolFriendsSet.add(users.get(pwOlof));
+        schoolFriendsSet.add(users.get(pwAlex));
+        schoolFriendsSet.add(users.get(pwYenan));
+        schoolFriendsSet.add(users.get(pwGabriel));
 
         HashSet<User> awSet = new HashSet<>();
-        awSet.add(users.get("leirbag"));
-        awSet.add(users.get("naney"));
-        awSet.add(users.get("xela"));
+        awSet.add(users.get(pwGabriel));
+        awSet.add(users.get(pwYenan));
+        awSet.add(users.get(pwAlex));
 
         groups.add(new Group("School friends", "1a705586-238d-4a29-b7af-36dc103bd45a", schoolFriendsSet));
         groups.add(new Group("Trip to Italy", "4116c93e-5542-4b5c-8423-010a901abdce", italySet));
         groups.add(new Group("Afterwork", "d467b5bc-5fa9-4ac2-890d-29a07803d484", awSet));
+
+        Set<User> olofSet = new HashSet<>();
+        olofSet.add(users.get(pwOlof));
+
+        Set<User> oscarSet = new HashSet<>();
+        oscarSet.add(users.get(pwOscar));
+
+        Set<User> alexSet = new HashSet<>();
+        alexSet.add(users.get(pwAlex));
+
+        Set<User> yenanSet = new HashSet<>();
+        yenanSet.add(users.get(pwYenan));
+
+        Set<User> gabrielSet = new HashSet<>();
+        gabrielSet.add(users.get(pwGabriel));
+
+        try {
+            groups.get(0).createDebt(users.get(pwOlof), oscarSet, 140.5);
+            groups.get(0).createDebt(users.get(pwYenan), oscarSet, 140.5);
+            groups.get(0).createDebt(users.get(pwGabriel), yenanSet, 90.25);
+            groups.get(0).createDebt(users.get(pwGabriel), olofSet, 90.99);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
