@@ -8,6 +8,7 @@ import com.goayo.debtify.modelaccess.IUserData;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Gabriel Brattgård, Yenan Wang
@@ -36,8 +37,7 @@ class DebtTracker implements IDebtData {
         this.payments = new ArrayList<>();
         this.lender = lender;
         this.borrower = borrower;
-        // TODO: need a util class to generate IDs
-        this.debtTrackerID = "TEMP ID";
+        this.debtTrackerID = UUID.randomUUID().toString();
     }
 
     /**

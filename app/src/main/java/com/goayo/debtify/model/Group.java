@@ -162,4 +162,6 @@ class Group implements IGroupData {
         }
         return groupLedger.getUserTotal(user);
     }
+
+
 }

@@ -87,6 +87,23 @@ class MockDatabase implements IDatabase {
             groups.get(0).createDebt(users.get(pwYenan), oscarSet, 140.5);
             groups.get(0).createDebt(users.get(pwGabriel), yenanSet, 90.25);
             groups.get(0).createDebt(users.get(pwGabriel), olofSet, 90.99);
+            groups.get(0).createDebt(users.get(pwAlex), gabrielSet, 80);
+
+            groups.get(1).createDebt(users.get(pwOlof), alexSet, 30.89);
+            groups.get(1).createDebt(users.get(pwOlof), oscarSet, 30.89);
+            groups.get(1).createDebt(users.get(pwOscar), alexSet, 27.09);
+
+            String id00 = groups.get(0).getDebts().get(0).getDebtID();
+            String id01 = groups.get(0).getDebts().get(1).getDebtID();
+            String id02 = groups.get(0).getDebts().get(2).getDebtID();
+            String id03 = groups.get(0).getDebts().get(3).getDebtID();
+            String id04 = groups.get(0).getDebts().get(4).getDebtID();
+
+            groups.get(0).payOffDebt(50.25, id00);
+            groups.get(0).payOffDebt(25, id00);
+
+            groups.get(0).payOffDebt();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -111,14 +128,17 @@ class MockDatabase implements IDatabase {
         return groupsWithSentInPhoneNumber;
     }
 
+
+
     @Override
     public Group getGroupFromId(String groupID) {
         for (Group g : groups){
-            if(g.getGroupID() == groupID){
+            if(g.getGroupID().equals(groupID)){
                 return g;
             }
         }
         throw new NullPointerException("THE GROUP DOESNT EXIST");
+
     }
 
     /**
