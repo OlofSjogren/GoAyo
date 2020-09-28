@@ -96,18 +96,27 @@ class MockDatabase implements IDatabase {
             groups.get(2).createDebt(users.get(pwGabriel), alexSet, 20.9);
             groups.get(2).createDebt(users.get(pwGabriel), yenanSet, 30.0);
 
-            String id00 = groups.get(0).getDebts().get(0).getDebtID();
-            String id01 = groups.get(0).getDebts().get(1).getDebtID();
-            String id02 = groups.get(0).getDebts().get(2).getDebtID();
-            String id03 = groups.get(0).getDebts().get(3).getDebtID();
-            String id04 = groups.get(0).getDebts().get(4).getDebtID();
+            String id0_0 = groups.get(0).getDebts().get(0).getDebtID();
+            String id0_1 = groups.get(0).getDebts().get(1).getDebtID();
+            String id0_2 = groups.get(0).getDebts().get(2).getDebtID();
+            String id0_3 = groups.get(0).getDebts().get(3).getDebtID();
+            String id0_4 = groups.get(0).getDebts().get(4).getDebtID();
 
-            groups.get(0).payOffDebt(50.25, id00);
-            groups.get(0).payOffDebt(25, id00);
+            groups.get(0).payOffDebt(50.25, id0_0);
+            groups.get(0).payOffDebt(25, id0_0);
+            groups.get(0).payOffDebt(100.25, id0_1);
+            groups.get(0).payOffDebt(40.25, id0_1);
+            groups.get(0).payOffDebt(30.75, id0_2);
+            groups.get(0).payOffDebt(25, id0_2);
+            groups.get(0).payOffDebt(80.25, id0_3);
+            groups.get(0).payOffDebt(10.00, id0_3);
+            groups.get(0).payOffDebt(70.25, id0_4);
+            groups.get(0).payOffDebt(5.00, id0_4);
 
             String id1_0 = groups.get(1).getDebts().get(0).getDebtID();
             String id1_1 = groups.get(1).getDebts().get(1).getDebtID();
             String id1_2 = groups.get(1).getDebts().get(2).getDebtID();
+
             groups.get(1).payOffDebt(30.89, id1_0);
             groups.get(1).payOffDebt(27.09, id1_1);
             groups.get(1).payOffDebt(16.90, id1_2);
@@ -115,6 +124,7 @@ class MockDatabase implements IDatabase {
 
             String id2_0 = groups.get(2).getDebts().get(0).getDebtID();
             String id2_1 = groups.get(2).getDebts().get(0).getDebtID();
+
             groups.get(2).payOffDebt(20.9, id2_0);
             groups.get(2).payOffDebt(20.0, id2_1);
 
