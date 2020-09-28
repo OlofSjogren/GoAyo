@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/action_show_group_informaion" app:showAsAction="ifRoom" android:title="Show members"/>
-    <item android:id="@+id/action_add_members" app:showAsAction="ifRoom" android:title="Add members"/>
+    <item
+        android:id="@+id/action_show_group_informaion"
+        android:title="Show members"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_add_members"
+        android:title="Add members"
+        app:showAsAction="never" />
 </menu>
