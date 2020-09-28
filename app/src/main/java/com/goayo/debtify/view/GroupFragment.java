@@ -33,16 +33,15 @@ import com.goayo.debtify.viewModel.GroupsViewModel;
  * <p>
  * 2020-09-22 Modified by Oscar Sanner and Alex Phu: Added binding methods
  * and initializer for recycler view.
- *
+ * <p>
  * 2020-09-23 Modified by Alex: Added fetchDebtData method. Will probably be changed later depending on
  * if IDebtData's type will be changed to Set from List.
- *
+ * <p>
  * 25-09-2020 Modified by Alex: Refactored bottom-buttons to GroupFragment from DetailedGroupActivity.
- *
+ * <p>
  * 25-09-2020 Modified by Alex Phu, Oscar Sanner, Olof Sjögren: Setup communication with ViewModel instead ModelEngine.
- *
+ * <p>
  * 2020/09/25 Modified bt Oscar Sanner, Alex Phu and Olof Sjögren: Added factory to ViewModelProvider.
- *
  */
 public class GroupFragment extends Fragment {
 
@@ -53,7 +52,7 @@ public class GroupFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         GroupFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.group_fragment, container, false);
 
-        viewModel = ViewModelProviders.of(this,  new GroupViewModelFactory()).get(GroupsViewModel.class);
+        viewModel = ViewModelProviders.of(this, new GroupViewModelFactory()).get(GroupsViewModel.class);
         IGroupData groupData = viewModel.getCurrentGroupData().getValue();
 
         initTextViews(binding, groupData);
@@ -64,7 +63,7 @@ public class GroupFragment extends Fragment {
     }
 
     @SuppressLint("SetTextI18n")
-    private void initTextViews (GroupFragmentBinding binding, IGroupData group) {
+    private void initTextViews(GroupFragmentBinding binding, IGroupData group) {
         binding.detailedGroupGroupNameTextView.setText(group.getGroupName());
 
         try {

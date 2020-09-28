@@ -55,16 +55,16 @@ public class ModelEngine {
             e.printStackTrace();
         }
         Set<String> debtData2 =  new HashSet<>();
-        debtData2.add("0735216752");
+        debtData2.add("0773345654");
         try {
-            createDebt("1002", "0756415987", debtData2, 69.50);
+            createDebt("1002", "0734355982", debtData2, 69.50);
         } catch (Exception e) {
             e.printStackTrace();
         }
         Set<String> debtData3 =  new HashSet<>();
-        debtData3.add("0735216752");
+        debtData3.add("0704345621");
         try {
-            createDebt("1004", "0756415987", debtData3, 79.99);
+            createDebt("1004", "0735216752", debtData3, 79.99);
         } catch (Exception e) {
             e.printStackTrace();
         }

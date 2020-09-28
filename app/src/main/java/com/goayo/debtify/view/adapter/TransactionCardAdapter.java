@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
@@ -104,6 +105,7 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
         private TextView lenderBorrowerDescription;
         private TextView date;
         private TextView balance;
+        private ConstraintLayout layout;
         private CardView cardView;
 
         /**
@@ -117,6 +119,7 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
             lenderBorrowerDescription = itemView.findViewById(R.id.detailed_group_card_lender_borrower_description_textView);
             date = itemView.findViewById(R.id.detailed_group_card_date_textView);
             balance = itemView.findViewById(R.id.detailed_group_card_balance);
+            layout = itemView.findViewById(R.id.detailed_group_card_constraintLayout);
             cardView = itemView.findViewById(R.id.detailed_group_cardView);
         }
 
@@ -140,7 +143,7 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
         }
 
         private void setCardViewColor(int color) {
-            cardView.setBackgroundColor(color);
+            layout.setBackgroundColor(color);
         }
     }
 
