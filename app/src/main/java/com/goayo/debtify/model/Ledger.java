@@ -28,9 +28,10 @@ class Ledger {
      * @param lender    the user who lends out money
      * @param borrowers either a single or several users who borrow from the lender
      * @param owedTotal total amount lent out by the lender to the borrowers
+     * @param description the brief description of the debt
      * @throws Exception
      */
-    public void createDebt(User lender, Set<User> borrowers, double owedTotal) throws Exception {
+    public void createDebt(User lender, Set<User> borrowers, double owedTotal, String description) throws Exception {
         double individualAmount = owedTotal / borrowers.size();
         List<DebtTracker> mockList = new ArrayList<>();
 
@@ -40,7 +41,7 @@ class Ledger {
         }
 
         for (User u : borrowers) {
-            if (!mockList.add(new DebtTracker(individualAmount, lender, u))) {
+            if (!mockList.add(new DebtTracker(individualAmount, lender, u, description))) {
                 //TODO: Specify exception.
                 throw new Exception();
             }

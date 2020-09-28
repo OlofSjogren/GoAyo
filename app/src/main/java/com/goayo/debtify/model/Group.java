@@ -99,11 +99,12 @@ class Group implements IGroupData {
      * @param lender    the user who lends out money
      * @param borrowers either a single or several users who borrow from the lender
      * @param owed      total amount lent out by the lender to the borrowers
+     * @param description the brief description of the debt
      * @throws Exception
      */
     // TODO: Specify exception.
-    public void createDebt(User lender, Set<User> borrowers, double owed) throws Exception {
-        groupLedger.createDebt(lender, borrowers, owed);
+    public void createDebt(User lender, Set<User> borrowers, double owed, String description) throws Exception {
+        groupLedger.createDebt(lender, borrowers, owed, description);
     }
 
     /**

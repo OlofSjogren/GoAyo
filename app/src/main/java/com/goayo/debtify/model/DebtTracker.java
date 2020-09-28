@@ -44,18 +44,6 @@ class DebtTracker implements IDebtData {
     }
 
     /**
-     * temporary constructor to prevent the whole application from collapsing
-     */
-    public DebtTracker(double debtAmount, User lender, User borrower) {
-        this.debt = new Debt(debtAmount);
-        this.payments = new ArrayList<>();
-        this.lender = lender;
-        this.borrower = borrower;
-        this.description = "TEMP ID";
-        this.debtTrackerID = "TEMP ID";
-    }
-
-    /**
      * constructor for creating a clone of this DebtTracker for defensive copying
      *
      * @param debtTracker the debtTracker to clone

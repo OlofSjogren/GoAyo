@@ -182,11 +182,12 @@ public class ModelEngine {
      * @param lender   The phone number of the user lending the money.
      * @param borrower A list of one or more users.
      * @param owed     A positive double, representing the whole value spent by the lender.
+     * @param description A short string, preferably <20 characters, that describes the debt
      * @return True if the operation was successful, server side and in the program.
      * False if the preconditions aren't met, or if some form of connection error occurs.
      */
-    public void createDebt(String groupID, String lender, Set<String> borrower, double owed) throws Exception {
-        account.createDebt(groupID, lender, borrower, owed);
+    public void createDebt(String groupID, String lender, Set<String> borrower, double owed, String description) throws Exception {
+        account.createDebt(groupID, lender, borrower, owed, description);
     }
 
     /**
