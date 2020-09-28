@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -99,6 +98,8 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
      * @date 2020-09-18
      * <p>
      * ViewHolder for TransactionCardViewHolder
+     *
+     * 2020-09-28 Modified by Alex: Substituted cardview variable with ConstraintLayout (to set background colour)
      */
     class TransactionCardViewHolder extends RecyclerView.ViewHolder {
         private TextView transactionType;
@@ -106,7 +107,6 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
         private TextView date;
         private TextView balance;
         private ConstraintLayout layout;
-        private CardView cardView;
 
         /**
          * Binds the elements in the layout file to a variable
@@ -120,7 +120,6 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
             date = itemView.findViewById(R.id.detailed_group_card_date_textView);
             balance = itemView.findViewById(R.id.detailed_group_card_balance);
             layout = itemView.findViewById(R.id.detailed_group_card_constraintLayout);
-            cardView = itemView.findViewById(R.id.detailed_group_cardView);
         }
 
         /**
