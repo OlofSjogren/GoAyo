@@ -1,5 +1,6 @@
 package com.goayo.debtify.model;
 
+import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.modelaccess.IUserData;
 
 import java.util.ArrayList;
@@ -94,14 +95,8 @@ class MockDatabase implements IDatabase {
      * @return The user in the database who has the phone number
      */
     @Override
-    public User getUser(String phoneNumber) throws Exception {
-        User user = getUserFromDatabase(phoneNumber);
-        if(user == null){
-            throw new Exception("Cannot get user from database");
-        } else {
-            return user;
-
-        }
+    public User getUser(String phoneNumber) {
+        return getUserFromDatabase(phoneNumber);
     }
 
         /**
@@ -147,8 +142,18 @@ class MockDatabase implements IDatabase {
     }
 
     @Override
-    public boolean addDebt(String groupID, String lender, Set<String> borrowers, double amount) {
-        return false;
+    public boolean addDebt(String groupID, String lender, Set<String> borrowers, double amount) throws Exception {
+        Group group = getGroupFromId(groupID);
+        Set<User> borrowersSet = new HashSet<>();
+        for(String string : borrowers){
+            User user = getUserFromDatabase(string);
+            if(user == null){
+                return false;
+            }
+            borrowersSet.add(user);
+        }
+        group.createDebt(getUserFromDatabase(lender), borrowersSet, amount);
+        return true;
     }
 
     @Override
@@ -179,12 +184,24 @@ class MockDatabase implements IDatabase {
 
     @Override
     public boolean addPayment(String GroupID, String debtID, double amount) {
-        return false;
+        Group group = getGroupFromId(GroupID);
+        try {
+            group.payOffDebt(amount, debtID);
+        } catch (Exception e){
+            return false;
+        }
+        return true;
     }
 
     @Override
     public boolean addUserToGroup(String groupID, String phoneNumber) {
-        return false;
+        Group group = getGroupFromId(groupID);
+        User user = getUserFromDatabase(phoneNumber);
+        if(user == null){
+            return false;
+        }
+        group.addUser(user);
+        return true;
     }
 
     /**
@@ -218,7 +235,6 @@ class MockDatabase implements IDatabase {
         for (Group g : getGroups(phoneNumber)) {
             if (g.getGroupID().equals(groupID)) {
                 groupRemoveSuccess = g.removeUser(userToBeRemoved);
-                //Todo, wrong dependency order? What does this mean?
                 //Todo: Throw exception here. User doesn't exist in group, shouldn't rely on boolean.
             }
         }
