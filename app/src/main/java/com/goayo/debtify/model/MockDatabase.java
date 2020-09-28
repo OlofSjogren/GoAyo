@@ -93,6 +93,9 @@ class MockDatabase implements IDatabase {
             groups.get(1).createDebt(users.get(pwOlof), oscarSet, 30.89);
             groups.get(1).createDebt(users.get(pwOscar), alexSet, 27.09);
 
+            groups.get(2).createDebt(users.get(pwGabriel), alexSet, 20.9);
+            groups.get(2).createDebt(users.get(pwGabriel), yenanSet, 30.0);
+
             String id00 = groups.get(0).getDebts().get(0).getDebtID();
             String id01 = groups.get(0).getDebts().get(1).getDebtID();
             String id02 = groups.get(0).getDebts().get(2).getDebtID();
@@ -102,7 +105,18 @@ class MockDatabase implements IDatabase {
             groups.get(0).payOffDebt(50.25, id00);
             groups.get(0).payOffDebt(25, id00);
 
-            groups.get(0).payOffDebt();
+            String id1_0 = groups.get(1).getDebts().get(0).getDebtID();
+            String id1_1 = groups.get(1).getDebts().get(1).getDebtID();
+            String id1_2 = groups.get(1).getDebts().get(2).getDebtID();
+            groups.get(1).payOffDebt(30.89, id1_0);
+            groups.get(1).payOffDebt(27.09, id1_1);
+            groups.get(1).payOffDebt(16.90, id1_2);
+            groups.get(1).payOffDebt(5.0, id1_2);
+
+            String id2_0 = groups.get(2).getDebts().get(0).getDebtID();
+            String id2_1 = groups.get(2).getDebts().get(0).getDebtID();
+            groups.get(2).payOffDebt(20.9, id2_0);
+            groups.get(2).payOffDebt(20.0, id2_1);
 
         } catch (Exception e) {
             e.printStackTrace();
