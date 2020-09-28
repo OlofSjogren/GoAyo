@@ -11,13 +11,12 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- *
  * @Author Oscar Sanner
  * @date 2020-09-15
  *
  * <p>
  * A mock class to try different database calls on, without connecting to an actual database.
- * 
+ * <p>
  * 2020-09-21 Modified by Oscar Sanner: Added functionality to remove a user from a group.
  */
 
@@ -25,8 +24,9 @@ class MockDatabase implements IDatabase {
 
     private List<Group> groups;
     private Map<String, User> users;
+    private Map<User, List<User>> userContactLists;
 
-    public MockDatabase(){
+    public MockDatabase() {
         users = new HashMap<>();
         groups = new ArrayList<>();
 
@@ -63,15 +63,14 @@ class MockDatabase implements IDatabase {
      * A method for retrieving groups from the database.
      *
      * @param phoneNumber The phone number for the user for who's groups will be returned.
-     *
      * @return All groups associated with the phone number sent into the method.
      */
     @Override
     public Set<Group> getGroups(String phoneNumber) {
         Set<Group> groupsWithSentInPhoneNumber = new HashSet<>();
-        for(Group g : groups){
-            for(IUserData user : g.getIUserDataSet()){
-                if(user.getPhoneNumber().equals(phoneNumber)){
+        for (Group g : groups) {
+            for (IUserData user : g.getIUserDataSet()) {
+                if (user.getPhoneNumber().equals(phoneNumber)) {
                     groupsWithSentInPhoneNumber.add(g);
                 }
             }
@@ -94,7 +93,6 @@ class MockDatabase implements IDatabase {
      * A method which retries a User from the database, if the sent in phone number is associated with a user.
      *
      * @param phoneNumber The phone number for the user which the database will look for.
-     *
      * @return The user in the database who has the phone number
      */
     @Override
@@ -104,6 +102,7 @@ class MockDatabase implements IDatabase {
             throw new Exception("Cannot get user from database");
         } else {
             return user;
+
         }
     }
 
@@ -130,9 +129,8 @@ class MockDatabase implements IDatabase {
     /**
      * A method registering a group to the database.
      *
-     * @param name Name of the group to be created in the database.
+     * @param name  Name of the group to be created in the database.
      * @param users List of users to be associated with the group.
-     *
      * @return True if the creation was successful.
      */
 
@@ -152,11 +150,7 @@ class MockDatabase implements IDatabase {
 
     @Override
     public boolean addDebt(String groupID, String lender, Set<String> borrowers, double amount) {
-        Group group = getGroupFromId(groupID);
-        Set<User> borrowersSet = new HashSet<>();
-        
-
-        group.createDebt(getUserFromDatabase(lender), );
+        return false;
     }
 
     @Override
@@ -183,41 +177,54 @@ class MockDatabase implements IDatabase {
      * Get a user based on the provided phone number and password. If they match.
      *
      * @param phoneNumber The phone number of the user.
-     * @param password The password of the user.
-     *
+     * @param password    The password of the user.
      * @return The user with the provided credentials.
      */
     @Override
     public User getUserToBeLoggedIn(String phoneNumber, String password) {
-        return userToBeLoggedIn;
+        for (Map.Entry<String,User> passUserSet : users.entrySet()){
+            if (passUserSet.getKey().equals(password)){
+                return passUserSet.getValue();
+            }
+        }
+        return null;
     }
 
     @Override
-    public boolean removeUserFromGroup(String phoneNumber, String groupID){
-        User userToBeRemoved = null;
-        for(User u : users){
-            if(u.getPhoneNumber().equals(phoneNumber)){
-                userToBeRemoved = u;
-            }
+    public boolean removeUserFromGroup(String phoneNumber, String groupID) {
+        User userToBeRemoved = getUserFromDatabase(phoneNumber);
+        Group group = getGroupFromId(groupID);
+        boolean groupRemoveSuccess = false;
+
+        if (userToBeRemoved == null || group == null) {
+            //TODO Throw exception here. User doesn't exist in database.
+            return false;
         }
 
-        for (Group g : getGroups(phoneNumber)){
-            if(g.getGroupID().equals(groupID)){
-                if(userToBeRemoved != null){
-                    g.removeUser(userToBeRemoved); //Todo, wrong dependency order??
-                }
-                else {
-                    //Todo: SomeKind Of exeption??
-                }
+        for (Group g : getGroups(phoneNumber)) {
+            if (g.getGroupID().equals(groupID)) {
+                groupRemoveSuccess = g.removeUser(userToBeRemoved);
+                //Todo, wrong dependency order? What does this mean?
+                //Todo: Throw exception here. User doesn't exist in group, shouldn't rely on boolean.
             }
-            //Todo: User not in group exeption.
         }
+        return groupRemoveSuccess;
     }
+
 
     @Override
     public Set<User> getContactList(String phoneNumber) {
+        User user = getUserFromDatabase(phoneNumber);
+        Set<User> contactList = new HashSet<>();
+        if (user == null) {
+            //TODO Throw exception here
+            return null;
+        } else {
+            contactList = new HashSet<User>(userContactLists.get(user));
+        }
         return contactList;
     }
+
 
     private User getUserFromDatabase(String phoneNumber){
         for (Map.Entry<String, User> mapElement : users.entrySet()) {
