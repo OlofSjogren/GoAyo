@@ -79,6 +79,11 @@ class MockDatabase implements IDatabase {
         return groupsWithSentInPhoneNumber;
     }
 
+    @Override
+    public Group getGroupFromId(String groupID) {
+        return null;
+    }
+
     /**
      * A method which retries a User from the database, if the sent in phone number is associated with a user.
      *
@@ -129,8 +134,33 @@ class MockDatabase implements IDatabase {
 
     @Override
     public boolean registerGroup(String name, Set<String> users) {
-        groups.add(new Group(name, "1234", null));
+        groups.add(new Group(name, "1234", ));
         return true;
+    }
+
+    @Override
+    public boolean addDebt(String groupID, String lender, Set<String> borrowers, double amount) {
+        return false;
+    }
+
+    @Override
+    public boolean addContact(String userPhoneNumber, String contactToBeAdded) {
+        return false;
+    }
+
+    @Override
+    public boolean removeContact(String userPhoneNumber, String phoneNumberOfContactToBeRemoved) {
+        return false;
+    }
+
+    @Override
+    public boolean addPayment(String GroupID, String debtID, double amount) {
+        return false;
+    }
+
+    @Override
+    public boolean addUserToGroup(String groupID, String phoneNumber) {
+        return false;
     }
 
     /**
@@ -146,7 +176,8 @@ class MockDatabase implements IDatabase {
         return userToBeLoggedIn;
     }
 
-    public void removeUserFromGroup(String phoneNumber, String groupID){
+    @Override
+    public boolean removeUserFromGroup(String phoneNumber, String groupID){
         User userToBeRemoved = null;
         for(User u : users){
             if(u.getPhoneNumber().equals(phoneNumber)){
