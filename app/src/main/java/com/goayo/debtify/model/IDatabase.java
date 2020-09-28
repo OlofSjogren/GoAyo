@@ -14,13 +14,13 @@ import java.util.Set;
 public interface IDatabase {
     Set<Group> getGroups(String phoneNumber);
     Group getGroupFromId(String groupID);
-    User getUser(String phoneNumber) throws Exception;
+    User getUser(String phoneNumber);
     boolean registerUser(String phoneNumber, String password, String name);
     boolean registerGroup(String name, Set<String> usersPhoneNumber);
-    boolean addDebt(String groupID, String lender, Set<String> borrowers, double amount);
+    boolean addDebt(String groupID, String lender, Set<String> borrowers, double amount) throws Exception;
     boolean addContact(String userPhoneNumber, String contactToBeAdded);
     boolean removeContact(String userPhoneNumber, String phoneNumberOfContactToBeRemoved);
-    boolean addPayment(String GroupID, String debtID, double amount);
+    boolean addPayment(String GroupID, String debtID, double amount) throws Exception;
     boolean addUserToGroup(String groupID, String phoneNumber);
     User getUserToBeLoggedIn(String phoneNumber, String password);
     Set<User> getContactList(String phoneNumber);

@@ -250,8 +250,13 @@ public class Account {
         loadAssociatedGroups();
     }
 
-    private User getUserFromID(String phoneNumber) {
-        return database.getUser(phoneNumber);
+    private User getUserFromID(String phoneNumber) throws Exception {
+        User u = database.getUser(phoneNumber);
+        if(u != null){
+            return u;
+        } else {
+            throw new Exception("THE USER CAME BACK AS NULL IN THE DATABASE");
+        }
     }
 
     /**
