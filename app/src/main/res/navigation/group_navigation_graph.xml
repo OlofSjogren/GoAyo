@@ -11,17 +11,9 @@
         android:name="com.goayo.debtify.view.GroupFragment"
         android:label="GroupFragment" >
         <action
-            android:id="@+id/action_groupFragment2_to_addMembersFragment"
-            app:destination="@id/addMembersFragment" />
-        <action
             android:id="@+id/action_groupFragment_to_pickUsersFragment"
             app:destination="@id/pickUsersFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/addMembersFragment"
-        tools:layout="@layout/add_members_fragment"
-        android:name="com.goayo.debtify.view.AddMembersFragment"
-        android:label="AddMembersFragment" />
     <fragment
         android:id="@+id/pickUsersFragment"
         android:name="com.goayo.debtify.view.PickUsersFragment"
