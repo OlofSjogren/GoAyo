@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><!--
 @author Oscar Sanner, Olof Sjögren
-@date   2020-09-XX
+@date   2020-09-29
 -->
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.constraintlayout.widget.ConstraintLayout
