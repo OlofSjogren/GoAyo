@@ -21,6 +21,7 @@ import com.goayo.debtify.view.adapter.PickUserAdapter;
 import com.goayo.debtify.viewmodel.PickUserViewModel;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Alex Phu, Olof Sjögren
@@ -36,9 +37,17 @@ public class PickUsersFragment extends Fragment {
         PickUsersFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.pick_users_fragment, container, false);
         PickUserViewModel viewModel = ViewModelProviders.of(this).get(PickUserViewModel.class);
 
-        //TODO("Set current group!")
-        viewModel.setCurrentGroup("1003");
+        //TODO ("Implement logic for Settle and add debt in switch")
+        switch (Objects.requireNonNull(requireActivity().getIntent().getStringExtra("BASE_CLASS"))) {
+            case "DetailedGroupActivity.class":
+                viewModel.setCurrentGroup(getActivity().getIntent().getStringExtra("GROUP_ID"));
+                break;
+            case "AddDebtFragment.class":
+                //TODO ("TO BE IMPLEMENTED")
+                break;
+            default:
 
+        }
         //TODO ("Identifier for which data to fetch from ViewModel (Through Intent)")
         List<IUserData> userData = getUserData(0, viewModel);
 
@@ -88,9 +97,10 @@ public class PickUsersFragment extends Fragment {
         binding.pickuserContinueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!viewModel.configureGroupMembers()){
+                //TODO ("INSERT IDENTIFIER TO configureGroupMembers() to be able to distinguish debt or group")
+                if (!viewModel.configureGroupMembers()) {
                     Toast.makeText(view.getContext(), "Please select at least a user", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     getParentFragmentManager().popBackStack();
                 }
             }

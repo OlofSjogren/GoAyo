@@ -8,10 +8,13 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.ActivityDetailedGroupBinding;
+import com.goayo.debtify.viewmodel.GroupViewModelFactory;
+import com.goayo.debtify.viewmodel.GroupsViewModel;
 
 /**
  * @author Alex Phu, Oscar Sanner
@@ -44,11 +47,18 @@ public class DetailedGroupActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_add_members :
+                getIntent().putExtra("BASE_CLASS", "DetailedGroupActivity.class");
+                String groupID = ViewModelProviders.of(this, new GroupViewModelFactory()).get(GroupsViewModel.class).getCurrentGroupData().getValue().getGroupID();
+                getIntent().putExtra("GROUP_ID", groupID);
+
                 Navigation.findNavController(this, R.id.group_nav_host).navigate(R.id.action_groupFragment_to_pickUsersFragment);
+                break;
             case R.id.action_show_group_informaion :
-                //Todo: Show something
+                Navigation.findNavController(this, R.id.group_nav_host).navigate(R.id.action_groupFragment_to_showMembersFragment);
+                break;
             default: return super.onOptionsItemSelected(item);
         }
+        return true;
     }
 
     private void initToolBar(ActivityDetailedGroupBinding binding) {

@@ -21,7 +21,8 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="409dp"
+            android:id="@+id/show_members_recyclerView"
+            android:layout_width="match_parent"
             android:layout_height="710dp"
             android:layout_marginStart="1dp"
             android:layout_marginEnd="1dp"
