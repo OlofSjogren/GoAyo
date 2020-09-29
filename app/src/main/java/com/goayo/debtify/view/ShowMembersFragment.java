@@ -1,5 +1,6 @@
 package com.goayo.debtify.view;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -41,13 +42,20 @@ public class ShowMembersFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ShowMembersFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.show_members_fragment, container, false);
+        initTextView(binding);
         initRecyclerView(binding);
         onBackButtonPressed();
-
         //To disable optionsMenu
         setHasOptionsMenu(true);
 
         return binding.getRoot();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void initTextView(ShowMembersFragmentBinding binding) {
+        GroupsViewModel groupsViewModel = ViewModelProviders.of(getActivity(), new GroupViewModelFactory()).get(GroupsViewModel.class);
+        String groupName = groupsViewModel.getCurrentGroupData().getValue().getGroupName();
+        binding.showMembersGroupnameTextview.setText("Members of " + groupName);
     }
 
     private void onBackButtonPressed() {
