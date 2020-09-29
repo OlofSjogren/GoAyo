@@ -45,7 +45,7 @@ public class MockDatabaseTest {
 
     @Test
     public void registerUser() {
-        String testPhoneNumber = "0987123454"
+        String testPhoneNumber = "0987123454";
         database.registerUser(testPhoneNumber, "Ralf Broberg", "flar");
         assert (database.getUser(testPhoneNumber).getName().equals("Ralf Broberg"));
     }
@@ -89,9 +89,27 @@ public class MockDatabaseTest {
 
     @Test
     public void removeUserFromGroup() {
+
     }
 
     @Test
     public void getContactList() {
+        assertTrue(database.getContactList("0701234546").contains(database.getUser("0738980732")));
+        assertTrue(database.getContactList("0701234546").contains(database.getUser("0733387676")));
+
+        assertTrue(database.getContactList("0786458765").contains(database.getUser("0701094578")));
+        assertTrue(database.getContactList("0786458765").contains(database.getUser("0701234546")));
+
+        assertTrue(database.getContactList("0738980732").contains(database.getUser("0786458765")));
+        assertTrue(database.getContactList("0738980732").contains(database.getUser("0733387676")));
+
+        assertTrue(database.getContactList("0701094578").contains(database.getUser("0701234546")));
+        assertTrue(database.getContactList("0701094578").contains(database.getUser("0786458765")));
+        assertTrue(database.getContactList("0701094578").contains(database.getUser("0738980732")));
+        assertTrue(database.getContactList("0701094578").contains(database.getUser("0733387676")));
+
+        assertTrue(database.getContactList("0701094578").isEmpty());
+
+
     }
 }

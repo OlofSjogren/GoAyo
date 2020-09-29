@@ -17,6 +17,7 @@ import java.util.Set;
  * 2020-09-17 Modified by Gabriel & Yenan : Changed to exception on createDebt. Added comments.
  * 2020-09-25 Modified by Olof Sjögren, Alex Phu & Oscar Sanner : Implemented getUsersTotal for
  * calculating a specific Users net total debt.
+ * 2020-09-29 Modified by Olof & Oscar : Created method for removing all debts of a specific user (removeSpecificUserDebt).
  */
 class Ledger {
 
@@ -61,6 +62,19 @@ class Ledger {
      */
     public void payOffDebt(double amount, String debtTrackerID) throws Exception {
         findDebtTracker(debtTrackerID).payOffDebt(amount);
+    }
+
+    /**
+     * Removes all debts associated to a specific user in a group. Method is used when a user is removed from a group.
+     *
+     * @param user the user who's debts are to be removed.
+     */
+    public void removeSpecificUserDebt(User user){
+        for (DebtTracker dt : debtTrackerList){
+            if (dt.getLender().equals(user) || dt.getBorrower().equals(user)){
+                debtTrackerList.remove(dt);
+            }
+        }
     }
 
     private DebtTracker findDebtTracker(String debtTrackerID) {

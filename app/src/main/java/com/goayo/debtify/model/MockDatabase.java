@@ -1,5 +1,6 @@
 package com.goayo.debtify.model;
 
+import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.modelaccess.IUserData;
 
 import java.util.ArrayList;
@@ -327,6 +328,11 @@ class MockDatabase implements IDatabase {
         for (Group g : getGroups(phoneNumber)) {
             if (g.getGroupID().equals(groupID)) {
                 groupRemoveSuccess = g.removeUser(userToBeRemoved);
+                if (groupRemoveSuccess) {
+                    for (IDebtData iDebtData : g.get){
+                        i
+                    }
+                }
                 //Todo: Throw exception here. User doesn't exist in group, shouldn't rely on boolean.
             }
         }
