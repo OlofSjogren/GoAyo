@@ -21,10 +21,9 @@ import java.util.List;
  */
 public class PickUserViewModel extends ViewModel {
     private final ModelEngine modelEngine;
-
-    private MutableLiveData<List<IUserData>> potentialUsersToBeAddedData;
-    private MutableLiveData<List<IUserData>> selectedUsersData;
     private MutableLiveData<IGroupData> currentGroup;
+    private MutableLiveData<List<IUserData>> initialUsers;
+    private MutableLiveData<List<IUserData>> selectedUsersData;
 
     /**
      * Constructor for PickUserViewModel
@@ -46,26 +45,33 @@ public class PickUserViewModel extends ViewModel {
             currentGroup.setValue(ModelEngine.getInstance().getGroup(groupId));
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("PickUserViewModel", "setCurrentGroup: DATABASE ERROR?");
         }
     }
 
     //TODO
     // * Have to compare number since objects are not same when comparing ACTUAL identical objects.
     // How come User.java overwritten equals() isn't working as intended?
-    public void setPotentialUsersData() {
-        if (potentialUsersToBeAddedData == null) {
-            potentialUsersToBeAddedData = new MutableLiveData<List<IUserData>>();
+
+    /**
+     * Sets initialUsers with only "addable" users. (DetailedGroupActivity)
+     */
+    public void setInitialUsersToExcludeCurrentGroupMembers() {
+        //Users to be displayed at beginning
+        if (initialUsers == null) {
+            initialUsers = new MutableLiveData<List<IUserData>>();
         }
         List<IUserData> temporaryUserList = new ArrayList<>();
 
         //Temporary solution as equals doesn't work.
         List<String> phoneNumbers = new ArrayList<>();
         for (IUserData currentMembers : currentGroup.getValue().getIUserDataSet()) {
+            //Phone number of each current member
             phoneNumbers.add(currentMembers.getPhoneNumber());
         }
 
         for (IUserData contacts : modelEngine.getContacts()) {
+            //If phone number doesn't match with contacts, add
+            //Only show users who aren't in the group.
             if (!phoneNumbers.contains(contacts.getPhoneNumber())) {
                 temporaryUserList.add(contacts);
             }
@@ -77,20 +83,30 @@ public class PickUserViewModel extends ViewModel {
                 temporaryUserList.add(u);
             }
         }*/
-        potentialUsersToBeAddedData.setValue(temporaryUserList);
+        initialUsers.setValue(temporaryUserList);
     }
 
-    public LiveData<List<IUserData>> getPotentialUsersData() {
-        if (potentialUsersToBeAddedData == null) {
+    /**
+     * Sets initialUsers with all group members. (DebtActivity)
+     */
+    public void setInitialUsersToAllGroupMembers() {
+        if (initialUsers == null) {
+            initialUsers = new MutableLiveData<List<IUserData>>();
+        }
+        List<IUserData> temporaryUserList = new ArrayList<>(currentGroup.getValue().getIUserDataSet());
+        initialUsers.setValue(temporaryUserList);
+    }
+
+    public LiveData<List<IUserData>> getInitialUsers() {
+        if (initialUsers == null) {
             Log.d("PickUserViewModel", "getPotentialUsersData: Returnes null");
             return null;
         }
-        return potentialUsersToBeAddedData;
+        return initialUsers;
     }
 
     /**
      * Adds a user to selectedUsersData if it doesn't contain it, otherwise remove.
-     * Called from CardViews in PickUserAdapter
      *
      * @param user User to be added
      */
@@ -116,9 +132,5 @@ public class PickUserViewModel extends ViewModel {
             return null;
         }
         return selectedUsersData;
-    }
-
-    public void setUsersToBeRemoved() {
-        //TODO ("FUTURE USER STORY")
     }
 }

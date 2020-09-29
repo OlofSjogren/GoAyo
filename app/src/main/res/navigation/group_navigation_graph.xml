@@ -29,5 +29,10 @@
     <fragment
         android:id="@+id/showMembersFragment"
         android:name="com.goayo.debtify.view.ShowMembersFragment"
-        android:label="ShowMembersFragment" />
+        android:label="ShowMembersFragment"
+        tools:layout="@layout/show_members_fragment">
+        <action
+            android:id="@+id/action_showMembersFragment_to_groupFragment"
+            app:destination="@id/groupFragment" />
+    </fragment>
 </navigation>
