@@ -23,6 +23,10 @@ public class AddDebtViewModel extends ViewModel {
     private MutableLiveData<Set<IUserData>> selectedLenderData;
     private MutableLiveData<Set<IUserData>> selectedBorrowersData;
 
+    /**
+     * @return the LiveData object representing the Set of lender,
+     * the Set should contain only one element at most
+     */
     public LiveData<Set<IUserData>> getSelectedLenderData() {
         if (selectedLenderData == null) {
             selectedLenderData = new MutableLiveData<>();
@@ -30,6 +34,9 @@ public class AddDebtViewModel extends ViewModel {
         return selectedLenderData;
     }
 
+    /**
+     * @return the LiveData object representing the Set of borrowers
+     */
     public LiveData<Set<IUserData>> getSelectedBorrowersData() {
         if (selectedBorrowersData == null) {
             selectedBorrowersData = new MutableLiveData<>();
@@ -37,24 +44,41 @@ public class AddDebtViewModel extends ViewModel {
         return selectedBorrowersData;
     }
 
-    // TODO refactor all strings to IUserData or whatever
+    /**
+     * @param borrowers the Set of borrowers that replaces the current Set of borrowers
+     */
+    public void setSelectedBorrowersData(Set<IUserData> borrowers) {
+        selectedBorrowersData.setValue(borrowers);
+    }
+
+    /**
+     * @param lender the Set of lender that replaces the current Set of lender,
+     *               the Set should contain only one element at most
+     */
+    public void setSelectedLender(Set<IUserData> lender) {
+        selectedLenderData.setValue(lender);
+    }
+
+    /**
+     * creates a new Debt in the model
+     *
+     * @param groupID     the ID of the group to create a debt in
+     * @param lender      the lender
+     * @param borrowers   the borrower/borrowers
+     * @param amount      the total amount of the debt
+     * @param description a brief description of the debt
+     * @throws Exception to be specified later
+     */
     public void createDebt(String groupID,
                            Set<IUserData> lender,
                            Set<IUserData> borrowers,
                            double amount,
                            String description) throws Exception {
+        // TODO refactor all strings to IUserData
         modelEngine.createDebt(groupID,
                 // this is horrendous
                 ((IUserData) (convertToString(lender).toArray()[0])).getPhoneNumber(),
                 convertToString(borrowers), amount, description);
-    }
-
-    public void setSelectedLender(Set<IUserData> lender) {
-        selectedLenderData.setValue(lender);
-    }
-
-    public void setSelectedBorrowersData(Set<IUserData> borrowers) {
-        selectedBorrowersData.setValue(borrowers);
     }
 
     // TODO this method shouldn't be needed

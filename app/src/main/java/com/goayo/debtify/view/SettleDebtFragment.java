@@ -30,11 +30,11 @@ import java.util.List;
  * <p>
  * 2020-09-18 Modified by Yenan & Gabriel: Added SettleDebt view, tested with hard-coded value
  * 2020-09-25 Modified by Yenan & Gabriel: Implemented initRecyclerView
- * 2020-09-25 Modified by Yenan: Connected with SettleDebtFragment
+ * 2020-09-29 Modified by Yenan: Connected with SettleDebtFragment
  */
 public class SettleDebtFragment extends Fragment {
     // the ViewModel for this fragment
-    SettleDebtViewModel model;
+    private SettleDebtViewModel model;
     // the binding object which preloads all its xml components
     private SettleDebtFragmentBinding binding;
     // the adapter for recyclerview which will be used to get the selected item

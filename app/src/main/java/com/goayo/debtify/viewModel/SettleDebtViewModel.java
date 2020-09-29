@@ -22,6 +22,10 @@ public class SettleDebtViewModel extends ViewModel {
 
     private MutableLiveData<List<IDebtData>> debtListData;
 
+    /**
+     * the constructor,
+     * initialises the debtListData at creation
+     */
     public SettleDebtViewModel() {
         super();
         // initialise the debtListData since nothing else will initialise it
@@ -29,6 +33,11 @@ public class SettleDebtViewModel extends ViewModel {
         debtListData = new MutableLiveData<>(initList);
     }
 
+    /**
+     * loads data from the model into debtListData from the given groupID
+     *
+     * @param groupID the current group's ID
+     */
     public void retrieveData(String groupID) {
         try {
             debtListData.setValue(modelEngine.getGroup(groupID).getDebts());
@@ -36,10 +45,21 @@ public class SettleDebtViewModel extends ViewModel {
         }
     }
 
+    /**
+     * @return the copy of debtList
+     */
     public List<IDebtData> getDebtList() {
         return new ArrayList<>(Objects.requireNonNull(debtListData.getValue()));
     }
 
+    /**
+     * creates a new payment in the backend to the given Debt
+     *
+     * @param amount  the amount to be paid off
+     * @param debtID  the ID of the Debt that is to be paid
+     * @param groupID the ID of the Group the Debt belongs to
+     * @throws Exception to be specified later
+     */
     public void settleDebt(double amount, String debtID, String groupID) throws Exception {
         modelEngine.payOffDebt(amount, debtID, groupID);
     }
