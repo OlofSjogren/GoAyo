@@ -16,6 +16,9 @@ import java.util.Set;
  * 2020-09-28 Modified by Oscar Sanner and Olof Sjögren: Added new methods for all types of calls
  * related to the database.
  *
+ * 2020-09-29 Modified by Oscar Sanner: Added small adjustments to the documentation. Specified
+ * postconditios where needed.
+ *
  */
 
 public interface IDatabase {
@@ -68,6 +71,10 @@ public interface IDatabase {
     /**
      * Adds a new debt in a group between two users.
      *
+     * Postcondition: Does not promise to modify the same java objects as those held by the model.
+     *                Only promises to modify the database. Groups should be re-fetched after
+     *                calling this method.
+     *
      * @param groupID The id of the group in which the debt will be added.
      * @param lender The phone number of the person lending the money out.
      * @param borrowers A set of phone numbers of user who borrows money.
@@ -81,6 +88,10 @@ public interface IDatabase {
     /**
      * Add a new contact to a users list of contacts.
      *
+     * Postcondition: Does not promise to modify the same java objects as those held by the model.
+     *                Only promises to modify the database. Contact list should be re-fetched after
+     *                calling this method.
+     *
      * @param userPhoneNumber Phone number of the user who is adding a contact.
      * @param contactToBeAdded Phone number of the user being added as a contact.
      * @return True if both of the users exits and the operation was successful, otherwise false.
@@ -90,6 +101,10 @@ public interface IDatabase {
     /**
      * Remove a contact from a users contact list.
      *
+     * Postcondition: Does not promise to modify the same java objects as those held by the model.
+     *                Only promises to modify the database. Contact list should be re-fetched after
+     *                calling this method.
+     *
      * @param userPhoneNumber The phone number of the user removing the contact.
      * @param phoneNumberOfContactToBeRemoved The phone number of the user being removed as a contact.
      * @return True if both of the users exits and the operation was successful, otherwise false.
@@ -98,6 +113,10 @@ public interface IDatabase {
 
     /**
      * Adds a payment towards a debt.
+     *
+     * Postcondition: Does not promise to modify the same java objects as those held by the model.
+     *                Only promises to modify the database. Groups should be re-fetched after
+     *                calling this method.
      *
      * @param GroupID The id of the group to which the debt belongs to.
      * @param debtID The id of the debt towards which the payment is made.
@@ -109,6 +128,10 @@ public interface IDatabase {
 
     /**
      * Adds a user to a specific group.
+     *
+     * Postcondition: Does not promise to modify the same java objects as those held by the model.
+     *                Only promises to modify the database. Groups should be re-fetched after
+     *                calling this method.
      *
      * @param groupID The id of the group.
      * @param phoneNumber The id of the user.
@@ -138,6 +161,10 @@ public interface IDatabase {
 
     /**
      * Removes a user from a group.
+     *
+     * Postcondition: Does not promise to modify the same java objects as those held by the model.
+     *                Only promises to modify the database. Groups should be re-fetched after
+     *                calling this method.
      *
      * @param phoneNumber The phone number of the user being removed.
      * @param groupID The id of the group in which the user will be removed.
