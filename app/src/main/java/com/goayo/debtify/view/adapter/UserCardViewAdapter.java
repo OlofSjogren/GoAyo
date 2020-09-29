@@ -1,6 +1,5 @@
 package com.goayo.debtify.view.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +7,6 @@ import android.widget.TextView;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.modelaccess.IUserData;
-
-import org.w3c.dom.Text;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contacts_navigation_graph"
+    app:startDestination="@id/DisplayContactsFragment">
+
+    <fragment
+        android:id="@+id/DisplayContactsFragment"
+        android:name="com.goayo.debtify.view.DisplayContactsFragment"
+        android:label="Display Contacts"
+        tools:layout="@layout/display_contacts_fragment">
+
+        <!-- TODO: Rebuild PickUserFrag to include a button-label and header in the constructor for multi-purpose -->
+        <action
+            android:id="@+id/action_DisplayContactsFragment_to_PickUserFragment"
+            app:destination="@id/PickUsersFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/PickUsersFragment"
+        android:name="com.goayo.debtify.view.PickUsersFragment"
+        android:label="Pick User"
+        tools:layout="@layout/pick_users_fragment">
+    </fragment>
+
+</navigation>
