@@ -94,7 +94,7 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
             super(itemView);
             groupName = itemView.findViewById(R.id.pickuser_card_name_textview);
             balance = itemView.findViewById(R.id.group_card_balance_textview);
-            cardView = itemView.findViewById(R.id.group_cardView);
+            cardView = itemView.findViewById(R.id.pickuser_cardView);
         }
 
         /**

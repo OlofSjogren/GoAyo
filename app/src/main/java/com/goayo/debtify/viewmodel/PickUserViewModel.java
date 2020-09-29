@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * @author Alex Phu
  * @date 2020-09-29
- *
+ * <p>
  * ViewModel for PickUserFragment, and PickUserAdapter.
  */
 public class PickUserViewModel extends ViewModel {
@@ -35,6 +35,7 @@ public class PickUserViewModel extends ViewModel {
 
     /**
      * Sets the current group.
+     *
      * @param groupId GroupId of current group.
      */
     public void setCurrentGroup(String groupId) {
@@ -50,7 +51,7 @@ public class PickUserViewModel extends ViewModel {
     }
 
     public void setPotentialUsersData() {
-        if(potentialUsersToBeAddedData == null) {
+        if (potentialUsersToBeAddedData == null) {
             potentialUsersToBeAddedData = new MutableLiveData<List<IUserData>>();
         }
         List<IUserData> temporaryUserList = new ArrayList<>();
@@ -63,7 +64,7 @@ public class PickUserViewModel extends ViewModel {
     }
 
     public LiveData<List<IUserData>> getPotentialUsersData() {
-        if(potentialUsersToBeAddedData == null) {
+        if (potentialUsersToBeAddedData == null) {
             Log.d("PickUserViewModel", "getPotentialUsersData: Returnes null");
             return null;
         }
@@ -73,16 +74,19 @@ public class PickUserViewModel extends ViewModel {
     /**
      * Adds a user to selectedUsersData if it doesn't contain it, otherwise remove.
      * Called from CardViews in PickUserAdapter
+     *
      * @param user User to be added
      */
     public void setSelectedUsersData(IUserData user) {
-        if(selectedUsersData == null) {
+        if (selectedUsersData == null) {
             selectedUsersData = new MutableLiveData<List<IUserData>>();
+            selectedUsersData.setValue(new ArrayList<IUserData>());
         }
-        List<IUserData> temporaryUserList  = selectedUsersData.getValue();
-        if(!selectedUsersData.getValue().contains(user)){
+        List<IUserData> temporaryUserList = selectedUsersData.getValue();
+
+        if (!temporaryUserList.contains(user)) {
             temporaryUserList.add(user);
-        }else{
+        } else {
             //Unselect user
             temporaryUserList.remove(user);
         }
@@ -90,11 +94,27 @@ public class PickUserViewModel extends ViewModel {
     }
 
     public LiveData<List<IUserData>> getSelectedUsersData() {
-        if(selectedUsersData == null) {
+        if (selectedUsersData == null) {
             Log.d("PickUserViewModel", "getSelectedUsersData: Returns null");
             return null;
         }
         return selectedUsersData;
+    }
+
+    public boolean configureGroupMembers() {
+        if (selectedUsersData == null || selectedUsersData.getValue().isEmpty()) {
+            return false;
+        }
+        for (IUserData u : selectedUsersData.getValue()) {
+            if (!currentGroup.getValue().getIUserDataSet().contains(u)) {
+                try {
+                    modelEngine.addUserToGroup(u.getPhoneNumber(), currentGroup.getValue().getGroupID());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return true;
     }
 
     public void setUsersToBeRemoved() {

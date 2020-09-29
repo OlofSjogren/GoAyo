@@ -5,8 +5,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
@@ -79,6 +81,7 @@ public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUs
         private TextView username;
         private TextView phoneNumber;
         private CheckBox checkBox;
+        private CardView cardView;
 
         /**
          * Binds the elements in the layout file to a variable
@@ -90,6 +93,7 @@ public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUs
             username = itemView.findViewById(R.id.pickuser_card_name_textview);
             phoneNumber = itemView.findViewById(R.id.pickuser_card_phoneNumber_textview);
             checkBox = itemView.findViewById(R.id.pickuser_card_checkbox);
+            cardView = itemView.findViewById(R.id.pickuser_cardView);
         }
 
         /**
@@ -106,8 +110,15 @@ public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUs
         /**
          * Listener for cardview. Adds the user to the viewModel.
          */
-        public void setCardViewListener(PickUserViewModel viewModel, IUserData user) {
-            viewModel.setSelectedUsersData(user);
+        public void setCardViewListener(final PickUserViewModel viewModel, final IUserData user) {
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    checkBox.setChecked(!checkBox.isChecked());
+                    Toast.makeText(view.getContext(), "CLICKED!", Toast.LENGTH_SHORT).show();
+                    viewModel.setSelectedUsersData(user);
+                }
+            });
         }
     }
 }

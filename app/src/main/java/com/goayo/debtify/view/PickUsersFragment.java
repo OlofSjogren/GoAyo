@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,12 +37,14 @@ public class PickUsersFragment extends Fragment {
         PickUserViewModel viewModel = ViewModelProviders.of(this).get(PickUserViewModel.class);
 
         //TODO("Set current group!")
-        //viewModel.setCurrentGroup("XXXXXXX");
+        viewModel.setCurrentGroup("1003");
 
         //TODO ("Identifier for which data to fetch from ViewModel (Through Intent)")
         List<IUserData> userData = getUserData(0, viewModel);
 
         initRecyclerView(binding, userData, viewModel);
+        initContinueButton(binding, viewModel);
+
 
         return binding.getRoot();
     }
@@ -82,11 +84,15 @@ public class PickUsersFragment extends Fragment {
      *
      * @param binding Variable which can access the elements in the layout file.
      */
-    private void initContinueButton(PickUsersFragmentBinding binding) {
+    private void initContinueButton(PickUsersFragmentBinding binding, final PickUserViewModel viewModel) {
         binding.pickuserContinueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_pickUsersFragment_to_createGroupFragment);
+                if(!viewModel.configureGroupMembers()){
+                    Toast.makeText(view.getContext(), "Please select at least a user", Toast.LENGTH_SHORT).show();
+                }else{
+                    getParentFragmentManager().popBackStack();
+                }
             }
         });
     }
