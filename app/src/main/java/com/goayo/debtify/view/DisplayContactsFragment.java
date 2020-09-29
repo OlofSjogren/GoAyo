@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.DisplayContactsFragmentBinding;
 import com.goayo.debtify.modelaccess.IUserData;
-import com.goayo.debtify.view.adapter.UserCardView;
 import com.goayo.debtify.view.adapter.UserCardViewAdapter;
 import com.goayo.debtify.viewModel.ContactsViewModel;
 

@@ -8,6 +8,9 @@
         android:id="@+id/myGroupsFragment"
         android:title="Groups" />
     <item
+        android:id="@+id/myContactsFragment"
+        android:title="Contacts" />
+    <item
         android:id="@+id/historyFragment"
         android:title="History" />
     <item

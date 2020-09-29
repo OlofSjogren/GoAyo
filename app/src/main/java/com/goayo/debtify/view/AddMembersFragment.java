@@ -47,18 +47,18 @@ public class AddMembersFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void initRecyclerView(AddMembersFragmentBinding binding){
+    private void initRecyclerView(AddMembersFragmentBinding binding) {
         RecyclerView recyclerView = binding.addMembersRecyclerView;
         PickUserAdapter adapter = new PickUserAdapter(getContext(), getAddableMembers());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
     }
 
-    private IUserData[] getAddableMembers(){
+    private IUserData[] getAddableMembers() {
         List<IUserData> userDataToBeReturned = new ArrayList<>();
 
-        for(IUserData user : ModelEngine.getInstance().getContacts()){
-            if(!currentGroup.getIUserDataSet().contains(user)){
+        for (IUserData user : ModelEngine.getInstance().getContacts()) {
+            if (!currentGroup.getIUserDataSet().contains(user)) {
                 userDataToBeReturned.add(user);
             }
         }
