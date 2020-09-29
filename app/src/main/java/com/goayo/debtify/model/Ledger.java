@@ -70,7 +70,8 @@ class Ledger {
      * @param user the user who's debts are to be removed.
      */
     public void removeSpecificUserDebt(User user){
-        for (DebtTracker dt : debtTrackerList){
+        List<DebtTracker> newList = new ArrayList<>(debtTrackerList);
+        for (DebtTracker dt : newList){
             if (dt.getLender().equals(user) || dt.getBorrower().equals(user)){
                 debtTrackerList.remove(dt);
             }

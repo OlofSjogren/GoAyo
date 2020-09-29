@@ -52,6 +52,7 @@ class Group implements IGroupData {
         this.groupName = groupName;
         this.groupId = groupId;
         groupMembers.add(user);
+        this.groupLedger = new Ledger();
     }
 
     /**

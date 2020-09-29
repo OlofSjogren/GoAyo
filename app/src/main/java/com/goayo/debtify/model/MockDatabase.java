@@ -109,7 +109,7 @@ class MockDatabase implements IDatabase {
             groups.get(1).createDebt(users.get(pwOscar), alexSet, 27.09);
 
             groups.get(2).createDebt(users.get(pwGabriel), alexSet, 20.9);
-            groups.get(2).createDebt(users.get(pwGabriel), yenanSet, 30.0);
+            groups.get(2).createDebt(users.get(pwGabriel), yenanSet, 20.0);
 
             String id0_0 = groups.get(0).getDebts().get(0).getDebtID();
             String id0_1 = groups.get(0).getDebts().get(1).getDebtID();
@@ -119,12 +119,16 @@ class MockDatabase implements IDatabase {
 
             groups.get(0).payOffDebt(50.25, id0_0);
             groups.get(0).payOffDebt(25, id0_0);
+
             groups.get(0).payOffDebt(100.25, id0_1);
             groups.get(0).payOffDebt(40.25, id0_1);
+
             groups.get(0).payOffDebt(30.75, id0_2);
             groups.get(0).payOffDebt(25, id0_2);
+
             groups.get(0).payOffDebt(80.25, id0_3);
             groups.get(0).payOffDebt(10.00, id0_3);
+
             groups.get(0).payOffDebt(70.25, id0_4);
             groups.get(0).payOffDebt(5.00, id0_4);
 
@@ -138,7 +142,7 @@ class MockDatabase implements IDatabase {
             groups.get(1).payOffDebt(5.0, id1_2);
 
             String id2_0 = groups.get(2).getDebts().get(0).getDebtID();
-            String id2_1 = groups.get(2).getDebts().get(0).getDebtID();
+            String id2_1 = groups.get(2).getDebts().get(1).getDebtID();
 
             groups.get(2).payOffDebt(20.9, id2_0);
             groups.get(2).payOffDebt(20.0, id2_1);
@@ -234,8 +238,15 @@ class MockDatabase implements IDatabase {
     }
 
     @Override
-    public boolean addDebt(String groupID, String lender, Set<String> borrowers, double amount) throws Exception {
-        Group group = getGroupFromId(groupID);
+    public boolean addDebt(String groupID, String lender, Set<String> borrowers, double amount) {
+
+        Group group;
+        try {
+            group = getGroupFromId(groupID);
+        } catch (NullPointerException e){
+            return false;
+        }
+
         Set<User> borrowersSet = new HashSet<>();
         for(String string : borrowers){
             User user = getUserFromDatabase(string);
@@ -244,7 +255,11 @@ class MockDatabase implements IDatabase {
             }
             borrowersSet.add(user);
         }
-        group.createDebt(getUserFromDatabase(lender), borrowersSet, amount);
+        try {
+            group.createDebt(getUserFromDatabase(lender), borrowersSet, amount);
+        } catch (Exception e) {
+            return false;
+        }
         return true;
     }
 
@@ -307,7 +322,7 @@ class MockDatabase implements IDatabase {
     @Override
     public User getUserToBeLoggedIn(String phoneNumber, String password) {
         for (Map.Entry<String,User> passUserSet : users.entrySet()){
-            if (passUserSet.getKey().equals(password)){
+            if (passUserSet.getKey().equals(password) && passUserSet.getValue().getPhoneNumber().equals(phoneNumber)){
                 return passUserSet.getValue();
             }
         }
@@ -328,11 +343,7 @@ class MockDatabase implements IDatabase {
         for (Group g : getGroups(phoneNumber)) {
             if (g.getGroupID().equals(groupID)) {
                 groupRemoveSuccess = g.removeUser(userToBeRemoved);
-                if (groupRemoveSuccess) {
-                    for (IDebtData iDebtData : g.get){
-                        i
-                    }
-                }
+                groupRemoveSuccess = g.removeUser(userToBeRemoved);
                 //Todo: Throw exception here. User doesn't exist in group, shouldn't rely on boolean.
             }
         }

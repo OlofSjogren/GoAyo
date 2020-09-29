@@ -64,7 +64,7 @@ public class Account {
         if (loggedInUser == null) {
             throw new LoginException("Password or number wrong");
         }
-        contactList = initContactList(phoneNumber);
+        initContactList(phoneNumber);
         loadAssociatedGroups();
     }
 
@@ -85,6 +85,7 @@ public class Account {
             return;
         }
 
+        phoneNumberSet.add(loggedInUser.getPhoneNumber());
         database.registerGroup(groupName, phoneNumberSet);
         associatedGroups = database.getGroups(loggedInUser.getPhoneNumber());
     }
@@ -274,8 +275,8 @@ public class Account {
     }
 
 
-    private Set<User> initContactList(String phoneNumber) throws Exception {
-        return database.getContactList(phoneNumber);
+    private void initContactList(String phoneNumber) throws Exception {
+        contactList = database.getContactList(phoneNumber);
     }
 
     private void loadAssociatedGroups() {

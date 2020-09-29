@@ -50,7 +50,7 @@ public class MockDatabaseTest {
     @Test
     public void registerUser() {
         String testPhoneNumber = "0987123454";
-        database.registerUser(testPhoneNumber, "Ralf Broberg", "flar");
+        database.registerUser(testPhoneNumber, "flar", "Ralf Broberg");
         assert (database.getUser(testPhoneNumber).getName().equals("Ralf Broberg"));
     }
 
@@ -176,13 +176,13 @@ public class MockDatabaseTest {
     @Test
     public void getUserToBeLoggedIn() {
         User oscar = database.getUserToBeLoggedIn("0701234546", "racso");
-        assert (oscar != null);
+        assertNotNull(oscar);
         User noUser = database.getUserToBeLoggedIn("0987467281", "123");
-        assert (noUser == null);
+        assertNull(noUser);
         User wrongPw = database.getUserToBeLoggedIn("0701234546", "123");
-        assert (wrongPw == null);
+        assertNull(wrongPw);
         User wrongNumber = database.getUserToBeLoggedIn("0987467281", "racso");
-        assert (wrongNumber == null);
+        assertNull(wrongNumber);
     }
 
     @Test
@@ -192,6 +192,7 @@ public class MockDatabaseTest {
         User removedUser3 = database.getUser("0738980732");
         User removedUser4 = database.getUser("0701094578");
         User remainingUser5 = database.getUser("0733387676");
+
         Set<User> removedUserSet = new HashSet<>();
         removedUserSet.add(removedUser2);
         removedUserSet.add(removedUser3);
@@ -227,7 +228,7 @@ public class MockDatabaseTest {
         assertTrue(database.getContactList("0701094578").contains(database.getUser("0738980732")));
         assertTrue(database.getContactList("0701094578").contains(database.getUser("0733387676")));
 
-        assertTrue(database.getContactList("0701094578").isEmpty());
+        assertTrue(database.getContactList("0733387676").isEmpty());
 
 
     }

@@ -60,7 +60,7 @@ class DebtTracker implements IDebtData {
      * @throws if payOffAmount exceeds debt left to pay
      */
     public void payOffDebt(double payOffAmount) throws Exception {
-        if (debt.getDebtAmount() - getSumOfPayments() > payOffAmount) {
+        if (debt.getDebtAmount() - getSumOfPayments() >= payOffAmount) {
             payments.add(new Payment(payOffAmount));
         } else {
             //TODO: Sepcify what exception this is.
