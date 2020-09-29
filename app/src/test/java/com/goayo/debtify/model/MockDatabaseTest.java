@@ -89,6 +89,27 @@ public class MockDatabaseTest {
 
     @Test
     public void removeUserFromGroup() {
+        User removedUser1 = database.getUser("0701234546");
+        User removedUser2 = database.getUser("0786458765");
+        User removedUser3 = database.getUser("0738980732");
+        User removedUser4 = database.getUser("0701094578");
+        User remainingUser5 = database.getUser("0733387676");
+        Set<User> removedUserSet = new HashSet<>();
+        removedUserSet.add(removedUser2);
+        removedUserSet.add(removedUser3);
+        removedUserSet.add(removedUser4);
+
+        Group testGroup = database.getGroupFromId("1a705586-238d-4a29-b7af-36dc103bd45a");
+
+        testGroup.removeUser(removedUser1);
+        testGroup.removeUser(removedUserSet);
+
+        assertFalse(testGroup.getGroupMembers().contains(removedUser1));
+        for (User u : removedUserSet){
+            assertFalse(testGroup.getGroupMembers().contains(u));
+        }
+        assertTrue(testGroup.getGroupMembers().contains(remainingUser5));
+        assertTrue(testGroup.getGroupMembers().size() == 1);
 
     }
 

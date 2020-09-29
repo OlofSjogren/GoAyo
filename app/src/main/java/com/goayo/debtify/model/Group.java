@@ -75,7 +75,7 @@ class Group implements IGroupData {
     }
 
     /**
-     * Removing a single user from group.
+     * Removing a single user from group and all debts associated to it in the group.
      *
      * @param removeUser single user to remove.
      * @return Returns true if successfully removed the user from the grouplist, otherwise returns false.
@@ -86,12 +86,15 @@ class Group implements IGroupData {
     }
 
     /**
-     * Removing multiple users from group.
+     * Removing multiple users from group and all debts associated to them in the group.
      *
      * @param removeUsers multiple users to remove.
      * @return Returns true if successfully removed the all users from the grouplist, otherwise returns false.
      */
     public boolean removeUser(Set<User> removeUsers) {
+        for (User u : removeUsers){
+            groupLedger.removeSpecificUserDebt(u);
+        }
         return groupMembers.removeAll(removeUsers);
     }
 
