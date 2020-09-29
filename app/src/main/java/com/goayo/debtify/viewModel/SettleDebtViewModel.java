@@ -37,8 +37,7 @@ public class SettleDebtViewModel extends ViewModel {
     }
 
     public List<IDebtData> getDebtList() {
-       // return new ArrayList<>(Objects.requireNonNull(debtListData.getValue()));
-        return new ArrayList<>(modelEngine.getGroups()).get(0).getDebts();
+        return new ArrayList<>(Objects.requireNonNull(debtListData.getValue()));
     }
 
     public void settleDebt(double amount, String debtID, String groupID) throws Exception {
