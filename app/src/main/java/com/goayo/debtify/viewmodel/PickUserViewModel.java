@@ -23,8 +23,12 @@ public class PickUserViewModel extends ViewModel {
     private final ModelEngine modelEngine;
 
     private MutableLiveData<List<IUserData>> potentialUsersToBeAddedData;
+    private MutableLiveData<List<IUserData>> selectedUsersData;
     private MutableLiveData<IGroupData> currentGroup;
 
+    /**
+     * Constructor for PickUserViewModel
+     */
     public PickUserViewModel() {
         modelEngine = ModelEngine.getInstance();
     }
@@ -45,7 +49,7 @@ public class PickUserViewModel extends ViewModel {
         }
     }
 
-    public void setUsersToBeAdded() {
+    public void setPotentialUsersData() {
         if(potentialUsersToBeAddedData == null) {
             potentialUsersToBeAddedData = new MutableLiveData<List<IUserData>>();
         }
@@ -58,12 +62,39 @@ public class PickUserViewModel extends ViewModel {
         potentialUsersToBeAddedData.setValue(temporaryUserList);
     }
 
-    public LiveData<List<IUserData>> getUsersToBeAdded() {
+    public LiveData<List<IUserData>> getPotentialUsersData() {
         if(potentialUsersToBeAddedData == null) {
-            Log.d("PickUserViewModel", "Returnes null in getUserToBeAdded()");
+            Log.d("PickUserViewModel", "getPotentialUsersData: Returnes null");
             return null;
         }
         return potentialUsersToBeAddedData;
+    }
+
+    /**
+     * Adds a user to selectedUsersData if it doesn't contain it, otherwise remove.
+     * Called from CardViews in PickUserAdapter
+     * @param user User to be added
+     */
+    public void setSelectedUsersData(IUserData user) {
+        if(selectedUsersData == null) {
+            selectedUsersData = new MutableLiveData<List<IUserData>>();
+        }
+        List<IUserData> temporaryUserList  = selectedUsersData.getValue();
+        if(!selectedUsersData.getValue().contains(user)){
+            temporaryUserList.add(user);
+        }else{
+            //Unselect user
+            temporaryUserList.remove(user);
+        }
+        selectedUsersData.setValue(temporaryUserList);
+    }
+
+    public LiveData<List<IUserData>> getSelectedUsersData() {
+        if(selectedUsersData == null) {
+            Log.d("PickUserViewModel", "getSelectedUsersData: Returns null");
+            return null;
+        }
+        return selectedUsersData;
     }
 
     public void setUsersToBeRemoved() {

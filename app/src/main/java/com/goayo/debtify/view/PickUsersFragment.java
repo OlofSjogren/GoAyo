@@ -21,7 +21,6 @@ import com.goayo.debtify.view.adapter.PickUserAdapter;
 import com.goayo.debtify.viewmodel.PickUserViewModel;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Alex Phu, Olof Sjögren
@@ -66,14 +65,15 @@ public class PickUsersFragment extends Fragment {
         switch (typeOfData) {
             case 0:
                 //Maybe don't call it here, let getUsersToBeAdded call it.
-                viewModel.setUsersToBeAdded();
-                return viewModel.getUsersToBeAdded().getValue();
+                viewModel.setPotentialUsersData();
+                return viewModel.getPotentialUsersData().getValue();
             case 1:
                 //TODO ("DEBTDATA")
                 break;
             default:
                 return null;
         }
+        return null;
     }
 
 

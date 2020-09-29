@@ -7,7 +7,6 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
@@ -61,6 +60,8 @@ public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUs
     @Override
     public void onBindViewHolder(@NonNull PickUserViewHolder holder, int position) {
         holder.setUserData(userData.get(position));
+
+        holder.setCardViewListener(viewModel, userData.get(position));
     }
 
     @Override
@@ -103,10 +104,10 @@ public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUs
         }
 
         /**
-         * Sets a listener to the cardView
+         * Listener for cardview. Adds the user to the viewModel.
          */
-        public void setCardViewListener() {
-            //TODO ("TO BE IMPLEMENTED")
+        public void setCardViewListener(PickUserViewModel viewModel, IUserData user) {
+            viewModel.setSelectedUsersData(user);
         }
     }
 }
