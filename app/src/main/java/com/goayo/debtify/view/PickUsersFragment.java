@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,7 +50,7 @@ public class PickUsersFragment extends Fragment {
 
         }
         //TODO ("Identifier for which data to fetch from ViewModel (Through Intent)")
-        List<IUserData> userData = getUserData(0, viewModel);
+        List<IUserData> userData = getUserData(viewModel);
 
         initRecyclerView(binding, userData, viewModel);
         initContinueButton(binding, viewModel);
@@ -72,19 +73,9 @@ public class PickUsersFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
     }
 
-    private List<IUserData> getUserData(int typeOfData, PickUserViewModel viewModel) {
-        switch (typeOfData) {
-            case 0:
-                //Maybe don't call it here, let getUsersToBeAdded call it.
-                viewModel.setPotentialUsersData();
-                return viewModel.getPotentialUsersData().getValue();
-            case 1:
-                //TODO ("DEBTDATA")
-                break;
-            default:
-                return null;
-        }
-        return null;
+    private List<IUserData> getUserData(PickUserViewModel viewModel) {
+        viewModel.setPotentialUsersData();
+        return viewModel.getPotentialUsersData().getValue();
     }
 
 
@@ -101,7 +92,8 @@ public class PickUsersFragment extends Fragment {
                 if (!viewModel.configureGroupMembers()) {
                     Toast.makeText(view.getContext(), "Please select at least a user", Toast.LENGTH_SHORT).show();
                 } else {
-                    getParentFragmentManager().popBackStack();
+                    Navigation.findNavController(getActivity(), R.id.group_nav_host).navigate(R.id.action_pickUsersFragment_to_groupFragment);
+                    viewModel.setCurrentGroup(getActivity().getIntent().getStringExtra("GROUP_ID"));
                 }
             }
         });

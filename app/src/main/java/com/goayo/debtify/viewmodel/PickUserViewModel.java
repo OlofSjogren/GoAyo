@@ -50,16 +50,35 @@ public class PickUserViewModel extends ViewModel {
         }
     }
 
+    //TODO
+    // * Have to compare number since objects are not same when comparing ACTUAL identical objects.
+    // How come User.java overwritten equals() isn't working as intended?
     public void setPotentialUsersData() {
         if (potentialUsersToBeAddedData == null) {
             potentialUsersToBeAddedData = new MutableLiveData<List<IUserData>>();
         }
         List<IUserData> temporaryUserList = new ArrayList<>();
-        for (IUserData u : modelEngine.getContacts()) {
+
+        //Temporary solution as equals doesn't work.
+        List<String> phoneNumbers = new ArrayList<>();
+        for(IUserData currentMembers: currentGroup.getValue().getIUserDataSet()){
+            phoneNumbers.add(currentMembers.getPhoneNumber());
+        }
+
+        for(IUserData contacts: modelEngine.getContacts()){
+            if(!phoneNumbers.contains(contacts.getPhoneNumber())){
+                temporaryUserList.add(contacts);
+            }
+        }
+
+
+
+        //Use below when Equal in User works
+        /*for (IUserData u : modelEngine.getContacts()) {
             if (!currentGroup.getValue().getIUserDataSet().contains(u)) {
                 temporaryUserList.add(u);
             }
-        }
+        }*/
         potentialUsersToBeAddedData.setValue(temporaryUserList);
     }
 
