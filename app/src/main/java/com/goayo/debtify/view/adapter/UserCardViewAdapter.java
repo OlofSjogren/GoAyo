@@ -1,20 +1,18 @@
 package com.goayo.debtify.view.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.goayo.debtify.R;
-import com.goayo.debtify.modelaccess.IUserData;
-
-import org.w3c.dom.Text;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.goayo.debtify.R;
+import com.goayo.debtify.modelaccess.IUserData;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,6 +24,7 @@ import java.util.List;
  * <p>
  * 2020-09-23 Modified by Gabriel Brattgård, Yenan Wang: Implemented.
  * 2020-09-29 Modified by Yenan: Refactored code to use a List instead of array
+ * 2020-09-29 Modified by Yenan: Added a few methods for data handling
  */
 public class UserCardViewAdapter extends RecyclerView.Adapter<UserCardViewAdapter.UserCardViewHolder> {
 
@@ -65,18 +64,18 @@ public class UserCardViewAdapter extends RecyclerView.Adapter<UserCardViewAdapte
     public void onBindViewHolder(UserCardViewHolder holder, int position) {
         try {
             holder.setUserData(userList.get(position));
-            holder.itemView.setOnClickListener(commonClickListener);
-        } catch (NullPointerException ignored) {
+        } catch (IndexOutOfBoundsException ignored) {
         }
+        holder.itemView.setOnClickListener(commonClickListener);
     }
 
     @Override
     public int getItemCount() {
-        try {
-            return userList.size();
-        } catch (NullPointerException e) {
-            return 0;
+        // makes sure the default view gets displayed
+        if (userList.size() == 0) {
+            return 1;
         }
+        return userList.size();
     }
 
     /**
@@ -94,6 +93,24 @@ public class UserCardViewAdapter extends RecyclerView.Adapter<UserCardViewAdapte
      */
     public void removedCommonClickListener() {
         setCommonClickListener(null);
+    }
+
+    /**
+     * replace the whole list with the parameter and then updates it
+     *
+     * @param userList the userList to be loaded in the adapter
+     */
+    public void updateList(List<IUserData> userList) {
+        this.userList.clear();
+        this.userList.addAll(userList);
+        notifyItemRangeChanged(0, userList.size());
+    }
+
+    /**
+     * @return a copy of userList
+     */
+    public List<IUserData> getUserList() {
+        return new ArrayList<>(userList);
     }
 
     /**
