@@ -20,8 +20,8 @@ import java.util.Set;
  * classes and by extension, the view and controller package.
  *
  * 2020-09-21 Modified by Alex and Oscar: Implemented Leave and remove feature.
- *
  * 2020-09-23 Modified by Olof: getGroupFromID-method is now public and documented, called upon by ModelEngine to provide data to view.
+ * 2020-09-28 Modified by Yenan: refactor to add parameter description to createDebt method
  */
 public class Account {
 
@@ -147,9 +147,10 @@ public class Account {
      * @param lender The lender.
      * @param borrower The borrower(s).
      * @param owed Amount of owed money.
+     * @param description the brief description of the debt
      * @throws Exception Thrown if group or users are not found, or if the set of borrower is empty.
      */
-    public void createDebt(String groupID, String lender, Set<String> borrower, double owed) throws Exception {
+    public void createDebt(String groupID, String lender, Set<String> borrower, double owed, String description) throws Exception {
         try {
             userIsLoggedIn();
         } catch (Exception e) {
@@ -168,7 +169,7 @@ public class Account {
             borrowerUsers.add(getUserFromID(s));
         }
         //TODO ("Check database if debt is created before delegating task to tempGroup")
-        tempGroup.createDebt(lenderUser, borrowerUsers, owed);
+        tempGroup.createDebt(lenderUser, borrowerUsers, owed, description);
     }
 
     /**

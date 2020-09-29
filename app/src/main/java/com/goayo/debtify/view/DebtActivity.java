@@ -1,11 +1,11 @@
 package com.goayo.debtify.view;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-
-import android.os.Bundle;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.ActivityDebtBinding;
@@ -15,6 +15,8 @@ import com.goayo.debtify.databinding.ActivityDebtBinding;
  * @date 2020-09-22
  * <p>
  * Activity for creating or settling debt
+ * <p>
+ * 2020-09-28 Modified by Yenan : Removed method call on supportBar since it doesn't exist anymore
  */
 public class DebtActivity extends AppCompatActivity {
 
@@ -42,7 +44,5 @@ public class DebtActivity extends AppCompatActivity {
             finish();
             // TODO send error message
         }
-
-        this.getSupportActionBar().hide();
     }
 }

@@ -15,11 +15,9 @@ import java.util.Set;
  * packages depending on the model. This class aims to keep the model loosely coupled with other packages.
  * <p>
  * 2020-09-18 Modfied by Olof, Yenan & Alex : removed booleans returns and replaced with exceptions.
- *
  * 2020-09-21 Modified by Alex and Oscar: Implemented Leave and remove feature.
- *
  * 2020-09-23 Modified by Olof: Added getGroup-method provided a specific id.
- *
+ * 2020-09-28 Modified by Yenan: refactor to add parameter description to createDebt method
  * 2020-09-28 Modified by Alex: Refactored hardcoded debt data.
  */
 
@@ -50,21 +48,21 @@ public class ModelEngine {
         Set<String> debtData1 =  new HashSet<>();
         debtData1.add("0735216752");
         try {
-            createDebt("1003", "0756415987", debtData1, 23.90);
+            createDebt("1003", "0756415987", debtData1, 23.90, "ass");
         } catch (Exception e) {
             e.printStackTrace();
         }
         Set<String> debtData2 =  new HashSet<>();
         debtData2.add("0773345654");
         try {
-            createDebt("1002", "0734355982", debtData2, 69.50);
+            createDebt("1002", "0734355982", debtData2, 69.50, "abs");
         } catch (Exception e) {
             e.printStackTrace();
         }
         Set<String> debtData3 =  new HashSet<>();
         debtData3.add("0704345621");
         try {
-            createDebt("1004", "0735216752", debtData3, 79.99);
+            createDebt("1004", "0735216752", debtData3, 79.99, "the D");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -221,11 +219,12 @@ public class ModelEngine {
      * @param lender   The phone number of the user lending the money.
      * @param borrower A list of one or more users.
      * @param owed     A positive double, representing the whole value spent by the lender.
+     * @param description A short string, preferably <20 characters, that describes the debt
      * @return True if the operation was successful, server side and in the program.
      * False if the preconditions aren't met, or if some form of connection error occurs.
      */
-    public void createDebt(String groupID, String lender, Set<String> borrower, double owed) throws Exception {
-        account.createDebt(groupID, lender, borrower, owed);
+    public void createDebt(String groupID, String lender, Set<String> borrower, double owed, String description) throws Exception {
+        account.createDebt(groupID, lender, borrower, owed, description);
     }
 
     /**
