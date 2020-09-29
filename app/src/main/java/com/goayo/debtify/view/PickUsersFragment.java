@@ -36,6 +36,7 @@ import java.util.Objects;
  * <p>
  * 2020-09-29 Modified by Alex Phu: Implementation of RecyclerView, continueButton, differentiating which Activity started PickUserFragment.
  * Connected with PickUserViewModel.
+ * Disabled OptionsMenu.
  */
 public class PickUsersFragment extends Fragment {
 
@@ -82,6 +83,9 @@ public class PickUsersFragment extends Fragment {
 
         initContinueButton(binding);
 
+        //To disable optionsMenu
+        setHasOptionsMenu(true);
+
         return binding.getRoot();
     }
 
@@ -124,5 +128,10 @@ public class PickUsersFragment extends Fragment {
         });
     }
 
-
+    @Override
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        //To remove OptionMenu from
+        menu.clear();
+    }
 }

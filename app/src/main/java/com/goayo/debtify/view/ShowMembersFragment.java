@@ -2,6 +2,7 @@ package com.goayo.debtify.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -32,6 +33,7 @@ import java.util.Set;
  * <p>
  * 2020-09-29 Modified by Alex: Implemented RecyclerView and connected it with GroupsViewModel.
  * BackbuttonPressed now won't exit activity.
+ * Disabled OptionsMenu.
  */
 public class ShowMembersFragment extends Fragment {
 
@@ -41,10 +43,14 @@ public class ShowMembersFragment extends Fragment {
         ShowMembersFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.show_members_fragment, container, false);
         initRecyclerView(binding);
         onBackButtonPressed();
+
+        //To disable optionsMenu
+        setHasOptionsMenu(true);
+
         return binding.getRoot();
     }
 
-    private void onBackButtonPressed(){
+    private void onBackButtonPressed() {
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -65,5 +71,12 @@ public class ShowMembersFragment extends Fragment {
         UserCardViewAdapter userCardViewAdapter = new UserCardViewAdapter(data);
         recyclerView.setAdapter(userCardViewAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        //To remove OptionMenu from
+        menu.clear();
     }
 }
