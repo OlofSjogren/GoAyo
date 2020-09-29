@@ -27,18 +27,20 @@ import java.util.Set;
  * @date 2020-09-23
  * <p>
  * Show members fragment.
+ * <p>
+ * 2020-09-29 Modified by Alex: Implemented RecyclerView and connected it with GroupsViewModel.
  */
 public class ShowMembersFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ShowMembersFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.show_members_fragment, container,false);
+        ShowMembersFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.show_members_fragment, container, false);
         initRecyclerView(binding);
         return binding.getRoot();
     }
 
-    private void initRecyclerView(ShowMembersFragmentBinding binding){
+    private void initRecyclerView(ShowMembersFragmentBinding binding) {
         RecyclerView recyclerView = binding.showMembersRecyclerView;
         GroupsViewModel viewModel = ViewModelProviders.of(this, new GroupViewModelFactory()).get(GroupsViewModel.class);
 

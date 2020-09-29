@@ -61,17 +61,15 @@ public class PickUserViewModel extends ViewModel {
 
         //Temporary solution as equals doesn't work.
         List<String> phoneNumbers = new ArrayList<>();
-        for(IUserData currentMembers: currentGroup.getValue().getIUserDataSet()){
+        for (IUserData currentMembers : currentGroup.getValue().getIUserDataSet()) {
             phoneNumbers.add(currentMembers.getPhoneNumber());
         }
 
-        for(IUserData contacts: modelEngine.getContacts()){
-            if(!phoneNumbers.contains(contacts.getPhoneNumber())){
+        for (IUserData contacts : modelEngine.getContacts()) {
+            if (!phoneNumbers.contains(contacts.getPhoneNumber())) {
                 temporaryUserList.add(contacts);
             }
         }
-
-
 
         //Use below when Equal in User works
         /*for (IUserData u : modelEngine.getContacts()) {
@@ -118,22 +116,6 @@ public class PickUserViewModel extends ViewModel {
             return null;
         }
         return selectedUsersData;
-    }
-
-    public boolean configureGroupMembers() {
-        if (selectedUsersData == null || selectedUsersData.getValue().isEmpty()) {
-            return false;
-        }
-        for (IUserData u : selectedUsersData.getValue()) {
-            if (!currentGroup.getValue().getIUserDataSet().contains(u)) {
-                try {
-                    modelEngine.addUserToGroup(u.getPhoneNumber(), currentGroup.getValue().getGroupID());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return true;
     }
 
     public void setUsersToBeRemoved() {

@@ -19,6 +19,7 @@ import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.PickUsersFragmentBinding;
 import com.goayo.debtify.modelaccess.IUserData;
 import com.goayo.debtify.view.adapter.PickUserAdapter;
+import com.goayo.debtify.viewmodel.DetailedGroupViewModel;
 import com.goayo.debtify.viewmodel.PickUserViewModel;
 
 import java.util.List;
@@ -29,6 +30,8 @@ import java.util.Objects;
  * @date 2020-09-18
  * <p>
  * Selecting users page.
+ *
+ * 2020-09-29 Modified by Alex Phu: -----------
  */
 public class PickUsersFragment extends Fragment {
 
@@ -53,8 +56,7 @@ public class PickUsersFragment extends Fragment {
         List<IUserData> userData = getUserData(viewModel);
 
         initRecyclerView(binding, userData, viewModel);
-        initContinueButton(binding, viewModel);
-
+        initContinueButton(binding);
 
         return binding.getRoot();
     }
@@ -78,22 +80,26 @@ public class PickUsersFragment extends Fragment {
         return viewModel.getPotentialUsersData().getValue();
     }
 
-
     /**
      * Initializes the continue button to navigate to the next view.
      *
      * @param binding Variable which can access the elements in the layout file.
      */
-    private void initContinueButton(PickUsersFragmentBinding binding, final PickUserViewModel viewModel) {
+    private void initContinueButton(PickUsersFragmentBinding binding) {
+        final DetailedGroupViewModel detailedGroupViewModel = ViewModelProviders.of(this).get(DetailedGroupViewModel.class);
+        final PickUserViewModel pickUserViewModel = ViewModelProviders.of(this).get(PickUserViewModel.class);
+
+
         binding.pickuserContinueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO ("INSERT IDENTIFIER TO configureGroupMembers() to be able to distinguish debt or group")
-                if (!viewModel.configureGroupMembers()) {
+                detailedGroupViewModel.setCurrentGroup(getActivity().getIntent().getStringExtra("GROUP_ID"));
+                detailedGroupViewModel.setUsersToBeAdded(pickUserViewModel.getSelectedUsersData().getValue());
+                if (!detailedGroupViewModel.addSelectedMembersToCurrentGroup()) {
                     Toast.makeText(view.getContext(), "Please select at least a user", Toast.LENGTH_SHORT).show();
                 } else {
                     Navigation.findNavController(getActivity(), R.id.group_nav_host).navigate(R.id.action_pickUsersFragment_to_groupFragment);
-                    viewModel.setCurrentGroup(getActivity().getIntent().getStringExtra("GROUP_ID"));
                 }
             }
         });
