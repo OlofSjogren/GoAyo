@@ -83,7 +83,7 @@ public interface IDatabase {
      *         doesn't exist.
      * @throws Exception if something goes wrong when connecting to the server.
      */
-    boolean addDebt(String groupID, String lender, Set<String> borrowers, double amount) throws Exception;
+    boolean addDebt(String groupID, String lender, Set<String> borrowers, double amount, String description) throws Exception;
 
     /**
      * Add a new contact to a users list of contacts.

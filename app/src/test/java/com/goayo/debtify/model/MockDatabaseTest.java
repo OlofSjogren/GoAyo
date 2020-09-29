@@ -88,7 +88,7 @@ public class MockDatabaseTest {
         List<IDebtData> debtDataBefore = database.getGroupFromId("1a705586-238d-4a29-b7af-36dc103bd45a").getDebts();
 
         try {
-            database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", alexBorrowerSet, 20);
+            database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", alexBorrowerSet, 20, "TestDebt11");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -105,9 +105,9 @@ public class MockDatabaseTest {
         assert (debtDataAfter.get(0).getBorrower().getName().equals("Alex Phu"));
         assert (debtDataAfter.get(0).getLender().getName().equals("Oscar Sanner"));
 
-        assert (!(database.addDebt("Non existent Id", "Non existent number", new HashSet<String>(), 20)));
-        assert (!(database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "Non existent number", new HashSet<String>(), 20)));
-        assert (!(database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", new HashSet<String>(), 20)));
+        assert (!(database.addDebt("Non existent Id", "Non existent number", new HashSet<String>(), 20, "TestDebt12")));
+        assert (!(database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "Non existent number", new HashSet<String>(), 20, "TestDebt13")));
+        assert (!(database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", new HashSet<String>(), 20, "TestDebt14")));
 
     }
 
@@ -138,7 +138,7 @@ public class MockDatabaseTest {
         List<IDebtData> debtDataBefore = database.getGroupFromId("1a705586-238d-4a29-b7af-36dc103bd45a").getDebts();
 
         try {
-            database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", alexBorrowerSet, 20);
+            database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", alexBorrowerSet, 20, "TestDebt15");
         } catch (Exception e) {
             e.printStackTrace();
         }

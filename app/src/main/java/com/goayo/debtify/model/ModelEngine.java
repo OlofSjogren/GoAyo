@@ -3,6 +3,7 @@ package com.goayo.debtify.model;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -14,10 +15,10 @@ import java.util.Set;
  * packages depending on the model. This class aims to keep the model loosely coupled with other packages.
  * <p>
  * 2020-09-18 Modfied by Olof, Yenan & Alex : removed booleans returns and replaced with exceptions.
- *
  * 2020-09-21 Modified by Alex and Oscar: Implemented Leave and remove feature.
- *
  * 2020-09-23 Modified by Olof: Added getGroup-method provided a specific id.
+ * 2020-09-28 Modified by Yenan: refactor to add parameter description to createDebt method
+ * 2020-09-28 Modified by Alex: Refactored hardcoded debt data.
  */
 
 public class ModelEngine {
@@ -29,6 +30,13 @@ public class ModelEngine {
     private ModelEngine(Account account, IDatabase database) {
         this.account = account;
         this.database = database;
+        //TODO: AUTOMATICALLY LOGS THE USER IN WHEN THIS CLASS IS INSTANTIATED, BECAUSE
+        //TODO LOGIN FUNCTIONALITY IS YET TO BE IMPLEMENTED
+        try {
+            logInUser("0701234546", "racso");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -182,11 +190,12 @@ public class ModelEngine {
      * @param lender   The phone number of the user lending the money.
      * @param borrower A list of one or more users.
      * @param owed     A positive double, representing the whole value spent by the lender.
+     * @param description A short string, preferably <20 characters, that describes the debt
      * @return True if the operation was successful, server side and in the program.
      * False if the preconditions aren't met, or if some form of connection error occurs.
      */
-    public void createDebt(String groupID, String lender, Set<String> borrower, double owed) throws Exception {
-        account.createDebt(groupID, lender, borrower, owed);
+    public void createDebt(String groupID, String lender, Set<String> borrower, double owed, String description) throws Exception {
+        account.createDebt(groupID, lender, borrower, owed, description);
     }
 
     /**

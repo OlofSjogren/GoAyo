@@ -41,7 +41,7 @@ public class LedgerTest {
         List<IDebtData> debtDataBefore = database.getGroupFromId("1a705586-238d-4a29-b7af-36dc103bd45a").getDebts();
 
         try {
-            database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", alexBorrowerSet, 20);
+            database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", alexBorrowerSet, 20, "TestDebt0");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -58,9 +58,9 @@ public class LedgerTest {
         assertEquals("Alex Phu", debtDataAfter.get(0).getBorrower().getName());
         assertEquals("Oscar Sanner", debtDataAfter.get(0).getLender().getName());
 
-        assertFalse(database.addDebt("Non existent Id", "Non existent number", new HashSet<String>(), 20));
-        assertFalse(database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "Non existent number", new HashSet<String>(), 20));
-        assertFalse(database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", new HashSet<String>(), 20));
+        assertFalse(database.addDebt("Non existent Id", "Non existent number", new HashSet<String>(), 20, "TestDebt1"));
+        assertFalse(database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "Non existent number", new HashSet<String>(), 20, "TestDebt2"));
+        assertFalse(database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", new HashSet<String>(), 20, "TestDebt3"));
 
     }
 
@@ -72,7 +72,7 @@ public class LedgerTest {
         List<IDebtData> debtDataBefore = database.getGroupFromId("1a705586-238d-4a29-b7af-36dc103bd45a").getDebts();
 
         try {
-            database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", alexBorrowerSet, 20);
+            database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", alexBorrowerSet, 20, "Test Description");
         } catch (Exception e) {
             e.printStackTrace();
         }

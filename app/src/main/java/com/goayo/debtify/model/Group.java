@@ -18,6 +18,7 @@ import java.util.Set;
  * 2020-09-17 Modified by Alex Phu and Olof Sjögren: Changed List type to Set in method parameters.
  * 2020-09-16 Modified by Gabriel & Yenan : Added real ledger. Changed types on getDebts. Delegated to ledger.
  * 2020-09-18 Modified by Oscar & Alex : Switched over List types to Set, also added JDocs and switch boolean returns to exceptions.
+ * 2020-09-28 Modified by Yenan: refactor to add parameter description to createDebt method
  * 2020-09-29 Modified by Olof & Oscar : Added method call in removeUser() to also remove all debts associated to that user in the group.
  * 2020-09-29 Modified by Olof & Oscar : Fixed bug where one of the constructors wouldn't initiate the ledger.
  *
@@ -107,11 +108,12 @@ class Group implements IGroupData {
      * @param lender    the user who lends out money
      * @param borrowers either a single or several users who borrow from the lender
      * @param owed      total amount lent out by the lender to the borrowers
+     * @param description the brief description of the debt
      * @throws Exception
      */
     // TODO: Specify exception.
-    public void createDebt(User lender, Set<User> borrowers, double owed) throws Exception {
-        groupLedger.createDebt(lender, borrowers, owed);
+    public void createDebt(User lender, Set<User> borrowers, double owed, String description) throws Exception {
+        groupLedger.createDebt(lender, borrowers, owed, description);
     }
 
     /**

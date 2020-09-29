@@ -17,6 +17,7 @@ import java.util.Set;
  * 2020-09-17 Modified by Gabriel & Yenan : Changed to exception on createDebt. Added comments.
  * 2020-09-25 Modified by Olof Sjögren, Alex Phu & Oscar Sanner : Implemented getUsersTotal for
  * calculating a specific Users net total debt.
+ * 2020-09-28 Modified by Yenan: refactor to add parameter description to createDebt method
  * 2020-09-29 Modified by Olof & Oscar : Created method for removing all debts of a specific user (removeSpecificUserDebt).
  */
 class Ledger {
@@ -29,9 +30,10 @@ class Ledger {
      * @param lender    the user who lends out money
      * @param borrowers either a single or several users who borrow from the lender
      * @param owedTotal total amount lent out by the lender to the borrowers
+     * @param description the brief description of the debt
      * @throws Exception
      */
-    public void createDebt(User lender, Set<User> borrowers, double owedTotal) throws Exception {
+    public void createDebt(User lender, Set<User> borrowers, double owedTotal, String description) throws Exception {
         double individualAmount = owedTotal / borrowers.size();
         List<DebtTracker> mockList = new ArrayList<>();
 
@@ -41,7 +43,7 @@ class Ledger {
         }
 
         for (User u : borrowers) {
-            if (!mockList.add(new DebtTracker(individualAmount, lender, u))) {
+            if (!mockList.add(new DebtTracker(individualAmount, lender, u, description))) {
                 //TODO: Specify exception.
                 throw new Exception();
             }

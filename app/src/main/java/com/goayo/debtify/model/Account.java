@@ -23,6 +23,7 @@ import java.util.Set;
  * <p>
  * 2020-09-23 Modified by Olof: getGroupFromID-method is now public and documented, called upon by ModelEngine to provide data to view.
  * 2020-09-28 Modified by Oscar Sanner and Olof Sjögren: Reworked methods to depend on the database for calls before mutating model.
+ * 2020-09-28 Modified by Yenan: refactor to add parameter description to createDebt method
  * 2020-09-29 Modified by Oscar Sanner and Olof Sjögren: Fixed bug in login user method. Contact list will now mutate
  * the instance variable contactList instead of returning a new list. Also removed the getUserFromId method as this now
  * resides in the mock database.
@@ -157,15 +158,15 @@ public class Account {
     /**
      * Creates a debt between a lender and one or more borrowers.
      *
-     * @param groupID   The group's ID.
-     * @param lender    The lender.
+     * @param groupID The group's ID.
+     * @param lender The lender.
      * @param borrowers The borrower(s).
-     * @param owed      Amount of owed money.
+     * @param owed Amount of owed money.
+     * @param description the brief description of the debt
      * @throws Exception Thrown if group or users are not found, or if the set of borrower is empty.
      */
 
-    //Todo: Database.createDebt  -> No need to reload groups because same objects. Reload anyways.
-    public void createDebt(String groupID, String lender, Set<String> borrowers, double owed) throws Exception {
+    public void createDebt(String groupID, String lender, Set<String> borrowers, double owed, String description) throws Exception {
         try {
             userIsLoggedIn();
         } catch (Exception e) {
@@ -177,8 +178,7 @@ public class Account {
             //TODO ("Specify Exception")
             throw new Exception();
         }
-
-        database.addDebt(groupID, lender, borrowers, owed);
+        database.addDebt(groupID, lender, borrowers, owed, description);
         loadAssociatedGroups();
     }
 

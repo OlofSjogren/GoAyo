@@ -1,22 +1,19 @@
 package com.goayo.debtify.view.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.modelaccess.IPaymentData;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,8 +24,9 @@ import java.util.List;
  * @date 2020-09-22
  * <p>
  * RecyclerView adapter for the tranaction cardviews. Ensures that the correct information are shown on each cardItem.
+ *
+ * 2020-09-28 Modified by Yenan: add debt description to the cardviews
  */
-
 public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCardAdapter.TransactionCardViewHolder> {
 
     private final Context context;
@@ -85,9 +83,9 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
     private TransactionData[] createTransactionDataSet(IDebtData[] debtDataArray) {
         List<TransactionData> transactionDataList = new ArrayList<>();
         for (IDebtData debtData : debtDataArray) {
-            transactionDataList.add(new TransactionData(debtData.getDate(), "Debt", debtData.getLender() + " owes " + debtData.getBorrower(), debtData.getOriginalDebt()));
+            transactionDataList.add(new TransactionData(debtData.getDate(), debtData.getDescription(), "Debt", debtData.getLender().getName() + " owes " + debtData.getBorrower().getName(), debtData.getOriginalDebt()));
             for (IPaymentData paymentData : debtData.getPaymentHistory()) {
-                transactionDataList.add(new TransactionData(paymentData.getDate(), "Payment", debtData.getBorrower() + " payed " + debtData.getLender(), paymentData.getPaidAmount()));
+                transactionDataList.add(new TransactionData(paymentData.getDate(), debtData.getDescription(), "Payment", debtData.getBorrower().getName() + " payed " + debtData.getLender().getName(), paymentData.getPaidAmount()));
             }
         }
 
@@ -101,14 +99,15 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
      * @date 2020-09-18
      * <p>
      * ViewHolder for TransactionCardViewHolder
+     *
+     * 2020-09-28 Modified by Alex: Substituted cardview variable with ConstraintLayout (to set background colour)
      */
     class TransactionCardViewHolder extends RecyclerView.ViewHolder {
         private TextView transactionType;
         private TextView lenderBorrowerDescription;
         private TextView date;
         private TextView balance;
-        private CardView cardView;
-
+        private ConstraintLayout layout;
 
         /**
          * Binds the elements in the layout file to a variable
@@ -121,7 +120,7 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
             lenderBorrowerDescription = itemView.findViewById(R.id.detailed_group_card_lender_borrower_description_textView);
             date = itemView.findViewById(R.id.detailed_group_card_date_textView);
             balance = itemView.findViewById(R.id.detailed_group_card_balance);
-            cardView = itemView.findViewById(R.id.detailed_group_cardView);
+            layout = itemView.findViewById(R.id.detailed_group_card_constraintLayout);
         }
 
         /**
@@ -131,7 +130,7 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
          * @param transaction Current transaction data
          */
         public void setTransactionTypeData(Context context, TransactionData transaction) {
-            transactionType.setText(transaction.transactionType);
+            transactionType.setText(transaction.transactionType + ": " + transaction.description);
             lenderBorrowerDescription.setText(transaction.lenderBorrowerDescription);
             date.setText(convertDateToString(transaction.date));
             balance.setText(transaction.balance + "kr");
@@ -144,17 +143,19 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
         }
 
         private void setCardViewColor(int color) {
-            cardView.setBackgroundColor(color);
+            layout.setBackgroundColor(color);
         }
     }
 
     private class TransactionData {
         Date date;
+        String description;
         String transactionType;
         String lenderBorrowerDescription;
         double balance;
 
-        public TransactionData(Date date, String transactionType, String lenderBorrowerDescription, double balance) {
+        public TransactionData(Date date, String description, String transactionType, String lenderBorrowerDescription, double balance) {
+            this.description = description;
             this.date = date;
             this.transactionType = transactionType;
             this.lenderBorrowerDescription = lenderBorrowerDescription;

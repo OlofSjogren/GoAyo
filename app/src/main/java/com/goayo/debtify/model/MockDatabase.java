@@ -98,18 +98,18 @@ class MockDatabase implements IDatabase {
         gabrielSet.add(users.get(pwGabriel));
 
         try {
-            groups.get(0).createDebt(users.get(pwOlof), oscarSet, 140.5);
-            groups.get(0).createDebt(users.get(pwYenan), oscarSet, 140.5);
-            groups.get(0).createDebt(users.get(pwGabriel), yenanSet, 90.25);
-            groups.get(0).createDebt(users.get(pwGabriel), olofSet, 90.99);
-            groups.get(0).createDebt(users.get(pwAlex), gabrielSet, 80);
+            groups.get(0).createDebt(users.get(pwOlof), oscarSet, 140.5, "test1");
+            groups.get(0).createDebt(users.get(pwYenan), oscarSet, 140.5, "test2");
+            groups.get(0).createDebt(users.get(pwGabriel), yenanSet, 90.25, "test3");
+            groups.get(0).createDebt(users.get(pwGabriel), olofSet, 90.99, "test4");
+            groups.get(0).createDebt(users.get(pwAlex), gabrielSet, 80, "test5");
 
-            groups.get(1).createDebt(users.get(pwOlof), alexSet, 30.89);
-            groups.get(1).createDebt(users.get(pwOlof), oscarSet, 30.89);
-            groups.get(1).createDebt(users.get(pwOscar), alexSet, 27.09);
+            groups.get(1).createDebt(users.get(pwOlof), alexSet, 30.89, "test6");
+            groups.get(1).createDebt(users.get(pwOlof), oscarSet, 30.89, "test7");
+            groups.get(1).createDebt(users.get(pwOscar), alexSet, 27.09, "test8");
 
-            groups.get(2).createDebt(users.get(pwGabriel), alexSet, 20.9);
-            groups.get(2).createDebt(users.get(pwGabriel), yenanSet, 20.0);
+            groups.get(2).createDebt(users.get(pwGabriel), alexSet, 20.9, "test9");
+            groups.get(2).createDebt(users.get(pwGabriel), yenanSet, 20.0, "test10");
 
             String id0_0 = groups.get(0).getDebts().get(0).getDebtID();
             String id0_1 = groups.get(0).getDebts().get(1).getDebtID();
@@ -238,7 +238,7 @@ class MockDatabase implements IDatabase {
     }
 
     @Override
-    public boolean addDebt(String groupID, String lender, Set<String> borrowers, double amount) {
+    public boolean addDebt(String groupID, String lender, Set<String> borrowers, double amount, String description) {
 
         Group group;
         try {
@@ -256,7 +256,7 @@ class MockDatabase implements IDatabase {
             borrowersSet.add(user);
         }
         try {
-            group.createDebt(getUserFromDatabase(lender), borrowersSet, amount);
+            group.createDebt(getUserFromDatabase(lender), borrowersSet, amount, description);
         } catch (Exception e) {
             return false;
         }
