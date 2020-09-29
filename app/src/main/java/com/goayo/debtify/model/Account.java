@@ -23,6 +23,9 @@ import java.util.Set;
  * <p>
  * 2020-09-23 Modified by Olof: getGroupFromID-method is now public and documented, called upon by ModelEngine to provide data to view.
  * 2020-09-28 Modified by Oscar Sanner and Olof Sjögren: Reworked methods to depend on the database for calls before mutating model.
+ * 2020-09-29 Modified by Oscar Sanner and Olof Sjögren: Fixed bug in login user method. Contact list will now mutate
+ * the instance variable contactList instead of returning a new list. Also removed the getUserFromId method as this now
+ * resides in the mock database.
  */
 public class Account {
 

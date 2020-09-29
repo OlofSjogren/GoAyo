@@ -21,7 +21,7 @@ import java.util.UUID;
  * <p>
  * 2020-09-21 Modified by Oscar Sanner: Added functionality to remove a user from a group.
  * 2020-09-28 Modified by Oscar Sanner and Olof Sjögren: Added methods for debts, payments and contacts.
- *
+ * 2020-09-29 Modified by Oscar Sanner and Olof Sjögren: Bugfix in constructor initializing the debts.
  */
 
 class MockDatabase implements IDatabase {

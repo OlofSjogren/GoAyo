@@ -17,6 +17,8 @@ import java.util.UUID;
  * DebtTracker holds debts and keeps track of debt
  * 2020-09-17 Modified by Yenan & Gabriel : Updated comments. Added exception on payOffDebt instead of boolean false as return.
  * 2020-09-25 Modified by Olof Sjögren, Alex Phu & Oscar Sanner : Added getRemainingDebt for calculating remaining debt.
+ * 2020-09-29 Modified by Oscar Sanner and Olof Sjögren: Replaced "tempID" with a proper dynamically generated UUID.
+ * Also fixed bug in payOffDebt(), now compares larger than AND EQUAL to instead of just larger than.
  */
 class DebtTracker implements IDebtData {
     private final Debt debt;

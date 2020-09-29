@@ -19,6 +19,8 @@ import java.util.Set;
  * 2020-09-16 Modified by Gabriel & Yenan : Added real ledger. Changed types on getDebts. Delegated to ledger.
  * 2020-09-18 Modified by Oscar & Alex : Switched over List types to Set, also added JDocs and switch boolean returns to exceptions.
  * 2020-09-29 Modified by Olof & Oscar : Added method call in removeUser() to also remove all debts associated to that user in the group.
+ * 2020-09-29 Modified by Olof & Oscar : Fixed bug where one of the constructors wouldn't initiate the ledger.
+ *
  */
 class Group implements IGroupData {
 
