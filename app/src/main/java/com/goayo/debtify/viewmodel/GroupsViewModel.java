@@ -1,4 +1,4 @@
-package com.goayo.debtify.viewModel;
+package com.goayo.debtify.viewmodel;
 
 import android.util.Log;
 

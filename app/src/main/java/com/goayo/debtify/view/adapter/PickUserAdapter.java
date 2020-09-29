@@ -1,6 +1,5 @@
 package com.goayo.debtify.view.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,29 +7,34 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.modelaccess.IUserData;
+import com.goayo.debtify.viewmodel.PickUserViewModel;
+
+import java.util.List;
 
 /**
  * @author Alex Phu, Olof Sjögren
  * @date 2020-09-18
  * <p>
  * RecyclerView adapter for the pickUsers cardviews. Ensures that the correct information are shown on each cardItem and its respective listeners.
+ *
+ * 2020-09-29 Modified by Alex Phu: Changed userData type from Array to ArrayList.
+ * Removed Context, and userData from constructor. Added ViewModel in constructor. Gets data from viewModel instead.
  */
 public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUserViewHolder> {
-    private final Context context;
-    private IUserData[] userData;
+    private List<IUserData> userData;
+    private final PickUserViewModel viewModel;
 
     /**
      * Constructor for GroupViewAdapter
-     *
-     * @param context  The context which is linked to the Activity (in our case MainActivity) and its lifecycle.
-     * @param userData The data to be displayed.
+     * @param viewModel Handles data fetching from Model.
      */
-    public PickUserAdapter(Context context, IUserData[] userData) {
-        this.context = context;
+    public PickUserAdapter(PickUserViewModel viewModel, List<IUserData> userData) {
+        this.viewModel = viewModel;
         this.userData = userData;
     }
 
@@ -44,8 +48,7 @@ public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUs
     @NonNull
     @Override
     public PickUserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        final LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.pick_user_cardview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.pick_user_cardview, parent, false);
         return new PickUserViewHolder(view);
     }
 
@@ -57,12 +60,12 @@ public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUs
      */
     @Override
     public void onBindViewHolder(@NonNull PickUserViewHolder holder, int position) {
-        holder.setUserData(context, userData[position]);
+        holder.setUserData(userData.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return userData.length;
+        return userData.size();
     }
 
     /**
@@ -91,10 +94,9 @@ public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUs
         /**
          * Sets the values of the layout's elements.
          *
-         * @param context The context which is linked to the Activity (in our case MainActivity) and its lifecycle.
          * @param user    Current user data
          */
-        public void setUserData(Context context, IUserData user) {
+        public void setUserData(IUserData user) {
             username.setText(user.getName());
             phoneNumber.setText(user.getPhoneNumber());
             checkBox.setChecked(false);

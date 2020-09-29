@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.goayo.debtify.R;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.view.DetailedGroupActivity;
-import com.goayo.debtify.viewModel.GroupsViewModel;
+import com.goayo.debtify.viewmodel.GroupsViewModel;
 
 /**
  * @author Alex Phu, Olof Sjögren

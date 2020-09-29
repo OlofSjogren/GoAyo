@@ -18,8 +18,8 @@ import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.MyGroupsFragmentBinding;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.view.adapter.GroupViewAdapter;
-import com.goayo.debtify.viewModel.GroupViewModelFactory;
-import com.goayo.debtify.viewModel.GroupsViewModel;
+import com.goayo.debtify.viewmodel.GroupViewModelFactory;
+import com.goayo.debtify.viewmodel.GroupsViewModel;
 
 import java.util.Set;
 

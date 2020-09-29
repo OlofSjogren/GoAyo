@@ -22,8 +22,8 @@ import com.goayo.debtify.model.UserNotFoundException;
 import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.view.adapter.TransactionCardAdapter;
-import com.goayo.debtify.viewModel.GroupViewModelFactory;
-import com.goayo.debtify.viewModel.GroupsViewModel;
+import com.goayo.debtify.viewmodel.GroupViewModelFactory;
+import com.goayo.debtify.viewmodel.GroupsViewModel;
 
 /**
  * @author Alex Phu, Yenan Wang

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +18,9 @@ import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.PickUsersFragmentBinding;
 import com.goayo.debtify.modelaccess.IUserData;
 import com.goayo.debtify.view.adapter.PickUserAdapter;
+import com.goayo.debtify.viewmodel.PickUserViewModel;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -32,6 +35,15 @@ public class PickUsersFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         PickUsersFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.pick_users_fragment, container, false);
+        PickUserViewModel viewModel = ViewModelProviders.of(this).get(PickUserViewModel.class);
+
+        //TODO("Set current group!")
+        //viewModel.setCurrentGroup("XXXXXXX");
+
+        //TODO ("Identifier for which data to fetch from ViewModel (Through Intent)")
+        List<IUserData> userData = getUserData(0, viewModel);
+
+        initRecyclerView(binding, userData, viewModel);
 
         return binding.getRoot();
     }
@@ -42,28 +54,32 @@ public class PickUsersFragment extends Fragment {
      * @param userData Set of userdata to be displayed.
      * @param binding  Variable which can access the elements in the layout file.
      */
-    private void initRecyclerView(PickUsersFragmentBinding binding, Set<IUserData> userData) {
+    private void initRecyclerView(PickUsersFragmentBinding binding, List<IUserData> userData, PickUserViewModel viewModel) {
         RecyclerView recyclerView = binding.pickuserRecyclerView;
         //TODO ("ADD DATA TO PickUserAdapter")
-        PickUserAdapter pickUserAdapter = new PickUserAdapter(getContext(), convertSetToArray(userData));
+        PickUserAdapter pickUserAdapter = new PickUserAdapter(viewModel, userData);
         recyclerView.setAdapter(pickUserAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
     }
 
-    /**
-     * Converts a Set to an Array.
-     *
-     * @param userDataSet Set of Users.
-     * @return Returns an Array of Users.
-     */
-    private IUserData[] convertSetToArray(Set<IUserData> userDataSet) {
-        IUserData[] tempData = new IUserData[userDataSet.size()];
-        userDataSet.toArray(tempData);
-        return tempData;
+    private List<IUserData> getUserData(int typeOfData, PickUserViewModel viewModel) {
+        switch (typeOfData) {
+            case 0:
+                //Maybe don't call it here, let getUsersToBeAdded call it.
+                viewModel.setUsersToBeAdded();
+                return viewModel.getUsersToBeAdded().getValue();
+            case 1:
+                //TODO ("DEBTDATA")
+                break;
+            default:
+                return null;
+        }
     }
+
 
     /**
      * Initializes the continue button to navigate to the next view.
+     *
      * @param binding Variable which can access the elements in the layout file.
      */
     private void initContinueButton(PickUsersFragmentBinding binding) {
