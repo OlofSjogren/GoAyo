@@ -37,11 +37,6 @@ public class AddDebtViewModel extends ViewModel {
         return selectedBorrowersData;
     }
 
-    // TODO temp method
-    public Set<IUserData> getUserData() {
-        return modelEngine.getContacts();
-    }
-
     // TODO refactor all strings to IUserData or whatever
     public void createDebt(String groupID,
                            Set<IUserData> lender,
@@ -52,6 +47,14 @@ public class AddDebtViewModel extends ViewModel {
                 // this is horrendous
                 ((IUserData) (convertToString(lender).toArray()[0])).getPhoneNumber(),
                 convertToString(borrowers), amount, description);
+    }
+
+    public void setSelectedLender(Set<IUserData> lender) {
+        selectedLenderData.setValue(lender);
+    }
+
+    public void setSelectedBorrowersData(Set<IUserData> borrowers) {
+        selectedBorrowersData.setValue(borrowers);
     }
 
     // TODO this method shouldn't be needed

@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,8 +24,6 @@ import com.goayo.debtify.viewModel.AddDebtViewModel;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -37,6 +34,7 @@ import java.util.Set;
  * <p>
  * 2020-09-18 Modified by Yenan & Gabriel: Added AddDebt view, tested with hard-coded value
  * 2020-09-22 Modified by Yenan & Gabriel: Removed hard-coded values, added defaults.
+ * 2020-09-29 Modified by Yenan: Connected with AddDebtViewModel
  */
 public class AddDebtFragment extends Fragment {
     // the binding object which preloads all its xml components
@@ -55,7 +53,7 @@ public class AddDebtFragment extends Fragment {
         model = new ViewModelProvider(this).get(AddDebtViewModel.class);
 
         initAdapters();
-
+        initRecyclerView();
         // set a click listener to all items in the adapter
         lenderAdapter.setCommonClickListener(new View.OnClickListener() {
             @Override
@@ -97,8 +95,6 @@ public class AddDebtFragment extends Fragment {
             }
         });
 
-        initRecyclerView();
-
         return binding.getRoot();
     }
 
@@ -119,6 +115,7 @@ public class AddDebtFragment extends Fragment {
     }
 
     private void openPickUser() {
+        // TODO change so that it also send data to PickUser
         NavHostFragment.findNavController(this)
                 .navigate(R.id.action_addDebtFragment_to_pickUsersFragment);
     }

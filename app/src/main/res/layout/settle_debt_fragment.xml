@@ -20,14 +20,11 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/settleAmountEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
             android:ems="10"
-            android:hint="Amount to settle"
-            android:inputType="textPersonName"
-            android:textAlignment="center"
+            android:inputType="numberDecimal"
             app:layout_constraintBottom_toTopOf="@+id/settleDebtButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -38,7 +35,7 @@
             android:layout_height="wrap_content"
             android:text="How much to settle?"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/settleAmountEditText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -48,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:maxHeight="300dp"
             app:layout_constrainedHeight="true"
             app:layout_constraintBottom_toTopOf="@+id/howMuchTextView"
