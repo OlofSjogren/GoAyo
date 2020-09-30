@@ -22,8 +22,5 @@ public class LoginActivity extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         navController = Navigation.findNavController(this, R.id.loginNavHostFragment);
-
-        this.getSupportActionBar().hide();
-
     }
 }

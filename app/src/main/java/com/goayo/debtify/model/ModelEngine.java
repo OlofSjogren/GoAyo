@@ -19,6 +19,7 @@ import java.util.Set;
  * 2020-09-23 Modified by Olof: Added getGroup-method provided a specific id.
  * 2020-09-28 Modified by Yenan: refactor to add parameter description to createDebt method
  * 2020-09-28 Modified by Alex: Refactored hardcoded debt data.
+ * 2020-09-30 Modified by Oscar Sanner and Olof Sjögren: Added log out method.
  */
 
 public class ModelEngine {
@@ -81,6 +82,17 @@ public class ModelEngine {
      */
     public void logInUser(String phoneNumber, String password) throws Exception {
         account.loginUser(phoneNumber, password);
+    }
+
+    /**
+     * Logs the current user out from the model and removes any personal contacts or groups
+     * that are stored in the model.
+     *
+     * Precondition: The user is logged in to the model.
+     *
+     */
+    public void logOutUser(){
+        account.logOutUser();
     }
 
 

@@ -1,5 +1,6 @@
 package com.goayo.debtify.view;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.ActivityMainBinding;
 import com.goayo.debtify.view.handler.TabsPagerAdapter;
+import com.goayo.debtify.viewModel.SignInAndOutViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -31,12 +33,13 @@ import com.google.android.material.tabs.TabLayout;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityMainBinding binding;
+    SignInAndOutViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        viewModel = new SignInAndOutViewModel();
 
         initTabs();
         initToolbar();
@@ -99,7 +102,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         //Todo ("Logic for when menu item is selected")
-        Toast.makeText(this, "MENU_ITEM_CLICKED", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "MENU_ITEM_CLICKED", Toast.LENGTH_SHORT).show();
+        switch (item.getItemId()){
+            case R.id.logout_menu_item:
+                viewModel.logOutUser();
+                Intent intent = new Intent(this.binding.getRoot().getContext(), LoginActivity.class);
+                startActivity(intent);
+            default:
+        }
         return false;
     }
 }
