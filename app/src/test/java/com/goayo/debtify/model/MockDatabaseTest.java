@@ -51,7 +51,11 @@ public class MockDatabaseTest {
     @Test
     public void registerUser() {
         String testPhoneNumber = "0987123454";
-        database.registerUser(testPhoneNumber, "flar", "Ralf Broberg");
+        try {
+            database.registerUser(testPhoneNumber, "flar", "Ralf Broberg");
+        } catch (UserAlreadyExistsException e) {
+            e.printStackTrace();
+        }
         assert (database.getUser(testPhoneNumber).getName().equals("Ralf Broberg"));
     }
 
