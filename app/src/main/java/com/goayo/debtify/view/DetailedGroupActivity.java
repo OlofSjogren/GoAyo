@@ -14,7 +14,7 @@ import androidx.navigation.Navigation;
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.ActivityDetailedGroupBinding;
 import com.goayo.debtify.viewmodel.GroupViewModelFactory;
-import com.goayo.debtify.viewmodel.GroupsViewModel;
+import com.goayo.debtify.viewmodel.MyGroupsViewModel;
 
 /**
  * @author Alex Phu, Oscar Sanner
@@ -48,7 +48,7 @@ public class DetailedGroupActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.action_add_members :
                 getIntent().putExtra("BASE_CLASS", "DetailedGroupActivity.class");
-                String groupID = ViewModelProviders.of(this, new GroupViewModelFactory()).get(GroupsViewModel.class).getCurrentGroupData().getValue().getGroupID();
+                String groupID = ViewModelProviders.of(this, new GroupViewModelFactory()).get(MyGroupsViewModel.class).getCurrentGroupData().getValue().getGroupID();
                 getIntent().putExtra("GROUP_ID", groupID);
 
                 Navigation.findNavController(this, R.id.group_nav_host).navigate(R.id.action_groupFragment_to_pickUsersFragment);

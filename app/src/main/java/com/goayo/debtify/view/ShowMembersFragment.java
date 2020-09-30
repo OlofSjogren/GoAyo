@@ -22,7 +22,7 @@ import com.goayo.debtify.databinding.ShowMembersFragmentBinding;
 import com.goayo.debtify.modelaccess.IUserData;
 import com.goayo.debtify.view.adapter.UserCardViewAdapter;
 import com.goayo.debtify.viewmodel.GroupViewModelFactory;
-import com.goayo.debtify.viewmodel.GroupsViewModel;
+import com.goayo.debtify.viewmodel.MyGroupsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,7 @@ public class ShowMembersFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void initTextView(ShowMembersFragmentBinding binding) {
-        GroupsViewModel groupsViewModel = ViewModelProviders.of(getActivity(), new GroupViewModelFactory()).get(GroupsViewModel.class);
+        MyGroupsViewModel groupsViewModel = ViewModelProviders.of(getActivity(), new GroupViewModelFactory()).get(MyGroupsViewModel.class);
         String groupName = groupsViewModel.getCurrentGroupData().getValue().getGroupName();
         binding.showMembersGroupnameTextview.setText("Members of " + groupName);
     }
@@ -71,7 +71,7 @@ public class ShowMembersFragment extends Fragment {
 
     private void initRecyclerView(ShowMembersFragmentBinding binding) {
         RecyclerView recyclerView = binding.showMembersRecyclerView;
-        GroupsViewModel viewModel = ViewModelProviders.of(this, new GroupViewModelFactory()).get(GroupsViewModel.class);
+        MyGroupsViewModel viewModel = ViewModelProviders.of(this, new GroupViewModelFactory()).get(MyGroupsViewModel.class);
 
         //Temporary conversion from set to array
         Set<IUserData> userDataSet = viewModel.getCurrentGroupData().getValue().getIUserDataSet();

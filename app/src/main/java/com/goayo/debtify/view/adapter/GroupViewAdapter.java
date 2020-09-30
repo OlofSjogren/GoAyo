@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.goayo.debtify.R;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.view.DetailedGroupActivity;
-import com.goayo.debtify.viewmodel.GroupsViewModel;
+import com.goayo.debtify.viewmodel.MyGroupsViewModel;
 
 /**
  * @author Alex Phu, Olof Sjögren
@@ -31,13 +31,13 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
 
     private final Context context;
     private IGroupData[] groupData;
-    private GroupsViewModel viewModel;
+    private MyGroupsViewModel viewModel;
     /**
      * Constructor for GroupViewAdapter
      * @param context The context which is linked to the Activity (in our case MainActivity) and its lifecycle.
      * @param groupData The data to be displayed.
      */
-    public GroupViewAdapter(Context context, IGroupData[] groupData, GroupsViewModel viewModel) {
+    public GroupViewAdapter(Context context, IGroupData[] groupData, MyGroupsViewModel viewModel) {
         this.context = context;
         this.groupData = groupData;
         this.viewModel = viewModel;
@@ -90,7 +90,7 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
          * Binds the elements in the layout file to a variable
          * @param itemView In this case, my_groups_cardview
          */
-        public GroupViewHolder(@NonNull View itemView, GroupsViewModel viewModel) {
+        public GroupViewHolder(@NonNull View itemView, MyGroupsViewModel viewModel) {
             super(itemView);
             groupName = itemView.findViewById(R.id.pickuser_card_name_textview);
             balance = itemView.findViewById(R.id.group_card_balance_textview);
@@ -112,7 +112,7 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
          * @param groupID
          * @param viewModel
          */
-        public void setCardViewListener(final String groupID, final GroupsViewModel viewModel, final Context context) {
+        public void setCardViewListener(final String groupID, final MyGroupsViewModel viewModel, final Context context) {
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -23,7 +23,7 @@ import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.view.adapter.TransactionCardAdapter;
 import com.goayo.debtify.viewmodel.GroupViewModelFactory;
-import com.goayo.debtify.viewmodel.GroupsViewModel;
+import com.goayo.debtify.viewmodel.MyGroupsViewModel;
 
 /**
  * @author Alex Phu, Yenan Wang
@@ -45,14 +45,14 @@ import com.goayo.debtify.viewmodel.GroupsViewModel;
  */
 public class GroupFragment extends Fragment {
 
-    private GroupsViewModel viewModel;
+    private MyGroupsViewModel viewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         GroupFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.group_fragment, container, false);
 
-        viewModel = ViewModelProviders.of(requireActivity(), new GroupViewModelFactory()).get(GroupsViewModel.class);
+        viewModel = ViewModelProviders.of(requireActivity(), new GroupViewModelFactory()).get(MyGroupsViewModel.class);
         IGroupData groupData = viewModel.getCurrentGroupData().getValue();
 
         initTextViews(binding, groupData);

@@ -22,7 +22,7 @@ import com.goayo.debtify.modelaccess.IUserData;
 import com.goayo.debtify.view.adapter.UserCardViewAdapter;
 import com.goayo.debtify.viewmodel.AddDebtViewModel;
 import com.goayo.debtify.viewmodel.GroupViewModelFactory;
-import com.goayo.debtify.viewmodel.GroupsViewModel;
+import com.goayo.debtify.viewmodel.MyGroupsViewModel;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -61,7 +61,7 @@ public class AddDebtFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 requireActivity().getIntent().putExtra("BASE_CLASS", "AddDebtFragment.class_Lender");
-                String groupID = ViewModelProviders.of(requireActivity(), new GroupViewModelFactory()).get(GroupsViewModel.class).getCurrentGroupData().getValue().getGroupID();
+                String groupID = ViewModelProviders.of(requireActivity(), new GroupViewModelFactory()).get(MyGroupsViewModel.class).getCurrentGroupData().getValue().getGroupID();
                 requireActivity().getIntent().putExtra("GROUP_ID", groupID);
                 openPickUser();
             }
@@ -72,7 +72,7 @@ public class AddDebtFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 requireActivity().getIntent().putExtra("BASE_CLASS", "AddDebtFragment.class_Borrower");
-                String groupID = ViewModelProviders.of(requireActivity(), new GroupViewModelFactory()).get(GroupsViewModel.class).getCurrentGroupData().getValue().getGroupID();
+                String groupID = ViewModelProviders.of(requireActivity(), new GroupViewModelFactory()).get(MyGroupsViewModel.class).getCurrentGroupData().getValue().getGroupID();
                 requireActivity().getIntent().putExtra("GROUP_ID", groupID);
                 openPickUser();
             }
