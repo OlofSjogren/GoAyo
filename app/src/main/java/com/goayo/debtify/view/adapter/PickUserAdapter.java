@@ -24,6 +24,8 @@ import java.util.List;
  * <p>
  * 2020-09-29 Modified by Alex Phu: Changed userData type from Array to ArrayList.
  * Removed Context, and userData from constructor. Added ViewModel in constructor. Gets data from viewModel instead.
+ * <p>
+ * 2020-09-30 Modified by Alex & Yenan: Refactored it so that it now can be either multiple or single choice
  */
 public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUserViewHolder> {
     private List<IUserData> userData;

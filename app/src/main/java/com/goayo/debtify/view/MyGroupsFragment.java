@@ -19,7 +19,6 @@ import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.MyGroupsFragmentBinding;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.view.adapter.GroupViewAdapter;
-import com.goayo.debtify.viewmodel.GroupViewModelFactory;
 import com.goayo.debtify.viewmodel.MyGroupsViewModel;
 
 import java.util.ArrayList;
@@ -37,9 +36,8 @@ import java.util.Set;
  * 2020/09/16 Modified by Alex Phu. Added listener for FloatingActionButton.
  * <p>
  * 2020/09/25 Modified by Oscar Sanner, Alex Phu and Olof Sjögren: Added factory to ViewModelProvider.
- *
+ * <p>
  * 2020/09/30 Modified by Alex Phu and Yenan Wang: Refactored entire class.
- *
  */
 public class MyGroupsFragment extends Fragment {
 
@@ -75,7 +73,7 @@ public class MyGroupsFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void groupCardViewOnClick(GroupViewAdapter groupViewAdapter){
+    private void groupCardViewOnClick(GroupViewAdapter groupViewAdapter) {
         Intent intent = new Intent(getContext(), DetailedGroupActivity.class);
         intent.putExtra("GROUP_ID", groupViewAdapter.getClickedGroup().getGroupID());
         startActivity(intent);
@@ -84,7 +82,7 @@ public class MyGroupsFragment extends Fragment {
     /**
      * Initializes RecyclerView in MyGroups.
      *
-     * @param binding   Variable which can access the elements in the layout file.
+     * @param binding Variable which can access the elements in the layout file.
      */
     private void initRecyclerView(MyGroupsFragmentBinding binding, GroupViewAdapter groupViewAdapter) {
         RecyclerView recyclerView = binding.groupRecyclerView;

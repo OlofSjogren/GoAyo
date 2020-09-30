@@ -25,6 +25,9 @@ import com.goayo.debtify.viewmodel.PickUserViewModel;
  * 25-09-2020 Modified by Alex: Refactored bottom-buttons to GroupFragment.
  * <p>
  * 2020/09/25 Modified by Oscar Sanner, Alex Phu and Olof Sjögren: Removed duplicate "setContentView".
+ * <p>
+ * 2020-09-30 Modified by Yenan & Alex: Refactored so that it now uses PickUserViewModel and
+ * DetailedGroupViewModel to manage data
  */
 public class DetailedGroupActivity extends AppCompatActivity {
 

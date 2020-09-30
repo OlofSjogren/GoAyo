@@ -1,26 +1,22 @@
 package com.goayo.debtify.viewmodel;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.goayo.debtify.model.ModelEngine;
-import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 
 /**
  * @author Alex Phu
  * @date 2020-09-29
  * <p>
  * ViewModel for PickUserFragment, and PickUserAdapter.
+ * <p>
+ * 2020-09-30 Modified by Alex and Yenan: Implemented
  */
 public class PickUserViewModel extends ViewModel {
     private final ModelEngine modelEngine;

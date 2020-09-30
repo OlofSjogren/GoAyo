@@ -11,6 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author Alex Phu, Oscar Sanner
+ * @date 2020-09-29
+ * <p>
+ * ViewModel for the DetailedGroupActivity
+ * <p>
+ * 2020-09-30 Modified by Alex & Yenan: Add getAddableUser method
+ */
 public class DetailedGroupViewModel extends ViewModel {
     private final ModelEngine modelEngine;
     private MutableLiveData<IGroupData> currentGroup;

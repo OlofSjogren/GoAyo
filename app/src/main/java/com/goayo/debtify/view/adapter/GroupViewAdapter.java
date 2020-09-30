@@ -19,19 +19,23 @@ import java.util.List;
  * @date 2020-09-15
  * <p>
  * RecyclerView adapter for the group cardviews. Ensures that the correct information are shown on each cardItem and its respective listeners.
- *
+ * <p>
  * 2020/09/18 Modified by Alex Phu and Olof Sjögren. Changed type Set to Array, conversion is done outside instead.
- *
+ * <p>
  * 2020/09/25 Modified by Alex Phu, Oscar Sanner and Olof Sjögren: Injected viewModel through constructor in order to
  * set currentGroupData.
+ * <p>
+ * 2020-09-30 Modified by Alex & Yenan: Add setCommonClickListener and update method
  */
 public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.GroupViewHolder> {
 
     private List<IGroupData> groupData;
     private View.OnClickListener commonClickListener;
     private IGroupData clickedGroup;
+
     /**
      * Constructor for GroupViewAdapter
+     *
      * @param groupData The data to be displayed.
      */
     public GroupViewAdapter(List<IGroupData> groupData) {
@@ -40,7 +44,8 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
 
     /**
      * Creates a new ViewHolder object whenever the RecyclerView needs a new one.
-     * @param parent Parent-view
+     *
+     * @param parent   Parent-view
      * @param viewType View type
      * @return A new instance of GroupViewHolder
      */
@@ -54,7 +59,8 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
 
     /**
      * Binds the data to the ViewHolder
-     * @param holder ViewHolder
+     *
+     * @param holder   ViewHolder
      * @param position Position in the dataArray.
      */
     @Override
@@ -76,6 +82,7 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
 
     /**
      * Updates the RecyclerView with new data.
+     *
      * @param groupData Groups to display
      */
     public void update(List<IGroupData> groupData) {
@@ -84,12 +91,12 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
         notifyItemRangeChanged(0, groupData.size());
     }
 
-    private void setClickedGroup(IGroupData clickedGroup) {
-        this.clickedGroup = clickedGroup;
-    }
-
     public IGroupData getClickedGroup() {
         return clickedGroup;
+    }
+
+    private void setClickedGroup(IGroupData clickedGroup) {
+        this.clickedGroup = clickedGroup;
     }
 
     /**
@@ -115,6 +122,7 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
 
         /**
          * Binds the elements in the layout file to a variable
+         *
          * @param itemView In this case, my_groups_cardview
          */
         public GroupViewHolder(@NonNull View itemView) {
@@ -126,6 +134,7 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
 
         /**
          * Sets the values of the layout's elements.
+         *
          * @param group Current group data
          */
         public void setGroupData(IGroupData group) {
@@ -136,6 +145,7 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
 
         /**
          * Sets a listener to the cardView
+         *
          * @param onClickListener Listener.
          */
         public void setCardViewListener(View.OnClickListener onClickListener) {

@@ -33,7 +33,7 @@ import java.util.List;
  * @author Alex Phu, Yenan Wang
  * @date 2020-09-09
  * <p>
- * Sign up page.
+ * Page representing a Group
  * <p>
  * 2020-09-22 Modified by Oscar Sanner and Alex Phu: Added binding methods
  * and initializer for recycler view.

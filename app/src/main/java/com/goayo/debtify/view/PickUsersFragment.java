@@ -30,9 +30,9 @@ import java.util.List;
  * <p>
  * Selecting users page.
  * <p>
- * 2020-09-29 Modified by Alex Phu: Implementation of RecyclerView, continueButton, differentiating which Activity started PickUserFragment.
- * Connected with PickUserViewModel.
- * Disabled OptionsMenu.
+ * 2020-09-29 Modified by Alex Phu: Implementation of RecyclerView, continueButton, differentiating
+ * which Activity started PickUserFragment. Connected with PickUserViewModel. Disabled OptionsMenu.
+ * 2020-09-30 Modified by Alex & Yenan: Refactored everything, now this class is dumb
  */
 public class PickUsersFragment extends Fragment {
 

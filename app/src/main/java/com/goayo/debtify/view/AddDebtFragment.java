@@ -37,6 +37,7 @@ import java.util.Set;
  * 2020-09-18 Modified by Yenan & Gabriel: Added AddDebt view, tested with hard-coded value
  * 2020-09-22 Modified by Yenan & Gabriel: Removed hard-coded values, added defaults.
  * 2020-09-29 Modified by Yenan: Connected with AddDebtViewModel
+ * 2020-09-30 Modified by Yenan & Alex: Made it compatible with PickUser
  */
 public class AddDebtFragment extends Fragment {
     // the binding object which preloads all its xml components
@@ -100,6 +101,7 @@ public class AddDebtFragment extends Fragment {
             }
         });
 
+        // this observer sets data to AddDebtViewModel whenever something is selected
         pickUserViewModel.getSelectedUsersData().observe(getViewLifecycleOwner(), new Observer<List<IUserData>>() {
             @Override
             public void onChanged(List<IUserData> iUserData) {

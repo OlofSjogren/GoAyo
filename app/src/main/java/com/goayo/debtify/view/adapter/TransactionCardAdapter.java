@@ -1,6 +1,5 @@
 package com.goayo.debtify.view.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,9 +24,9 @@ import java.util.List;
  * @date 2020-09-22
  * <p>
  * RecyclerView adapter for the tranaction cardviews. Ensures that the correct information are shown on each cardItem.
- *
+ * <p>
  * 2020-09-28 Modified by Yenan: add debt description to the cardviews
- *
+ * <p>
  * 2020-09-30 Modified by Alex, Yenan: Refactored adapter.
  */
 public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCardAdapter.TransactionCardViewHolder> {
@@ -96,7 +95,7 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
      * @date 2020-09-18
      * <p>
      * ViewHolder for TransactionCardViewHolder
-     *
+     * <p>
      * 2020-09-28 Modified by Alex: Substituted cardview variable with ConstraintLayout (to set background colour)
      */
     class TransactionCardViewHolder extends RecyclerView.ViewHolder {

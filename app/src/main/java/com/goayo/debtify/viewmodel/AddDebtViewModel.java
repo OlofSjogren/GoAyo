@@ -16,6 +16,8 @@ import java.util.Set;
  * @date 2020-09-29
  * <p>
  * ViewModel for AddDebtFragment
+ * <p>
+ * 2020-09-30 Modified by Yenan & Alex: Fix an error caused by createDebt method
  */
 public class AddDebtViewModel extends ViewModel {
 
@@ -36,6 +38,14 @@ public class AddDebtViewModel extends ViewModel {
     }
 
     /**
+     * @param lender the Set of lender that replaces the current Set of lender,
+     *               the Set should contain only one element at most
+     */
+    public void setSelectedLenderData(Set<IUserData> lender) {
+        selectedLenderData.setValue(lender);
+    }
+
+    /**
      * @return the LiveData object representing the Set of borrowers
      */
     public LiveData<Set<IUserData>> getSelectedBorrowersData() {
@@ -50,14 +60,6 @@ public class AddDebtViewModel extends ViewModel {
      */
     public void setSelectedBorrowersData(Set<IUserData> borrowers) {
         selectedBorrowersData.setValue(borrowers);
-    }
-
-    /**
-     * @param lender the Set of lender that replaces the current Set of lender,
-     *               the Set should contain only one element at most
-     */
-    public void setSelectedLenderData(Set<IUserData> lender) {
-        selectedLenderData.setValue(lender);
     }
 
     /**
