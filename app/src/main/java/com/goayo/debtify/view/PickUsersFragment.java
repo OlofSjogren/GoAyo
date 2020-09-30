@@ -47,54 +47,22 @@ public class PickUsersFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         PickUsersFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.pick_users_fragment, container, false);
 
-        PickUserViewModel pickUserViewModel = ViewModelProviders.of(getActivity()).get(PickUserViewModel.class);
-        DetailedGroupViewModel detailedGroupViewModel = ViewModelProviders.of(getActivity()).get(DetailedGroupViewModel.class);
+        PickUserViewModel pickUserViewModel = ViewModelProviders.of(requireActivity()).get(PickUserViewModel.class);
 
-        //Set current group in PickUserViewModel
-        pickUserViewModel.setCurrentGroup(getActivity().getIntent().getStringExtra("GROUP_ID"));
+        PickUserAdapter pickUserAdapter = new PickUserAdapter(pickUserViewModel, pickUserViewModel.getInitialUsers());
 
-        List<IUserData> userData = new ArrayList<>();
-        //TODO ("Implement logic for Settle and add debt in switch")
-        switch (Objects.requireNonNull(requireActivity().getIntent().getStringExtra("BASE_CLASS"))) {
-            case "DetailedGroupActivity.class":
-                //Set current group in DetailedGroupViewModel
-                detailedGroupViewModel.setCurrentGroup(getActivity().getIntent().getStringExtra("GROUP_ID"));
 
-                //Init initialUsers (Users to be displayed on RecyclerView)
-                pickUserViewModel.setInitialUsersToExcludeCurrentGroupMembers();
 
-                //OnBackButtonPressed
-                requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
-                    @Override
-                    public void handleOnBackPressed() {
-                        Navigation.findNavController(getActivity(), R.id.group_nav_host).navigate(R.id.action_pickUsersFragment_to_groupFragment);
-                    }
-                });
-                break;
-            case "AddDebtFragment.class":
-                //TODO ("TO BE IMPLEMENTED")
-                //Init initalUsers with all group members
-            case "AddDebtFragment.class_Lender":
-            case "AddDebtFragment.class_Borrower":
-                pickUserViewModel.setInitialUsersToAllGroupMembers();
-                break;
-        }
-        //Fetches initialUsers after init in switch.
-        userData = pickUserViewModel.getInitialUsers().getValue();
-
-        initRecyclerView(binding, pickUserViewModel, userData);
-
+        initRecyclerView(binding);
         initContinueButton(binding);
-
         //To disable optionsMenu
         setHasOptionsMenu(true);
 
         return binding.getRoot();
     }
 
-    private void initRecyclerView(PickUsersFragmentBinding binding, PickUserViewModel pickUserViewModel, List<IUserData> userData) {
+    private void initRecyclerView(PickUsersFragmentBinding binding, PickUserAdapter pickUserAdapter) {
         RecyclerView recyclerView = binding.pickuserRecyclerView;
-        PickUserAdapter pickUserAdapter = new PickUserAdapter(pickUserViewModel, userData);
         recyclerView.setAdapter(pickUserAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
     }

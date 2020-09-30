@@ -16,7 +16,7 @@ import java.util.Set;
  * @author Oscar Sanner and Alex Phu
  * @date 2020-09-25
  * <p>
- * 2020-09-30 Modified by Alex Phu and Yenan: Cleaned up MyGroupsViewModel so it is only responsible for
+ * 2020-09-30 Modified by Alex Phu and Yenan Wang: Cleaned up MyGroupsViewModel so it is only responsible for
  * fetching groupsdata.
  */
 

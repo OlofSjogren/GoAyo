@@ -21,11 +21,13 @@ import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.ShowMembersFragmentBinding;
 import com.goayo.debtify.modelaccess.IUserData;
 import com.goayo.debtify.view.adapter.UserCardViewAdapter;
+import com.goayo.debtify.viewmodel.DetailedGroupViewModel;
 import com.goayo.debtify.viewmodel.GroupViewModelFactory;
 import com.goayo.debtify.viewmodel.MyGroupsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -37,13 +39,18 @@ import java.util.Set;
  * 2020-09-29 Modified by Alex: Implemented RecyclerView and connected it with GroupsViewModel.
  * BackbuttonPressed now won't exit activity.
  * Disabled OptionsMenu.
+ *
+ * 2020-09-30 Modified by Alex, Yenan: Small changes to make it use DetailedGroupViewModel.
  */
 public class ShowMembersFragment extends Fragment {
+    DetailedGroupViewModel detailedGroupViewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ShowMembersFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.show_members_fragment, container, false);
+        detailedGroupViewModel  = ViewModelProviders.of(requireActivity()).get(DetailedGroupViewModel.class);
+
         initTextView(binding);
         initRecyclerView(binding);
         onBackButtonPressed();
@@ -55,8 +62,7 @@ public class ShowMembersFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void initTextView(ShowMembersFragmentBinding binding) {
-        MyGroupsViewModel groupsViewModel = ViewModelProviders.of(getActivity(), new GroupViewModelFactory()).get(MyGroupsViewModel.class);
-        String groupName = groupsViewModel.getCurrentGroupData().getValue().getGroupName();
+        String groupName = Objects.requireNonNull(detailedGroupViewModel.getCurrentGroup().getValue()).getGroupName();
         binding.showMembersGroupnameTextview.setText("Members of " + groupName);
     }
 
@@ -64,17 +70,16 @@ public class ShowMembersFragment extends Fragment {
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                Navigation.findNavController(getActivity(), R.id.group_nav_host).navigate(R.id.action_showMembersFragment_to_groupFragment);
+                Navigation.findNavController(requireActivity(), R.id.group_nav_host).navigate(R.id.action_showMembersFragment_to_groupFragment);
             }
         });
     }
 
     private void initRecyclerView(ShowMembersFragmentBinding binding) {
         RecyclerView recyclerView = binding.showMembersRecyclerView;
-        MyGroupsViewModel viewModel = ViewModelProviders.of(this, new GroupViewModelFactory()).get(MyGroupsViewModel.class);
 
         //Temporary conversion from set to array
-        Set<IUserData> userDataSet = viewModel.getCurrentGroupData().getValue().getIUserDataSet();
+        Set<IUserData> userDataSet = detailedGroupViewModel.getCurrentGroup().getValue().getIUserDataSet();
         List<IUserData> data = new ArrayList<>(userDataSet);
 
         UserCardViewAdapter userCardViewAdapter = new UserCardViewAdapter(data);

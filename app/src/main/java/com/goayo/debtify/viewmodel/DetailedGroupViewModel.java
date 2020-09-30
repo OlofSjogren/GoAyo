@@ -2,11 +2,14 @@ package com.goayo.debtify.viewmodel;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class DetailedGroupViewModel extends ViewModel {
@@ -17,12 +20,16 @@ public class DetailedGroupViewModel extends ViewModel {
         modelEngine = ModelEngine.getInstance();
     }
 
+    public IUserData getLoggedInUser() {
+        return modelEngine.getLoggedInUser();
+    }
+
     public MutableLiveData<IGroupData> getCurrentGroup() {
         return currentGroup;
     }
 
     public void setCurrentGroup(String groupID) {
-        if(currentGroup == null){
+        if (currentGroup == null) {
             this.currentGroup = new MutableLiveData<>();
         }
         try {
@@ -33,7 +40,25 @@ public class DetailedGroupViewModel extends ViewModel {
     }
 
     /**
+     * {Contact} \ {CurrentGroupMembers}
+     * @return Addable members to the group.
+     */
+    public List<IUserData> getAddableUsers() {
+        List<IUserData> addableUsers = new ArrayList<>();
+        for (IUserData contact : modelEngine.getContacts()) {
+            for (IUserData groupMember : currentGroup.getValue().getIUserDataSet()) {
+                if (!contact.equals(groupMember)) {
+                    addableUsers.add(contact);
+                    break;
+                }
+            }
+        }
+        return addableUsers;
+    }
+
+    /**
      * Adds the selected users from PickUserFragment to the current group in model.
+     *
      * @return False if usersToBeAdded has yet to be set or is empty.
      */
     public boolean addSelectedMembersToCurrentGroup(Set<IUserData> users) {

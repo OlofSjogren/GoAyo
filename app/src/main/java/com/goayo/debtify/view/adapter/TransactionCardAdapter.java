@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
@@ -26,20 +27,19 @@ import java.util.List;
  * RecyclerView adapter for the tranaction cardviews. Ensures that the correct information are shown on each cardItem.
  *
  * 2020-09-28 Modified by Yenan: add debt description to the cardviews
+ *
+ * 2020-09-30 Modified by Alex, Yenan: Refactored adapter.
  */
 public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCardAdapter.TransactionCardViewHolder> {
 
-    private final Context context;
-    private TransactionData[] transactionData;
+    private List<TransactionData> transactionData;
 
     /**
      * Contructor for TransactionCardAdapter.
      *
-     * @param context  The context which is linked to the Activity (in our case MainActivity) and its lifecycle.
      * @param debtData The data to be displayed.
      */
-    public TransactionCardAdapter(Context context, IDebtData[] debtData) {
-        this.context = context;
+    public TransactionCardAdapter(List<IDebtData> debtData) {
         transactionData = createTransactionDataSet(debtData);
     }
 
@@ -53,7 +53,7 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
     @NonNull
     @Override
     public TransactionCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        final LayoutInflater inflater = LayoutInflater.from(context);
+        final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.detailed_group_transaction_cardview, parent, false);
         return new TransactionCardViewHolder(view);
     }
@@ -66,21 +66,21 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
      */
     @Override
     public void onBindViewHolder(@NonNull TransactionCardViewHolder holder, int position) {
-        holder.setTransactionTypeData(context, transactionData[position]);
-        if (transactionData[position].transactionType.equals("Payment")) {
-            holder.setCardViewColor(context.getResources().getColor(R.color.greenTransactionCard));
+        holder.setTransactionTypeData(transactionData.get(position));
+        if (transactionData.get(position).transactionType.equals("Payment")) {
+            holder.setCardViewColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.greenTransactionCard));
             //TODO: DOES THIS WORK? IF COLORS WONT CHANGE, DEBUG FROM HERE.
         } else {
-            holder.setCardViewColor(context.getResources().getColor(R.color.redTransactionCard));
+            holder.setCardViewColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.redTransactionCard));
         }
     }
 
     @Override
     public int getItemCount() {
-        return transactionData.length;
+        return transactionData.size();
     }
 
-    private TransactionData[] createTransactionDataSet(IDebtData[] debtDataArray) {
+    private List<TransactionData> createTransactionDataSet(List<IDebtData> debtDataArray) {
         List<TransactionData> transactionDataList = new ArrayList<>();
         for (IDebtData debtData : debtDataArray) {
             transactionDataList.add(new TransactionData(debtData.getDate(), debtData.getDescription(), "Debt", debtData.getLender().getName() + " owes " + debtData.getBorrower().getName(), debtData.getOriginalDebt()));
@@ -88,10 +88,7 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
                 transactionDataList.add(new TransactionData(paymentData.getDate(), debtData.getDescription(), "Payment", debtData.getBorrower().getName() + " payed " + debtData.getLender().getName(), paymentData.getPaidAmount()));
             }
         }
-
-        TransactionData[] transactionData = new TransactionData[transactionDataList.size()];
-        transactionDataList.toArray(transactionData);
-        return transactionData;
+        return transactionDataList;
     }
 
     /**
@@ -126,10 +123,9 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
         /**
          * Sets the values of the layout's elements.
          *
-         * @param context     The context which is linked to the Activity (in our case MainActivity) and its lifecycle.
          * @param transaction Current transaction data
          */
-        public void setTransactionTypeData(Context context, TransactionData transaction) {
+        public void setTransactionTypeData(TransactionData transaction) {
             transactionType.setText(transaction.transactionType + ": " + transaction.description);
             lenderBorrowerDescription.setText(transaction.lenderBorrowerDescription);
             date.setText(convertDateToString(transaction.date));
