@@ -23,6 +23,7 @@ import java.util.Set;
  * 2020-09-28 Modified by Yenan: refactor to add parameter description to createDebt method
  * 2020-09-28 Modified by Alex: Refactored hardcoded debt data.
  * 2020-09-30 Modified by Oscar Sanner and Olof Sjögren: Added log out method.
+ * 2020-09-30 Modified by Olof Sjögren and Oscar Sanner : Now implements IObservable and (for now) notifies on registration and login.
  */
 
 public class ModelEngine implements IObservable {

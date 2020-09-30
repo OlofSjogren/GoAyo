@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +24,8 @@ import com.google.android.material.textfield.TextInputEditText;
  * @date 2020-09-09
  * <p>
  * Sign in page.
+ *
+ * 2020-09-30 Added all functionality: editable text-input fields, registration and login buttons as well as fragment's initialisation.
  */
 public class SignInFragment extends Fragment {
 
@@ -38,6 +41,10 @@ public class SignInFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * Method for initializing an on-click listener to the registration button which navigates to the SignUpFragment.
+     * @param binding Variable which can access the elements in the layout file, sign_in_fragment.xml.
+     */
     private void initRegisterButton(SignInFragmentBinding binding){
         binding.signInFragmentSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +54,11 @@ public class SignInFragment extends Fragment {
         });
     }
 
+    /**
+     * Initializes on-click listener for the login button which reads the input fields and attempts a login through the dedicated ViewModel.
+     * Will start the MainActivity (through an intent) if the login was successful in model, will otherwise clear all input fields and display an error message.
+     * @param binding Variable which can access the elements in the layout file, sign_up_fragment.xml.
+     */
     private void initLogInButton(final SignInFragmentBinding binding){
         binding.signInFragmentSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +72,7 @@ public class SignInFragment extends Fragment {
                 } else {
                     pnField.setText("");
                     pwField.setText("");
+                    Toast.makeText (binding.getRoot().getContext(), "Invalid phone number or password", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -28,7 +28,9 @@ import com.google.android.material.tabs.TabLayout;
  * <p>
  * Entry point of the application.
  *
- * 2020-09-15 Modified by Alex Phu and Olof Sjögren. Removed default floatingActionButton.
+ * 2020-09-15 Modified by Alex Phu and Olof Sjögren : Removed default floatingActionButton.
+ * 2020-09-30 Modified by Olof Sjögren and Oscar Sanner : Added logOut functionality in onNavigationItemSelected() and
+ * also added SignInAndOutViewModel.
  */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
