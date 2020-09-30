@@ -33,36 +33,7 @@ public class ModelEngine {
         //TODO: AUTOMATICALLY LOGS THE USER IN WHEN THIS CLASS IS INSTANTIATED, BECAUSE
         //TODO LOGIN FUNCTIONALITY IS YET TO BE IMPLEMENTED
         try {
-            logInUser("123", "123");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        //TODO ("REMOVE FUNCTION")
-        HARDCODEDDEBTDATA();
-    }
-
-    //TODO REMOVE HARDCODED_DATA
-    private void HARDCODEDDEBTDATA() {
-        //TODO REMOVE THIS ITS VERY TEMPORARY
-        Set<String> debtData1 =  new HashSet<>();
-        debtData1.add("0735216752");
-        try {
-            createDebt("1003", "0756415987", debtData1, 23.90, "ass");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Set<String> debtData2 =  new HashSet<>();
-        debtData2.add("0773345654");
-        try {
-            createDebt("1002", "0734355982", debtData2, 69.50, "abs");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Set<String> debtData3 =  new HashSet<>();
-        debtData3.add("0704345621");
-        try {
-            createDebt("1004", "0735216752", debtData3, 79.99, "the D");
+            logInUser("0701234546", "racso");
         } catch (Exception e) {
             e.printStackTrace();
         }
