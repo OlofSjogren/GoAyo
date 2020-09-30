@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -21,14 +20,9 @@ import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.PickUsersFragmentBinding;
 import com.goayo.debtify.modelaccess.IUserData;
 import com.goayo.debtify.view.adapter.PickUserAdapter;
-import com.goayo.debtify.viewmodel.AddDebtViewModel;
-import com.goayo.debtify.viewmodel.DetailedGroupViewModel;
 import com.goayo.debtify.viewmodel.PickUserViewModel;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Alex Phu, Olof Sjögren
@@ -42,16 +36,16 @@ import java.util.Objects;
  */
 public class PickUsersFragment extends Fragment {
 
+    private PickUserAdapter pickUserAdapter;
+    private PickUserViewModel pickUserViewModel;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         PickUsersFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.pick_users_fragment, container, false);
 
-        PickUserViewModel pickUserViewModel = ViewModelProviders.of(requireActivity()).get(PickUserViewModel.class);
-
-        PickUserAdapter pickUserAdapter = new PickUserAdapter(pickUserViewModel, pickUserViewModel.getInitialUsers());
-
-
+        pickUserViewModel = ViewModelProviders.of(requireActivity()).get(PickUserViewModel.class);
+        pickUserAdapter = new PickUserAdapter(pickUserViewModel.getInitialUsers(), pickUserViewModel.getIsMultipleChoice());
 
         initRecyclerView(binding);
         initContinueButton(binding);
@@ -61,7 +55,7 @@ public class PickUsersFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void initRecyclerView(PickUsersFragmentBinding binding, PickUserAdapter pickUserAdapter) {
+    private void initRecyclerView(PickUsersFragmentBinding binding) {
         RecyclerView recyclerView = binding.pickuserRecyclerView;
         recyclerView.setAdapter(pickUserAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
@@ -73,39 +67,15 @@ public class PickUsersFragment extends Fragment {
      * @param binding Variable which can access the elements in the layout file.
      */
     private void initContinueButton(PickUsersFragmentBinding binding) {
-        final PickUserViewModel pickUserViewModel = ViewModelProviders.of(requireActivity()).get(PickUserViewModel.class);
-        //final AddDebtViewModel debtViewModel = new ViewModelProvider(this).get(AddDebtViewModel.class);
-        final AddDebtViewModel debtViewModel = ViewModelProviders.of(requireActivity()).get(AddDebtViewModel.class);
-
         binding.pickuserContinueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                //Identifier to know where and what to do at the end of PickUsersFragment's lifecycle
-                switch (Objects.requireNonNull(requireActivity().getIntent().getStringExtra("BASE_CLASS"))) {
-                    case "DetailedGroupActivity.class":
-                        final DetailedGroupViewModel detailedGroupViewModel = ViewModelProviders.of(requireActivity()).get(DetailedGroupViewModel.class);
-                        //Add selected users from pickUserViewModel to the group.
-                        if (!detailedGroupViewModel.addSelectedMembersToCurrentGroup(pickUserViewModel.getSelectedUsersData().getValue())) {
-                            //--> No user's selected
-                            Toast.makeText(view.getContext(), "Please select at least a user", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Navigation.findNavController(getActivity(), R.id.group_nav_host).navigate(R.id.action_pickUsersFragment_to_groupFragment);
-                        }
-                        break;
-                    case "AddDebtFragment.class_Lender":
-                        //TODO ("TO BE IMPLEMENTED")
-                        debtViewModel.setSelectedLender(new HashSet<IUserData>(pickUserViewModel.getSelectedUsersData().getValue()));
-                        pickUserViewModel.resetSelectedData();
-                        Navigation.findNavController(requireActivity(), R.id.debtNavHostFragment).navigate(R.id.action_pickUsersFragment_to_addDebtFragment);
-                        break;
-                    case "AddDebtFragment.class_Borrower":
-                        //TODO ("TO BE IMPLEMENTED")
-                        debtViewModel.setSelectedBorrowersData(new HashSet<IUserData>(pickUserViewModel.getSelectedUsersData().getValue()));
-
-                        pickUserViewModel.resetSelectedData();
-                        Navigation.findNavController(requireActivity(), R.id.debtNavHostFragment).navigate(R.id.action_pickUsersFragment_to_addDebtFragment);
-                        break;
+                List<IUserData> userList = pickUserAdapter.getSelectedUser();
+                if (userList.size() != 0) {
+                    pickUserViewModel.setSelectedUsersData(userList);
+                    Navigation.findNavController(view).popBackStack();
+                } else {
+                    Toast.makeText(getContext(), "Please select at least a user!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

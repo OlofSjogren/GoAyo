@@ -13,6 +13,7 @@ import com.goayo.debtify.modelaccess.IUserData;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -46,6 +47,14 @@ public class PickUserViewModel extends ViewModel {
 
     public void setInitialUsers(List<IUserData> initialUsers) {
         this.initialUsers.setValue(initialUsers);
+    }
+
+    public LiveData<List<IUserData>> getSelectedUsersData() {
+        return selectedUsersData;
+    }
+
+    public void setSelectedUsersData(List<IUserData> selectedUsersData) {
+        this.selectedUsersData.setValue(selectedUsersData);
     }
 
     public boolean getIsMultipleChoice() {

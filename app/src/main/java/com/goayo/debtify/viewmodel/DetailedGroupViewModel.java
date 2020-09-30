@@ -46,11 +46,15 @@ public class DetailedGroupViewModel extends ViewModel {
     public List<IUserData> getAddableUsers() {
         List<IUserData> addableUsers = new ArrayList<>();
         for (IUserData contact : modelEngine.getContacts()) {
+            boolean userExists = false;
             for (IUserData groupMember : currentGroup.getValue().getIUserDataSet()) {
-                if (!contact.equals(groupMember)) {
-                    addableUsers.add(contact);
+                if (contact.equals(groupMember)) {
+                    userExists = true;
                     break;
                 }
+            }
+            if (!userExists) {
+                addableUsers.add(contact);
             }
         }
         return addableUsers;
