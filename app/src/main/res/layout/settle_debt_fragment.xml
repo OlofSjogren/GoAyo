@@ -20,14 +20,11 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/settleAmountEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
             android:ems="10"
-            android:hint="Amount to settle"
-            android:inputType="textPersonName"
-            android:textAlignment="center"
+            android:inputType="numberDecimal"
             app:layout_constraintBottom_toTopOf="@+id/settleDebtButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -38,22 +35,18 @@
             android:layout_height="wrap_content"
             android:text="How much to settle?"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/settleAmountEditText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <ScrollView
             android:id="@+id/debtScrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp"
-            android:maxHeight="300dp"
-            app:layout_constrainedHeight="true"
+            android:layout_height="match_parent"
+            android:layout_marginTop="60dp"
+            android:layout_marginBottom="160dp"
             app:layout_constraintBottom_toTopOf="@+id/howMuchTextView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_max="300dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/selectDebtTextView"
             app:layout_constraintVertical_bias="0.0">
