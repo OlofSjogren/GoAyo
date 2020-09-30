@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * <p>
  * RecyclerView adapter for pick_debt_cardview. Ensures that the correct information are shown on each cardItem and its respective listeners.
  *
+ * 2020-09-28 Modified by Yenan: Add debt description to the cardview
  */
 
 public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDebtViewHolder> {
@@ -74,6 +75,7 @@ public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDe
         private TextView lender;
         private TextView borrower;
         private TextView amount;
+        private TextView description;
 
         /**
          * Binds the elements in the layout file to variables in this ViewHolder
@@ -87,6 +89,7 @@ public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDe
             lender = itemView.findViewById(R.id.debtLender);
             borrower = itemView.findViewById(R.id.debtBorrower);
             amount = itemView.findViewById(R.id.debtAmount);
+            description = itemView.findViewById(R.id.debtDesciption);
 
             //Makes the radiobutton update when pressed.
             View.OnClickListener listener = new View.OnClickListener() {
@@ -105,6 +108,7 @@ public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDe
             lender.setText(debtData.getLender().getName());
             borrower.setText(debtData.getBorrower().getName());
             amount.setText(String.valueOf(debtData.getAmountOwed()));
+            description.setText(debtData.getDescription());
         }
     }
 }

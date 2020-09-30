@@ -21,10 +21,12 @@ import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.PickUsersFragmentBinding;
 import com.goayo.debtify.modelaccess.IUserData;
 import com.goayo.debtify.view.adapter.PickUserAdapter;
+import com.goayo.debtify.viewmodel.AddDebtViewModel;
 import com.goayo.debtify.viewmodel.DetailedGroupViewModel;
 import com.goayo.debtify.viewmodel.PickUserViewModel;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -72,8 +74,9 @@ public class PickUsersFragment extends Fragment {
             case "AddDebtFragment.class":
                 //TODO ("TO BE IMPLEMENTED")
                 //Init initalUsers with all group members
+            case "AddDebtFragment.class_Lender":
+            case "AddDebtFragment.class_Borrower":
                 pickUserViewModel.setInitialUsersToAllGroupMembers();
-
                 break;
         }
         //Fetches initialUsers after init in switch.
@@ -102,8 +105,9 @@ public class PickUsersFragment extends Fragment {
      * @param binding Variable which can access the elements in the layout file.
      */
     private void initContinueButton(PickUsersFragmentBinding binding) {
-        final DetailedGroupViewModel detailedGroupViewModel = ViewModelProviders.of(getActivity()).get(DetailedGroupViewModel.class);
-        final PickUserViewModel pickUserViewModel = ViewModelProviders.of(getActivity()).get(PickUserViewModel.class);
+        final PickUserViewModel pickUserViewModel = ViewModelProviders.of(requireActivity()).get(PickUserViewModel.class);
+        //final AddDebtViewModel debtViewModel = new ViewModelProvider(this).get(AddDebtViewModel.class);
+        final AddDebtViewModel debtViewModel = ViewModelProviders.of(requireActivity()).get(AddDebtViewModel.class);
 
         binding.pickuserContinueButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +116,7 @@ public class PickUsersFragment extends Fragment {
                 //Identifier to know where and what to do at the end of PickUsersFragment's lifecycle
                 switch (Objects.requireNonNull(requireActivity().getIntent().getStringExtra("BASE_CLASS"))) {
                     case "DetailedGroupActivity.class":
+                        final DetailedGroupViewModel detailedGroupViewModel = ViewModelProviders.of(requireActivity()).get(DetailedGroupViewModel.class);
                         //Add selected users from pickUserViewModel to the group.
                         if (!detailedGroupViewModel.addSelectedMembersToCurrentGroup(pickUserViewModel.getSelectedUsersData().getValue())) {
                             //--> No user's selected
@@ -120,8 +125,18 @@ public class PickUsersFragment extends Fragment {
                             Navigation.findNavController(getActivity(), R.id.group_nav_host).navigate(R.id.action_pickUsersFragment_to_groupFragment);
                         }
                         break;
-                    case "AddDebtFragment.class":
+                    case "AddDebtFragment.class_Lender":
                         //TODO ("TO BE IMPLEMENTED")
+                        debtViewModel.setSelectedLender(new HashSet<IUserData>(pickUserViewModel.getSelectedUsersData().getValue()));
+                        pickUserViewModel.resetSelectedData();
+                        Navigation.findNavController(requireActivity(), R.id.debtNavHostFragment).navigate(R.id.action_pickUsersFragment_to_addDebtFragment);
+                        break;
+                    case "AddDebtFragment.class_Borrower":
+                        //TODO ("TO BE IMPLEMENTED")
+                        debtViewModel.setSelectedBorrowersData(new HashSet<IUserData>(pickUserViewModel.getSelectedUsersData().getValue()));
+
+                        pickUserViewModel.resetSelectedData();
+                        Navigation.findNavController(requireActivity(), R.id.debtNavHostFragment).navigate(R.id.action_pickUsersFragment_to_addDebtFragment);
                         break;
                 }
             }

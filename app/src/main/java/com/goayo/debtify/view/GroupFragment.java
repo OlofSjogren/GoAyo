@@ -52,7 +52,7 @@ public class GroupFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         GroupFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.group_fragment, container, false);
 
-        viewModel = ViewModelProviders.of(this, new GroupViewModelFactory()).get(GroupsViewModel.class);
+        viewModel = ViewModelProviders.of(requireActivity(), new GroupViewModelFactory()).get(GroupsViewModel.class);
         IGroupData groupData = viewModel.getCurrentGroupData().getValue();
 
         initTextViews(binding, groupData);

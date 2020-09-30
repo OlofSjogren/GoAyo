@@ -24,6 +24,8 @@ import com.goayo.debtify.view.adapter.UserCardViewAdapter;
 import com.goayo.debtify.viewmodel.GroupViewModelFactory;
 import com.goayo.debtify.viewmodel.GroupsViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -73,8 +75,7 @@ public class ShowMembersFragment extends Fragment {
 
         //Temporary conversion from set to array
         Set<IUserData> userDataSet = viewModel.getCurrentGroupData().getValue().getIUserDataSet();
-        IUserData[] data = new IUserData[userDataSet.size()];
-        userDataSet.toArray(data);
+        List<IUserData> data = new ArrayList<>(userDataSet);
 
         UserCardViewAdapter userCardViewAdapter = new UserCardViewAdapter(data);
         recyclerView.setAdapter(userCardViewAdapter);

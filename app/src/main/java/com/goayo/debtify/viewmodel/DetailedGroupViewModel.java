@@ -7,7 +7,7 @@ import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
-import java.util.List;
+import java.util.Set;
 
 public class DetailedGroupViewModel extends ViewModel {
     private MutableLiveData<IGroupData> currentGroup;
@@ -33,10 +33,10 @@ public class DetailedGroupViewModel extends ViewModel {
     }
 
     /**
-     * Adds the selected users from PickUserFragment to the current group.
+     * Adds the selected users from PickUserFragment to the current group in model.
      * @return False if usersToBeAdded has yet to be set or is empty.
      */
-    public boolean addSelectedMembersToCurrentGroup(List<IUserData> users) {
+    public boolean addSelectedMembersToCurrentGroup(Set<IUserData> users) {
         if (users == null || users.isEmpty()) {
             return false;
         }

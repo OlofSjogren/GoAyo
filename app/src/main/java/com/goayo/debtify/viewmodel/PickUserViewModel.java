@@ -11,7 +11,9 @@ import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Alex Phu
@@ -23,7 +25,7 @@ public class PickUserViewModel extends ViewModel {
     private final ModelEngine modelEngine;
     private MutableLiveData<IGroupData> currentGroup;
     private MutableLiveData<List<IUserData>> initialUsers;
-    private MutableLiveData<List<IUserData>> selectedUsersData;
+    private MutableLiveData<Set<IUserData>> selectedUsersData;
 
     /**
      * Constructor for PickUserViewModel
@@ -112,10 +114,10 @@ public class PickUserViewModel extends ViewModel {
      */
     public void setSelectedUsersData(IUserData user) {
         if (selectedUsersData == null) {
-            selectedUsersData = new MutableLiveData<List<IUserData>>();
-            selectedUsersData.setValue(new ArrayList<IUserData>());
+            selectedUsersData = new MutableLiveData<Set<IUserData>>();
+            selectedUsersData.setValue(new HashSet<IUserData>());
         }
-        List<IUserData> temporaryUserList = selectedUsersData.getValue();
+        Set<IUserData> temporaryUserList = selectedUsersData.getValue();
 
         if (!temporaryUserList.contains(user)) {
             temporaryUserList.add(user);
@@ -126,11 +128,15 @@ public class PickUserViewModel extends ViewModel {
         selectedUsersData.setValue(temporaryUserList);
     }
 
-    public LiveData<List<IUserData>> getSelectedUsersData() {
+    public LiveData<Set<IUserData>> getSelectedUsersData() {
         if (selectedUsersData == null) {
             Log.d("PickUserViewModel", "getSelectedUsersData: Returns null");
             return null;
         }
         return selectedUsersData;
+    }
+
+    public void resetSelectedData(){
+        selectedUsersData.setValue(new HashSet<IUserData>());
     }
 }
