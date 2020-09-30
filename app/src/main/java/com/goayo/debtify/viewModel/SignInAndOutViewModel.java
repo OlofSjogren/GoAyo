@@ -8,6 +8,9 @@ import com.goayo.debtify.IObserver;
 import com.goayo.debtify.model.ModelEngine;
 
 /**
+ * @Author Oscar Sanner and Olof Sjögren
+ * @date 2020-09-30
+ *
  * View model class responsible for handling logIn request from Views and calling upon ModelEngine accordingly.
  */
 public class SignInAndOutViewModel extends ViewModel {

@@ -19,6 +19,9 @@ import java.util.Set;
  * 2020-09-29 Modified by Oscar Sanner: Added small adjustments to the documentation. Specified
  * postconditios where needed.
  *
+ * 2020-09-30 Modified by Oscar Sanner and Olof Sjögren: Changed return type of registerUser.
+ * boolean to void.
+ *
  */
 
 public interface IDatabase {
@@ -56,7 +59,7 @@ public interface IDatabase {
      * @return true if the operation was successful. False if the phone number is already
      *         registered.
      */
-    boolean registerUser(String phoneNumber, String password, String name);
+    void registerUser(String phoneNumber, String password, String name) throws UserAlreadyExistsException;
 
     /**
      * Registers a new group in the database.

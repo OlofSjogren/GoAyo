@@ -19,6 +19,8 @@
             android:layout_height="50dp"
             android:layout_marginBottom="50dp"
             android:hint="Password"
+            android:inputType="text"
+            android:maxLines="1"
             app:layout_constraintBottom_toTopOf="@+id/signUpFragment_register_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -29,6 +31,8 @@
             android:layout_height="50dp"
             android:layout_marginBottom="20dp"
             android:hint="Phone Number"
+            android:inputType="text"
+            android:maxLines="1"
             app:layout_constraintBottom_toTopOf="@+id/signUpFragment_password_textInputEditText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -39,6 +43,8 @@
             android:layout_height="50dp"
             android:layout_marginBottom="20dp"
             android:hint="Name"
+            android:inputType="text"
+            android:maxLines="1"
             app:layout_constraintBottom_toTopOf="@+id/signUpFragment_phone_number_textInputEditText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

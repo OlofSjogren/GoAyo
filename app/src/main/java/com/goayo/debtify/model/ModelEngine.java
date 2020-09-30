@@ -66,7 +66,7 @@ public class ModelEngine implements IObservable {
      * @return true if the operation was successful, server side. False if the precondition
      * is not met, or if some form of connection error occurs.
      */
-    public void registerUser(String phoneNumber, String name, String password) throws Exception {
+    public void registerUser(String phoneNumber, String name, String password) throws UserAlreadyExistsException {
         account.registerUser(phoneNumber, name, password);
     }
 

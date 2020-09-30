@@ -54,7 +54,7 @@ public class Account {
      * @param name        the registered user's name.
      * @param password    the registered user's password.
      */
-    public void registerUser(String phoneNumber, String password, String name) {
+    public void registerUser(String phoneNumber, String password, String name) throws UserAlreadyExistsException {
         database.registerUser(phoneNumber, password, name);
     }
 

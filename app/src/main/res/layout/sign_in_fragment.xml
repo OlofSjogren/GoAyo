@@ -31,6 +31,7 @@
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword"
+            android:maxLines="1"
             app:layout_constraintBottom_toTopOf="@+id/signInFragment_sign_in_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
@@ -42,6 +43,8 @@
             android:layout_height="50dp"
             android:layout_marginBottom="20dp"
             android:hint="Phone Number"
+            android:inputType="text"
+            android:maxLines="1"
             app:layout_constraintBottom_toTopOf="@+id/signInFragment_password_field_editText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
