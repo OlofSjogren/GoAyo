@@ -73,9 +73,8 @@ public class SettleDebtFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
     }
 
-    // TODO implement this
     private String getCurrentGroupID() {
-        return "";
+        return requireActivity().getIntent().getStringExtra("GROUP_ID");
     }
 
     // TODO implement this

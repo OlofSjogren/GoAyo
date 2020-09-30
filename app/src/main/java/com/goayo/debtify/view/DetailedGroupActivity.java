@@ -13,22 +13,17 @@ import androidx.navigation.Navigation;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.ActivityDetailedGroupBinding;
-import com.goayo.debtify.modelaccess.IUserData;
 import com.goayo.debtify.viewmodel.DetailedGroupViewModel;
-import com.goayo.debtify.viewmodel.GroupViewModelFactory;
-import com.goayo.debtify.viewmodel.MyGroupsViewModel;
 import com.goayo.debtify.viewmodel.PickUserViewModel;
-
-import java.util.List;
 
 /**
  * @author Alex Phu, Oscar Sanner
  * @date 2020-09-22
  * <p>
  * Activity for the detailed view of a group.
- *
+ * <p>
  * 25-09-2020 Modified by Alex: Refactored bottom-buttons to GroupFragment.
- *
+ * <p>
  * 2020/09/25 Modified by Oscar Sanner, Alex Phu and Olof Sjögren: Removed duplicate "setContentView".
  */
 public class DetailedGroupActivity extends AppCompatActivity {
@@ -52,18 +47,18 @@ public class DetailedGroupActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         PickUserViewModel pickUserViewModel = ViewModelProviders.of(this).get(PickUserViewModel.class);
         DetailedGroupViewModel detailedGroupViewModel = ViewModelProviders.of(this).get(DetailedGroupViewModel.class);
-        switch (item.getItemId()){
-            case R.id.action_add_members :
-                getIntent().putExtra("BASE_CLASS", "DetailedGroupActivity.class");
-
+        switch (item.getItemId()) {
+            case R.id.action_add_members:
                 pickUserViewModel.setInitialUsers(detailedGroupViewModel.getAddableUsers());
+                pickUserViewModel.setIsMultipleChoice(true);
 
                 Navigation.findNavController(this, R.id.group_nav_host).navigate(R.id.action_groupFragment_to_pickUsersFragment);
                 break;
-            case R.id.action_show_group_informaion :
+            case R.id.action_show_group_informaion:
                 Navigation.findNavController(this, R.id.group_nav_host).navigate(R.id.action_groupFragment_to_showMembersFragment);
                 break;
-            default: return super.onOptionsItemSelected(item);
+            default:
+                return super.onOptionsItemSelected(item);
         }
         return true;
     }

@@ -8,12 +8,10 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.modelaccess.IUserData;
-import com.goayo.debtify.viewmodel.PickUserViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,17 +38,19 @@ public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUs
     public PickUserAdapter(List<IUserData> userData) {
         this.userData = userData;
         this.isMultipleChoice = true;
+        this.selectedUserPosList = new ArrayList<>();
     }
 
     /**
      * Constructor allowing setting isMultipleChoice from start
      *
-     * @param userData the userData to adapt
+     * @param userData         the userData to adapt
      * @param isMultipleChoice decides whether to use radiobutton or checkbox
      */
     public PickUserAdapter(List<IUserData> userData, boolean isMultipleChoice) {
         this.userData = userData;
         this.isMultipleChoice = isMultipleChoice;
+        this.selectedUserPosList = new ArrayList<>();
     }
 
     /**
@@ -79,7 +79,10 @@ public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUs
         holder.setMultipleChoice(isMultipleChoice);
 
         if (!isMultipleChoice) {
-            holder.radioButton.setChecked(position == selectedUserPosList.get(0));
+            try {
+                holder.radioButton.setChecked(position == selectedUserPosList.get(0));
+            } catch (IndexOutOfBoundsException ignored) {
+            }
         }
     }
 

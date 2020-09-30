@@ -18,15 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.GroupFragmentBinding;
-import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.model.UserNotFoundException;
 import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 import com.goayo.debtify.view.adapter.TransactionCardAdapter;
 import com.goayo.debtify.viewmodel.DetailedGroupViewModel;
-import com.goayo.debtify.viewmodel.GroupViewModelFactory;
-import com.goayo.debtify.viewmodel.MyGroupsViewModel;
 import com.goayo.debtify.viewmodel.PickUserViewModel;
 
 import java.util.HashSet;
@@ -60,7 +57,7 @@ public class GroupFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         GroupFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.group_fragment, container, false);
 
-        viewModel  = ViewModelProviders.of(requireActivity()).get(DetailedGroupViewModel.class);
+        viewModel = ViewModelProviders.of(requireActivity()).get(DetailedGroupViewModel.class);
         String groupID = getActivity().getIntent().getStringExtra("GROUP_ID");
         viewModel.setCurrentGroup(groupID);
 

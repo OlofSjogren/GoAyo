@@ -21,11 +21,11 @@ import com.goayo.debtify.databinding.AddDebtFragmentBinding;
 import com.goayo.debtify.modelaccess.IUserData;
 import com.goayo.debtify.view.adapter.UserCardViewAdapter;
 import com.goayo.debtify.viewmodel.AddDebtViewModel;
-import com.goayo.debtify.viewmodel.GroupViewModelFactory;
-import com.goayo.debtify.viewmodel.MyGroupsViewModel;
+import com.goayo.debtify.viewmodel.PickUserViewModel;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -42,17 +42,26 @@ public class AddDebtFragment extends Fragment {
     // the binding object which preloads all its xml components
     private AddDebtFragmentBinding binding;
     // the ViewModel for this class
-    private AddDebtViewModel model;
+    private AddDebtViewModel addDebtViewModel;
+    // the shared ViewModel for data retrieval
+    private PickUserViewModel pickUserViewModel;
 
     // the two adapters which will observe the ViewModel
     private UserCardViewAdapter lenderAdapter;
     private UserCardViewAdapter borrowersAdapter;
 
+    // the variable will decide what data it has retrieved
+    private String dataRetrieved = "";
+
+    private final String LENDER_DATA = "LENDER_DATA";
+    private final String BORROWER_DATA = "BORROWER_DATA";
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.add_debt_fragment, container, false);
-        model = ViewModelProviders.of(requireActivity()).get(AddDebtViewModel.class);
+        addDebtViewModel = ViewModelProviders.of(requireActivity()).get(AddDebtViewModel.class);
+        pickUserViewModel = ViewModelProviders.of(requireActivity()).get(PickUserViewModel.class);
 
         initAdapters();
         initRecyclerView();
@@ -60,10 +69,8 @@ public class AddDebtFragment extends Fragment {
         lenderAdapter.setCommonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requireActivity().getIntent().putExtra("BASE_CLASS", "AddDebtFragment.class_Lender");
-                String groupID = ViewModelProviders.of(requireActivity(), new GroupViewModelFactory()).get(MyGroupsViewModel.class).getCurrentGroupData().getValue().getGroupID();
-                requireActivity().getIntent().putExtra("GROUP_ID", groupID);
-                openPickUser();
+                openPickUser(false);
+                dataRetrieved = LENDER_DATA;
             }
         });
 
@@ -71,15 +78,13 @@ public class AddDebtFragment extends Fragment {
         borrowersAdapter.setCommonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requireActivity().getIntent().putExtra("BASE_CLASS", "AddDebtFragment.class_Borrower");
-                String groupID = ViewModelProviders.of(requireActivity(), new GroupViewModelFactory()).get(MyGroupsViewModel.class).getCurrentGroupData().getValue().getGroupID();
-                requireActivity().getIntent().putExtra("GROUP_ID", groupID);
-                openPickUser();
+                openPickUser(true);
+                dataRetrieved = BORROWER_DATA;
             }
         });
 
         // set a observer to notify the recyclerview adapter whenever the lender data has changed
-        model.getSelectedLenderData().observe(getViewLifecycleOwner(), new Observer<Set<IUserData>>() {
+        addDebtViewModel.getSelectedLenderData().observe(getViewLifecycleOwner(), new Observer<Set<IUserData>>() {
             @Override
             public void onChanged(Set<IUserData> userDataSet) {
                 lenderAdapter.updateList(new ArrayList<>(userDataSet));
@@ -87,11 +92,22 @@ public class AddDebtFragment extends Fragment {
         });
 
         // set a observer to notify the recyclerview adapter whenever the borrowers data has changed
-        model.getSelectedBorrowersData().observe(getViewLifecycleOwner(), new Observer<Set<IUserData>>() {
+        addDebtViewModel.getSelectedBorrowersData().observe(getViewLifecycleOwner(), new Observer<Set<IUserData>>() {
 
             @Override
             public void onChanged(Set<IUserData> userDataSet) {
                 borrowersAdapter.updateList(new ArrayList<>(userDataSet));
+            }
+        });
+
+        pickUserViewModel.getSelectedUsersData().observe(getViewLifecycleOwner(), new Observer<List<IUserData>>() {
+            @Override
+            public void onChanged(List<IUserData> iUserData) {
+                if (dataRetrieved.equals(LENDER_DATA)) {
+                    addDebtViewModel.setSelectedLenderData(new HashSet<>(iUserData));
+                } else if (dataRetrieved.equals(BORROWER_DATA)) {
+                    addDebtViewModel.setSelectedBorrowersData(new HashSet<>(iUserData));
+                }
             }
         });
 
@@ -122,10 +138,16 @@ public class AddDebtFragment extends Fragment {
         borrowerRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-    private void openPickUser() {
-        // TODO change so that it also send data to PickUser
-        NavHostFragment.findNavController(this)
-                .navigate(R.id.action_addDebtFragment_to_pickUsersFragment);
+    private void openPickUser(boolean isMultipleChoice) {
+        pickUserViewModel.setIsMultipleChoice(isMultipleChoice);
+        try {
+            pickUserViewModel.setInitialUsers(new ArrayList<>(addDebtViewModel.getGroupMembers(getCurrentGroupID())));
+            NavHostFragment.findNavController(this)
+                    .navigate(R.id.action_addDebtFragment_to_pickUsersFragment);
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Oops, seems like our code monkeys made an woopsies daisy, please try again UwU", Toast.LENGTH_LONG).show();
+            requireActivity().finish();
+        }
     }
 
     private void createDebt() {
@@ -138,7 +160,7 @@ public class AddDebtFragment extends Fragment {
             String description = binding.editTextDebtDescription.getText().toString();
 
             // create debt
-            model.createDebt(groupID, lenderSet, borrowerSet, amount, description);
+            addDebtViewModel.createDebt(groupID, lenderSet, borrowerSet, amount, description);
             // once the debt is created, the activity is therefore useless and needs to be killed
             requireActivity().finish();
         } catch (Exception e) {
@@ -148,8 +170,7 @@ public class AddDebtFragment extends Fragment {
         }
     }
 
-    // TODO implement this
     private String getCurrentGroupID() {
-        return "";
+        return requireActivity().getIntent().getStringExtra("GROUP_ID");
     }
 }

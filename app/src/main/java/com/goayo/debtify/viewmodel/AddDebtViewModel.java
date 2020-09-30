@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.modelaccess.IUserData;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -55,7 +56,7 @@ public class AddDebtViewModel extends ViewModel {
      * @param lender the Set of lender that replaces the current Set of lender,
      *               the Set should contain only one element at most
      */
-    public void setSelectedLender(Set<IUserData> lender) {
+    public void setSelectedLenderData(Set<IUserData> lender) {
         selectedLenderData.setValue(lender);
     }
 
@@ -77,8 +78,12 @@ public class AddDebtViewModel extends ViewModel {
         // TODO refactor all strings to IUserData
         modelEngine.createDebt(groupID,
                 // this is horrendous
-                ((IUserData) (convertToString(lender).toArray()[0])).getPhoneNumber(),
+                (new ArrayList<>(lender).get(0)).getPhoneNumber(),
                 convertToString(borrowers), amount, description);
+    }
+
+    public Set<IUserData> getGroupMembers(String groupID) throws Exception {
+        return modelEngine.getGroup(groupID).getIUserDataSet();
     }
 
     // TODO this method shouldn't be needed

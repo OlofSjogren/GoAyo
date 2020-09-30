@@ -2,7 +2,6 @@ package com.goayo.debtify.viewmodel;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.modelaccess.IGroupData;
@@ -13,8 +12,8 @@ import java.util.List;
 import java.util.Set;
 
 public class DetailedGroupViewModel extends ViewModel {
-    private MutableLiveData<IGroupData> currentGroup;
     private final ModelEngine modelEngine;
+    private MutableLiveData<IGroupData> currentGroup;
 
     public DetailedGroupViewModel() {
         modelEngine = ModelEngine.getInstance();
@@ -41,6 +40,7 @@ public class DetailedGroupViewModel extends ViewModel {
 
     /**
      * {Contact} \ {CurrentGroupMembers}
+     *
      * @return Addable members to the group.
      */
     public List<IUserData> getAddableUsers() {
