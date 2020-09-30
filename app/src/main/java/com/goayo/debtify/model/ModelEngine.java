@@ -1,9 +1,12 @@
 package com.goayo.debtify.model;
 
+import com.goayo.debtify.IObservable;
+import com.goayo.debtify.IObserver;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -22,22 +25,20 @@ import java.util.Set;
  * 2020-09-30 Modified by Oscar Sanner and Olof Sjögren: Added log out method.
  */
 
-public class ModelEngine {
+public class ModelEngine implements IObservable {
 
     private Account account;
     private static ModelEngine instance;
     private IDatabase database;
 
+    private List<IObserver> observers;
+
     private ModelEngine(Account account, IDatabase database) {
         this.account = account;
         this.database = database;
+        observers = new ArrayList<>();
         //TODO: AUTOMATICALLY LOGS THE USER IN WHEN THIS CLASS IS INSTANTIATED, BECAUSE
         //TODO LOGIN FUNCTIONALITY IS YET TO BE IMPLEMENTED
-        try {
-            logInUser("0701234546", "racso");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -82,6 +83,7 @@ public class ModelEngine {
      */
     public void logInUser(String phoneNumber, String password) throws Exception {
         account.loginUser(phoneNumber, password);
+        notifyAllObservers();
     }
 
     /**
@@ -252,4 +254,20 @@ public class ModelEngine {
         return account.getContacts();
     }
 
+    @Override
+    public void addObserver(IObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(IObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyAllObservers() {
+        for (IObserver observer : observers) {
+            observer.update();
+        }
+    }
 }

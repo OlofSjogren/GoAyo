@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.goayo.debtify.IObserver;
 import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.modelaccess.IGroupData;
@@ -20,10 +21,15 @@ import java.util.Set;
  * @date 2020-09-25
  */
 
-public class GroupsViewModel extends ViewModel {
+public class GroupsViewModel extends ViewModel implements IObserver {
     private MutableLiveData<Set<IGroupData>> groupData;
     private MutableLiveData<IGroupData> currentGroup;
     private MutableLiveData<IDebtData[]> currentGroupsDebtData;
+
+    public GroupsViewModel(){
+        super();
+        ModelEngine.getInstance().addObserver(this);
+    }
 
     public LiveData<Set<IGroupData>> getAllGroupsData() {
         if (groupData == null) {
@@ -34,8 +40,8 @@ public class GroupsViewModel extends ViewModel {
         return groupData;
     }
 
-    public void setAllGroupsData(Set<IGroupData> groupData) {
-        this.groupData.setValue(groupData);
+    public void setAllGroupsData() {
+        this.groupData.setValue(ModelEngine.getInstance().getGroups());
     }
 
     public LiveData<IGroupData> getCurrentGroupData() {
@@ -79,5 +85,10 @@ public class GroupsViewModel extends ViewModel {
         // If kept, change remove convertSetToArray() method.
         IDebtData[] debtData = new IDebtData[groupData.getDebts().size()];
         return groupData.getDebts().toArray(debtData);
+    }
+
+    @Override
+    public void update() {
+        setAllGroupsData();
     }
 }

@@ -5,12 +5,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.goayo.debtify.R;
+import com.goayo.debtify.databinding.SignUpFragmentBinding;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 /**
  * @author Alex Phu, Yenan Wang
@@ -20,11 +25,26 @@ import com.goayo.debtify.R;
  */
 public class SignUpFragment extends Fragment {
 
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d("SIGNUP", "DO YOU EXIST?");
+        SignUpFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.sign_up_fragment, container, false);
+        initRegisterButton(binding);
 
-        return inflater.inflate(R.layout.sign_up_fragment, container, false);
+        return binding.getRoot();
+    }
+
+    private void initRegisterButton(final SignUpFragmentBinding binding) {
+        binding.signUpFragmentRegisterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextInputEditText nameField = binding.signUpFragmentNameTextInputEditText;
+                TextInputEditText numberField = binding.signUpFragmentPhoneNumberTextInputEditText;
+                TextInputEditText passwordField = binding.signUpFragmentPasswordTextInputEditText;
+
+            }
+        });
     }
 }

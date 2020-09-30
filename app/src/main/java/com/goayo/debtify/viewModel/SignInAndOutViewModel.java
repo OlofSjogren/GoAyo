@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
+import com.goayo.debtify.IObserver;
 import com.goayo.debtify.model.ModelEngine;
 
 public class SignInAndOutViewModel extends ViewModel {
@@ -21,5 +22,4 @@ public class SignInAndOutViewModel extends ViewModel {
     public void logOutUser(){
         ModelEngine.getInstance().logOutUser();
     }
-
 }

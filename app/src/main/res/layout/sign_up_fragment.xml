@@ -2,80 +2,66 @@
 @author Olof Sjögren, Oscar Sanner
 @date   2020-09-29
 -->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/pink">
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/pink">
 
-    <TextView
-        android:id="@+id/signUpFragment_sign_up_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="188dp"
-        android:textSize="40sp"
-
-
-        android:text="Create an account"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/signupFragment_name_textInputLayout"
-        android:layout_width="250dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="68dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUpFragment_sign_up_textview">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signUpFragment_password_textInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/signupFragment_phone_number_textInputLayout"
-        android:layout_width="250dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupFragment_name_textInputLayout">
+            android:layout_marginTop="20dp"
+            android:hint="Password"
+            app:layout_constraintTop_toBottomOf="@+id/signUpFragment_phone_number_textInputEditText"
+            tools:layout_editor_absoluteX="81dp" />
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signUpFragment_phone_number_textInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Phone Number" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/signupFragment_password_textInputLayout"
-        android:layout_width="250dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupFragment_phone_number_textInputLayout">
+            android:layout_marginTop="20dp"
+            android:hint="Phone Number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/signUpFragment_name_textInputEditText" />
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signUpFragment_name_textInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="80dp"
+            android:hint="Name"
+            app:layout_constraintTop_toBottomOf="@+id/signUpFragment_sign_up_textview"
+            tools:layout_editor_absoluteX="53dp" />
 
-    <Button
-        android:id="@+id/signUpFragment_register_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:text="Register"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupFragment_password_textInputLayout" />
+        <TextView
+            android:id="@+id/signUpFragment_sign_up_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="188dp"
+            android:text="Create an account"
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+            android:textSize="40sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/signUpFragment_register_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:text="Register"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/signUpFragment_password_textInputEditText" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
