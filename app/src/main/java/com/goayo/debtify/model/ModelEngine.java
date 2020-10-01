@@ -3,7 +3,6 @@ package com.goayo.debtify.model;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
