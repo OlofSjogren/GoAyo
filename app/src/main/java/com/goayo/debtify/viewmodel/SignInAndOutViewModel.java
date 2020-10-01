@@ -1,10 +1,9 @@
-package com.goayo.debtify.viewModel;
+package com.goayo.debtify.viewmodel;
 
 import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
-import com.goayo.debtify.IObserver;
 import com.goayo.debtify.model.ModelEngine;
 
 /**

@@ -1,4 +1,4 @@
-package com.goayo.debtify.viewModel;
+package com.goayo.debtify.viewmodel;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
@@ -13,13 +13,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 public class GroupViewModelFactory implements ViewModelProvider.Factory {
 
-    private static GroupsViewModel viewModel;
+    private static MyGroupsViewModel viewModel;
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if(viewModel == null){
-            viewModel = new GroupsViewModel();
+            viewModel = new MyGroupsViewModel();
         }
 
         return (T)viewModel;

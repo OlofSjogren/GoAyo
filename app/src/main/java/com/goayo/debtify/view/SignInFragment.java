@@ -16,7 +16,7 @@ import androidx.navigation.Navigation;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.SignInFragmentBinding;
-import com.goayo.debtify.viewModel.SignInAndOutViewModel;
+import com.goayo.debtify.viewmodel.SignInAndOutViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 
 /**
@@ -69,6 +69,7 @@ public class SignInFragment extends Fragment {
                 if(attempt){
                     Intent intent = new Intent(binding.getRoot().getContext(), MainActivity.class);
                     startActivity(intent);
+                    requireActivity().finish();
                 } else {
                     pnField.setText("");
                     pwField.setText("");

@@ -1,11 +1,8 @@
 package com.goayo.debtify.view;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -16,10 +13,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.ActivityMainBinding;
 import com.goayo.debtify.view.handler.TabsPagerAdapter;
-import com.goayo.debtify.viewModel.SignInAndOutViewModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.goayo.debtify.viewmodel.SignInAndOutViewModel;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
 /**

@@ -8,19 +8,26 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.ActivityDetailedGroupBinding;
+import com.goayo.debtify.viewmodel.DetailedGroupViewModel;
+import com.goayo.debtify.viewmodel.PickUserViewModel;
 
 /**
  * @author Alex Phu, Oscar Sanner
  * @date 2020-09-22
  * <p>
  * Activity for the detailed view of a group.
- *
+ * <p>
  * 25-09-2020 Modified by Alex: Refactored bottom-buttons to GroupFragment.
- *
+ * <p>
  * 2020/09/25 Modified by Oscar Sanner, Alex Phu and Olof Sjögren: Removed duplicate "setContentView".
+ * <p>
+ * 2020-09-30 Modified by Yenan & Alex: Refactored so that it now uses PickUserViewModel and
+ * DetailedGroupViewModel to manage data
  */
 public class DetailedGroupActivity extends AppCompatActivity {
 
@@ -41,13 +48,22 @@ public class DetailedGroupActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_add_members :
-                //Todo: Add something
-            case R.id.action_show_group_informaion :
-                //Todo: Show something
-            default: return super.onOptionsItemSelected(item);
+        PickUserViewModel pickUserViewModel = ViewModelProviders.of(this).get(PickUserViewModel.class);
+        DetailedGroupViewModel detailedGroupViewModel = ViewModelProviders.of(this).get(DetailedGroupViewModel.class);
+        switch (item.getItemId()) {
+            case R.id.action_add_members:
+                pickUserViewModel.setInitialUsers(detailedGroupViewModel.getAddableUsers());
+                pickUserViewModel.setIsMultipleChoice(true);
+
+                Navigation.findNavController(this, R.id.group_nav_host).navigate(R.id.action_groupFragment_to_pickUsersFragment);
+                break;
+            case R.id.action_show_group_informaion:
+                Navigation.findNavController(this, R.id.group_nav_host).navigate(R.id.action_groupFragment_to_showMembersFragment);
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
+        return true;
     }
 
     private void initToolBar(ActivityDetailedGroupBinding binding) {

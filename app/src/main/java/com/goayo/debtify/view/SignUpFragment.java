@@ -1,12 +1,9 @@
 package com.goayo.debtify.view;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,10 +14,8 @@ import androidx.navigation.Navigation;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.SignUpFragmentBinding;
-import com.goayo.debtify.viewModel.SignInAndOutViewModel;
-import com.goayo.debtify.viewModel.SignUpViewModel;
+import com.goayo.debtify.viewmodel.SignUpViewModel;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 /**
  * @author Alex Phu, Yenan Wang

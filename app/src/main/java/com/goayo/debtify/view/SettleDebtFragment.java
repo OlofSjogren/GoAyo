@@ -18,7 +18,7 @@ import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.SettleDebtFragmentBinding;
 import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.view.adapter.PickDebtAdapter;
-import com.goayo.debtify.viewModel.SettleDebtViewModel;
+import com.goayo.debtify.viewmodel.SettleDebtViewModel;
 
 import java.util.List;
 
@@ -73,9 +73,8 @@ public class SettleDebtFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
     }
 
-    // TODO implement this
     private String getCurrentGroupID() {
-        return "";
+        return requireActivity().getIntent().getStringExtra("GROUP_ID");
     }
 
     // TODO implement this
