@@ -2,7 +2,7 @@ package com.goayo.debtify;
 
 /**
  * @author Olof Sjögren, Oscar Sanner
- * @date 2020-09-15
+ * @date 2020-09-30
  * <p>
  * Observer interface for observer pattern.
  */

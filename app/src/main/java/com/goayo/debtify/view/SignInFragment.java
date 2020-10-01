@@ -25,7 +25,7 @@ import com.google.android.material.textfield.TextInputEditText;
  * <p>
  * Sign in page.
  *
- * 2020-09-30 Added all functionality: editable text-input fields, registration and login buttons as well as fragment's initialisation.
+ * 2020-09-30 Modified by Olof Sjögren and Oscar Sanner: Added all functionality: editable text-input fields, registration and login buttons as well as fragment's initialisation.
  */
 public class SignInFragment extends Fragment {
 
