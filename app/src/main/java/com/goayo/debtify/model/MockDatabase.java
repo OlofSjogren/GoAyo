@@ -22,6 +22,8 @@ import java.util.UUID;
  * 2020-09-21 Modified by Oscar Sanner: Added functionality to remove a user from a group.
  * 2020-09-28 Modified by Oscar Sanner and Olof Sjögren: Added methods for debts, payments and contacts.
  * 2020-09-29 Modified by Oscar Sanner and Olof Sjögren: Bugfix in constructor initializing the debts.
+ * 2020-09-30 Modified by Oscar Sanner and Olof Sjögren: Changed return type of registerUser.
+ * boolean to void.
  */
 
 class MockDatabase implements IDatabase {
@@ -41,11 +43,15 @@ class MockDatabase implements IDatabase {
         groups = new ArrayList<>();
         userContactLists = new HashMap<>();
 
-        registerUser("0701234546", pwOscar, "Oscar Sanner");
-        registerUser("0786458765", pwOlof, "Olof Sjögren");
-        registerUser("0738980732", pwAlex, "Alex Phu");
-        registerUser("0701094578", pwYenan, "Yenan Wang");
-        registerUser("0733387676", pwGabriel, "Gabriel Brattgård");
+        try {
+            registerUser("0701234546", pwOscar, "Oscar Sanner");
+            registerUser("0786458765", pwOlof, "Olof Sjögren");
+            registerUser("0738980732", pwAlex, "Alex Phu");
+            registerUser("0701094578", pwYenan, "Yenan Wang");
+            registerUser("0733387676", pwGabriel, "Gabriel Brattgård");
+        } catch (UserAlreadyExistsException e){
+            e.printStackTrace();
+        }
 
         addContact(users.get(pwOscar).getPhoneNumber(), users.get(pwAlex).getPhoneNumber());
         addContact(users.get(pwOscar).getPhoneNumber(), users.get(pwGabriel).getPhoneNumber());
@@ -204,15 +210,14 @@ class MockDatabase implements IDatabase {
          * @return true if the registration was successful.
          */
     @Override
-    public boolean registerUser(String phoneNumber, String password, String name) {
+    public void registerUser(String phoneNumber, String password, String name) throws UserAlreadyExistsException {
         User user = getUserFromDatabase(phoneNumber);
         if(user != null){
-            return false;
+            throw new UserAlreadyExistsException("This user exists in database");
         }
         user = new User(phoneNumber, name);
         users.put(password, user);
         userContactLists.put(user, new ArrayList<User>());
-        return true;
     }
 
     /**

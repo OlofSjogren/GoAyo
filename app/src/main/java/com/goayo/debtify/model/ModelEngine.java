@@ -1,8 +1,12 @@
 package com.goayo.debtify.model;
 
+import com.goayo.debtify.IObservable;
+import com.goayo.debtify.IObserver;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,24 +22,24 @@ import java.util.Set;
  * 2020-09-23 Modified by Olof: Added getGroup-method provided a specific id.
  * 2020-09-28 Modified by Yenan: refactor to add parameter description to createDebt method
  * 2020-09-28 Modified by Alex: Refactored hardcoded debt data.
+ * 2020-09-30 Modified by Oscar Sanner and Olof Sjögren: Added log out method.
+ * 2020-09-30 Modified by Olof Sjögren and Oscar Sanner : Now implements IObservable and (for now) notifies on registration and login.
  */
 
-public class ModelEngine {
+public class ModelEngine implements IObservable {
 
     private Account account;
     private static ModelEngine instance;
     private IDatabase database;
 
+    private List<IObserver> observers;
+
     private ModelEngine(Account account, IDatabase database) {
         this.account = account;
         this.database = database;
+        observers = new ArrayList<>();
         //TODO: AUTOMATICALLY LOGS THE USER IN WHEN THIS CLASS IS INSTANTIATED, BECAUSE
         //TODO LOGIN FUNCTIONALITY IS YET TO BE IMPLEMENTED
-        try {
-            logInUser("0701234546", "racso");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -62,7 +66,7 @@ public class ModelEngine {
      * @return true if the operation was successful, server side. False if the precondition
      * is not met, or if some form of connection error occurs.
      */
-    public void registerUser(String phoneNumber, String name, String password) throws Exception {
+    public void registerUser(String phoneNumber, String name, String password) throws UserAlreadyExistsException {
         account.registerUser(phoneNumber, name, password);
     }
 
@@ -80,6 +84,18 @@ public class ModelEngine {
      */
     public void logInUser(String phoneNumber, String password) throws Exception {
         account.loginUser(phoneNumber, password);
+        notifyAllObservers();
+    }
+
+    /**
+     * Logs the current user out from the model and removes any personal contacts or groups
+     * that are stored in the model.
+     *
+     * Precondition: The user is logged in to the model.
+     *
+     */
+    public void logOutUser(){
+        account.logOutUser();
     }
 
 
@@ -239,4 +255,20 @@ public class ModelEngine {
         return account.getContacts();
     }
 
+    @Override
+    public void addObserver(IObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(IObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyAllObservers() {
+        for (IObserver observer : observers) {
+            observer.update();
+        }
+    }
 }

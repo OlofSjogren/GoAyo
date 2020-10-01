@@ -3,7 +3,9 @@ package com.goayo.debtify.model;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,6 +29,7 @@ import java.util.Set;
  * 2020-09-29 Modified by Oscar Sanner and Olof Sjögren: Fixed bug in login user method. Contact list will now mutate
  * the instance variable contactList instead of returning a new list. Also removed the getUserFromId method as this now
  * resides in the mock database.
+ * 2020-09-30 Modified by Oscar Sanner and Olof Sjögren: Added log out method.
  */
 public class Account {
 
@@ -51,7 +54,7 @@ public class Account {
      * @param name        the registered user's name.
      * @param password    the registered user's password.
      */
-    public void registerUser(String phoneNumber, String password, String name) {
+    public void registerUser(String phoneNumber, String password, String name) throws UserAlreadyExistsException {
         database.registerUser(phoneNumber, password, name);
     }
 
@@ -277,6 +280,21 @@ public class Account {
         return database.getGroupFromId(groupID);
     }
 
+
+    /**
+     * A method for logging out the current user. This method will make sure that no groups
+     * can be saved between logins and that no contacts are saved between logins.
+     */
+    public void logOutUser() {
+        try {
+            userIsLoggedIn();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        loggedInUser = null;
+        associatedGroups = null;
+        contactList = null;
+    }
 
     private void initContactList(String phoneNumber) throws Exception {
         contactList = database.getContactList(phoneNumber);
