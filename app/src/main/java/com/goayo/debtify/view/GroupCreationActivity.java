@@ -16,6 +16,8 @@ import com.goayo.debtify.viewmodel.PickUserViewModel;
  * @date 2020-09-16
  * <p>
  * Entry point of creating-a-group.
+ *
+ * 2020-10-05 Modified by ALex & Yenan: changed the implementation so that it initializes the ViewModels
  */
 public class GroupCreationActivity extends AppCompatActivity {
 
