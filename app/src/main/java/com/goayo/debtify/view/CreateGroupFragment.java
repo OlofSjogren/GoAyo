@@ -34,7 +34,7 @@ import java.util.List;
  * Create-a-group page.
  * <p>
  * 2020-09-18 Modified by Alex Phu and Olof Sjögren: Added listener for create button. Logic will be implemented later.
- * 2020-10-05 Modified by ALex & Yenan: implemented
+ * 2020-10-05 Modified by ALex & Yenan: implemented create group button and now it actually creates a group
  */
 public class CreateGroupFragment extends Fragment {
 
@@ -91,7 +91,7 @@ public class CreateGroupFragment extends Fragment {
 
         try {
             if (groupName.isEmpty()) {
-                throw new Exception("YOUR FUCKING NAME IS EMPTY");
+                throw new Exception("Group name cannot be empty!");
             } else {
                 model.createGroup(groupName, new HashSet(userData));
                 requireActivity().finish();
