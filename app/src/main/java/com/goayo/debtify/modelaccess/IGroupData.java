@@ -15,6 +15,8 @@ import java.util.Set;
  * 2020-09-16 Modified by Gabriel & Yenan : Changed Set<IDebtData> into List<IDebtData>.
  * <p>
  * 2020-09-25 Modified by Olof Sjögren, Alex Phu & Oscar Sanner : Added getUsersTotal method.
+ * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
+ * return types and params of methods are correctly set as BigDecimal.
  */
 public interface IGroupData {
     String getGroupID();

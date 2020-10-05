@@ -22,6 +22,8 @@ import java.util.Set;
  * 2020-09-28 Modified by Yenan: refactor to add parameter description to createDebt method
  * 2020-09-29 Modified by Olof & Oscar : Added method call in removeUser() to also remove all debts associated to that user in the group.
  * 2020-09-29 Modified by Olof & Oscar : Fixed bug where one of the constructors wouldn't initiate the ledger.
+ * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
+ * return types and params of methods are correctly set as BigDecimal.
  *
  */
 class Group implements IGroupData {

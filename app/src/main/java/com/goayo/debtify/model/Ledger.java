@@ -20,6 +20,8 @@ import java.util.Set;
  * calculating a specific Users net total debt.
  * 2020-09-28 Modified by Yenan: refactor to add parameter description to createDebt method
  * 2020-09-29 Modified by Olof & Oscar : Created method for removing all debts of a specific user (removeSpecificUserDebt).
+ * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
+ * return types and params of methods are correctly set as BigDecimal.
  */
 class Ledger {
 

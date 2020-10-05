@@ -32,6 +32,8 @@ import java.util.List;
  * 2020-09-18 Modified by Yenan & Gabriel: Added SettleDebt view, tested with hard-coded value
  * 2020-09-25 Modified by Yenan & Gabriel: Implemented initRecyclerView
  * 2020-09-29 Modified by Yenan: Connected with SettleDebtFragment
+ * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
+ * return types and params of methods are correctly set as BigDecimal.
  */
 public class SettleDebtFragment extends Fragment {
     // the ViewModel for this fragment

@@ -13,6 +13,8 @@ import java.util.List;
  * <p>
  * 2020-09-16 Modified by Gabriel & Yenan : Added getOriginalDebt() and getAmountOwed() to account for payments done.
  * 2020-09-28 Modified by Yenan: add getDebtDescription() method and add comments
+ * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
+ * return types and params of methods are correctly set as BigDecimal.
  */
 public interface IDebtData {
     /**

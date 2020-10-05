@@ -39,6 +39,8 @@ import java.util.Set;
  * 2020-09-22 Modified by Yenan & Gabriel: Removed hard-coded values, added defaults.
  * 2020-09-29 Modified by Yenan: Connected with AddDebtViewModel
  * 2020-09-30 Modified by Yenan & Alex: Made it compatible with PickUser
+ * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
+ * return types and params of methods are correctly set as BigDecimal.
  */
 public class AddDebtFragment extends Fragment {
     // the binding object which preloads all its xml components

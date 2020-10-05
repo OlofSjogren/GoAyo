@@ -21,6 +21,8 @@ import java.util.UUID;
  * 2020-09-28 Modified by Yenan : refactor to add description parameter to the constructor
  * 2020-09-29 Modified by Oscar Sanner and Olof Sjögren: Replaced "tempID" with a proper dynamically generated UUID.
  * Also fixed bug in payOffDebt(), now compares larger than AND EQUAL to instead of just larger than.
+ * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
+ * return types and params of methods are correctly set as BigDecimal.
  */
 class DebtTracker implements IDebtData {
     private final Debt debt;

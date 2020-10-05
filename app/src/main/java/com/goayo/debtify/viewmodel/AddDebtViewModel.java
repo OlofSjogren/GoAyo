@@ -19,6 +19,9 @@ import java.util.Set;
  * ViewModel for AddDebtFragment
  * <p>
  * 2020-09-30 Modified by Yenan & Alex: Fix an error caused by createDebt method
+ *
+ * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
+ * return types and params of methods are correctly set as BigDecimal.
  */
 public class AddDebtViewModel extends ViewModel {
 

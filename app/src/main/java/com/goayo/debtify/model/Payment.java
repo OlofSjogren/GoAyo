@@ -11,6 +11,8 @@ import java.util.Date;
  * @date 2020-09-15
  * <p>
  * Value object for Payment
+ * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
+ * return types and params of methods are correctly set as BigDecimal.
  */
 class Payment implements IPaymentData {
     private final Date date;
