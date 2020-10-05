@@ -23,6 +23,7 @@ import com.goayo.debtify.view.adapter.UserCardViewAdapter;
 import com.goayo.debtify.viewmodel.AddDebtViewModel;
 import com.goayo.debtify.viewmodel.PickUserViewModel;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -38,6 +39,8 @@ import java.util.Set;
  * 2020-09-22 Modified by Yenan & Gabriel: Removed hard-coded values, added defaults.
  * 2020-09-29 Modified by Yenan: Connected with AddDebtViewModel
  * 2020-09-30 Modified by Yenan & Alex: Made it compatible with PickUser
+ * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
+ * return types and params of methods are correctly set as BigDecimal.
  */
 public class AddDebtFragment extends Fragment {
     // the binding object which preloads all its xml components
@@ -158,7 +161,7 @@ public class AddDebtFragment extends Fragment {
             String groupID = getCurrentGroupID();
             Set<IUserData> lenderSet = new HashSet<>(lenderAdapter.getUserList());
             Set<IUserData> borrowerSet = new HashSet<>(borrowersAdapter.getUserList());
-            double amount = Double.parseDouble(binding.editTextNumberDecimal.getText().toString());
+            BigDecimal amount = new BigDecimal(binding.editTextNumberDecimal.getText().toString());
             String description = binding.editTextDebtDescription.getText().toString();
 
             // create debt

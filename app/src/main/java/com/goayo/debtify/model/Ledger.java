@@ -3,6 +3,7 @@ package com.goayo.debtify.model;
 
 import com.goayo.debtify.modelaccess.IDebtData;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -19,6 +20,8 @@ import java.util.Set;
  * calculating a specific Users net total debt.
  * 2020-09-28 Modified by Yenan: refactor to add parameter description to createDebt method
  * 2020-09-29 Modified by Olof & Oscar : Created method for removing all debts of a specific user (removeSpecificUserDebt).
+ * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
+ * return types and params of methods are correctly set as BigDecimal.
  */
 class Ledger {
 
@@ -33,8 +36,8 @@ class Ledger {
      * @param description the brief description of the debt
      * @throws Exception
      */
-    public void createDebt(User lender, Set<User> borrowers, double owedTotal, String description) throws Exception {
-        double individualAmount = owedTotal / borrowers.size();
+    public void createDebt(User lender, Set<User> borrowers, BigDecimal owedTotal, String description) throws Exception {
+        BigDecimal individualAmount = owedTotal.divide(new BigDecimal(borrowers.size()));
         List<DebtTracker> mockList = new ArrayList<>();
 
         if (borrowers.size() == 0) {
@@ -62,7 +65,7 @@ class Ledger {
      * @param debtTrackerID ID used to retrieve the specific debtTracker.
      * @throws
      */
-    public void payOffDebt(double amount, String debtTrackerID) throws Exception {
+    public void payOffDebt(BigDecimal amount, String debtTrackerID) throws Exception {
         findDebtTracker(debtTrackerID).payOffDebt(amount);
     }
 
@@ -103,13 +106,13 @@ class Ledger {
      * @param user The user for which the total debt calculations will be made.
      * @return the net total debt.
      */
-    public double getUserTotal(User user) {
-        double total = 0;
+    public BigDecimal getUserTotal(User user) {
+        BigDecimal total = new BigDecimal(0);
         for (DebtTracker dt : debtTrackerList) {
             if (dt.getLender().equals(user)) {
-                total += dt.getAmountOwed();
+                total = total.add(dt.getAmountOwed());
             } else if (dt.getBorrower().equals(user)) {
-                total -= dt.getAmountOwed();
+                total = total.subtract(dt.getAmountOwed());
             }
         }
         return total;

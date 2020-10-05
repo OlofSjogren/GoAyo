@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.modelaccess.IDebtData;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +16,8 @@ import java.util.Objects;
  * @date 2020-09-29
  * <p>
  * ViewModel for SettleDebtFragment
+ * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
+ * return types and params of methods are correctly set as BigDecimal.
  */
 public class SettleDebtViewModel extends ViewModel {
 
@@ -60,7 +63,7 @@ public class SettleDebtViewModel extends ViewModel {
      * @param groupID the ID of the Group the Debt belongs to
      * @throws Exception to be specified later
      */
-    public void settleDebt(double amount, String debtID, String groupID) throws Exception {
+    public void settleDebt(BigDecimal amount, String debtID, String groupID) throws Exception {
         modelEngine.payOffDebt(amount, debtID, groupID);
     }
 

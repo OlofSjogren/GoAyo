@@ -6,6 +6,7 @@ import com.goayo.debtify.modelaccess.IPaymentData;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -41,7 +42,7 @@ public class LedgerTest {
         List<IDebtData> debtDataBefore = database.getGroupFromId("1a705586-238d-4a29-b7af-36dc103bd45a").getDebts();
 
         try {
-            database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", alexBorrowerSet, 20, "TestDebt0");
+            database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", alexBorrowerSet, new BigDecimal(20), "TestDebt0");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -54,13 +55,13 @@ public class LedgerTest {
         }
 
         assertEquals(1, debtDataAfter.size());
-        assertEquals(20, debtDataAfter.get(0).getAmountOwed(), 0.0);
+        assertEquals(new BigDecimal(20), debtDataAfter.get(0).getAmountOwed());
         assertEquals("Alex Phu", debtDataAfter.get(0).getBorrower().getName());
         assertEquals("Oscar Sanner", debtDataAfter.get(0).getLender().getName());
 
-        assertFalse(database.addDebt("Non existent Id", "Non existent number", new HashSet<String>(), 20, "TestDebt1"));
-        assertFalse(database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "Non existent number", new HashSet<String>(), 20, "TestDebt2"));
-        assertFalse(database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", new HashSet<String>(), 20, "TestDebt3"));
+        assertFalse(database.addDebt("Non existent Id", "Non existent number", new HashSet<String>(), new BigDecimal(20), "TestDebt1"));
+        assertFalse(database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "Non existent number", new HashSet<String>(), new BigDecimal(20), "TestDebt2"));
+        assertFalse(database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", new HashSet<String>(), new BigDecimal(20), "TestDebt3"));
 
     }
 
@@ -72,7 +73,7 @@ public class LedgerTest {
         List<IDebtData> debtDataBefore = database.getGroupFromId("1a705586-238d-4a29-b7af-36dc103bd45a").getDebts();
 
         try {
-            database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", alexBorrowerSet, 20, "Test Description");
+            database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", alexBorrowerSet, new BigDecimal(20), "Test Description");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -86,7 +87,7 @@ public class LedgerTest {
 
         List<IPaymentData> paymentsBefore = debtDataAfter.get(0).getPaymentHistory();
         try {
-            database.addPayment("1a705586-238d-4a29-b7af-36dc103bd45a", debtDataAfter.get(0).getDebtID(), 15);
+            database.addPayment("1a705586-238d-4a29-b7af-36dc103bd45a", debtDataAfter.get(0).getDebtID(), new BigDecimal(15));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -94,14 +95,14 @@ public class LedgerTest {
 
         assertEquals(0, paymentsBefore.size());
         assertEquals(1, paymentsAfter.size());
-        assertEquals(15, paymentsAfter.get(0).getPaidAmount(), 0.0);
-        assertEquals(5, debtDataAfter.get(0).getAmountOwed(), 0.0);
-        assertEquals(debtDataAfter.get(0).getOriginalDebt() - paymentsAfter.get(0).getPaidAmount(), debtDataAfter.get(0).getAmountOwed(), 0.0);
+        assertEquals(new BigDecimal(15), paymentsAfter.get(0).getPaidAmount());
+        assertEquals(new BigDecimal(5), debtDataAfter.get(0).getAmountOwed());
+        assertEquals(debtDataAfter.get(0).getOriginalDebt().subtract(paymentsAfter.get(0).getPaidAmount()), debtDataAfter.get(0).getAmountOwed());
     }
 
     @Test
     public void testGetUserTotal() throws UserNotFoundException {
-        double total =  group.getUserTotal("0701234546");
-        assertEquals(-65.25, total, 0.0);
+        BigDecimal total =  group.getUserTotal("0701234546");
+        assertEquals(BigDecimal.valueOf(-65.25), total);
     }
 }

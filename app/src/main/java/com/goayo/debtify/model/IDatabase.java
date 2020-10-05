@@ -1,5 +1,6 @@
 package com.goayo.debtify.model;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 /**
@@ -22,6 +23,8 @@ import java.util.Set;
  * 2020-09-30 Modified by Oscar Sanner and Olof Sjögren: Changed return type of registerUser.
  * boolean to void.
  *
+ * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
+ * return types and params of methods are correctly set as BigDecimal.
  */
 
 public interface IDatabase {
@@ -86,7 +89,7 @@ public interface IDatabase {
      *         doesn't exist.
      * @throws Exception if something goes wrong when connecting to the server.
      */
-    boolean addDebt(String groupID, String lender, Set<String> borrowers, double amount, String description) throws Exception;
+    boolean addDebt(String groupID, String lender, Set<String> borrowers, BigDecimal amount, String description) throws Exception;
 
     /**
      * Add a new contact to a users list of contacts.
@@ -127,7 +130,7 @@ public interface IDatabase {
      * @return True if the entity with the provided ids exist. Otherwise false.
      * @throws Exception if something goes wrong when connecting to the server.
      */
-    boolean addPayment(String GroupID, String debtID, double amount) throws Exception;
+    boolean addPayment(String GroupID, String debtID, BigDecimal amount) throws Exception;
 
     /**
      * Adds a user to a specific group.
