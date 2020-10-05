@@ -4,6 +4,7 @@ import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -112,7 +113,7 @@ class Group implements IGroupData {
      * @throws Exception
      */
     // TODO: Specify exception.
-    public void createDebt(User lender, Set<User> borrowers, double owed, String description) throws Exception {
+    public void createDebt(User lender, Set<User> borrowers, BigDecimal owed, String description) throws Exception {
         groupLedger.createDebt(lender, borrowers, owed, description);
     }
 
@@ -124,7 +125,7 @@ class Group implements IGroupData {
      * @throws
      */
     // TODO: Specify exception.
-    public void payOffDebt(double amount, String debtTrackerID) throws Exception {
+    public void payOffDebt(BigDecimal amount, String debtTrackerID) throws Exception {
         groupLedger.payOffDebt(amount, debtTrackerID);
     }
 
@@ -160,7 +161,7 @@ class Group implements IGroupData {
      * @throws UserNotFoundException thrown if a User with phoneNumber can't be found in the group.
      */
     @Override
-    public double getUserTotal(String phoneNumber) throws UserNotFoundException {
+    public BigDecimal getUserTotal(String phoneNumber) throws UserNotFoundException {
         User user = null;
         for (User member : groupMembers) {
             if (member.getPhoneNumber().equals(phoneNumber)) {

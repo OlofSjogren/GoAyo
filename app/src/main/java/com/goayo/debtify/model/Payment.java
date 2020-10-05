@@ -3,6 +3,7 @@ package com.goayo.debtify.model;
 
 import com.goayo.debtify.modelaccess.IPaymentData;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -13,9 +14,9 @@ import java.util.Date;
  */
 class Payment implements IPaymentData {
     private final Date date;
-    private final double paidAmount;
+    private final BigDecimal paidAmount;
 
-    public Payment(double paidAmount) {
+    public Payment(BigDecimal paidAmount) {
         this.date = new Date();
         this.paidAmount = paidAmount;
     }
@@ -24,7 +25,7 @@ class Payment implements IPaymentData {
         return (Date)date.clone();
     }
 
-    public double getPaidAmount() {
+    public BigDecimal getPaidAmount() {
         return paidAmount;
     }
 }

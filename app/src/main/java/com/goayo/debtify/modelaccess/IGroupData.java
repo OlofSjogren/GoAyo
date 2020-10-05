@@ -2,6 +2,7 @@ package com.goayo.debtify.modelaccess;
 
 import com.goayo.debtify.model.UserNotFoundException;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
@@ -24,5 +25,5 @@ public interface IGroupData {
 
     List<IDebtData> getDebts();
 
-    double getUserTotal(String phoneNumber) throws UserNotFoundException;
+    BigDecimal getUserTotal(String phoneNumber) throws UserNotFoundException;
 }

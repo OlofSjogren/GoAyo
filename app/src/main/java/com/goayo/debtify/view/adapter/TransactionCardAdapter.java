@@ -14,6 +14,7 @@ import com.goayo.debtify.R;
 import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.modelaccess.IPaymentData;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -147,9 +148,9 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
         String description;
         String transactionType;
         String lenderBorrowerDescription;
-        double balance;
+        BigDecimal balance;
 
-        public TransactionData(Date date, String description, String transactionType, String lenderBorrowerDescription, double balance) {
+        public TransactionData(Date date, String description, String transactionType, String lenderBorrowerDescription, BigDecimal balance) {
             this.description = description;
             this.date = date;
             this.transactionType = transactionType;

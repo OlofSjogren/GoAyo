@@ -1,5 +1,6 @@
 package com.goayo.debtify.model;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 /**
@@ -86,7 +87,7 @@ public interface IDatabase {
      *         doesn't exist.
      * @throws Exception if something goes wrong when connecting to the server.
      */
-    boolean addDebt(String groupID, String lender, Set<String> borrowers, double amount, String description) throws Exception;
+    boolean addDebt(String groupID, String lender, Set<String> borrowers, BigDecimal amount, String description) throws Exception;
 
     /**
      * Add a new contact to a users list of contacts.
@@ -127,7 +128,7 @@ public interface IDatabase {
      * @return True if the entity with the provided ids exist. Otherwise false.
      * @throws Exception if something goes wrong when connecting to the server.
      */
-    boolean addPayment(String GroupID, String debtID, double amount) throws Exception;
+    boolean addPayment(String GroupID, String debtID, BigDecimal amount) throws Exception;
 
     /**
      * Adds a user to a specific group.

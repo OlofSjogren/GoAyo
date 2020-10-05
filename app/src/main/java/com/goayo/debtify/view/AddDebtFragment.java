@@ -23,6 +23,7 @@ import com.goayo.debtify.view.adapter.UserCardViewAdapter;
 import com.goayo.debtify.viewmodel.AddDebtViewModel;
 import com.goayo.debtify.viewmodel.PickUserViewModel;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -158,7 +159,7 @@ public class AddDebtFragment extends Fragment {
             String groupID = getCurrentGroupID();
             Set<IUserData> lenderSet = new HashSet<>(lenderAdapter.getUserList());
             Set<IUserData> borrowerSet = new HashSet<>(borrowersAdapter.getUserList());
-            double amount = Double.parseDouble(binding.editTextNumberDecimal.getText().toString());
+            BigDecimal amount = new BigDecimal(binding.editTextNumberDecimal.getText().toString());
             String description = binding.editTextDebtDescription.getText().toString();
 
             // create debt

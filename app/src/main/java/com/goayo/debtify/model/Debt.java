@@ -1,5 +1,6 @@
 package com.goayo.debtify.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -10,9 +11,9 @@ import java.util.Date;
  */
 class Debt {
     private final Date date;
-    private final double owed;
+    private final BigDecimal owed;
 
-    public Debt(double owed) {
+    public Debt(BigDecimal owed) {
         this.date = new Date();
         this.owed = owed;
     }
@@ -21,7 +22,7 @@ class Debt {
         return (Date)date.clone();
     }
 
-    public double getDebtAmount() {
+    public BigDecimal getDebtAmount() {
         return owed;
     }
 }

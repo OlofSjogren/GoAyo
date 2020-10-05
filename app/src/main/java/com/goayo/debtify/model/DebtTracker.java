@@ -5,6 +5,7 @@ import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.modelaccess.IPaymentData;
 import com.goayo.debtify.modelaccess.IUserData;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,7 +38,7 @@ class DebtTracker implements IDebtData {
      * @param borrower    the user that borrows money
      * @param description the brief description of the debt
      */
-    public DebtTracker(double debtAmount, User lender, User borrower, String description) {
+    public DebtTracker(BigDecimal debtAmount, User lender, User borrower, String description) {
         this.debt = new Debt(debtAmount);
         this.payments = new ArrayList<>();
         this.lender = lender;
@@ -66,8 +67,9 @@ class DebtTracker implements IDebtData {
      * @param payOffAmount the amount to pay off
      * @throws if payOffAmount exceeds debt left to pay
      */
-    public void payOffDebt(double payOffAmount) throws Exception {
-        if (debt.getDebtAmount() - getSumOfPayments() >= payOffAmount) {
+    public void payOffDebt(BigDecimal payOffAmount) throws Exception {
+        if (debt.getDebtAmount().subtract(getSumOfPayments()).doubleValue() >= payOffAmount.doubleValue()) {
+            //TODO : MOVE INSTANTIATION TO FACTORY
             payments.add(new Payment(payOffAmount));
         } else {
             //TODO: Sepcify what exception this is.
@@ -78,10 +80,10 @@ class DebtTracker implements IDebtData {
     /**
      * @return sum of all payments done
      */
-    public double getSumOfPayments() {
-        double sum = 0;
+    public BigDecimal getSumOfPayments() {
+        BigDecimal sum = new BigDecimal(0);
         for (Payment p : payments) {
-            sum += p.getPaidAmount();
+            sum = sum.add(p.getPaidAmount());
         }
         return sum;
     }
@@ -101,8 +103,8 @@ class DebtTracker implements IDebtData {
      * @return the remaining amount to be payed.
      */
     @Override
-    public double getAmountOwed() {
-        return debt.getDebtAmount() - getSumOfPayments();
+    public BigDecimal getAmountOwed() {
+        return debt.getDebtAmount().subtract(getSumOfPayments());
     }
 
     @Override
@@ -126,7 +128,7 @@ class DebtTracker implements IDebtData {
     }
 
     @Override
-    public double getOriginalDebt() {
+    public BigDecimal getOriginalDebt() {
         return debt.getDebtAmount();
     }
 

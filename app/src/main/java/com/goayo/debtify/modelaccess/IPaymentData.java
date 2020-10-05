@@ -1,5 +1,6 @@
 package com.goayo.debtify.modelaccess;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -10,6 +11,6 @@ import java.util.Date;
  * Interface for accessing payment data
  */
 public interface IPaymentData {
-    double getPaidAmount();
+    BigDecimal getPaidAmount();
     Date getDate();
 }

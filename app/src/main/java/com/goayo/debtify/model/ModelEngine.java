@@ -5,6 +5,7 @@ import com.goayo.debtify.IObserver;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -209,7 +210,7 @@ public class ModelEngine implements IObservable {
      * @return True if the operation was successful, server side and in the program.
      * False if the preconditions aren't met, or if some form of connection error occurs.
      */
-    public void createDebt(String groupID, String lender, Set<String> borrower, double owed, String description) throws Exception {
+    public void createDebt(String groupID, String lender, Set<String> borrower, BigDecimal owed, String description) throws Exception {
         account.createDebt(groupID, lender, borrower, owed, description);
     }
 
@@ -225,7 +226,7 @@ public class ModelEngine implements IObservable {
      * @return True if the operation was successful, server side and in the program.
      * False if the preconditions aren't met, or if some form of connection error occurs.
      */
-    public void payOffDebt(double amount, String debtID, String groupID) throws Exception {
+    public void payOffDebt(BigDecimal amount, String debtID, String groupID) throws Exception {
         account.payOffDebt(amount, debtID, groupID);
     }
 

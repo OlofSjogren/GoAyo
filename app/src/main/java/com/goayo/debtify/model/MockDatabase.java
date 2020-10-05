@@ -3,6 +3,7 @@ package com.goayo.debtify.model;
 import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.modelaccess.IUserData;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -104,18 +105,18 @@ class MockDatabase implements IDatabase {
         gabrielSet.add(users.get(pwGabriel));
 
         try {
-            groups.get(0).createDebt(users.get(pwOlof), oscarSet, 140.5, "test1");
-            groups.get(0).createDebt(users.get(pwYenan), oscarSet, 140.5, "test2");
-            groups.get(0).createDebt(users.get(pwGabriel), yenanSet, 90.25, "test3");
-            groups.get(0).createDebt(users.get(pwGabriel), olofSet, 90.99, "test4");
-            groups.get(0).createDebt(users.get(pwAlex), gabrielSet, 80, "test5");
+            groups.get(0).createDebt(users.get(pwOlof), oscarSet, new BigDecimal("140.5"), "test1");
+            groups.get(0).createDebt(users.get(pwYenan), oscarSet, new BigDecimal("140.5"), "test2");
+            groups.get(0).createDebt(users.get(pwGabriel), yenanSet, new BigDecimal("90.25"), "test3");
+            groups.get(0).createDebt(users.get(pwGabriel), olofSet, new BigDecimal("90.99"), "test4");
+            groups.get(0).createDebt(users.get(pwAlex), gabrielSet, new BigDecimal("80"), "test5");
 
-            groups.get(1).createDebt(users.get(pwOlof), alexSet, 30.89, "test6");
-            groups.get(1).createDebt(users.get(pwOlof), oscarSet, 30.89, "test7");
-            groups.get(1).createDebt(users.get(pwOscar), alexSet, 27.09, "test8");
+            groups.get(1).createDebt(users.get(pwOlof), alexSet, new BigDecimal("30.89"), "test6");
+            groups.get(1).createDebt(users.get(pwOlof), oscarSet, new BigDecimal("30.89"), "test7");
+            groups.get(1).createDebt(users.get(pwOscar), alexSet, new BigDecimal("27.09"), "test8");
 
-            groups.get(2).createDebt(users.get(pwGabriel), alexSet, 20.9, "test9");
-            groups.get(2).createDebt(users.get(pwGabriel), yenanSet, 20.0, "test10");
+            groups.get(2).createDebt(users.get(pwGabriel), alexSet, new BigDecimal("20.9"), "test9");
+            groups.get(2).createDebt(users.get(pwGabriel), yenanSet, new BigDecimal("20.0"), "test10");
 
             String id0_0 = groups.get(0).getDebts().get(0).getDebtID();
             String id0_1 = groups.get(0).getDebts().get(1).getDebtID();
@@ -123,35 +124,35 @@ class MockDatabase implements IDatabase {
             String id0_3 = groups.get(0).getDebts().get(3).getDebtID();
             String id0_4 = groups.get(0).getDebts().get(4).getDebtID();
 
-            groups.get(0).payOffDebt(50.25, id0_0);
-            groups.get(0).payOffDebt(25, id0_0);
+            groups.get(0).payOffDebt(new BigDecimal("50.25"), id0_0);
+            groups.get(0).payOffDebt(new BigDecimal("25"), id0_0);
 
-            groups.get(0).payOffDebt(100.25, id0_1);
-            groups.get(0).payOffDebt(40.25, id0_1);
+            groups.get(0).payOffDebt(new BigDecimal("100.25"), id0_1);
+            groups.get(0).payOffDebt(new BigDecimal("40.25"), id0_1);
 
-            groups.get(0).payOffDebt(30.75, id0_2);
-            groups.get(0).payOffDebt(25, id0_2);
+            groups.get(0).payOffDebt(new BigDecimal("30.75"), id0_2);
+            groups.get(0).payOffDebt(new BigDecimal("25"), id0_2);
 
-            groups.get(0).payOffDebt(80.25, id0_3);
-            groups.get(0).payOffDebt(10.00, id0_3);
+            groups.get(0).payOffDebt(new BigDecimal("80.25"), id0_3);
+            groups.get(0).payOffDebt(new BigDecimal("10.00"), id0_3);
 
-            groups.get(0).payOffDebt(70.25, id0_4);
-            groups.get(0).payOffDebt(5.00, id0_4);
+            groups.get(0).payOffDebt(new BigDecimal("70.25"), id0_4);
+            groups.get(0).payOffDebt(new BigDecimal("5.00"), id0_4);
 
             String id1_0 = groups.get(1).getDebts().get(0).getDebtID();
             String id1_1 = groups.get(1).getDebts().get(1).getDebtID();
             String id1_2 = groups.get(1).getDebts().get(2).getDebtID();
 
-            groups.get(1).payOffDebt(30.89, id1_0);
-            groups.get(1).payOffDebt(27.09, id1_1);
-            groups.get(1).payOffDebt(16.90, id1_2);
-            groups.get(1).payOffDebt(5.0, id1_2);
+            groups.get(1).payOffDebt(new BigDecimal("30.89"), id1_0);
+            groups.get(1).payOffDebt(new BigDecimal("27.09"), id1_1);
+            groups.get(1).payOffDebt(new BigDecimal("16.90"), id1_2);
+            groups.get(1).payOffDebt(new BigDecimal("5.0"), id1_2);
 
             String id2_0 = groups.get(2).getDebts().get(0).getDebtID();
             String id2_1 = groups.get(2).getDebts().get(1).getDebtID();
 
-            groups.get(2).payOffDebt(20.9, id2_0);
-            groups.get(2).payOffDebt(20.0, id2_1);
+            groups.get(2).payOffDebt(new BigDecimal("20.9"), id2_0);
+            groups.get(2).payOffDebt(new BigDecimal("20.0"), id2_1);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -206,8 +207,6 @@ class MockDatabase implements IDatabase {
          * @param phoneNumber Phone number for the user to be registered in the database.
          * @param password Password for the user to be registered in the database.
          * @param name Name for the user to be registered in the database.
-         *
-         * @return true if the registration was successful.
          */
     @Override
     public void registerUser(String phoneNumber, String password, String name) throws UserAlreadyExistsException {
@@ -243,7 +242,7 @@ class MockDatabase implements IDatabase {
     }
 
     @Override
-    public boolean addDebt(String groupID, String lender, Set<String> borrowers, double amount, String description) {
+    public boolean addDebt(String groupID, String lender, Set<String> borrowers, BigDecimal amount, String description) {
 
         Group group;
         try {
@@ -295,7 +294,7 @@ class MockDatabase implements IDatabase {
     }
 
     @Override
-    public boolean addPayment(String GroupID, String debtID, double amount) {
+    public boolean addPayment(String GroupID, String debtID, BigDecimal amount) {
         Group group = getGroupFromId(GroupID);
         try {
             group.payOffDebt(amount, debtID);

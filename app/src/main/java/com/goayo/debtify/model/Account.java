@@ -3,6 +3,7 @@ package com.goayo.debtify.model;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -169,7 +170,7 @@ public class Account {
      * @throws Exception Thrown if group or users are not found, or if the set of borrower is empty.
      */
 
-    public void createDebt(String groupID, String lender, Set<String> borrowers, double owed, String description) throws Exception {
+    public void createDebt(String groupID, String lender, Set<String> borrowers, BigDecimal owed, String description) throws Exception {
         try {
             userIsLoggedIn();
         } catch (Exception e) {
@@ -195,7 +196,7 @@ public class Account {
      */
 
     //Todo: Database.PayOfDebt -> No need to reload groups because same objects. Reload anyways.
-    public void payOffDebt(double amount, String debtID, String groupID) throws Exception {
+    public void payOffDebt(BigDecimal amount, String debtID, String groupID) throws Exception {
 
         try {
             userIsLoggedIn();

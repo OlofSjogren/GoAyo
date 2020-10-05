@@ -20,6 +20,7 @@ import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.view.adapter.PickDebtAdapter;
 import com.goayo.debtify.viewmodel.SettleDebtViewModel;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -81,7 +82,7 @@ public class SettleDebtFragment extends Fragment {
     private void settleDebt() {
         try {
             // the parameters needed to settle a debt
-            double amount = Double.parseDouble(binding.settleAmountEditText.getText().toString());
+            BigDecimal amount = new BigDecimal(binding.settleAmountEditText.getText().toString());
             String debtID = pickDebtAdapter.getSelectedDebt().getDebtID();
             String groupID = getCurrentGroupID();
 

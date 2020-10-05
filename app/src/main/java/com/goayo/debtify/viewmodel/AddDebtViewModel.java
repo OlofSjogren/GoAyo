@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.modelaccess.IUserData;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -75,7 +76,7 @@ public class AddDebtViewModel extends ViewModel {
     public void createDebt(String groupID,
                            Set<IUserData> lender,
                            Set<IUserData> borrowers,
-                           double amount,
+                           BigDecimal amount,
                            String description) throws Exception {
         // TODO refactor all strings to IUserData
         modelEngine.createDebt(groupID,

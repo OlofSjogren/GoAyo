@@ -1,5 +1,6 @@
 package com.goayo.debtify.modelaccess;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -37,12 +38,12 @@ public interface IDebtData {
     /**
      * @return the amount of debt specified at the beginning
      */
-    double getOriginalDebt();
+    BigDecimal getOriginalDebt();
 
     /**
      * @return the amount of debt left now
      */
-    double getAmountOwed();
+    BigDecimal getAmountOwed();
 
     /**
      * @return a list of IPaymentData attached to the Debt/DebtTracker
