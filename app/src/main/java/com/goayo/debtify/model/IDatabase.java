@@ -17,14 +17,15 @@ import java.util.Set;
  * related to the database.
  *
  * 2020-09-29 Modified by Oscar Sanner: Added small adjustments to the documentation. Specified
- * postconditios where needed.
+ * precondition where needed.
  *
  * 2020-09-30 Modified by Oscar Sanner and Olof Sjögren: Changed return type of registerUser.
  * boolean to void.
  *
+ * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Made package private.
  */
 
-public interface IDatabase {
+interface IDatabase {
     /**
      * A method that returns a set of all groups containing the user with the given
      * phone number.

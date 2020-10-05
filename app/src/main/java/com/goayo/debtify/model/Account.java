@@ -30,8 +30,9 @@ import java.util.Set;
  * the instance variable contactList instead of returning a new list. Also removed the getUserFromId method as this now
  * resides in the mock database.
  * 2020-09-30 Modified by Oscar Sanner and Olof Sjögren: Added log out method.
+ * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Made package private.
  */
-public class Account {
+class Account {
 
     /**
      * Constructor for Account class.
