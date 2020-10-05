@@ -5,6 +5,7 @@ import com.goayo.debtify.IObserver;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -24,6 +25,8 @@ import java.util.Set;
  * 2020-09-28 Modified by Alex: Refactored hardcoded debt data.
  * 2020-09-30 Modified by Oscar Sanner and Olof Sjögren: Added log out method.
  * 2020-09-30 Modified by Olof Sjögren and Oscar Sanner : Now implements IObservable and (for now) notifies on registration and login.
+ * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
+ * return types and params of methods are correctly set as BigDecimal.
  */
 
 public class ModelEngine implements IObservable {
@@ -209,7 +212,7 @@ public class ModelEngine implements IObservable {
      * @return True if the operation was successful, server side and in the program.
      * False if the preconditions aren't met, or if some form of connection error occurs.
      */
-    public void createDebt(String groupID, String lender, Set<String> borrower, double owed, String description) throws Exception {
+    public void createDebt(String groupID, String lender, Set<String> borrower, BigDecimal owed, String description) throws Exception {
         account.createDebt(groupID, lender, borrower, owed, description);
     }
 
@@ -225,7 +228,7 @@ public class ModelEngine implements IObservable {
      * @return True if the operation was successful, server side and in the program.
      * False if the preconditions aren't met, or if some form of connection error occurs.
      */
-    public void payOffDebt(double amount, String debtID, String groupID) throws Exception {
+    public void payOffDebt(BigDecimal amount, String debtID, String groupID) throws Exception {
         account.payOffDebt(amount, debtID, groupID);
     }
 

@@ -6,6 +6,7 @@ import com.goayo.debtify.modelaccess.IPaymentData;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -92,7 +93,7 @@ public class MockDatabaseTest {
         List<IDebtData> debtDataBefore = database.getGroupFromId("1a705586-238d-4a29-b7af-36dc103bd45a").getDebts();
 
         try {
-            database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", alexBorrowerSet, 20, "TestDebt11");
+            database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", alexBorrowerSet, new BigDecimal(20), "TestDebt11");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -105,13 +106,13 @@ public class MockDatabaseTest {
         }
 
         assert (debtDataAfter.size() == 1);
-        assert (debtDataAfter.get(0).getAmountOwed() == 20);
+        assert (debtDataAfter.get(0).getAmountOwed().equals(new BigDecimal(20)));
         assert (debtDataAfter.get(0).getBorrower().getName().equals("Alex Phu"));
         assert (debtDataAfter.get(0).getLender().getName().equals("Oscar Sanner"));
 
-        assert (!(database.addDebt("Non existent Id", "Non existent number", new HashSet<String>(), 20, "TestDebt12")));
-        assert (!(database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "Non existent number", new HashSet<String>(), 20, "TestDebt13")));
-        assert (!(database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", new HashSet<String>(), 20, "TestDebt14")));
+        assert (!(database.addDebt("Non existent Id", "Non existent number", new HashSet<String>(), new BigDecimal(20), "TestDebt12")));
+        assert (!(database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "Non existent number", new HashSet<String>(), new BigDecimal(20), "TestDebt13")));
+        assert (!(database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", new HashSet<String>(), new BigDecimal(20), "TestDebt14")));
 
     }
 
@@ -142,7 +143,7 @@ public class MockDatabaseTest {
         List<IDebtData> debtDataBefore = database.getGroupFromId("1a705586-238d-4a29-b7af-36dc103bd45a").getDebts();
 
         try {
-            database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", alexBorrowerSet, 20, "TestDebt15");
+            database.addDebt("1a705586-238d-4a29-b7af-36dc103bd45a", "0701234546", alexBorrowerSet, new BigDecimal(20), "TestDebt15");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -156,7 +157,7 @@ public class MockDatabaseTest {
 
         List<IPaymentData> paymentsBefore = debtDataAfter.get(0).getPaymentHistory();
         try {
-            database.addPayment("1a705586-238d-4a29-b7af-36dc103bd45a", debtDataAfter.get(0).getDebtID(), 15);
+            database.addPayment("1a705586-238d-4a29-b7af-36dc103bd45a", debtDataAfter.get(0).getDebtID(), new BigDecimal(15));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -164,9 +165,9 @@ public class MockDatabaseTest {
 
         assert (paymentsBefore.size() == 0);
         assert (paymentsAfter.size() == 1);
-        assert (paymentsAfter.get(0).getPaidAmount() == 15);
-        assert (debtDataAfter.get(0).getAmountOwed() == 5);
-        assert (debtDataAfter.get(0).getOriginalDebt() - paymentsAfter.get(0).getPaidAmount() == debtDataAfter.get(0).getAmountOwed());
+        assert (paymentsAfter.get(0).getPaidAmount().equals(new BigDecimal(15)));
+        assert (debtDataAfter.get(0).getAmountOwed().equals(new BigDecimal(5)));
+        assert (debtDataAfter.get(0).getOriginalDebt().subtract( paymentsAfter.get(0).getPaidAmount()).equals(debtDataAfter.get(0).getAmountOwed()));
 
     }
 

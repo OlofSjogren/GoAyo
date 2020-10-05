@@ -1,5 +1,6 @@
 package com.goayo.debtify.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -7,12 +8,14 @@ import java.util.Date;
  * @date 2020-09-15
  * <p>
  * Value object for debt
+ * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
+ * return types and params of methods are correctly set as BigDecimal.
  */
 class Debt {
     private final Date date;
-    private final double owed;
+    private final BigDecimal owed;
 
-    public Debt(double owed) {
+    public Debt(BigDecimal owed) {
         this.date = new Date();
         this.owed = owed;
     }
@@ -21,7 +24,7 @@ class Debt {
         return (Date)date.clone();
     }
 
-    public double getDebtAmount() {
+    public BigDecimal getDebtAmount() {
         return owed;
     }
 }
