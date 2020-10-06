@@ -1,5 +1,6 @@
 package com.goayo.debtify.model;
 
+import com.goayo.debtify.IObservable;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
@@ -35,7 +36,7 @@ import java.util.Set;
  * return types and params of methods are correctly set as BigDecimal.
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Made package private.
  */
-class Account {
+class Account implements IObservable {
 
     /**
      * Constructor for Account class.
