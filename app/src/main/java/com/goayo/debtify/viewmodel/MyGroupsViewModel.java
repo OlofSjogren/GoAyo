@@ -4,6 +4,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.goayo.debtify.model.EventBus;
+import com.goayo.debtify.model.GroupsEvent;
+import com.goayo.debtify.model.IEventHandler;
+import com.goayo.debtify.model.IModelEvent;
 import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.modelaccess.IGroupData;
 
@@ -20,16 +24,33 @@ import java.util.Set;
  * fetching groupsdata.
  */
 
-public class MyGroupsViewModel extends ViewModel {
+public class MyGroupsViewModel extends ViewModel implements IEventHandler {
     private MutableLiveData<Set<IGroupData>> groupsData;
 
     public MyGroupsViewModel() {
         super();
         Set<IGroupData> groupsData = ModelEngine.getInstance().getGroups();
         this.groupsData = new MutableLiveData<>(groupsData);
+        EventBus.getInstance().register(this, GroupsEvent.class);
+    }
+
+    private void setGroupsData(){
+        groupsData.setValue(ModelEngine.getInstance().getGroups());
     }
 
     public LiveData<Set<IGroupData>> getGroupsData() {
         return groupsData;
+    }
+
+
+    @Override
+    public void onModelEvent(IModelEvent evt) {
+        setGroupsData();
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        EventBus.getInstance().unRegister(this, GroupsEvent.class);
     }
 }

@@ -1,13 +1,10 @@
 package com.goayo.debtify.model;
 
-import com.goayo.debtify.IObservable;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -36,7 +33,7 @@ import java.util.Set;
  * return types and params of methods are correctly set as BigDecimal.
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Made package private.
  */
-class Account implements IObservable {
+class Account {
 
     /**
      * Constructor for Account class.
@@ -78,6 +75,7 @@ class Account implements IObservable {
         }
         initContactList(phoneNumber);
         loadAssociatedGroups();
+        EventBus.getInstance().publish(new ContactEvent());
     }
 
     /**
@@ -96,10 +94,10 @@ class Account implements IObservable {
             e.printStackTrace();
             return;
         }
-
         phoneNumberSet.add(loggedInUser.getPhoneNumber());
         database.registerGroup(groupName, phoneNumberSet);
         associatedGroups = database.getGroups(loggedInUser.getPhoneNumber());
+        EventBus.getInstance().publish(new GroupsEvent());
     }
 
     /**
@@ -119,6 +117,7 @@ class Account implements IObservable {
 
         database.addContact(loggedInUser.getPhoneNumber(), phoneNumber);
         initContactList(loggedInUser.getPhoneNumber());
+        EventBus.getInstance().publish(new ContactEvent());
     }
 
     /**
@@ -140,6 +139,7 @@ class Account implements IObservable {
 
         database.addUserToGroup(groupID, phoneNumber);
         loadAssociatedGroups();
+        EventBus.getInstance().publish(new DetailedGroupEvent());
     }
 
     /**
@@ -161,6 +161,7 @@ class Account implements IObservable {
 
         database.removeUserFromGroup(phoneNumber, groupID);
         loadAssociatedGroups();
+        EventBus.getInstance().publish(new DetailedGroupEvent());
     }
 
     /**
@@ -188,6 +189,7 @@ class Account implements IObservable {
         }
         database.addDebt(groupID, lender, borrowers, owed, description);
         loadAssociatedGroups();
+        EventBus.getInstance().publish(new DetailedGroupEvent());
     }
 
     /**
@@ -211,6 +213,7 @@ class Account implements IObservable {
 
         database.addPayment(groupID, debtID, amount);
         loadAssociatedGroups();
+        EventBus.getInstance().publish(new DetailedGroupEvent());
     }
 
     /**
@@ -263,6 +266,7 @@ class Account implements IObservable {
 
         database.removeContact(loggedInUser.getPhoneNumber(), phoneNumber);
         initContactList(loggedInUser.getPhoneNumber());
+        EventBus.getInstance().publish(new ContactEvent());
     }
 
 
@@ -270,6 +274,7 @@ class Account implements IObservable {
     public void leaveGroup(String groupID) throws Exception {
         database.removeUserFromGroup(loggedInUser.getPhoneNumber(), groupID);
         loadAssociatedGroups();
+        EventBus.getInstance().publish(new GroupsEvent());
     }
 
     /**

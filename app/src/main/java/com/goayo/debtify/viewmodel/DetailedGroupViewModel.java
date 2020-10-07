@@ -3,7 +3,11 @@ package com.goayo.debtify.viewmodel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.goayo.debtify.model.DetailedGroupEvent;
+import com.goayo.debtify.model.EventBus;
+import com.goayo.debtify.model.IEventHandler;
 import com.goayo.debtify.model.ModelEngine;
+import com.goayo.debtify.model.IModelEvent;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
@@ -19,12 +23,13 @@ import java.util.Set;
  * <p>
  * 2020-09-30 Modified by Alex & Yenan: Add getAddableUser method
  */
-public class DetailedGroupViewModel extends ViewModel {
+public class DetailedGroupViewModel extends ViewModel implements IEventHandler {
     private final ModelEngine modelEngine;
     private MutableLiveData<IGroupData> currentGroup;
 
     public DetailedGroupViewModel() {
         modelEngine = ModelEngine.getInstance();
+        EventBus.getInstance().register(this, DetailedGroupEvent.class);
     }
 
     public IUserData getLoggedInUser() {
@@ -44,6 +49,12 @@ public class DetailedGroupViewModel extends ViewModel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onCleared() {
+        EventBus.getInstance().unRegister(this, DetailedGroupEvent.class);
+        super.onCleared();
     }
 
     /**
@@ -88,5 +99,11 @@ public class DetailedGroupViewModel extends ViewModel {
         }
         return true;
     }
+
+    @Override
+    public void onModelEvent(IModelEvent evt) {
+        setCurrentGroup(currentGroup.getValue().getGroupID());
+    }
+
 
 }
