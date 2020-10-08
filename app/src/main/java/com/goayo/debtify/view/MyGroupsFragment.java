@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,7 +19,10 @@ import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.MyGroupsFragmentBinding;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.view.adapter.GroupViewAdapter;
+import com.goayo.debtify.viewmodel.MyGroupsViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,8 +32,12 @@ import java.util.Set;
  * Second tab of the main screen.
  * <p>
  * 2020/09/15 Modified by Alex Phu. Added init function for RecyclerView. Will be activated when backend is resolved.
- *
+ * <p>
  * 2020/09/16 Modified by Alex Phu. Added listener for FloatingActionButton.
+ * <p>
+ * 2020/09/25 Modified by Oscar Sanner, Alex Phu and Olof Sjögren: Added factory to ViewModelProvider.
+ * <p>
+ * 2020/09/30 Modified by Alex Phu and Yenan Wang: Refactored entire class.
  */
 public class MyGroupsFragment extends Fragment {
 
@@ -39,24 +48,51 @@ public class MyGroupsFragment extends Fragment {
         MyGroupsFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.my_groups_fragment, container, false);
         addListenerToFloatingActionButton(binding);
 
+        MyGroupsViewModel viewModel = ViewModelProviders.of(this).get(MyGroupsViewModel.class);
+
+        List<IGroupData> groupData = new ArrayList<>(viewModel.getGroupsData().getValue());
+
+        final GroupViewAdapter groupViewAdapter = new GroupViewAdapter(groupData);
+        initRecyclerView(binding, groupViewAdapter);
+
+        //Updates RecyclerView when LiveData is changed.
+        viewModel.getGroupsData().observe(getViewLifecycleOwner(), new Observer<Set<IGroupData>>() {
+            @Override
+            public void onChanged(Set<IGroupData> iGroupData) {
+                groupViewAdapter.update(new ArrayList<IGroupData>(iGroupData));
+            }
+        });
+        //Fetches clicked group and sends it away.
+        groupViewAdapter.setCommonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                groupCardViewOnClick(groupViewAdapter);
+            }
+        });
+
         return binding.getRoot();
+    }
+
+    private void groupCardViewOnClick(GroupViewAdapter groupViewAdapter) {
+        Intent intent = new Intent(getContext(), DetailedGroupActivity.class);
+        intent.putExtra("GROUP_ID", groupViewAdapter.getClickedGroup().getGroupID());
+        startActivity(intent);
     }
 
     /**
      * Initializes RecyclerView in MyGroups.
      *
-     * @param groupData Set of groupdata to be displayed.
      * @param binding Variable which can access the elements in the layout file.
      */
-    private void initRecyclerView(MyGroupsFragmentBinding binding, Set<IGroupData> groupData) {
+    private void initRecyclerView(MyGroupsFragmentBinding binding, GroupViewAdapter groupViewAdapter) {
         RecyclerView recyclerView = binding.groupRecyclerView;
-        GroupViewAdapter groupViewAdapter = new GroupViewAdapter(getContext(), convertSetToArray(groupData));
         recyclerView.setAdapter(groupViewAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
     }
 
     /**
      * Sets listener to the floatingActionButton.
+     *
      * @param binding Variable which can access the elements in the layout file.
      */
     private void addListenerToFloatingActionButton(MyGroupsFragmentBinding binding) {
@@ -67,16 +103,5 @@ public class MyGroupsFragment extends Fragment {
                 startActivity(createGroupIntent);
             }
         });
-    }
-
-    /**
-     * Converts a Set to an Array.
-     * @param groupDataSet Set of Groups.
-     * @return Returns an Array of Groups.
-     */
-    private IGroupData[] convertSetToArray(Set<IGroupData> groupDataSet) {
-        IGroupData[] tempData = new IGroupData[groupDataSet.size()];
-        groupDataSet.toArray(tempData);
-        return tempData;
     }
 }

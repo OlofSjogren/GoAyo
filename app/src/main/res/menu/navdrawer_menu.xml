@@ -16,5 +16,8 @@
     <item
         android:id="@+id/myProfileFragment"
         android:title="My Profile" />
+    <item
+        android:id="@+id/logout_menu_item"
+        android:title="LogOut" />
 
 </menu>

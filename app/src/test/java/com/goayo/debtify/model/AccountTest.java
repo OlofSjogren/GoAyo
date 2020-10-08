@@ -2,6 +2,7 @@ package com.goayo.debtify.model;
 
 import com.goayo.debtify.modelaccess.IGroupData;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -11,17 +12,19 @@ import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class AccountTest {
 
     static Account account;
     static MockDatabase database;
 
-    @BeforeClass
-    public static void beforeClass() throws Exception {
+    @Before
+    public void beforeClass() throws Exception {
         database = new MockDatabase();
         account = new Account(database);
-        account.loginUser("123", "asd");
+        account.loginUser("0701234546", "racso");
     }
 
     @Test
@@ -31,8 +34,7 @@ public class AccountTest {
     }
 
     @Test
-    public void loginUser() throws Exception {
-        account.loginUser("123", "123");
+    public void loginUser() {
         assert(account.getLoggedInUser() != null);
         assert(account.getContacts() != null);
         assert(account.getAssociatedGroups() != null);
@@ -42,87 +44,62 @@ public class AccountTest {
     public void createGroup() throws Exception {
         int groupSizeBefore = account.getAssociatedGroups().size();
         Set<String> userToNewGroup = new HashSet<>();
-        userToNewGroup.add("0876123221");
+        userToNewGroup.add("0738980732");
         account.createGroup("test", userToNewGroup);
         int groupSizeAfter = account.getAssociatedGroups().size();
 
-        assert(groupSizeAfter > groupSizeBefore);
+        assertTrue(groupSizeAfter > groupSizeBefore);
     }
 
     @Test
     public void addContact() throws Exception {
         int contactSizeBefore = account.getContacts().size();
-        account.addContact("0735216752");
+        account.addContact("0786458765");
         int contactSizeAfter = account.getContacts().size();
-        assert (contactSizeAfter > contactSizeBefore);
+        assertTrue (contactSizeAfter > contactSizeBefore);
     }
 
     @Test
     public void addUserToGroup() throws Exception {
-        IGroupData g;
-        //
-        int i = 1002;
-        List<Integer> beforeSizes = new ArrayList<>();
-        List<Integer> afterSizes = new ArrayList<>();
-        List<Integer> assertionAtOne = new ArrayList<>();
 
-        for(IGroupData group : account.getAssociatedGroups()){
-            beforeSizes.add(group.getIUserDataSet().size());
-        }
-
-        for(IGroupData groupData : account.getAssociatedGroups()){
-            account.addUserToGroup("0876123221", Integer.toString(i));
-            i++;
-        }
-
-        for(IGroupData group : account.getAssociatedGroups()){
-            afterSizes.add(group.getIUserDataSet().size());
-        }
-
-        for(int t = 0; t < beforeSizes.size(); t++){
-            assertionAtOne.add((afterSizes.get(t)) - beforeSizes.get(t));
-        }
-
-        for (Integer integer : assertionAtOne){
-            assert(integer == 1);
-        }
+        Group g = database.getGroupFromId("4116c93e-5542-4b5c-8423-010a901abdce");
+        assertFalse(g.getGroupMembers().contains(database.getUser("0733387676")));
+        assertEquals(3, g.getGroupMembers().size());
+        account.addUserToGroup("0733387676", "4116c93e-5542-4b5c-8423-010a901abdce");
+        assertEquals(4, g.getGroupMembers().size());
+        assertTrue(g.getGroupMembers().contains(database.getUser("0733387676")));
     }
 
     @Test
     public void removeUserFromGroup()  throws Exception{
-        int sizeBefore = 0;
-        int sizeAfter = 0;
-
-        for(IGroupData g : account.getAssociatedGroups()){
-            if(g.getGroupID() == "1003"){
-                sizeBefore = g.getIUserDataSet().size();
-            }
-        }
-        account.removeUserFromGroup("0735216752", "1003");
-        for(IGroupData g : account.getAssociatedGroups()){
-            if(g.getGroupID() == "1003"){
-                sizeAfter = g.getIUserDataSet().size();
-            }
-        }
-        assert(sizeAfter < sizeBefore);
+        Group g = database.getGroupFromId("4116c93e-5542-4b5c-8423-010a901abdce");
+        assertFalse(g.getGroupMembers().contains(database.getUser("0733387676")));
+        assertEquals(3, g.getGroupMembers().size());
+        account.addUserToGroup("0733387676", "4116c93e-5542-4b5c-8423-010a901abdce");
+        assertEquals(4, g.getGroupMembers().size());
+        assertTrue(g.getGroupMembers().contains(database.getUser("0733387676")));
+        account.removeUserFromGroup("0733387676", "4116c93e-5542-4b5c-8423-010a901abdce");
+        assertFalse(g.getGroupMembers().contains(database.getUser("0733387676")));
+        assertEquals(3, g.getGroupMembers().size());
     }
 
     @Test
     public void leaveGroup() throws Exception {
         Set<IGroupData> groupsBefore = account.getAssociatedGroups();
-        account.leaveGroup("1002");
+        assertTrue(account.getAssociatedGroups().contains(database.getGroupFromId("1a705586-238d-4a29-b7af-36dc103bd45a")));
+        account.leaveGroup("1a705586-238d-4a29-b7af-36dc103bd45a");
+        assertFalse(account.getAssociatedGroups().contains(database.getGroupFromId("1a705586-238d-4a29-b7af-36dc103bd45a")));
         Set<IGroupData> groupsAfter = account.getAssociatedGroups();
-        assert(groupsBefore.size() > groupsAfter.size());
+        assertTrue(groupsBefore.size() > groupsAfter.size());
     }
 
     //TODO: Awaiting a more testable model.
 
-    @Test(expected = Exception.class)
+    @Test
     public void removeContact() throws Exception {
-        Account acc = new Account(database);
-        acc.loginUser("123", "asd");
-        acc.removeContact("0765483856");
-        acc.removeContact("0765483856");
+        assertTrue(account.getContacts().contains(database.getUser("0733387676")));
+        account.removeContact("0733387676");
+        assertFalse(account.getContacts().contains(database.getUser("0733387676")));
     }
 
 

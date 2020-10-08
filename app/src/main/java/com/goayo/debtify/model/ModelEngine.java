@@ -1,8 +1,13 @@
 package com.goayo.debtify.model;
 
+import com.goayo.debtify.IObservable;
+import com.goayo.debtify.IObserver;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -14,21 +19,30 @@ import java.util.Set;
  * packages depending on the model. This class aims to keep the model loosely coupled with other packages.
  * <p>
  * 2020-09-18 Modfied by Olof, Yenan & Alex : removed booleans returns and replaced with exceptions.
- *
  * 2020-09-21 Modified by Alex and Oscar: Implemented Leave and remove feature.
- *
  * 2020-09-23 Modified by Olof: Added getGroup-method provided a specific id.
+ * 2020-09-28 Modified by Yenan: refactor to add parameter description to createDebt method
+ * 2020-09-28 Modified by Alex: Refactored hardcoded debt data.
+ * 2020-09-30 Modified by Oscar Sanner and Olof Sjögren: Added log out method.
+ * 2020-09-30 Modified by Olof Sjögren and Oscar Sanner : Now implements IObservable and (for now) notifies on registration and login.
+ * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
+ * return types and params of methods are correctly set as BigDecimal.
  */
 
-public class ModelEngine {
+public class ModelEngine implements IObservable {
 
     private Account account;
     private static ModelEngine instance;
     private IDatabase database;
 
+    private List<IObserver> observers;
+
     private ModelEngine(Account account, IDatabase database) {
         this.account = account;
         this.database = database;
+        observers = new ArrayList<>();
+        //TODO: AUTOMATICALLY LOGS THE USER IN WHEN THIS CLASS IS INSTANTIATED, BECAUSE
+        //TODO LOGIN FUNCTIONALITY IS YET TO BE IMPLEMENTED
     }
 
     /**
@@ -55,7 +69,7 @@ public class ModelEngine {
      * @return true if the operation was successful, server side. False if the precondition
      * is not met, or if some form of connection error occurs.
      */
-    public void registerUser(String phoneNumber, String name, String password) throws Exception {
+    public void registerUser(String phoneNumber, String name, String password) throws UserAlreadyExistsException {
         account.registerUser(phoneNumber, name, password);
     }
 
@@ -73,6 +87,18 @@ public class ModelEngine {
      */
     public void logInUser(String phoneNumber, String password) throws Exception {
         account.loginUser(phoneNumber, password);
+        notifyAllObservers();
+    }
+
+    /**
+     * Logs the current user out from the model and removes any personal contacts or groups
+     * that are stored in the model.
+     *
+     * Precondition: The user is logged in to the model.
+     *
+     */
+    public void logOutUser(){
+        account.logOutUser();
     }
 
 
@@ -182,11 +208,12 @@ public class ModelEngine {
      * @param lender   The phone number of the user lending the money.
      * @param borrower A list of one or more users.
      * @param owed     A positive double, representing the whole value spent by the lender.
+     * @param description A short string, preferably <20 characters, that describes the debt
      * @return True if the operation was successful, server side and in the program.
      * False if the preconditions aren't met, or if some form of connection error occurs.
      */
-    public void createDebt(String groupID, String lender, Set<String> borrower, double owed) throws Exception {
-        account.createDebt(groupID, lender, borrower, owed);
+    public void createDebt(String groupID, String lender, Set<String> borrower, BigDecimal owed, String description) throws Exception {
+        account.createDebt(groupID, lender, borrower, owed, description);
     }
 
     /**
@@ -201,7 +228,7 @@ public class ModelEngine {
      * @return True if the operation was successful, server side and in the program.
      * False if the preconditions aren't met, or if some form of connection error occurs.
      */
-    public void payOffDebt(double amount, String debtID, String groupID) throws Exception {
+    public void payOffDebt(BigDecimal amount, String debtID, String groupID) throws Exception {
         account.payOffDebt(amount, debtID, groupID);
     }
 
@@ -231,4 +258,20 @@ public class ModelEngine {
         return account.getContacts();
     }
 
+    @Override
+    public void addObserver(IObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(IObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyAllObservers() {
+        for (IObserver observer : observers) {
+            observer.update();
+        }
+    }
 }
