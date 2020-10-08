@@ -23,6 +23,8 @@ public class ContactsViewModel extends ViewModel {
     private MutableLiveData<List<IUserData>> contactsData;
     private ModelEngine modelEngine;
 
+    // TODO need to observe the model to update contacts
+
     public ContactsViewModel() {
         super();
         modelEngine = ModelEngine.getInstance();

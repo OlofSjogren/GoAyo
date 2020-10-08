@@ -34,7 +34,7 @@ import java.util.Objects;
  * Fragment class to display a list of personal contacts to the logged in user.
  * Has buttons to add or remove contacts to the list.
  * <p>
- * 2020-10-08 Modified by Yenan: removed the dependency to model, implemented remove contacts
+ * 2020-10-08 Modified by Yenan: removed the dependency to model, implemented add/remove contacts
  */
 public class DisplayContactsFragment extends Fragment {
     // binding object that generates all widgets belong to this class's xml file
@@ -110,6 +110,7 @@ public class DisplayContactsFragment extends Fragment {
     }
 
     private void addContacts() {
+        // navigate to AddContactFragment
         NavHostFragment.findNavController(this).navigate(R.id.action_displayContactsFragment_to_addContactFragment);
     }
 

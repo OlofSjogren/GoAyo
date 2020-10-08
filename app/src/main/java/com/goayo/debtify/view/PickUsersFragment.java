@@ -55,6 +55,7 @@ public class PickUsersFragment extends Fragment {
         initContinueButton(binding);
         //To disable optionsMenu
         setHasOptionsMenu(true);
+        setOnBackPressed();
 
         return binding.getRoot();
     }
@@ -83,6 +84,18 @@ public class PickUsersFragment extends Fragment {
                 }
             }
         });
+    }
+
+    // forces the back button to pop the backstack instead of doing whatever it was doing
+    private void setOnBackPressed() {
+        final NavController navController = NavHostFragment.findNavController(this);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                navController.popBackStack();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
     }
 
     @Override
