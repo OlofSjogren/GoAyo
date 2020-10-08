@@ -7,12 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +36,7 @@ import java.util.List;
  * 2020-09-29 Modified by Alex Phu: Implementation of RecyclerView, continueButton, differentiating
  * which Activity started PickUserFragment. Connected with PickUserViewModel. Disabled OptionsMenu.
  * 2020-09-30 Modified by Alex & Yenan: Refactored everything, now this class is dumb
+ * 2020-10-08 Modified by Yenan: Add setOnBackPressed() method
  */
 public class PickUsersFragment extends Fragment {
 
@@ -51,6 +55,7 @@ public class PickUsersFragment extends Fragment {
         initContinueButton(binding);
         //To disable optionsMenu
         setHasOptionsMenu(true);
+        setOnBackPressed();
 
         return binding.getRoot();
     }
@@ -86,5 +91,17 @@ public class PickUsersFragment extends Fragment {
         super.onPrepareOptionsMenu(menu);
         //To remove OptionMenu from
         menu.clear();
+    }
+
+    public void setOnBackPressed()  {
+        final NavController navController = NavHostFragment.findNavController(this);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                navController.popBackStack();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
     }
 }
