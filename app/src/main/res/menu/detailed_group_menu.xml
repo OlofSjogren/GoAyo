@@ -9,4 +9,8 @@
         android:id="@+id/action_add_members"
         android:title="Add members"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_leave_group"
+        android:title="Leave group"
+        app:showAsAction="never" />
 </menu>

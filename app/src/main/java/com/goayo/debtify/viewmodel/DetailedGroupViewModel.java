@@ -17,7 +17,9 @@ import java.util.Set;
  * <p>
  * ViewModel for the DetailedGroupActivity
  * <p>
- * 2020-09-30 Modified by Alex & Yenan: Add getAddableUser method
+ * 2020-09-30 Modified by Alex Phu & Yenan Wang: Add getAddableUser method
+ *
+ * 2020-10-08 Modified by Alex Phu: Added leaveCurrentGroup() method
  */
 public class DetailedGroupViewModel extends ViewModel {
     private final ModelEngine modelEngine;
@@ -87,6 +89,17 @@ public class DetailedGroupViewModel extends ViewModel {
             }
         }
         return true;
+    }
+
+    /**
+     * Leaves the current group.
+     */
+    public void leaveCurrentGroup() {
+        try {
+            modelEngine.leaveGroup(currentGroup.getValue().getGroupID());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
