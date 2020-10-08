@@ -84,6 +84,13 @@ public class DisplayContactsFragment extends Fragment {
             }
         });
 
+        binding.addContactButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addContacts();
+            }
+        });
+
         return binding.getRoot();
     }
 
@@ -100,6 +107,10 @@ public class DisplayContactsFragment extends Fragment {
         pickUserViewModel.setInitialUsers(model.getContactsData().getValue());
         // navigate to PickUserFragment
         NavHostFragment.findNavController(this).navigate(R.id.action_displayContactsFragment_to_pickUserFragment);
+    }
+
+    private void addContacts() {
+        NavHostFragment.findNavController(this).navigate(R.id.action_displayContactsFragment_to_addContactFragment);
     }
 
     private void initRecyclerView(List<IUserData> userData) {

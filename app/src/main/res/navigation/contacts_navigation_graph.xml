@@ -10,11 +10,12 @@
         android:name="com.goayo.debtify.view.DisplayContactsFragment"
         android:label="Display Contacts"
         tools:layout="@layout/display_contacts_fragment">
-
-        <!-- TODO: Rebuild PickUserFrag to include a button-label and header in the constructor for multi-purpose -->
         <action
             android:id="@+id/action_displayContactsFragment_to_pickUserFragment"
             app:destination="@id/pickUsersFragment" />
+        <action
+            android:id="@+id/action_displayContactsFragment_to_addContactFragment"
+            app:destination="@id/addContactFragment" />
     </fragment>
 
     <fragment
@@ -23,5 +24,10 @@
         android:label="Pick User"
         tools:layout="@layout/pick_users_fragment">
     </fragment>
+    <fragment
+        android:id="@+id/addContactFragment"
+        android:name="com.goayo.debtify.view.AddContactFragment"
+        android:label="add_contact_fragment"
+        tools:layout="@layout/add_contact_fragment" />
 
 </navigation>

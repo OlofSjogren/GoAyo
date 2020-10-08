@@ -103,7 +103,19 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="DisplayContactsFragment">
+                  <entry key="addContactFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="152" />
+                            <option name="y" value="347" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="displayContactsFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
@@ -114,7 +126,12 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_DisplayContactsFragment_to_PickUserFragment">
+                            <entry key="action_displayContactsFragment_to_addContactFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_displayContactsFragment_to_pickUserFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -124,13 +141,13 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="PickUsersFragment">
+                  <entry key="pickUsersFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="192" />
-                            <option name="y" value="14" />
+                            <option name="x" value="256" />
+                            <option name="y" value="12" />
                           </Point>
                         </option>
                       </LayoutPositions>

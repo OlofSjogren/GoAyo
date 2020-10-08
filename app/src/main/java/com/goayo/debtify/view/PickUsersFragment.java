@@ -55,7 +55,6 @@ public class PickUsersFragment extends Fragment {
         initContinueButton(binding);
         //To disable optionsMenu
         setHasOptionsMenu(true);
-        setOnBackPressed();
 
         return binding.getRoot();
     }
@@ -91,17 +90,5 @@ public class PickUsersFragment extends Fragment {
         super.onPrepareOptionsMenu(menu);
         //To remove OptionMenu from
         menu.clear();
-    }
-
-    public void setOnBackPressed()  {
-        final NavController navController = NavHostFragment.findNavController(this);
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
-            @Override
-            public void handleOnBackPressed() {
-                navController.popBackStack();
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-
     }
 }
