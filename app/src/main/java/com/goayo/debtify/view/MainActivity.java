@@ -26,6 +26,7 @@ import com.google.android.material.tabs.TabLayout;
  * 2020-09-15 Modified by Alex Phu and Olof Sjögren : Removed default floatingActionButton.
  * 2020-09-30 Modified by Olof Sjögren and Oscar Sanner : Added logOut functionality in onNavigationItemSelected() and
  * also added SignInAndOutViewModel.
+ * 2020-10-08 Modified by Alex Phu: Minor bug fix where user could get back to MainActivity after logout
  */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
