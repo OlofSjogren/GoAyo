@@ -105,6 +105,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 viewModel.logOutUser();
                 Intent intent = new Intent(this.binding.getRoot().getContext(), LoginActivity.class);
                 startActivity(intent);
+                //Finishes activity so that the user can't popBackStack to MainActivity after logOut
+                finish();
             default:
         }
         return false;
