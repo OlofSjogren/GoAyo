@@ -69,13 +69,13 @@ class DebtTracker implements IDebtData {
      * @param payOffAmount the amount to pay off
      * @throws if payOffAmount exceeds debt left to pay
      */
-    public void payOffDebt(BigDecimal payOffAmount) throws Exception {
+    public void payOffDebt(BigDecimal payOffAmount) {
         if (debt.getDebtAmount().subtract(getSumOfPayments()).doubleValue() >= payOffAmount.doubleValue()) {
             //TODO : MOVE INSTANTIATION TO FACTORY
             payments.add(new Payment(payOffAmount));
         } else {
             //TODO: Sepcify what exception this is.
-            throw new Exception("PayOffDebt failed.");
+            throw new RuntimeException("PayOffDebt failed.");
         }
     }
 

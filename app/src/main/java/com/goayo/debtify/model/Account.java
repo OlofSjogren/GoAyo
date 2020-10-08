@@ -4,6 +4,7 @@ import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
 import java.math.BigDecimal;
+import java.net.ConnectException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,8 +43,10 @@ class Account {
      */
     public Account(IDatabase database) {
         this.database = database;
+        this.jsonParser = new JsonParser();
     }
 
+    private JsonParser jsonParser;
     private User loggedInUser;
     private Set<Group> associatedGroups;
     private Set<User> contactList;
@@ -56,7 +59,7 @@ class Account {
      * @param name        the registered user's name.
      * @param password    the registered user's password.
      */
-    public void registerUser(String phoneNumber, String password, String name) throws UserAlreadyExistsException {
+    public void registerUser(String phoneNumber, String password, String name) throws RegistrationException, ConnectException {
         database.registerUser(phoneNumber, password, name);
     }
 
@@ -68,11 +71,9 @@ class Account {
      * @param password    Password input.
      * @throws Exception Thrown if user input is not valid.
      */
-    public void loginUser(String phoneNumber, String password) throws Exception {
-        loggedInUser = database.getUserToBeLoggedIn(phoneNumber, password);
-        if (loggedInUser == null) {
-            throw new LoginException("Password or number wrong");
-        }
+    public void loginUser(String phoneNumber, String password) throws LoginException, ConnectException, UserNotFoundException {
+        String userToBeLoggedIn = database.getUserToBeLoggedIn(phoneNumber, password);
+        loggedInUser = jsonParser.getUser(userToBeLoggedIn);
         initContactList(phoneNumber);
         loadAssociatedGroups();
         EventBus.getInstance().publish(new ContactEvent());
@@ -87,16 +88,13 @@ class Account {
      */
 
     //TODO: Remove all but last two lines?
-    public void createGroup(String groupName, Set<String> phoneNumberSet) throws Exception {
-        try {
-            userIsLoggedIn();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
+    public void createGroup(String groupName, Set<String> phoneNumberSet) throws RegistrationException, ConnectException, UserNotFoundException {
+        userIsLoggedIn();
+
         phoneNumberSet.add(loggedInUser.getPhoneNumber());
         database.registerGroup(groupName, phoneNumberSet);
-        associatedGroups = database.getGroups(loggedInUser.getPhoneNumber());
+        String associatedGroupsJson = database.getGroups(loggedInUser.getPhoneNumber());
+        associatedGroups = jsonParser.getGroups(associatedGroupsJson);
         EventBus.getInstance().publish(new GroupsEvent());
     }
 
@@ -107,14 +105,8 @@ class Account {
      * @throws Exception Thrown if the user is not found, or if the user is already in the contactList.
      */
 
-    public void addContact(String phoneNumber) throws Exception {
-        try {
-            userIsLoggedIn();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
-
+    public void addContact(String phoneNumber) throws UserNotFoundException, ConnectException {
+        userIsLoggedIn();
         database.addContact(loggedInUser.getPhoneNumber(), phoneNumber);
         initContactList(loggedInUser.getPhoneNumber());
         EventBus.getInstance().publish(new ContactEvent());
@@ -129,13 +121,8 @@ class Account {
      *                   already in the group.
      */
 
-    public void addUserToGroup(String phoneNumber, String groupID) throws Exception {
-        try {
-            userIsLoggedIn();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
+    public void addUserToGroup(String phoneNumber, String groupID) throws UserNotFoundException, UserAlreadyExistsException, ConnectException, GroupNotFoundException {
+        userIsLoggedIn();
 
         database.addUserToGroup(groupID, phoneNumber);
         loadAssociatedGroups();
@@ -151,15 +138,10 @@ class Account {
      *                   or if the user is not found given the group.
      */
 
-    public void removeUserFromGroup(String phoneNumber, String groupID) throws Exception {
-        try {
-            userIsLoggedIn();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
-
+    public void removeUserFromGroup(String phoneNumber, String groupID) throws UserNotFoundException, GroupNotFoundException, ConnectException {
+        userIsLoggedIn();
         database.removeUserFromGroup(phoneNumber, groupID);
+
         loadAssociatedGroups();
         EventBus.getInstance().publish(new DetailedGroupEvent());
     }
@@ -167,26 +149,21 @@ class Account {
     /**
      * Creates a debt between a lender and one or more borrowers.
      *
-     * @param groupID The group's ID.
-     * @param lender The lender.
-     * @param borrowers The borrower(s).
-     * @param owed Amount of owed money.
+     * @param groupID     The group's ID.
+     * @param lender      The lender.
+     * @param borrowers   The borrower(s).
+     * @param owed        Amount of owed money.
      * @param description the brief description of the debt
      * @throws Exception Thrown if group or users are not found, or if the set of borrower is empty.
      */
 
-    public void createDebt(String groupID, String lender, Set<String> borrowers, BigDecimal owed, String description) throws Exception {
-        try {
-            userIsLoggedIn();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
+    public void createDebt(String groupID, String lender, Set<String> borrowers, BigDecimal owed, String description) throws UserNotFoundException, InvalidDebtException, ConnectException, GroupNotFoundException {
+        userIsLoggedIn();
 
         if (borrowers.isEmpty()) {
-            //TODO ("Specify Exception")
-            throw new Exception();
+            throw new EmptySelectionException("No Borrowers Selected!");
         }
+
         database.addDebt(groupID, lender, borrowers, owed, description);
         loadAssociatedGroups();
         EventBus.getInstance().publish(new DetailedGroupEvent());
@@ -202,14 +179,8 @@ class Account {
      */
 
     //Todo: Database.PayOfDebt -> No need to reload groups because same objects. Reload anyways.
-    public void payOffDebt(BigDecimal amount, String debtID, String groupID) throws Exception {
-
-        try {
-            userIsLoggedIn();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
+    public void payOffDebt(BigDecimal amount, String debtID, String groupID) throws InvalidDebtException, InvalidPaymentException, GroupNotFoundException, ConnectException, UserNotFoundException {
+        userIsLoggedIn();
 
         database.addPayment(groupID, debtID, amount);
         loadAssociatedGroups();
@@ -234,18 +205,14 @@ class Account {
      * @return A set with objects typed IGroupData, providing group information.
      */
     public Set<IGroupData> getAssociatedGroups() {
-        Set<IGroupData> retGroup = new HashSet<>();
-        retGroup.addAll(associatedGroups);
-        return retGroup;
+        return new HashSet<>(associatedGroups);
     }
 
     /**
      * The public getter for the contact list of the logged in user.
      */
     public Set<IUserData> getContacts() {
-        Set<IUserData> returnList = new HashSet<>();
-        returnList.addAll(contactList);
-        return returnList;
+        return new HashSet<>(contactList);
     }
 
     /**
@@ -256,14 +223,8 @@ class Account {
      */
 
     //Todo: database.removeContact. -> Reload contact list.
-    public void removeContact(String phoneNumber) throws Exception {
-        try {
-            userIsLoggedIn();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
-
+    public void removeContact(String phoneNumber) throws UserNotFoundException, ConnectException {
+        userIsLoggedIn();
         database.removeContact(loggedInUser.getPhoneNumber(), phoneNumber);
         initContactList(loggedInUser.getPhoneNumber());
         EventBus.getInstance().publish(new ContactEvent());
@@ -271,7 +232,7 @@ class Account {
 
 
     //TODO: NEEDS JDOCZ
-    public void leaveGroup(String groupID) throws Exception {
+    public void leaveGroup(String groupID) throws UserNotFoundException, GroupNotFoundException, ConnectException {
         database.removeUserFromGroup(loggedInUser.getPhoneNumber(), groupID);
         loadAssociatedGroups();
         EventBus.getInstance().publish(new GroupsEvent());
@@ -286,8 +247,9 @@ class Account {
      */
 
     //Todo: Database call?
-    public Group getGroupFromID(String groupID) {
-        return database.getGroupFromId(groupID);
+    public Group getGroupFromID(String groupID) throws GroupNotFoundException, ConnectException {
+        String groupJson = database.getGroupFromId(groupID);
+        return jsonParser.getGroupFromId(groupJson);
     }
 
 
@@ -296,27 +258,26 @@ class Account {
      * can be saved between logins and that no contacts are saved between logins.
      */
     public void logOutUser() {
-        try {
-            userIsLoggedIn();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        userIsLoggedIn();
         loggedInUser = null;
         associatedGroups = null;
         contactList = null;
     }
 
-    private void initContactList(String phoneNumber) throws Exception {
-        contactList = database.getContactList(phoneNumber);
+    private void initContactList(String phoneNumber) throws UserNotFoundException {
+        String contactListJson = database.getContactList(phoneNumber);
+        contactList = jsonParser.getContactList(contactListJson);
     }
 
-    private void loadAssociatedGroups() {
-        associatedGroups = database.getGroups(loggedInUser.getPhoneNumber());
+    private void loadAssociatedGroups() throws UserNotFoundException, ConnectException {
+
+        String associatedGroupsJson = database.getGroups(loggedInUser.getPhoneNumber());
+        associatedGroups = jsonParser.getGroups(associatedGroupsJson);
     }
 
-    private void userIsLoggedIn() throws Exception {
+    private void userIsLoggedIn() {
         if (loggedInUser == null) {
-            throw new Exception();
+            throw new UserNotLoggedInException("The user is not logged in");
         }
     }
 }

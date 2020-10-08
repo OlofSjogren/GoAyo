@@ -3,7 +3,10 @@ package com.goayo.debtify.viewmodel;
 import android.util.Log;
 import androidx.lifecycle.ViewModel;
 import com.goayo.debtify.model.ModelEngine;
+import com.goayo.debtify.model.RegistrationException;
 import com.goayo.debtify.model.UserAlreadyExistsException;
+
+import java.net.ConnectException;
 
 /**
  * @Author Oscar Sanner and Olof Sjögren.
@@ -23,9 +26,10 @@ public class SignUpViewModel extends ViewModel {
     public boolean registerUser(String phoneNumber, String name, String password){
         try {
             ModelEngine.getInstance().registerUser(phoneNumber, name, password);
-        } catch (UserAlreadyExistsException e) {
-            Log.d(e.getMessage(), "registerUser: ");
-            return false;
+        } catch (RegistrationException e) {
+            e.printStackTrace();
+        } catch (ConnectException e) {
+            e.printStackTrace();
         }
         return true;
     }

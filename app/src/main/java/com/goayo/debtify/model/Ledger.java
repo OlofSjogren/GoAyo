@@ -36,25 +36,25 @@ class Ledger {
      * @param description the brief description of the debt
      * @throws Exception
      */
-    public void createDebt(User lender, Set<User> borrowers, BigDecimal owedTotal, String description) throws Exception {
+    public void createDebt(User lender, Set<User> borrowers, BigDecimal owedTotal, String description) {
         BigDecimal individualAmount = owedTotal.divide(new BigDecimal(borrowers.size()));
         List<DebtTracker> mockList = new ArrayList<>();
 
         if (borrowers.size() == 0) {
             // TODO: Specify exception.
-            throw new Exception();
+            throw new RuntimeException();
         }
 
         for (User u : borrowers) {
             if (!mockList.add(new DebtTracker(individualAmount, lender, u, description))) {
                 //TODO: Specify exception.
-                throw new Exception();
+                throw new RuntimeException();
             }
         }
 
         if (!debtTrackerList.addAll(mockList)) {
             //TODO: Specify exception.
-            throw new Exception();
+            throw new RuntimeException();
         }
     }
 
@@ -65,7 +65,7 @@ class Ledger {
      * @param debtTrackerID ID used to retrieve the specific debtTracker.
      * @throws
      */
-    public void payOffDebt(BigDecimal amount, String debtTrackerID) throws Exception {
+    public void payOffDebt(BigDecimal amount, String debtTrackerID) {
         findDebtTracker(debtTrackerID).payOffDebt(amount);
     }
 

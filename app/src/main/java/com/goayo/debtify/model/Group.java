@@ -115,7 +115,7 @@ class Group implements IGroupData {
      * @throws Exception
      */
     // TODO: Specify exception.
-    public void createDebt(User lender, Set<User> borrowers, BigDecimal owed, String description) throws Exception {
+    public void createDebt(User lender, Set<User> borrowers, BigDecimal owed, String description) {
         groupLedger.createDebt(lender, borrowers, owed, description);
     }
 
@@ -127,7 +127,7 @@ class Group implements IGroupData {
      * @throws
      */
     // TODO: Specify exception.
-    public void payOffDebt(BigDecimal amount, String debtTrackerID) throws Exception {
+    public void payOffDebt(BigDecimal amount, String debtTrackerID) {
         groupLedger.payOffDebt(amount, debtTrackerID);
     }
 

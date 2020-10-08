@@ -29,7 +29,7 @@ import java.util.UUID;
  * return types and params of methods are correctly set as BigDecimal.
  */
 
-class MockDatabase implements IDatabase {
+class MockDatabase {
 
     private List<Group> groups;
     private Map<String, User> users;
@@ -167,7 +167,6 @@ class MockDatabase implements IDatabase {
      * @param phoneNumber The phone number for the user for who's groups will be returned.
      * @return All groups associated with the phone number sent into the method.
      */
-    @Override
     public Set<Group> getGroups(String phoneNumber) {
         Set<Group> groupsWithSentInPhoneNumber = new HashSet<>();
         for (Group g : groups) {
@@ -182,7 +181,6 @@ class MockDatabase implements IDatabase {
 
 
 
-    @Override
     public Group getGroupFromId(String groupID) {
         for (Group g : groups){
             if(g.getGroupID().equals(groupID)){
@@ -198,7 +196,6 @@ class MockDatabase implements IDatabase {
      * @param phoneNumber The phone number for the user which the database will look for.
      * @return The user in the database who has the phone number
      */
-    @Override
     public User getUser(String phoneNumber) {
         return getUserFromDatabase(phoneNumber);
     }
@@ -210,7 +207,6 @@ class MockDatabase implements IDatabase {
          * @param password Password for the user to be registered in the database.
          * @param name Name for the user to be registered in the database.
          */
-    @Override
     public void registerUser(String phoneNumber, String password, String name) throws UserAlreadyExistsException {
         User user = getUserFromDatabase(phoneNumber);
         if(user != null){
@@ -229,7 +225,7 @@ class MockDatabase implements IDatabase {
      * @return True if the creation was successful.
      */
 
-    @Override
+
     public boolean registerGroup(String name, Set<String> users) {
         Set<User> usersToBeAdded = new HashSet<>();
         for(String string : users){
@@ -243,7 +239,6 @@ class MockDatabase implements IDatabase {
         return true;
     }
 
-    @Override
     public boolean addDebt(String groupID, String lender, Set<String> borrowers, BigDecimal amount, String description) {
 
         Group group;
@@ -269,7 +264,6 @@ class MockDatabase implements IDatabase {
         return true;
     }
 
-    @Override
     public boolean addContact(String userPhoneNumber, String contactToBeAdded) {
         User user = getUserFromDatabase(userPhoneNumber);
         User userToBeAdded = getUserFromDatabase(contactToBeAdded);
@@ -282,7 +276,6 @@ class MockDatabase implements IDatabase {
         //TODO Add exception here. User couldn't be added.
     }
 
-    @Override
     public boolean removeContact(String userPhoneNumber, String contactToBeRemoved) {
         User user = getUserFromDatabase(userPhoneNumber);
         User userToBeRemoved = getUserFromDatabase(contactToBeRemoved);
@@ -295,7 +288,6 @@ class MockDatabase implements IDatabase {
         //TODO Add exception here. User couldn't be added.
     }
 
-    @Override
     public boolean addPayment(String GroupID, String debtID, BigDecimal amount) {
         Group group = getGroupFromId(GroupID);
         try {
@@ -306,7 +298,6 @@ class MockDatabase implements IDatabase {
         return true;
     }
 
-    @Override
     public boolean addUserToGroup(String groupID, String phoneNumber) {
         Group group = getGroupFromId(groupID);
         User user = getUserFromDatabase(phoneNumber);
@@ -325,7 +316,6 @@ class MockDatabase implements IDatabase {
      * @return The user with the provided credentials.
      *
      */
-    @Override
     public User getUserToBeLoggedIn(String phoneNumber, String password) {
         for (Map.Entry<String,User> passUserSet : users.entrySet()){
             if (passUserSet.getKey().equals(password) && passUserSet.getValue().getPhoneNumber().equals(phoneNumber)){
@@ -335,7 +325,6 @@ class MockDatabase implements IDatabase {
         return null;
     }
 
-    @Override
     public boolean removeUserFromGroup(String phoneNumber, String groupID) {
         User userToBeRemoved = getUserFromDatabase(phoneNumber);
         Group group = getGroupFromId(groupID);
@@ -356,7 +345,6 @@ class MockDatabase implements IDatabase {
         return groupRemoveSuccess;
     }
 
-    @Override
     public Set<User> getContactList(String phoneNumber) {
         User user = getUserFromDatabase(phoneNumber);
         Set<User> contactList = new HashSet<>();
