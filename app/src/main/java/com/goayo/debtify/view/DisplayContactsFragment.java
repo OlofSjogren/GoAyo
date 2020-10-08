@@ -62,6 +62,7 @@ public class DisplayContactsFragment extends Fragment {
                 if (userData.size() != 0) {
                     try {
                         model.removeContacts(userData);
+                        userData.clear();
                     } catch (Exception e) {
                         Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                     }
