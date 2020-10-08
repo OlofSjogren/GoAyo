@@ -1,4 +1,4 @@
-package com.goayo.debtify.viewModel;
+package com.goayo.debtify.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -9,7 +9,6 @@ import com.goayo.debtify.modelaccess.IUserData;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Gabriel Brattgård

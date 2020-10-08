@@ -20,7 +20,7 @@ import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.DisplayContactsFragmentBinding;
 import com.goayo.debtify.modelaccess.IUserData;
 import com.goayo.debtify.view.adapter.UserCardViewAdapter;
-import com.goayo.debtify.viewModel.ContactsViewModel;
+import com.goayo.debtify.viewmodel.ContactsViewModel;
 import com.goayo.debtify.viewmodel.PickUserViewModel;
 
 import java.util.ArrayList;
@@ -73,6 +73,7 @@ public class DisplayContactsFragment extends Fragment {
             @Override
             public void onChanged(List<IUserData> userData) {
                 adapter.updateList(userData);
+                showRecyclerView(userData.size() == 0);
             }
         });
 
@@ -84,6 +85,14 @@ public class DisplayContactsFragment extends Fragment {
         });
 
         return binding.getRoot();
+    }
+
+    private void showRecyclerView(boolean isEmpty) {
+        if (isEmpty) {
+            binding.displayContactsRecyclerView.setVisibility(View.GONE);
+        } else {
+            binding.displayContactsRecyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void removeContacts() {
