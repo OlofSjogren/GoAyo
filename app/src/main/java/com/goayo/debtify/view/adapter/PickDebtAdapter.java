@@ -1,5 +1,6 @@
 package com.goayo.debtify.view.adapter;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +14,17 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
+
 /**
  * @author Gabriel Brattgård & Yenan Wang
  * @date 2020-09-25
  * <p>
  * RecyclerView adapter for pick_debt_cardview. Ensures that the correct information are shown on each cardItem and its respective listeners.
  *
- * 2020-09-28 Modified by Yenan: Add debt description to the cardview
+ * 2020-09-28 Modified by Yenan Wang: Add debt description to the cardview
+ *
+ * 2020-10-08 Modified by Alex Phu: Refactored setDebtData and added configureName() method.
  */
 
 public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDebtViewHolder> {
@@ -103,12 +108,23 @@ public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDe
             debtRadioButton.setOnClickListener(listener);
         }
 
+        @SuppressLint("SetTextI18n")
         public void setDebtData(IDebtData debtData) {
-            date.setText(debtData.getDate().toString());
-            lender.setText(debtData.getLender().getName());
-            borrower.setText(debtData.getBorrower().getName());
-            amount.setText(String.valueOf(debtData.getAmountOwed()));
+            //Formats the date
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+            date.setText(format.format(debtData.getDate()));
+            lender.setText(configureName(debtData.getLender().getName()));
+            borrower.setText(configureName(debtData.getBorrower().getName()));
+            amount.setText(debtData.getAmountOwed() + " kr");
             description.setText(debtData.getDescription());
+        }
+
+        private String configureName(String name) {
+            String[] names = name.split(" ");
+            String firstLetterOfSurname = names[1].substring(0,1);
+            StringBuilder sb = new StringBuilder();
+            sb.append(names[0]).append(" ").append(firstLetterOfSurname);
+            return sb.toString();
         }
     }
 }
