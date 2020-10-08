@@ -2,19 +2,21 @@ package com.goayo.debtify.view;
 
 import android.os.Bundle;
 
-import com.goayo.debtify.R;
-import com.goayo.debtify.databinding.ActivityContactsBinding;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
-import android.view.View;
+import com.goayo.debtify.R;
+import com.goayo.debtify.databinding.ActivityContactsBinding;
 
+/**
+ * @author Gabriel Brattgård
+ * @date 2020-09-28
+ * <p>
+ * Activity for managing the logged in user's contacts
+ * <p>
+ * 2020-10-08 Modified by Yenan: removed lines that cause errors
+ */
 public class ContactsActivity extends AppCompatActivity {
 
     private ActivityContactsBinding binding;
@@ -24,9 +26,8 @@ public class ContactsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_contacts);
-        navController = Navigation.findNavController(this, R.id.contactsNavHostFragment);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_contacts);
 
-        navController.setGraph(R.navigation.contacts_navigation_graph);
+        // TODO: add an actionbar here
     }
 }
