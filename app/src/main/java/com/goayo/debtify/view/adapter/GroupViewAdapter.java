@@ -1,5 +1,6 @@
 package com.goayo.debtify.view.adapter;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
+import com.goayo.debtify.model.UserNotFoundException;
 import com.goayo.debtify.modelaccess.IGroupData;
 
 import java.util.List;
@@ -25,21 +27,25 @@ import java.util.List;
  * 2020/09/25 Modified by Alex Phu, Oscar Sanner and Olof Sjögren: Injected viewModel through constructor in order to
  * set currentGroupData.
  * <p>
- * 2020-09-30 Modified by Alex & Yenan: Add setCommonClickListener and update method
+ * 2020-09-30 Modified by Alex Phu & Yenan Wang: Add setCommonClickListener and update method
+ *
+ * 2020-10-08 Modified by Alex Phu: Group-total in cardview now shows actual total debt.
  */
 public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.GroupViewHolder> {
 
     private List<IGroupData> groupData;
     private View.OnClickListener commonClickListener;
     private IGroupData clickedGroup;
+    private String currentLoggedInUsersPhoneNumber;
 
     /**
      * Constructor for GroupViewAdapter
      *
      * @param groupData The data to be displayed.
      */
-    public GroupViewAdapter(List<IGroupData> groupData) {
+    public GroupViewAdapter(List<IGroupData> groupData, String currentLoggedInUsersPhoneNumber) {
         this.groupData = groupData;
+        this.currentLoggedInUsersPhoneNumber = currentLoggedInUsersPhoneNumber;
     }
 
     /**
@@ -65,7 +71,7 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
      */
     @Override
     public void onBindViewHolder(@NonNull GroupViewHolder holder, final int position) {
-        holder.setGroupData(groupData.get(position));
+        holder.setGroupData(groupData.get(position), currentLoggedInUsersPhoneNumber);
         holder.setCardViewListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -137,10 +143,13 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
          *
          * @param group Current group data
          */
-        public void setGroupData(IGroupData group) {
+        @SuppressLint("SetTextI18n")
+        public void setGroupData(IGroupData group, String currentLoggedInUsersPhoneNumber) {
             groupName.setText(group.getGroupName());
             //TODO ("SET BALANCE IN GROUP_CARDVIEW")
-            balance.setText("YET_TO_BE_SET");
+            try {
+                balance.setText(group.getUserTotal(currentLoggedInUsersPhoneNumber) + " kr");
+            } catch (UserNotFoundException ignore) {}
         }
 
         /**
