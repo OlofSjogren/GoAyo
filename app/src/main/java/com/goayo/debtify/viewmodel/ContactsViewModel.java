@@ -22,6 +22,7 @@ import java.util.List;
  * to Contacts.
  * <p>
  * 2020-10-08 Modified by Yenan: refactor to interact with the ModelEngine, add removeContacts(...) method
+ * 2020-10-09 Modified by Yenan & Alex: connect with EventBus so the LiveDatas updates immediately after modification
  */
 public class ContactsViewModel extends ViewModel implements IEventHandler {
     private MutableLiveData<List<IUserData>> contactsData;
