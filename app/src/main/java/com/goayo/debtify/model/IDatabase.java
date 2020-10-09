@@ -90,7 +90,7 @@ interface IDatabase {
      *         doesn't exist.
      * @throws Exception if something goes wrong when connecting to the server.
      */
-    boolean addDebt(String groupID, String lender, Set<String> borrowers, BigDecimal amount, String description) throws Exception;
+    boolean addDebt(String groupID, String lender, Set<String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy) throws Exception;
 
     /**
      * Add a new contact to a users list of contacts.

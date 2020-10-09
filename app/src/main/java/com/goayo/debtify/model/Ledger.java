@@ -6,6 +6,7 @@ import com.goayo.debtify.modelaccess.IDebtData;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -36,9 +37,10 @@ class Ledger {
      * @param description the brief description of the debt
      * @throws Exception
      */
-    public void createDebt(User lender, Set<User> borrowers, BigDecimal owedTotal, String description) throws Exception {
-        BigDecimal individualAmount = owedTotal.divide(new BigDecimal(borrowers.size()));
-        List<DebtTracker> mockList = new ArrayList<>();
+    public void createDebt(User lender, Set<User> borrowers, BigDecimal owedTotal, String description, IDebtSplitStrategy splitStrategy) throws Exception {
+
+        Map<User, BigDecimal> usersInDebt = splitStrategy.splitDebt(borrowers, owedTotal);
+        List<DebtTracker> debtList = new ArrayList<>();
 
         if (borrowers.size() == 0) {
             // TODO: Specify exception.
@@ -46,13 +48,13 @@ class Ledger {
         }
 
         for (User u : borrowers) {
-            if (!mockList.add(new DebtTracker(individualAmount, lender, u, description))) {
+            if (!debtList.add(new DebtTracker(usersInDebt.get(u), lender, u, description))) {
                 //TODO: Specify exception.
                 throw new Exception();
             }
         }
 
-        if (!debtTrackerList.addAll(mockList)) {
+        if (!debtTrackerList.addAll(debtList)) {
             //TODO: Specify exception.
             throw new Exception();
         }
