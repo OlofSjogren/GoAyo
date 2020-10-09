@@ -11,7 +11,7 @@ public class DbDebtsFetcher {
         int i = 0;
 
         for(String borrower : borrowers){
-            debts[i] = new DbObject.Debt(lender, borrower, amount.toString(), "", new DbObject.Payment[0]);
+            debts[i] = new DbObject.Debt(lender, borrower, amount.divide(new BigDecimal(borrowers.size())).toString(), "", new DbObject.Payment[0]);
             i++;
         }
 
