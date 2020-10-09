@@ -41,12 +41,35 @@ public class RealDatabase implements IDatabase {
 
     @Override
     public String getUser(String phoneNumber) throws UserNotFoundException, ConnectException {
-        return userFetcher.fetchUserFromPhoneNumber(phoneNumber);
+        DbUserFetcher.FetchUserFromPhoneNumber fetchUserFromPhoneNumber = new DbUserFetcher.FetchUserFromPhoneNumber(phoneNumber);
+        String data = null;
+        String returnData;
+        Thread thread = new Thread(fetchUserFromPhoneNumber);
+        thread.start();
+        while (true){
+            data = fetchUserFromPhoneNumber.data;
+            if(data != null){
+                returnData = data;
+                break;
+            }
+        }
+        
+        return returnData;
     }
 
     @Override
     public void registerUser(String phoneNumber, String password, String name) throws ConnectException, RegistrationException {
-        userFetcher.registerUser(phoneNumber, password, name);
+        DbUserFetcher.RegisterUser fetcherClass = new DbUserFetcher.RegisterUser(phoneNumber, password, name);
+        boolean returnData;
+        Thread thread = new Thread(fetcherClass);
+        thread.start();
+        while (true){
+            boolean data = fetcherClass.result;
+            if(data){
+                returnData = data;
+                break;
+            }
+        }
     }
 
     @Override
@@ -81,7 +104,18 @@ public class RealDatabase implements IDatabase {
 
     @Override
     public String getUserToBeLoggedIn(String phoneNumber, String password) throws LoginException, ConnectException {
-        return userFetcher.logInUser(phoneNumber, password);
+        DbUserFetcher.FetchUserFromPhoneNumber fetcherClass = new DbUserFetcher.FetchUserFromPhoneNumber(phoneNumber);
+        Thread thread = new Thread(fetcherClass);
+        thread.start();
+        String returnData;
+        while (true){
+            String data = fetcherClass.data;
+            if(data != null){
+                returnData = data;
+                break;
+            }
+        }
+        return returnData;
     }
 
     @Override

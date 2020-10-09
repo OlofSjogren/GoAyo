@@ -45,6 +45,7 @@ public class DbGroupsFetcher {
             String user = fetcher.fetchUserFromPhoneNumber(phoneNumber);
             DbObject.User u = gson.fromJson(user, DbObject.User.class);
             group.members[i] = u;
+            i++;
         }
         String data = gson.toJson(group);
         return DatabaseConnector.getInstance().postData(data, "groups");
@@ -71,13 +72,11 @@ public class DbGroupsFetcher {
         HashMap<String, String> map = new HashMap<>();
         map.put("number", phoneNumber);
         String jsonData = null;
-
         try {
             jsonData = DatabaseConnector.getInstance().getData(map, "groups");
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-
         return jsonData;
     }
 }

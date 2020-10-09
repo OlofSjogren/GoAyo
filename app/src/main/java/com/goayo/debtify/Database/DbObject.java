@@ -95,11 +95,11 @@ public class DbObject {
 
     public static class GroupMemberPost {
 
-        User user;
+        User member;
         String groupId;
 
         public GroupMemberPost(String groupID, User user) {
-            user = user;
+            this.member = user;
             groupId = groupID;
         }
     }
@@ -109,4 +109,13 @@ public class DbObject {
         }
         User[] contacts;
     }
+
+    static class GroupsArrayJsonObject {
+        Group[] groupJsonObjects;
+
+        public GroupsArrayJsonObject(Group[] groupJsonObjects) {
+            this.groupJsonObjects = groupJsonObjects;
+        }
+    }
+
 }
