@@ -29,6 +29,7 @@ public class JsonParser {
     }
 
     public Set<Group> getGroups(String associatedGroupsJson) {
+
         GroupJsonObject[] groupJsonObjects = gson.fromJson(associatedGroupsJson, GroupsArrayJsonObject.class).groupJsonObjects;
         Set<Group> groups = new HashSet<>();
 

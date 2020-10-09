@@ -50,7 +50,7 @@ public class RealDatabaseTest {
 
     @Test
     public void getUser() throws UserNotFoundException, ConnectException {
-        UserJsonObject jsonObject = gson.fromJson(database.getUser("aaaaxxyyzz"), UserJsonObject.class);
+        UserJsonObject jsonObject = gson.fromJson(database.getUser("0701234546"), UserJsonObject.class);
         assertNotNull(jsonObject.name);
         assertNotNull(jsonObject.password);
         assertNotNull(jsonObject.phonenumber);
@@ -65,7 +65,6 @@ public class RealDatabaseTest {
         database.registerUser("ccccxxyyzz", "123", "TestUser3");
         database.registerUser("ddddxxyyzz", "123", "TestUser3");
         database.registerUser("eeeexxyyzz", "123", "TestUser3");
-        //System.out.println(s);
     }
 
     @Test
@@ -115,7 +114,7 @@ public class RealDatabaseTest {
 
     @Test
     public void getUserToBeLoggedIn() throws LoginException, ConnectException {
-        UserJsonObject jsonObject = gson.fromJson(database.getUserToBeLoggedIn("0734266227", "password1"), UserJsonObject.class);
+        UserJsonObject jsonObject = gson.fromJson(database.getUserToBeLoggedIn("0701234546", "racso"), UserJsonObject.class);
         assertNotNull(jsonObject.name);
         assertNotNull(jsonObject.password);
         assertNotNull(jsonObject.phonenumber);

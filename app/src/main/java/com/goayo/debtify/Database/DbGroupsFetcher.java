@@ -77,6 +77,11 @@ public class DbGroupsFetcher {
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
+            try{
+                DbObject.GroupsArrayJsonObject group = new Gson().fromJson(jsonData, DbObject.GroupsArrayJsonObject.class);
+            } catch (Exception e){
+                return new Gson().toJson( new DbObject.GroupsArrayJsonObject(new DbObject.Group[0]));
+            }
         return jsonData;
     }
 }

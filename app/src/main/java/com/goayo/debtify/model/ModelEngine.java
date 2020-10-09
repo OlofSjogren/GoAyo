@@ -65,7 +65,7 @@ public class ModelEngine {
      * is not met, or if some form of connection error occurs.
      */
     public void registerUser(String phoneNumber, String name, String password) throws RegistrationException, ConnectException {
-        account.registerUser(phoneNumber, name, password);
+        account.registerUser(phoneNumber, password, name);
     }
 
     /**

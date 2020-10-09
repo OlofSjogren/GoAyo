@@ -270,7 +270,6 @@ class Account {
     }
 
     private void loadAssociatedGroups() throws UserNotFoundException, ConnectException {
-
         String associatedGroupsJson = database.getGroups(loggedInUser.getPhoneNumber());
         associatedGroups = jsonParser.getGroups(associatedGroupsJson);
     }
