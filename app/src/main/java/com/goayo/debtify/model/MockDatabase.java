@@ -27,6 +27,7 @@ import java.util.UUID;
  * boolean to void.
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
+ * 2020-10-08 Modified by Alex Phu: Removed redundant method call in removeUserFromGroup().
  */
 
 class MockDatabase implements IDatabase {
@@ -336,19 +337,18 @@ class MockDatabase implements IDatabase {
     }
 
     @Override
-    public boolean removeUserFromGroup(String phoneNumber, String groupID) {
+    public boolean removeUserFromGroup(String phoneNumber, String groupID) throws UserNotFoundException {
         User userToBeRemoved = getUserFromDatabase(phoneNumber);
         Group group = getGroupFromId(groupID);
         boolean groupRemoveSuccess = false;
 
         if (userToBeRemoved == null || group == null) {
+            throw new UserNotFoundException("There is no user with that phonenumber.");
             //TODO Throw exception here. User doesn't exist in database.
-            return false;
         }
 
         for (Group g : getGroups(phoneNumber)) {
             if (g.getGroupID().equals(groupID)) {
-                groupRemoveSuccess = g.removeUser(userToBeRemoved);
                 groupRemoveSuccess = g.removeUser(userToBeRemoved);
                 //Todo: Throw exception here. User doesn't exist in group, shouldn't rely on boolean.
             }

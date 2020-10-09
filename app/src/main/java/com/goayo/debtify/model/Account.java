@@ -4,9 +4,7 @@ import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -77,6 +75,7 @@ class Account {
         }
         initContactList(phoneNumber);
         loadAssociatedGroups();
+        EventBus.getInstance().publish(new ContactEvent());
     }
 
     /**
@@ -95,10 +94,10 @@ class Account {
             e.printStackTrace();
             return;
         }
-
         phoneNumberSet.add(loggedInUser.getPhoneNumber());
         database.registerGroup(groupName, phoneNumberSet);
         associatedGroups = database.getGroups(loggedInUser.getPhoneNumber());
+        EventBus.getInstance().publish(new GroupsEvent());
     }
 
     /**
@@ -115,9 +114,9 @@ class Account {
             e.printStackTrace();
             return;
         }
-
         database.addContact(loggedInUser.getPhoneNumber(), phoneNumber);
         initContactList(loggedInUser.getPhoneNumber());
+        EventBus.getInstance().publish(new ContactEvent());
     }
 
     /**
@@ -139,6 +138,7 @@ class Account {
 
         database.addUserToGroup(groupID, phoneNumber);
         loadAssociatedGroups();
+        EventBus.getInstance().publish(new DetailedGroupEvent());
     }
 
     /**
@@ -160,6 +160,7 @@ class Account {
 
         database.removeUserFromGroup(phoneNumber, groupID);
         loadAssociatedGroups();
+        EventBus.getInstance().publish(new DetailedGroupEvent());
     }
 
     /**
@@ -187,6 +188,7 @@ class Account {
         }
         database.addDebt(groupID, lender, borrowers, owed, description);
         loadAssociatedGroups();
+        EventBus.getInstance().publish(new DetailedGroupEvent());
     }
 
     /**
@@ -210,6 +212,7 @@ class Account {
 
         database.addPayment(groupID, debtID, amount);
         loadAssociatedGroups();
+        EventBus.getInstance().publish(new DetailedGroupEvent());
     }
 
     /**
@@ -262,6 +265,7 @@ class Account {
 
         database.removeContact(loggedInUser.getPhoneNumber(), phoneNumber);
         initContactList(loggedInUser.getPhoneNumber());
+        EventBus.getInstance().publish(new ContactEvent());
     }
 
 
@@ -269,6 +273,7 @@ class Account {
     public void leaveGroup(String groupID) throws Exception {
         database.removeUserFromGroup(loggedInUser.getPhoneNumber(), groupID);
         loadAssociatedGroups();
+        EventBus.getInstance().publish(new GroupsEvent());
     }
 
     /**
