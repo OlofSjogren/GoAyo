@@ -6,10 +6,10 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-public class JsonParser {
+public class FromJsonFactory {
     Gson gson;
 
-    public JsonParser(){
+    public FromJsonFactory(){
         gson = new Gson();
     }
 

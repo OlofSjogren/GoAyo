@@ -245,7 +245,7 @@ public class ModelEngine {
      * @throws Exception thrown if a group with the groupID couldn't be found in the user's group.
      */
     public IGroupData getGroup(String groupID) throws Exception {
-        return account.getGroupFromID(groupID);
+        return account.getAssociatedGroupFromId(groupID);
     }
 
     public Set<IUserData> getContacts() {

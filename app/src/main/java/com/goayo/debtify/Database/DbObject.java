@@ -1,7 +1,5 @@
 package com.goayo.debtify.Database;
 
-import com.goayo.debtify.model.JsonParser;
-
 public class DbObject {
     static class Group {
         public Group(String name, String date, String groupId, User[] members, Debt[] debts) {
