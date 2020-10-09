@@ -22,16 +22,17 @@ import com.google.android.material.tabs.TabLayout;
  * @date 2020-09-09
  * <p>
  * Entry point of the application.
- *
+ * <p>
  * 2020-09-15 Modified by Alex Phu and Olof Sjögren : Removed default floatingActionButton.
  * 2020-09-30 Modified by Olof Sjögren and Oscar Sanner : Added logOut functionality in onNavigationItemSelected() and
  * also added SignInAndOutViewModel.
+ * 2020-10-08 Modified by Yenan: add menu click handler for Contacts
  * 2020-10-08 Modified by Alex Phu: Minor bug fix where user could get back to MainActivity after logout
  */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private SignInAndOutViewModel viewModel;
     private ActivityMainBinding binding;
-    SignInAndOutViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,13 +102,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         //Todo ("Logic for when menu item is selected")
         //Toast.makeText(this, "MENU_ITEM_CLICKED", Toast.LENGTH_SHORT).show();
-        switch (item.getItemId()){
+        Intent intent;
+        switch (item.getItemId()) {
             case R.id.logout_menu_item:
                 viewModel.logOutUser();
-                Intent intent = new Intent(this.binding.getRoot().getContext(), LoginActivity.class);
+                intent = new Intent(this.binding.getRoot().getContext(), LoginActivity.class);
                 startActivity(intent);
                 //Finishes activity so that the user can't popBackStack to MainActivity after logOut
                 finish();
+                break;
+            case R.id.contacts_menu_item:
+                intent = new Intent(this.binding.getRoot().getContext(), ContactsActivity.class);
+                startActivity(intent);
+                break;
             default:
         }
         return false;
