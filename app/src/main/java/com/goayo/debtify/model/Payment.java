@@ -17,10 +17,12 @@ import java.util.Date;
 class Payment implements IPaymentData {
     private final Date date;
     private final BigDecimal paidAmount;
+    String id;
 
     public Payment(BigDecimal paidAmount) {
         this.date = new Date();
         this.paidAmount = paidAmount;
+        this.id = id;
     }
 
     public Date getDate() {

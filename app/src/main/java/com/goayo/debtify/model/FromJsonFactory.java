@@ -3,7 +3,9 @@ package com.goayo.debtify.model;
 import com.google.gson.Gson;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class FromJsonFactory {
@@ -57,8 +59,8 @@ public class FromJsonFactory {
         for (DebtJsonObject debtJsonObject : object.debts){
             User borrower = getUser(gson.toJson(debtJsonObject.borrower));
             User lender = getUser(gson.toJson(debtJsonObject.lender, UserJsonObject.class));
-            Set<User> borrowers = new HashSet<>();
-            borrowers.add(borrower);
+            Map<User, String> borrowers = new HashMap<>();
+            borrowers.put(borrower, debtJsonObject.id);
             group.createDebt(lender, borrowers, new BigDecimal(debtJsonObject.owed), "IMPLEMENT!");
 
             for(PaymentJsonObject paymentJsonObject : debtJsonObject.payments){

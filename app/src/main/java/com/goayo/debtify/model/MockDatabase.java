@@ -107,7 +107,7 @@ class MockDatabase {
         Set<User> gabrielSet = new HashSet<>();
         gabrielSet.add(users.get(pwGabriel));
 
-        try {
+        /*try {
             groups.get(0).createDebt(users.get(pwOlof), oscarSet, new BigDecimal("140.5"), "test1");
             groups.get(0).createDebt(users.get(pwYenan), oscarSet, new BigDecimal("140.5"), "test2");
             groups.get(0).createDebt(users.get(pwGabriel), yenanSet, new BigDecimal("90.25"), "test3");
@@ -157,9 +157,13 @@ class MockDatabase {
             groups.get(2).payOffDebt(new BigDecimal("20.9"), id2_0);
             groups.get(2).payOffDebt(new BigDecimal("20.0"), id2_1);
 
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+         */
     }
 
     /**
@@ -258,7 +262,7 @@ class MockDatabase {
             borrowersSet.add(user);
         }
         try {
-            group.createDebt(getUserFromDatabase(lender), borrowersSet, amount, description);
+            //group.createDebt(getUserFromDatabase(lender), borrowersSet, amount, description);
         } catch (Exception e) {
             return false;
         }

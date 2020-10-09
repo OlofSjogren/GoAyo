@@ -11,6 +11,7 @@ import com.goayo.debtify.model.UserNotFoundException;
 
 import java.math.BigDecimal;
 import java.net.ConnectException;
+import java.util.Map;
 import java.util.Set;
 
 public class RealDatabase implements IDatabase {
@@ -50,12 +51,12 @@ public class RealDatabase implements IDatabase {
     }
 
     @Override
-    public boolean registerGroup(String name, Set<String> usersPhoneNumber) throws RegistrationException, ConnectException {
-        return groupsFetcher.registerGroup(name, usersPhoneNumber);
+    public boolean registerGroup(String name, Set<String> usersPhoneNumber, String id) throws RegistrationException, ConnectException {
+        return groupsFetcher.registerGroup(name, usersPhoneNumber, id);
     }
 
     @Override
-    public boolean addDebt(String groupID, String lender, Set<String> borrowers, BigDecimal amount, String description) throws GroupNotFoundException, UserNotFoundException, ConnectException, InvalidDebtException {
+    public boolean addDebt(String groupID, String lender, Map<String, String> borrowers, BigDecimal amount, String description) throws GroupNotFoundException, UserNotFoundException, ConnectException, InvalidDebtException {
         return debtsFetcher.addDebt(groupID, lender, borrowers, amount, description);
     }
 
@@ -70,8 +71,8 @@ public class RealDatabase implements IDatabase {
     }
 
     @Override
-    public boolean addPayment(String groupID, String debtID, BigDecimal amount) throws GroupNotFoundException, InvalidDebtException, InvalidPaymentException, ConnectException {
-        return paymentFetcher.addPayment(groupID, debtID, amount);
+    public boolean addPayment(String groupID, String debtID, BigDecimal amount, String id) throws GroupNotFoundException, InvalidDebtException, InvalidPaymentException, ConnectException {
+        return paymentFetcher.addPayment(groupID, debtID, amount, id);
     }
 
     @Override

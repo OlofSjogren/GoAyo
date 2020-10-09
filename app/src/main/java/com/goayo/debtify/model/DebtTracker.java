@@ -40,12 +40,12 @@ class DebtTracker implements IDebtData {
      * @param borrower    the user that borrows money
      * @param description the brief description of the debt
      */
-    public DebtTracker(BigDecimal debtAmount, User lender, User borrower, String description) {
+    public DebtTracker(BigDecimal debtAmount, User lender, User borrower, String description, String id) {
         this.debt = new Debt(debtAmount);
         this.payments = new ArrayList<>();
         this.lender = lender;
         this.borrower = borrower;
-        this.debtTrackerID = UUID.randomUUID().toString();
+        this.debtTrackerID = id;
         this.description = description;
     }
 

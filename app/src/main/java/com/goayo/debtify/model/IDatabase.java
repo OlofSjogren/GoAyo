@@ -3,6 +3,7 @@ package com.goayo.debtify.model;
 import java.math.BigDecimal;
 import java.net.ConnectException;
 import java.net.SocketException;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -75,7 +76,7 @@ public interface IDatabase {
      *                         the group.
      * @return True after a successful registration.
      */
-    boolean registerGroup(String name, Set<String> usersPhoneNumber) throws RegistrationException, ConnectException;
+    boolean registerGroup(String name, Set<String> usersPhoneNumber, String id) throws RegistrationException, ConnectException;
 
     /**
      * Adds a new debt in a group between two users.
@@ -92,7 +93,7 @@ public interface IDatabase {
      * doesn't exist.
      * @throws Exception if something goes wrong when connecting to the server.
      */
-    boolean addDebt(String groupID, String lender, Set<String> borrowers, BigDecimal amount, String description) throws GroupNotFoundException, UserNotFoundException, ConnectException, InvalidDebtException;
+    boolean addDebt(String groupID, String lender, Map<String, String> borrowers, BigDecimal amount, String description) throws GroupNotFoundException, UserNotFoundException, ConnectException, InvalidDebtException;
 
     /**
      * Add a new contact to a users list of contacts.
@@ -133,7 +134,7 @@ public interface IDatabase {
      * @return True if the entity with the provided ids exist. Otherwise false.
      * @throws Exception if something goes wrong when connecting to the server.
      */
-    boolean addPayment(String GroupID, String debtID, BigDecimal amount) throws GroupNotFoundException, InvalidDebtException, InvalidPaymentException, ConnectException;
+    boolean addPayment(String GroupID, String debtID, BigDecimal amount, String id) throws GroupNotFoundException, InvalidDebtException, InvalidPaymentException, ConnectException;
 
     /**
      * Adds a user to a specific group.

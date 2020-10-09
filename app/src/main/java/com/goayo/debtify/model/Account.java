@@ -5,7 +5,9 @@ import com.goayo.debtify.modelaccess.IUserData;
 
 import java.math.BigDecimal;
 import java.net.ConnectException;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -92,14 +94,17 @@ class Account {
     public void createGroup(String groupName, Set<String> phoneNumberSet) throws RegistrationException, ConnectException, UserNotFoundException {
         userIsLoggedIn();
         phoneNumberSet.add(loggedInUser.getPhoneNumber());
-        database.registerGroup(groupName, phoneNumberSet);
+        String id = UUID.randomUUID().toString();
+        database.registerGroup(groupName, phoneNumberSet, id);
         Set<User> usersToBeAdded = new HashSet<>();
 
         for(String phoneNumber : phoneNumberSet){
-            usersToBeAdded.add(getUserFromSet(phoneNumber, contactList));
+            if(!phoneNumber.equals(loggedInUser.getPhoneNumber())){
+                usersToBeAdded.add(getUserFromSet(phoneNumber, contactList));
+            }
         }
 
-        associatedGroups.add(new Group(groupName, UUID.randomUUID().toString(), usersToBeAdded));
+        associatedGroups.add(new Group(groupName, id, usersToBeAdded));
         EventBus.getInstance().publish(new GroupsEvent());
     }
 
@@ -194,17 +199,23 @@ class Account {
             throw new EmptySelectionException("No Borrowers Selected!");
         }
 
-        database.addDebt(groupID, lender, borrowers, owed, description);
+        Map<String, String> borrowerStringAndId = new HashMap<>();
+        Map<User, String> borrowerUserAndId = new HashMap<>();
+
         Group g = getAssociatedGroupFromId(groupID);
 
-        User lenderUser = getUserFromSet(lender, g.getGroupMembers());
-        Set<User> borrowersSet = new HashSet<>();
-
-        for (String phoneNumber : borrowers){
-            borrowersSet.add(getUserFromSet(phoneNumber, g.getGroupMembers()));
+        for (String borrower : borrowers){
+            String id = UUID.randomUUID().toString();
+            borrowerStringAndId.put(borrower, id);
+            borrowerUserAndId.put(getUserFromSet(borrower, g.getGroupMembers()), id);
         }
 
-        g.createDebt(lenderUser, borrowersSet, owed, description);
+
+        database.addDebt(groupID, lender, borrowerStringAndId, owed, description);
+
+        User lenderUser = getUserFromSet(lender, g.getGroupMembers());
+
+        g.createDebt(lenderUser, borrowerUserAndId, owed, description);
         EventBus.getInstance().publish(new DetailedGroupEvent());
     }
 
@@ -220,7 +231,8 @@ class Account {
     //Todo: Database.PayOfDebt -> No need to reload groups because same objects. Reload anyways.
     public void payOffDebt(BigDecimal amount, String debtID, String groupID) throws InvalidDebtException, InvalidPaymentException, GroupNotFoundException, ConnectException, UserNotFoundException {
         userIsLoggedIn();
-        database.addPayment(groupID, debtID, amount);
+        String id = UUID.randomUUID().toString();
+        database.addPayment(groupID, debtID, amount, id);
 
         Group g = getAssociatedGroupFromId(groupID);
         g.payOffDebt(amount, debtID);

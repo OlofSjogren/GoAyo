@@ -17,9 +17,11 @@ import java.math.BigDecimal;
 import java.net.ConnectException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class RealDatabaseTest {
 
@@ -75,12 +77,12 @@ public class RealDatabaseTest {
         hashSet.add("ccccxxyyzz");
         hashSet.add("ddddxxyyzz");
         hashSet.add("eeeexxyyzz");
-        database.registerGroup("TestGroupRegisterAll", hashSet);
+        database.registerGroup("TestGroupRegisterAll", hashSet, UUID.randomUUID().toString());
         hashSet.remove("ccccxxyyzz");
         hashSet.remove("bbbbxxyyzz");
-        database.registerGroup("TestGroupRegisterThree", hashSet);
+        database.registerGroup("TestGroupRegisterThree", hashSet, UUID.randomUUID().toString());
         hashSet.remove("eeeexxyyzz");
-        database.registerGroup("TestGroupRegisterTwo", hashSet);
+        database.registerGroup("TestGroupRegisterTwo", hashSet, UUID.randomUUID().toString());
     }
 
     @Test
@@ -88,8 +90,8 @@ public class RealDatabaseTest {
         Set<String> borrowers = new HashSet<>();
         borrowers.add("bbbbxxyyzz");
         borrowers.add("ccccxxyyzz");
-        boolean b = database.addDebt("31ed58fc-d82d-4228-b545-305d188387a2", "aaaaxxyyzz", borrowers, new BigDecimal("400"), "no reason");
-        assertTrue(b);
+        //boolean b = database.addDebt("31ed58fc-d82d-4228-b545-305d188387a2", "aaaaxxyyzz", borrowers, new BigDecimal("400"), "no reason");
+        fail();
     }
 
     @Test
@@ -104,7 +106,7 @@ public class RealDatabaseTest {
 
     @Test
     public void addPayment() throws InvalidDebtException, InvalidPaymentException, GroupNotFoundException, ConnectException {
-        database.addPayment("31ed58fc-d82d-4228-b545-305d188387a2", "2964c77b-ffa6-4064-ac9a-78411c2d97c2", new BigDecimal("200"));
+        database.addPayment("31ed58fc-d82d-4228-b545-305d188387a2", "2964c77b-ffa6-4064-ac9a-78411c2d97c2", new BigDecimal("200"), "123");
     }
 
     @Test

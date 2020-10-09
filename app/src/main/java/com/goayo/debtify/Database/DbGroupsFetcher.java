@@ -34,12 +34,12 @@ public class DbGroupsFetcher {
         return DatabaseConnector.getInstance().postData(data, "groups/addMember");
     }
 
-    public boolean registerGroup(String name, Set<String> usersPhoneNumber) {
+    public boolean registerGroup(String name, Set<String> usersPhoneNumber, String id) {
         Gson gson = new Gson();
         DbUserFetcher fetcher = new DbUserFetcher();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String date = format.format(new Date());
-        DbObject.Group group = new DbObject.Group(name, date, "", new DbObject.User[usersPhoneNumber.size()], new DbObject.Debt[0]);
+        DbObject.Group group = new DbObject.Group(name, date, id, new DbObject.User[usersPhoneNumber.size()], new DbObject.Debt[0]);
         int i = 0;
         for (String phoneNumber : usersPhoneNumber){
             String user = fetcher.fetchUserFromPhoneNumber(phoneNumber);

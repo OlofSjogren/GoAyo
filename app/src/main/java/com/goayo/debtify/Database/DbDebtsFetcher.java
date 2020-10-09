@@ -4,10 +4,11 @@ import com.goayo.debtify.model.UserNotFoundException;
 import com.google.gson.Gson;
 
 import java.math.BigDecimal;
+import java.util.Map;
 import java.util.Set;
 
 public class DbDebtsFetcher {
-    public boolean addDebt(String groupID, String lender, Set<String> borrowers, BigDecimal amount, String description) {
+    public boolean addDebt(String groupID, String lender, Map<String, String> borrowers, BigDecimal amount, String description) {
         DbObject.Debt[] debts = new DbObject.Debt[borrowers.size()];
         int i = 0;
 
@@ -15,9 +16,9 @@ public class DbDebtsFetcher {
         String lenderJson = fetcher.fetchUserFromPhoneNumber(lender);
 
 
-        for(String borrower : borrowers){
-            String borrowerJson = fetcher.fetchUserFromPhoneNumber(borrower);
-            debts[i] = new DbObject.Debt(new Gson().fromJson(lenderJson, DbObject.User.class), new Gson().fromJson(borrowerJson, DbObject.User.class), amount.divide(new BigDecimal(borrowers.size())).toString(), "", new DbObject.Payment[0]);
+        for(Map.Entry<String, String> entry : borrowers.entrySet()){
+            String borrowerJson = fetcher.fetchUserFromPhoneNumber(entry.getKey());
+            debts[i] = new DbObject.Debt(new Gson().fromJson(lenderJson, DbObject.User.class), new Gson().fromJson(borrowerJson, DbObject.User.class), amount.divide(new BigDecimal(borrowers.size())).toString(), entry.getValue(), new DbObject.Payment[0]);
             i++;
         }
 
