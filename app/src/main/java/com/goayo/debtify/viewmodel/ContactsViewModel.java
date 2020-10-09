@@ -4,6 +4,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.goayo.debtify.model.ContactEvent;
+import com.goayo.debtify.model.EventBus;
+import com.goayo.debtify.model.IEventHandler;
+import com.goayo.debtify.model.IModelEvent;
 import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.modelaccess.IUserData;
 
@@ -19,15 +23,14 @@ import java.util.List;
  * <p>
  * 2020-10-08 Modified by Yenan: refactor to interact with the ModelEngine, add removeContacts(...) method
  */
-public class ContactsViewModel extends ViewModel {
+public class ContactsViewModel extends ViewModel implements IEventHandler {
     private MutableLiveData<List<IUserData>> contactsData;
     private ModelEngine modelEngine;
-
-    // TODO need to observe the model to update contacts
 
     public ContactsViewModel() {
         super();
         modelEngine = ModelEngine.getInstance();
+        EventBus.getInstance().register(this, ContactEvent.class);
     }
 
     public LiveData<List<IUserData>> getContactsData() {
@@ -52,6 +55,14 @@ public class ContactsViewModel extends ViewModel {
         for (IUserData user : contactsToRemove) {
             modelEngine.removeContact(user.getPhoneNumber());
         }
+    }
+
+    @Override
+    public void onModelEvent(IModelEvent evt) {
+        updateContactsData();
+    }
+
+    private void updateContactsData() {
         setContactsData(new ArrayList<>(modelEngine.getContacts()));
     }
 }
