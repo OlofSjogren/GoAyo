@@ -12,6 +12,7 @@
 
         <activity android:name=".view.MainActivity" />
         <activity android:name=".view.DebtActivity" />
+        <activity android:name=".view.ContactsActivity" />
         <activity android:name=".view.DetailedGroupActivity" />
         <activity android:name=".view.GroupCreationActivity" />
         <activity

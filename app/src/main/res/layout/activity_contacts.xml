@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.ContactsActivity">
+
+        <!--IGNORE THE WARNING, THE APP CRASHES IF YOU LISTEN TO IT-->
+        <fragment
+            android:id="@+id/contactsNavHostFragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="false"
+            app:navGraph="@navigation/contacts_navigation_graph">
+        </fragment>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

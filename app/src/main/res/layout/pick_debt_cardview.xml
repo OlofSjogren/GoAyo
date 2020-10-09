@@ -40,10 +40,10 @@
             android:layout_height="wrap_content"
             android:text="owes"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/debtAmount"
-            app:layout_constraintStart_toEndOf="@+id/debtRadioButton"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias=".6" />
+            app:layout_constraintEnd_toEndOf="@+id/debtDesciption"
+            app:layout_constraintStart_toStartOf="@+id/debtDesciption"
+            app:layout_constraintTop_toBottomOf="@id/debtDesciption"
+            app:layout_constraintVertical_bias="0.41" />
 
         <TextView
             android:id="@+id/debtLender"
@@ -75,21 +75,22 @@
             android:id="@+id/debtAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:text="Amount"
+            android:layout_marginEnd="16dp"
+            android:text="XXKR"
+            android:textAlignment="textEnd"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.509" />
+            app:layout_constraintVertical_bias="0.545" />
 
         <TextView
             android:id="@+id/debtDesciption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="148dp"
             android:text="Description"
-            app:layout_constraintBottom_toBottomOf="@+id/debtDate"
-            app:layout_constraintEnd_toStartOf="@+id/debtDate"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/debtDate" />
 

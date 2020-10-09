@@ -132,27 +132,31 @@ public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUs
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (isMultipleChoice) { // if checkbox
-                        boolean isChecked = checkBox.isChecked();
-                        if (isChecked) {
-                            // if the checkbox is already checked
-                            // remove the position from the posList
-                            selectedUserPosList.remove(getAdapterPosition());
-                        } else {
-                            // else add the position to the posList
-                            selectedUserPosList.add(getAdapterPosition());
-                        }
-                        // invert the checked status
-                        checkBox.setChecked(!checkBox.isChecked());
-                    } else { // or if radiobutton
-                        // clear whole list so that it may only hold one element
-                        selectedUserPosList.clear();
-                        selectedUserPosList.add(getAdapterPosition());
-                        // update the items to reflect the change
-                        notifyItemRangeChanged(0, userData.size());
-                    }
+                    updateSelection();
                 }
             });
+        }
+
+        private synchronized void updateSelection() {
+            if (isMultipleChoice) { // if checkbox
+                boolean isChecked = checkBox.isChecked();
+                if (isChecked) {
+                    // if the checkbox is already checked
+                    // remove the position from the posList
+                    selectedUserPosList.remove(Integer.valueOf(getAdapterPosition()));
+                } else {
+                    // else add the position to the posList
+                    selectedUserPosList.add(getAdapterPosition());
+                }
+                // invert the checked status
+                checkBox.setChecked(!checkBox.isChecked());
+            } else { // or if radiobutton
+                // clear whole list so that it may only hold one element
+                selectedUserPosList.clear();
+                selectedUserPosList.add(getAdapterPosition());
+                // update the items to reflect the change
+                notifyItemRangeChanged(0, userData.size());
+            }
         }
 
         /**

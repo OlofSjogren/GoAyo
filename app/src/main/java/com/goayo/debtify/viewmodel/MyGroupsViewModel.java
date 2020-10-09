@@ -22,26 +22,30 @@ import java.util.Set;
  * <p>
  * 2020-09-30 Modified by Alex Phu and Yenan Wang: Cleaned up MyGroupsViewModel so it is only responsible for
  * fetching groupsdata.
+ * <p>
+ * 2020-10-08 Modified by Alex Phu: Added getCurrentLoggedInUsersPhoneNumber() for GroupViewAdapter. To be able to get
+ * UserTotal in each group.
  */
 
 public class MyGroupsViewModel extends ViewModel implements IEventHandler {
     private MutableLiveData<Set<IGroupData>> groupsData;
+    private ModelEngine modelEngine;
 
     public MyGroupsViewModel() {
         super();
-        Set<IGroupData> groupsData = ModelEngine.getInstance().getGroups();
+        modelEngine = ModelEngine.getInstance();
+        Set<IGroupData> groupsData = modelEngine.getGroups();
         this.groupsData = new MutableLiveData<>(groupsData);
         EventBus.getInstance().register(this, GroupsEvent.class);
     }
 
-    private void setGroupsData(){
+    private void setGroupsData() {
         groupsData.setValue(ModelEngine.getInstance().getGroups());
     }
 
     public LiveData<Set<IGroupData>> getGroupsData() {
         return groupsData;
     }
-
 
     @Override
     public void onModelEvent(IModelEvent evt) {
@@ -52,5 +56,9 @@ public class MyGroupsViewModel extends ViewModel implements IEventHandler {
     protected void onCleared() {
         super.onCleared();
         EventBus.getInstance().unRegister(this, GroupsEvent.class);
+    }
+
+    public String getCurrentLoggedInUsersPhoneNumber() {
+        return modelEngine.getLoggedInUser().getPhoneNumber();
     }
 }
