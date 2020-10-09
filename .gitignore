@@ -216,6 +216,7 @@ obj/
 
 # IntelliJ IDEA
 *.iml
+*.plantuml
 /out/
 
 # User-specific configurations

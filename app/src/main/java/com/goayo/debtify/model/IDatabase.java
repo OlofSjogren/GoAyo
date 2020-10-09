@@ -60,17 +60,17 @@ public interface IDatabase {
      * Register a new user in the database.
      *
      * @param phoneNumber The phone number of the new user.
-     * @param password The password of the new user.
-     * @param name The name of the new user.
+     * @param password    The password of the new user.
+     * @param name        The name of the new user.
      * @return true if the operation was successful. False if the phone number is already
-     *         registered.
+     * registered.
      */
     void registerUser(String phoneNumber, String password, String name) throws ConnectException, RegistrationException;
 
     /**
      * Registers a new group in the database.
      *
-     * @param name The name of the group.
+     * @param name             The name of the group.
      * @param usersPhoneNumber A set with phone numbers of all the user to be registered in
      *                         the group.
      * @return True after a successful registration.
@@ -79,29 +79,29 @@ public interface IDatabase {
 
     /**
      * Adds a new debt in a group between two users.
-     *
+     * <p>
      * Postcondition: Does not promise to modify the same java objects as those held by the model.
-     *                Only promises to modify the database. Groups should be re-fetched after
-     *                calling this method.
+     * Only promises to modify the database. Groups should be re-fetched after
+     * calling this method.
      *
-     * @param groupID The id of the group in which the debt will be added.
-     * @param lender The phone number of the person lending the money out.
+     * @param groupID   The id of the group in which the debt will be added.
+     * @param lender    The phone number of the person lending the money out.
      * @param borrowers A set of phone numbers of user who borrows money.
-     * @param amount The total amount of the loan.
+     * @param amount    The total amount of the loan.
      * @return True if the operation was successful, false if the all users as well as the group
-     *         doesn't exist.
+     * doesn't exist.
      * @throws Exception if something goes wrong when connecting to the server.
      */
     boolean addDebt(String groupID, String lender, Set<String> borrowers, BigDecimal amount, String description) throws GroupNotFoundException, UserNotFoundException, ConnectException, InvalidDebtException;
 
     /**
      * Add a new contact to a users list of contacts.
-     *
+     * <p>
      * Postcondition: Does not promise to modify the same java objects as those held by the model.
-     *                Only promises to modify the database. Contact list should be re-fetched after
-     *                calling this method.
+     * Only promises to modify the database. Contact list should be re-fetched after
+     * calling this method.
      *
-     * @param userPhoneNumber Phone number of the user who is adding a contact.
+     * @param userPhoneNumber  Phone number of the user who is adding a contact.
      * @param contactToBeAdded Phone number of the user being added as a contact.
      * @return True if both of the users exits and the operation was successful, otherwise false.
      */
@@ -109,12 +109,12 @@ public interface IDatabase {
 
     /**
      * Remove a contact from a users contact list.
-     *
+     * <p>
      * Postcondition: Does not promise to modify the same java objects as those held by the model.
-     *                Only promises to modify the database. Contact list should be re-fetched after
-     *                calling this method.
+     * Only promises to modify the database. Contact list should be re-fetched after
+     * calling this method.
      *
-     * @param userPhoneNumber The phone number of the user removing the contact.
+     * @param userPhoneNumber                 The phone number of the user removing the contact.
      * @param phoneNumberOfContactToBeRemoved The phone number of the user being removed as a contact.
      * @return True if both of the users exits and the operation was successful, otherwise false.
      */
@@ -122,14 +122,14 @@ public interface IDatabase {
 
     /**
      * Adds a payment towards a debt.
-     *
+     * <p>
      * Postcondition: Does not promise to modify the same java objects as those held by the model.
-     *                Only promises to modify the database. Groups should be re-fetched after
-     *                calling this method.
+     * Only promises to modify the database. Groups should be re-fetched after
+     * calling this method.
      *
      * @param GroupID The id of the group to which the debt belongs to.
-     * @param debtID The id of the debt towards which the payment is made.
-     * @param amount The amount being payed towards the debt.
+     * @param debtID  The id of the debt towards which the payment is made.
+     * @param amount  The amount being payed towards the debt.
      * @return True if the entity with the provided ids exist. Otherwise false.
      * @throws Exception if something goes wrong when connecting to the server.
      */
@@ -137,15 +137,15 @@ public interface IDatabase {
 
     /**
      * Adds a user to a specific group.
-     *
+     * <p>
      * Postcondition: Does not promise to modify the same java objects as those held by the model.
-     *                Only promises to modify the database. Groups should be re-fetched after
-     *                calling this method.
+     * Only promises to modify the database. Groups should be re-fetched after
+     * calling this method.
      *
-     * @param groupID The id of the group.
+     * @param groupID     The id of the group.
      * @param phoneNumber The id of the user.
      * @return True if the group and the user exists, and if the user is not already in the group.
-     *         Otherwise false.
+     * Otherwise false.
      */
     boolean addUserToGroup(String groupID, String phoneNumber) throws UserNotFoundException, GroupNotFoundException, ConnectException, UserAlreadyExistsException;
 
@@ -154,9 +154,9 @@ public interface IDatabase {
      * phone number if it does.
      *
      * @param phoneNumber The phone number of the user being logged in.
-     * @param password The password of the user being logged in.
+     * @param password    The password of the user being logged in.
      * @return The user with the provided phone number, if the password matches mentioned phone
-     *         number.
+     * number.
      */
     String getUserToBeLoggedIn(String phoneNumber, String password) throws LoginException, ConnectException;
 
@@ -170,14 +170,15 @@ public interface IDatabase {
 
     /**
      * Removes a user from a group.
-     *
+     * <p>
      * Postcondition: Does not promise to modify the same java objects as those held by the model.
-     *                Only promises to modify the database. Groups should be re-fetched after
-     *                calling this method.
+     * Only promises to modify the database. Groups should be re-fetched after
+     * calling this method.
      *
      * @param phoneNumber The phone number of the user being removed.
-     * @param groupID The id of the group in which the user will be removed.
+     * @param groupID     The id of the group in which the user will be removed.
      * @return True on successful operation. False if user or group doesn't exist.
      */
     boolean removeUserFromGroup(String phoneNumber, String groupID) throws UserNotFoundException, GroupNotFoundException, ConnectException;
+
 }

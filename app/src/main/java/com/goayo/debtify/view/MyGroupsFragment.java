@@ -38,6 +38,8 @@ import java.util.Set;
  * 2020/09/25 Modified by Oscar Sanner, Alex Phu and Olof Sjögren: Added factory to ViewModelProvider.
  * <p>
  * 2020/09/30 Modified by Alex Phu and Yenan Wang: Refactored entire class.
+ *
+ * 2020/10/08 Modified by Alex Phu: Injected currentLoggedInUsersPhoneNumber to GroupViewAdapter.
  */
 public class MyGroupsFragment extends Fragment {
 
@@ -52,7 +54,7 @@ public class MyGroupsFragment extends Fragment {
 
         List<IGroupData> groupData = new ArrayList<>(viewModel.getGroupsData().getValue());
 
-        final GroupViewAdapter groupViewAdapter = new GroupViewAdapter(groupData);
+        final GroupViewAdapter groupViewAdapter = new GroupViewAdapter(groupData, viewModel.getCurrentLoggedInUsersPhoneNumber());
         initRecyclerView(binding, groupViewAdapter);
 
         //Updates RecyclerView when LiveData is changed.

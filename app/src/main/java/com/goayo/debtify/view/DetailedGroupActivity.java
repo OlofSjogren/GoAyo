@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavHostController;
 import androidx.navigation.Navigation;
 
 import com.goayo.debtify.R;
@@ -22,12 +23,14 @@ import com.goayo.debtify.viewmodel.PickUserViewModel;
  * <p>
  * Activity for the detailed view of a group.
  * <p>
- * 25-09-2020 Modified by Alex: Refactored bottom-buttons to GroupFragment.
+ * 25-09-2020 Modified by Alex Phu: Refactored bottom-buttons to GroupFragment.
  * <p>
  * 2020/09/25 Modified by Oscar Sanner, Alex Phu and Olof Sjögren: Removed duplicate "setContentView".
  * <p>
- * 2020-09-30 Modified by Yenan & Alex: Refactored so that it now uses PickUserViewModel and
+ * 2020-09-30 Modified by Yenan Wang & Alex Phu: Refactored so that it now uses PickUserViewModel and
  * DetailedGroupViewModel to manage data
+ *
+ * 2020-10-08 Modified by Alex Phu: Added third menu item (leave group) and its implementation.
  */
 public class DetailedGroupActivity extends AppCompatActivity {
 
@@ -60,6 +63,10 @@ public class DetailedGroupActivity extends AppCompatActivity {
             case R.id.action_show_group_informaion:
                 Navigation.findNavController(this, R.id.group_nav_host).navigate(R.id.action_groupFragment_to_showMembersFragment);
                 break;
+            case R.id.action_leave_group:
+                detailedGroupViewModel.leaveCurrentGroup();
+                //Finish activity
+                finish();
             default:
                 return super.onOptionsItemSelected(item);
         }

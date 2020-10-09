@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contacts_navigation_graph"
+    app:startDestination="@id/displayContactsFragment">
+
+    <fragment
+        android:id="@+id/displayContactsFragment"
+        android:name="com.goayo.debtify.view.DisplayContactsFragment"
+        android:label="Display Contacts"
+        tools:layout="@layout/display_contacts_fragment">
+        <action
+            android:id="@+id/action_displayContactsFragment_to_pickUserFragment"
+            app:destination="@id/pickUsersFragment" />
+        <action
+            android:id="@+id/action_displayContactsFragment_to_addContactFragment"
+            app:destination="@id/addContactFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/pickUsersFragment"
+        android:name="com.goayo.debtify.view.PickUsersFragment"
+        android:label="Pick User"
+        tools:layout="@layout/pick_users_fragment">
+    </fragment>
+    <fragment
+        android:id="@+id/addContactFragment"
+        android:name="com.goayo.debtify.view.AddContactFragment"
+        android:label="add_contact_fragment"
+        tools:layout="@layout/add_contact_fragment" />
+
+</navigation>
