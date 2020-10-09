@@ -46,7 +46,7 @@ public class DbObject {
     }
 
     static class Debt {
-        public Debt(String lender, String borrower, String owed, String debtId, Payment[] payments) {
+        public Debt(User lender, User borrower, String owed, String debtId, Payment[] payments) {
             this.lender = lender;
             this.borrower = borrower;
             this.owed = owed;
@@ -54,8 +54,8 @@ public class DbObject {
             this.payments = payments;
         }
 
-        String lender;
-        String borrower;
+        User lender;
+        User borrower;
         String owed;
         String id;
         Payment [] payments;

@@ -30,7 +30,13 @@ public class JsonParser {
 
     public Set<Group> getGroups(String associatedGroupsJson) {
 
-        GroupJsonObject[] groupJsonObjects = gson.fromJson(associatedGroupsJson, GroupsArrayJsonObject.class).groupJsonObjects;
+        GroupJsonObject[] groupJsonObjects = null;
+        try {
+            groupJsonObjects = gson.fromJson(associatedGroupsJson, GroupsArrayJsonObject.class).groupJsonObjects;
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
         Set<Group> groups = new HashSet<>();
 
         for (GroupJsonObject json : groupJsonObjects){
