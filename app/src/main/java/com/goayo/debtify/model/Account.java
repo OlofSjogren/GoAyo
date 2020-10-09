@@ -115,7 +115,6 @@ class Account {
             e.printStackTrace();
             return;
         }
-
         database.addContact(loggedInUser.getPhoneNumber(), phoneNumber);
         initContactList(loggedInUser.getPhoneNumber());
     }

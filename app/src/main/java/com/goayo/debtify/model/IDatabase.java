@@ -177,5 +177,5 @@ interface IDatabase {
      * @param groupID The id of the group in which the user will be removed.
      * @return True on successful operation. False if user or group doesn't exist.
      */
-    boolean removeUserFromGroup(String phoneNumber, String groupID);
+    boolean removeUserFromGroup(String phoneNumber, String groupID) throws UserNotFoundException;
 }
