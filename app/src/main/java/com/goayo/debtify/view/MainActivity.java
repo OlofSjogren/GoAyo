@@ -27,6 +27,7 @@ import com.google.android.material.tabs.TabLayout;
  * 2020-09-30 Modified by Olof Sjögren and Oscar Sanner : Added logOut functionality in onNavigationItemSelected() and
  * also added SignInAndOutViewModel.
  * 2020-10-08 Modified by Yenan: add menu click handler for Contacts
+ * 2020-10-08 Modified by Alex Phu: Minor bug fix where user could get back to MainActivity after logout
  */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -107,6 +108,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 viewModel.logOutUser();
                 intent = new Intent(this.binding.getRoot().getContext(), LoginActivity.class);
                 startActivity(intent);
+                //Finishes activity so that the user can't popBackStack to MainActivity after logOut
+                finish();
                 break;
             case R.id.contacts_menu_item:
                 intent = new Intent(this.binding.getRoot().getContext(), ContactsActivity.class);
