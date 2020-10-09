@@ -7,13 +7,14 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.goayo.debtify.R;
-import com.goayo.debtify.modelaccess.IDebtData;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.goayo.debtify.R;
+import com.goayo.debtify.modelaccess.IDebtData;
+
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 
 /**
@@ -21,10 +22,12 @@ import java.text.SimpleDateFormat;
  * @date 2020-09-25
  * <p>
  * RecyclerView adapter for pick_debt_cardview. Ensures that the correct information are shown on each cardItem and its respective listeners.
- *
+ * <p>
  * 2020-09-28 Modified by Yenan Wang: Add debt description to the cardview
- *
+ * <p>
  * 2020-10-08 Modified by Alex Phu: Refactored setDebtData and added configureName() method.
+ * <p>
+ * 2020-10-09 Modified by Yenan Wang, Alex Phu: Rounded decimals to 2 in balance
  */
 
 public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDebtViewHolder> {
@@ -37,7 +40,7 @@ public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDe
      *
      * @param debtData array of IDebtData
      */
-    public PickDebtAdapter(IDebtData[] debtData){
+    public PickDebtAdapter(IDebtData[] debtData) {
         this.debtData = debtData;
     }
 
@@ -52,7 +55,7 @@ public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDe
     /**
      * Binds the data to the ViewHolder.
      *
-     * @param holder ViewHolder
+     * @param holder   ViewHolder
      * @param position Current position in the debtData array
      */
     @Override
@@ -66,7 +69,7 @@ public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDe
         return debtData.length;
     }
 
-    public IDebtData getSelectedDebt(){
+    public IDebtData getSelectedDebt() {
         return debtData[mSelectedDebt];
     }
 
@@ -115,13 +118,13 @@ public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDe
             date.setText(format.format(debtData.getDate()));
             lender.setText(configureName(debtData.getLender().getName()));
             borrower.setText(configureName(debtData.getBorrower().getName()));
-            amount.setText(debtData.getAmountOwed() + " kr");
+            amount.setText(debtData.getAmountOwed().setScale(2, RoundingMode.HALF_UP) + " kr");
             description.setText(debtData.getDescription());
         }
 
         private String configureName(String name) {
             String[] names = name.split(" ");
-            String firstLetterOfSurname = names[1].substring(0,1);
+            String firstLetterOfSurname = names[1].substring(0, 1);
             StringBuilder sb = new StringBuilder();
             sb.append(names[0]).append(" ").append(firstLetterOfSurname);
             return sb.toString();

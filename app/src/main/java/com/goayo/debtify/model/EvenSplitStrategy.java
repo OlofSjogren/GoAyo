@@ -1,7 +1,6 @@
 package com.goayo.debtify.model;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,10 +23,9 @@ public class EvenSplitStrategy implements IDebtSplitStrategy {
      */
     @Override
     public Map<User, BigDecimal> splitDebt(Set<User> borrowers, BigDecimal owedTotal) {
-        // Splits the owedTotal by the number of borrowers and rounds it to 2 decimals
+        // Splits the owedTotal by the number of borrowers
         BigDecimal splitAmount = owedTotal
-                .divide(BigDecimal.valueOf(borrowers.size()), RoundingMode.HALF_UP)
-                .round(new MathContext(2));
+                .divide(BigDecimal.valueOf(borrowers.size()), 10, RoundingMode.HALF_UP);
         Map<User, BigDecimal> tempMap = new HashMap<>();
         for (User borrower : borrowers) {
             tempMap.put(borrower, new BigDecimal(splitAmount.toString()));

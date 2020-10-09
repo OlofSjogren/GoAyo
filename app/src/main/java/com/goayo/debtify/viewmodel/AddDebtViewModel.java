@@ -4,7 +4,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.goayo.debtify.model.EvenSplitStrategy;
+import com.goayo.debtify.model.IDebtSplitStrategy;
 import com.goayo.debtify.model.ModelEngine;
+import com.goayo.debtify.model.NoSplitStrategy;
 import com.goayo.debtify.modelaccess.IUserData;
 
 import java.math.BigDecimal;
@@ -19,9 +22,11 @@ import java.util.Set;
  * ViewModel for AddDebtFragment
  * <p>
  * 2020-09-30 Modified by Yenan & Alex: Fix an error caused by createDebt method
- *
+ * <p>
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
+ * <p>
+ * 2020-10-09 Modified by Yenan Wang and Alex Phu: Added IDebtStrategy to createDebt()
  */
 public class AddDebtViewModel extends ViewModel {
 
@@ -74,18 +79,27 @@ public class AddDebtViewModel extends ViewModel {
      * @param borrowers   the borrower/borrowers
      * @param amount      the total amount of the debt
      * @param description a brief description of the debt
+     * @param isNoSplit   How the debt will be split
      * @throws Exception to be specified later
      */
     public void createDebt(String groupID,
                            Set<IUserData> lender,
                            Set<IUserData> borrowers,
                            BigDecimal amount,
-                           String description) throws Exception {
+                           String description,
+                           boolean isNoSplit) throws Exception {
         // TODO refactor all strings to IUserData
+        IDebtSplitStrategy splitStrategy;
+        if (isNoSplit) {
+            splitStrategy = new NoSplitStrategy();
+        } else {
+            splitStrategy = new EvenSplitStrategy();
+        }
         modelEngine.createDebt(groupID,
                 // this is horrendous
                 (new ArrayList<>(lender).get(0)).getPhoneNumber(),
-                convertToString(borrowers), amount, description);
+                convertToString(borrowers), amount, description,
+                splitStrategy);
     }
 
     public Set<IUserData> getGroupMembers(String groupID) throws Exception {
