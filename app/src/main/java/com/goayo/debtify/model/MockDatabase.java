@@ -1,6 +1,5 @@
 package com.goayo.debtify.model;
 
-import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.modelaccess.IUserData;
 
 import java.math.BigDecimal;
@@ -50,7 +49,7 @@ class MockDatabase implements IDatabase {
         try {
             registerUser("0701234546", pwOscar, "Oscar Sanner");
             registerUser("0786458765", pwOlof, "Olof Sjögren");
-            registerUser("0738980732", pwAlex, "Alex Phu");
+            registerUser("0738980732", pwAlex, "     Phu   ");
             registerUser("0701094578", pwYenan, "Yenan Wang");
             registerUser("0733387676", pwGabriel, "Gabriel Brattgård");
         } catch (UserAlreadyExistsException e){
