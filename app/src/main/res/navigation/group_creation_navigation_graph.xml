@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/group_creation_navigation_graph"
-    app:startDestination="@id/createGroupFragment">
+    app:startDestination="@id/pickUsersFragment">
 
     <fragment
         android:id="@+id/createGroupFragment"
