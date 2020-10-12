@@ -1,6 +1,6 @@
 package com.goayo.debtify.MockDatabase;
 
-public class MockDbObject {
+class MockDbObject {
     static class Group {
         public Group(String name, String date, String groupId, User[] members, Debt[] debts) {
             this.name = name;

@@ -14,7 +14,7 @@ import org.apache.hc.core5.http.io.entity.StringEntity;
 import java.io.IOException;
 import java.util.Map;
 
-public class DatabaseConnector {
+class DatabaseConnector {
     private static DatabaseConnector instance;
     private String port = "2501";
     private String ipAddr = "http://83.252.195.154" + ":" + port + "/";

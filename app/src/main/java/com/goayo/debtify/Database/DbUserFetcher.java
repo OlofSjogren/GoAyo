@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DbUserFetcher {
+ class DbUserFetcher {
 
 
     public String logInUser(String phoneNumber, String password) {

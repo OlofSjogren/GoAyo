@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 import java.math.BigDecimal;
 import java.util.Map;
 
-public class DbDebtsFetcher {
+ class DbDebtsFetcher {
     public boolean addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy) {
         DbObject.Debt[] debts = new DbObject.Debt[borrowers.size()];
         int i = 0;

@@ -1,6 +1,6 @@
 package com.goayo.debtify.Database;
 
-public class DbObject {
+ class DbObject {
     static class Group {
         public Group(String name, String date, String groupId, User[] members, Debt[] debts) {
             this.name = name;
