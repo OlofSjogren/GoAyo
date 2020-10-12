@@ -11,10 +11,10 @@ public final class DebtSplitFactory {
     private DebtSplitFactory() {
     }
 
-    public static NoSplitStrategy createNoSplitStrategy(){
+    public static IDebtSplitStrategy createNoSplitStrategy(){
         return new NoSplitStrategy();
     }
-    public static EvenSplitStrategy createEvenSplitStrategy(){
+    public static IDebtSplitStrategy createEvenSplitStrategy(){
         return new EvenSplitStrategy();
     }
 }
