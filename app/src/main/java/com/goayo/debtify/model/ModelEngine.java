@@ -67,6 +67,10 @@ public class ModelEngine {
         account.registerUser(phoneNumber, password, name);
     }
 
+    public void refreshWithDatabase(){
+        account.refreshWithDatabase();
+    }
+
     /**
      * Logs the user into the application. Other functions related to account management will
      * throw an exception if no user is logged in.
