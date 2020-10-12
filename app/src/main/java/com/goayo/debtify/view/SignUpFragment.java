@@ -24,6 +24,7 @@ import com.google.android.material.textfield.TextInputEditText;
  * Sign up page.
  *
  * 2020-09-30 Modified by Olof Sjögren and Oscar Sanner : Added all functionality: editable text-input fields, registration button and fragment's initialisation.
+ * 2020-10-11 Modified by Alex Phu: Trimmed TextFields before sending registration-data to viewModel.
  */
 public class SignUpFragment extends Fragment {
 
@@ -51,7 +52,8 @@ public class SignUpFragment extends Fragment {
                 TextInputEditText nameField = binding.signUpFragmentNameTextInputEditText;
                 TextInputEditText numberField = binding.signUpFragmentPhoneNumberTextInputEditText;
                 TextInputEditText passwordField = binding.signUpFragmentPasswordTextInputEditText;
-                boolean attempt = viewModel.registerUser(numberField.getText().toString(), nameField.getText().toString(), passwordField.getText().toString());
+                String trimmedName = nameField.getText().toString().trim().replaceAll("\\s+", " ");
+                boolean attempt = viewModel.registerUser(numberField.getText().toString().trim(), trimmedName, passwordField.getText().toString());
                 if(attempt){
                     Toast.makeText (binding.getRoot().getContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
                     Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_signInFragment);

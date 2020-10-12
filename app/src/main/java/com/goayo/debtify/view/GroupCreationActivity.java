@@ -34,6 +34,7 @@ public class GroupCreationActivity extends AppCompatActivity {
         pickUserViewModel = ViewModelProviders.of(this).get(PickUserViewModel.class);
 
         pickUserViewModel.setInitialUsers(model.getContacts());
+        pickUserViewModel.setDestination(R.id.action_pickUsersFragment_to_createGroupFragment);
     }
 
 }

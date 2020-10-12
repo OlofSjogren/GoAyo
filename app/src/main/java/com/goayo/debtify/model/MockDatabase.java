@@ -337,14 +337,14 @@ class MockDatabase implements IDatabase {
     }
 
     @Override
-    public boolean removeUserFromGroup(String phoneNumber, String groupID) {
+    public boolean removeUserFromGroup(String phoneNumber, String groupID) throws UserNotFoundException {
         User userToBeRemoved = getUserFromDatabase(phoneNumber);
         Group group = getGroupFromId(groupID);
         boolean groupRemoveSuccess = false;
 
         if (userToBeRemoved == null || group == null) {
+            throw new UserNotFoundException("There is no user with that phonenumber.");
             //TODO Throw exception here. User doesn't exist in database.
-            return false;
         }
 
         for (Group g : getGroups(phoneNumber)) {

@@ -35,6 +35,13 @@ import java.util.List;
  * return types and params of methods are correctly set as BigDecimal.
  * <p>
  * 2020-10-09 Modified by Yenan Wang, Alex Phu: Rounded decimals to 2 in balance
+ * <p>
+ * 2020-09-30 Modified by Alex, Yenan: Refactored adapter.
+ * <p>
+ * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
+ * return types and params of methods are correctly set as BigDecimal.
+ * <p>
+ * 2020-10-09 Modified by Yenan & Alex: add method updateData(...)
  */
 public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCardAdapter.TransactionCardViewHolder> {
 
@@ -84,6 +91,12 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
     @Override
     public int getItemCount() {
         return transactionData.size();
+    }
+
+    public void updateData(List<IDebtData> debtData) {
+        transactionData.clear();
+        transactionData.addAll(createTransactionDataSet(debtData));
+        notifyItemRangeChanged(0, transactionData.size());
     }
 
     private List<TransactionData> createTransactionDataSet(List<IDebtData> debtDataArray) {

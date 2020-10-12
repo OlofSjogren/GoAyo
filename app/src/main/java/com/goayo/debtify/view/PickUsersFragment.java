@@ -7,12 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +37,7 @@ import java.util.List;
  * 2020-09-29 Modified by Alex Phu: Implementation of RecyclerView, continueButton, differentiating
  * which Activity started PickUserFragment. Connected with PickUserViewModel. Disabled OptionsMenu.
  * 2020-09-30 Modified by Alex & Yenan: Refactored everything, now this class is dumb
+ * 2020-10-08 Modified by Yenan: Add setOnBackPressed() method
  */
 public class PickUsersFragment extends Fragment {
 
@@ -51,6 +56,7 @@ public class PickUsersFragment extends Fragment {
         initContinueButton(binding);
         //To disable optionsMenu
         setHasOptionsMenu(true);
+        setOnBackPressed();
 
         return binding.getRoot();
     }
@@ -73,12 +79,40 @@ public class PickUsersFragment extends Fragment {
                 List<IUserData> userList = pickUserAdapter.getSelectedUser();
                 if (userList.size() != 0) {
                     pickUserViewModel.setSelectedUsersData(userList);
-                    Navigation.findNavController(view).popBackStack();
+                    NavController navController = Navigation.findNavController(view);
+                    // if there exists a destination
+                    if (pickUserViewModel.getDestination() != null) {
+                        // navigate to that destination
+                        navController.navigate(pickUserViewModel.getDestination());
+                    } else {
+                        // else simply pop backstack
+                        navController.popBackStack();
+                    }
                 } else {
                     Toast.makeText(getContext(), "Please select at least a user!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    // forces the back button to pop the backstack instead of doing whatever it was doing
+    private void setOnBackPressed() {
+        NavController navController = NavHostFragment.findNavController(this);
+        FragmentManager fragmentManager = getParentFragmentManager();
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // if is currently the first fragment to be shown
+                // then pressing the back button needs to finish the activity
+                if (fragmentManager.getBackStackEntryCount() == 0) {
+                    requireActivity().finish();
+                } else {
+                    // else just pop the backstack
+                    navController.popBackStack();
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
     }
 
     @Override

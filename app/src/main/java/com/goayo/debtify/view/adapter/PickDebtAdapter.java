@@ -28,6 +28,9 @@ import java.text.SimpleDateFormat;
  * 2020-10-08 Modified by Alex Phu: Refactored setDebtData and added configureName() method.
  * <p>
  * 2020-10-09 Modified by Yenan Wang, Alex Phu: Rounded decimals to 2 in balance
+ * <p>
+ * 2020-10-11 Modified by AlexPhu: Fixed bug in configureName() which would crash if user has not entered a surname. Now also handles lots of edge cases which shouldn't even occur in the first place.
+ * Ignores middle names.
  */
 
 public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDebtViewHolder> {
@@ -123,11 +126,17 @@ public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDe
         }
 
         private String configureName(String name) {
-            String[] names = name.split(" ");
-            String firstLetterOfSurname = names[1].substring(0, 1);
-            StringBuilder sb = new StringBuilder();
-            sb.append(names[0]).append(" ").append(firstLetterOfSurname);
-            return sb.toString();
+          //Trims name and removes multiple spaces in between name and surname
+          String temporaryNameHolder = name.trim().replaceAll("\\s+", " ");
+          if(temporaryNameHolder.contains(" ")){
+              //If First name and surname exists
+              String[] nameArray = temporaryNameHolder.split(" ");
+              StringBuilder sb = new StringBuilder();
+              String firstLetterOfSurname = nameArray[nameArray.length-1].substring(0, 1);
+              sb.append(nameArray[0]).append(" ").append(firstLetterOfSurname);
+              return sb.toString();
+          }
+          return temporaryNameHolder;
         }
     }
 }

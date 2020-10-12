@@ -1,13 +1,9 @@
 package com.goayo.debtify.model;
 
-import com.goayo.debtify.IObservable;
-import com.goayo.debtify.IObserver;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -28,20 +24,18 @@ import java.util.Set;
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
  * 2020-10-09 Modified by Alex Phu and Yenan Wang: Added IDebtSplitStrategy to createDebt's parameter.
+ * 2020-10-11 Modified by Alex Phu: Fixed wrong order of arguments in registerUser();
  */
 
-public class ModelEngine implements IObservable {
+public class ModelEngine {
 
     private Account account;
     private static ModelEngine instance;
     private IDatabase database;
 
-    private List<IObserver> observers;
-
     private ModelEngine(Account account, IDatabase database) {
         this.account = account;
         this.database = database;
-        observers = new ArrayList<>();
         //TODO: AUTOMATICALLY LOGS THE USER IN WHEN THIS CLASS IS INSTANTIATED, BECAUSE
         //TODO LOGIN FUNCTIONALITY IS YET TO BE IMPLEMENTED
     }
@@ -71,7 +65,7 @@ public class ModelEngine implements IObservable {
      * is not met, or if some form of connection error occurs.
      */
     public void registerUser(String phoneNumber, String name, String password) throws UserAlreadyExistsException {
-        account.registerUser(phoneNumber, name, password);
+        account.registerUser(phoneNumber, password, name);
     }
 
     /**
@@ -88,7 +82,6 @@ public class ModelEngine implements IObservable {
      */
     public void logInUser(String phoneNumber, String password) throws Exception {
         account.loginUser(phoneNumber, password);
-        notifyAllObservers();
     }
 
     /**
@@ -260,20 +253,4 @@ public class ModelEngine implements IObservable {
         return account.getContacts();
     }
 
-    @Override
-    public void addObserver(IObserver observer) {
-        observers.add(observer);
-    }
-
-    @Override
-    public void removeObserver(IObserver observer) {
-        observers.remove(observer);
-    }
-
-    @Override
-    public void notifyAllObservers() {
-        for (IObserver observer : observers) {
-            observer.update();
-        }
-    }
 }
