@@ -39,6 +39,7 @@ import java.util.UUID;
  * 2020-10-09 Modified by Alex Phu and Yenan Wang: Added IDebtSplitStrategy to createDebt's parameter.
  * 2020-10-11 Modidied by Oscar Sanner: Made sure the logged in user gets added to the groups he creates.
  * 2020-10-11 Modidied by Oscar Sanner: UUIDs are created in this class and passed to the database and the groups respectively.
+ * 2020-10-12 Modified by Alex Phu: In createDebt and payOffDebt, publish for GroupsEvent too on EventBus
  */
 class Account {
 
@@ -128,12 +129,22 @@ class Account {
      * @throws Exception Thrown if the user is not found, or if the user is already in the contactList.
      */
 
-    public void addContact(String phoneNumber) throws UserNotFoundException, ConnectException {
+    public void addContact(String phoneNumber) throws UserNotFoundException, ConnectException, UserAlreadyExistsException {
         userIsLoggedIn();
         String data = database.getUser(phoneNumber);
-        User u = fromJsonFactory.getUser(data);
-        database.addContact(loggedInUser.getPhoneNumber(), phoneNumber);
 
+        // TODO Change this to exception
+        if (data.equals("BAD REQUEST, INCORRECT NUMBER")) {
+            throw new UserNotFoundException("This user doesn't exist!");
+        }
+        User u = fromJsonFactory.getUser(data);
+
+        // prevent adding yourself as a contact
+        if (u.equals(loggedInUser)) {
+            throw new UserAlreadyExistsException("Cannot add yourself as a contact!");
+        }
+
+        database.addContact(loggedInUser.getPhoneNumber(), phoneNumber);
         contactList.add(u);
         EventBus.getInstance().publish(new ContactEvent());
     }
@@ -200,10 +211,6 @@ class Account {
     public void createDebt(String groupID, String lender, Set<String> borrowers, BigDecimal owed, String description, IDebtSplitStrategy splitStrategy) throws Exception {
         userIsLoggedIn();
 
-        if (borrowers.isEmpty()) {
-            throw new EmptySelectionException("No Borrowers Selected!");
-        }
-
         Map<IUserData, String> borrowerIUserDataAndId = new HashMap<>();
         Map<User, String> borrowerUserAndId = new HashMap<>();
 
@@ -224,6 +231,7 @@ class Account {
 
         g.createDebt(lenderUser, borrowerUserAndId, owed, description, splitStrategy);
         EventBus.getInstance().publish(new DetailedGroupEvent());
+        EventBus.getInstance().publish(new GroupsEvent());
     }
 
     /**
@@ -245,6 +253,7 @@ class Account {
         g.payOffDebt(amount, debtID);
 
         EventBus.getInstance().publish(new DetailedGroupEvent());
+        EventBus.getInstance().publish(new GroupsEvent());
     }
 
     /**
@@ -347,5 +356,12 @@ class Account {
     public IUserData getSingleUserFromDatabase(String phoneNumber) throws UserNotFoundException, ConnectException {
         String userJson = database.getUser(phoneNumber);
         return fromJsonFactory.getUser(userJson);
+    }
+
+    public void refreshWithDatabase() throws Exception {
+        userIsLoggedIn();
+        initAssociatedGroups();
+        EventBus.getInstance().publish(new GroupsEvent());
+        EventBus.getInstance().publish(new DetailedGroupEvent());
     }
 }

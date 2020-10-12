@@ -67,6 +67,10 @@ public class ModelEngine {
         account.registerUser(phoneNumber, password, name);
     }
 
+    public void refreshWithDatabase() throws Exception {
+        account.refreshWithDatabase();
+    }
+
     /**
      * Logs the user into the application. Other functions related to account management will
      * throw an exception if no user is logged in.
@@ -101,7 +105,7 @@ public class ModelEngine {
      * @param phoneNumber the phone number of the contact to be added.
      * @return True if the operation was successful, server side.
      */
-    public void addContact(String phoneNumber) throws Exception {
+    public void addContact(String phoneNumber) throws UserNotFoundException, UserAlreadyExistsException, ConnectException {
         account.addContact(phoneNumber);
     }
 

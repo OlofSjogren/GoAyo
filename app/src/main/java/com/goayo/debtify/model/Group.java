@@ -114,10 +114,9 @@ class Group implements IGroupData {
      * @param owed      total amount lent out by the lender to the borrowers
      * @param description the brief description of the debt
      * @param splitStrategy How the debt is split
-     * @throws Exception
      */
     // TODO: Specify exception.
-    public void createDebt(User lender, Map<User, String> borrowers, BigDecimal owed, String description, IDebtSplitStrategy splitStrategy) throws Exception {
+    public void createDebt(User lender, Map<User, String> borrowers, BigDecimal owed, String description, IDebtSplitStrategy splitStrategy) {
         groupLedger.createDebt(lender, borrowers, owed, description, splitStrategy);
     }
 
