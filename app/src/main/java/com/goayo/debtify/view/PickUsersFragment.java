@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -78,7 +79,15 @@ public class PickUsersFragment extends Fragment {
                 List<IUserData> userList = pickUserAdapter.getSelectedUser();
                 if (userList.size() != 0) {
                     pickUserViewModel.setSelectedUsersData(userList);
-                    Navigation.findNavController(view).popBackStack();
+                    NavController navController = Navigation.findNavController(view);
+                    // if there exists a destination
+                    if (pickUserViewModel.getDestination() != null) {
+                        // navigate to that destination
+                        navController.navigate(pickUserViewModel.getDestination());
+                    } else {
+                        // else simply pop backstack
+                        navController.popBackStack();
+                    }
                 } else {
                     Toast.makeText(getContext(), "Please select at least a user!", Toast.LENGTH_SHORT).show();
                 }
@@ -88,11 +97,19 @@ public class PickUsersFragment extends Fragment {
 
     // forces the back button to pop the backstack instead of doing whatever it was doing
     private void setOnBackPressed() {
-        final NavController navController = NavHostFragment.findNavController(this);
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+        NavController navController = NavHostFragment.findNavController(this);
+        FragmentManager fragmentManager = getParentFragmentManager();
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                navController.popBackStack();
+                // if is currently the first fragment to be shown
+                // then pressing the back button needs to finish the activity
+                if (fragmentManager.getBackStackEntryCount() == 0) {
+                    requireActivity().finish();
+                } else {
+                    // else just pop the backstack
+                    navController.popBackStack();
+                }
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);

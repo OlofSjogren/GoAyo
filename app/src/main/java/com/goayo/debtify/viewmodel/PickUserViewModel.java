@@ -23,6 +23,7 @@ public class PickUserViewModel extends ViewModel {
     private MutableLiveData<List<IUserData>> initialUsers;
     private MutableLiveData<List<IUserData>> selectedUsersData;
     private MutableLiveData<Boolean> isMultipleChoice;
+    private MutableLiveData<Integer> destination;
 
     /**
      * Constructor for PickUserViewModel
@@ -35,6 +36,7 @@ public class PickUserViewModel extends ViewModel {
         selectedUsersData = new MutableLiveData<>();
         selectedUsersData.setValue(new ArrayList<IUserData>());
         isMultipleChoice = new MutableLiveData<>(true);
+        destination = new MutableLiveData<>();
     }
 
     public List<IUserData> getInitialUsers() {
@@ -59,5 +61,17 @@ public class PickUserViewModel extends ViewModel {
 
     public void setIsMultipleChoice(boolean isMultipleChoice) {
         this.isMultipleChoice.setValue(isMultipleChoice);
+    }
+
+    public void setDestination(int actionDestination) {
+        destination.setValue(actionDestination);
+    }
+
+    public void clearDestination() {
+        destination.setValue(null);
+    }
+
+    public Integer getDestination() {
+        return destination.getValue();
     }
 }

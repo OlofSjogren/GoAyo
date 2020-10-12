@@ -55,12 +55,8 @@ public class CreateGroupFragment extends Fragment {
         pickUserViewModel.getSelectedUsersData().observe(getViewLifecycleOwner(), new Observer<List<IUserData>>() {
             @Override
             public void onChanged(List<IUserData> iUserData) {
-                if (iUserData.isEmpty()) {
-                    pickUser();
-                } else {
-                    userCardViewAdapter.updateList(iUserData);
-                    binding.createGroupNumTextView.setText(iUserData.size() + " participants");
-                }
+                userCardViewAdapter.updateList(iUserData);
+                binding.createGroupNumTextView.setText(iUserData.size() + " participants");
             }
         });
 
@@ -79,10 +75,6 @@ public class CreateGroupFragment extends Fragment {
         userCardViewAdapter = new UserCardViewAdapter(new ArrayList<IUserData>());
         recyclerView.setAdapter(userCardViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    }
-
-    private void pickUser() {
-        NavHostFragment.findNavController(this).navigate(R.id.action_createGroupFragment_to_pickUsersFragment);
     }
 
     private void createGroup() {
