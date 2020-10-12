@@ -11,6 +11,7 @@ import java.util.Set;
  * @date 2020-10-09
  * <p>
  * Strategy where the owedTotal is split evenly among the borrowers.
+ * 2020-10-12 Modified by GoAyo: Changed RoundingMode from HALF_UP to HALF_EVEN
  */
 public class EvenSplitStrategy implements IDebtSplitStrategy {
 
@@ -25,7 +26,7 @@ public class EvenSplitStrategy implements IDebtSplitStrategy {
     public Map<User, BigDecimal> splitDebt(Set<User> borrowers, BigDecimal owedTotal) {
         // Splits the owedTotal by the number of borrowers
         BigDecimal splitAmount = owedTotal
-                .divide(BigDecimal.valueOf(borrowers.size()), 10, RoundingMode.HALF_UP);
+                .divide(BigDecimal.valueOf(borrowers.size()), 10, RoundingMode.HALF_EVEN);
         Map<User, BigDecimal> tempMap = new HashMap<>();
         for (User borrower : borrowers) {
             tempMap.put(borrower, new BigDecimal(splitAmount.toString()));
