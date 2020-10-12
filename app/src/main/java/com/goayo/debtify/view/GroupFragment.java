@@ -109,6 +109,8 @@ public class GroupFragment extends Fragment {
             }
         });
 
+        //Sets group name label
+        binding.detailedGroupGroupNameTextView.setText(viewModel.getCurrentGroup().getValue().getGroupName());
         initBottomNavigation();
         initRecyclerView();
         initRefreshLayout();
