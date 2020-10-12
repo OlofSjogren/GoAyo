@@ -31,11 +31,16 @@ import java.util.List;
  * set currentGroupData.
  * <p>
  * 2020-09-30 Modified by Alex Phu & Yenan Wang: Add setCommonClickListener and update method
- *
+ * <p>
  * 2020-10-08 Modified by Alex Phu: Group-total in cardview now shows actual total debt.
+<<<<<<< HEAD
  *
  * 2020-10-10 Modified by Olof Sjögren: Added property for groupmembers on card as well as init for it in setGroupData.
  * Also added switch-statement for coloring text depending on debt situation.
+=======
+ * <p>
+ * 2020-10-09 Modified by Alex Phu, Yenan Wang: Changed notifyItemRangedChanged() to notifyDataSetChanged(), ugliest bug in Android
+>>>>>>> a0d9a3992b77d0dd1661aeb4189280403281d5d9
  */
 public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.GroupViewHolder> {
 
@@ -100,7 +105,7 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
     public void update(List<IGroupData> groupData) {
         this.groupData.clear();
         this.groupData.addAll(groupData);
-        notifyItemRangeChanged(0, groupData.size());
+        notifyDataSetChanged();
     }
 
     public IGroupData getClickedGroup() {
@@ -165,7 +170,6 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
             try {
                 int i = group.getUserTotal(currentLoggedInUsersPhoneNumber).compareTo(new BigDecimal(0));
                 balance.setText(group.getUserTotal(currentLoggedInUsersPhoneNumber) + " kr");
-
                 switch (i){
                     case 0:
                         balance.setTextColor(balance.getResources().getColor(R.color.dividerGrey));

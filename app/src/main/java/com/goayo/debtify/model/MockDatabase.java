@@ -1,6 +1,5 @@
 package com.goayo.debtify.model;
 
-import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.modelaccess.IUserData;
 
 import java.math.BigDecimal;
@@ -28,6 +27,7 @@ import java.util.UUID;
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
  * 2020-10-08 Modified by Alex Phu: Removed redundant method call in removeUserFromGroup().
+ * 2020-10-09 Modified by Alex Phu and Yenan Wang: Added IDebtSplitStrategy to addDebt's parameter.
  */
 
 class MockDatabase implements IDatabase {
@@ -108,18 +108,18 @@ class MockDatabase implements IDatabase {
         gabrielSet.add(users.get(pwGabriel));
 
         try {
-            groups.get(0).createDebt(users.get(pwOlof), oscarSet, new BigDecimal("140.5"), "test1");
-            groups.get(0).createDebt(users.get(pwYenan), oscarSet, new BigDecimal("140.5"), "test2");
-            groups.get(0).createDebt(users.get(pwGabriel), yenanSet, new BigDecimal("90.25"), "test3");
-            groups.get(0).createDebt(users.get(pwGabriel), olofSet, new BigDecimal("90.99"), "test4");
-            groups.get(0).createDebt(users.get(pwAlex), gabrielSet, new BigDecimal("80"), "test5");
+            groups.get(0).createDebt(users.get(pwOlof), oscarSet, new BigDecimal("140.5"), "test1", new NoSplitStrategy());
+            groups.get(0).createDebt(users.get(pwYenan), oscarSet, new BigDecimal("140.5"), "test2", new NoSplitStrategy());
+            groups.get(0).createDebt(users.get(pwGabriel), yenanSet, new BigDecimal("90.25"), "test3", new NoSplitStrategy());
+            groups.get(0).createDebt(users.get(pwGabriel), olofSet, new BigDecimal("90.99"), "test4", new NoSplitStrategy());
+            groups.get(0).createDebt(users.get(pwAlex), gabrielSet, new BigDecimal("80"), "test5", new NoSplitStrategy());
 
-            groups.get(1).createDebt(users.get(pwOlof), alexSet, new BigDecimal("30.89"), "test6");
-            groups.get(1).createDebt(users.get(pwOlof), oscarSet, new BigDecimal("30.89"), "test7");
-            groups.get(1).createDebt(users.get(pwOscar), alexSet, new BigDecimal("27.09"), "test8");
+            groups.get(1).createDebt(users.get(pwOlof), alexSet, new BigDecimal("30.89"), "test6", new NoSplitStrategy());
+            groups.get(1).createDebt(users.get(pwOlof), oscarSet, new BigDecimal("30.89"), "test7", new NoSplitStrategy());
+            groups.get(1).createDebt(users.get(pwOscar), alexSet, new BigDecimal("27.09"), "test8", new NoSplitStrategy());
 
-            groups.get(2).createDebt(users.get(pwGabriel), alexSet, new BigDecimal("20.9"), "test9");
-            groups.get(2).createDebt(users.get(pwGabriel), yenanSet, new BigDecimal("20.0"), "test10");
+            groups.get(2).createDebt(users.get(pwGabriel), alexSet, new BigDecimal("20.9"), "test9", new NoSplitStrategy());
+            groups.get(2).createDebt(users.get(pwGabriel), yenanSet, new BigDecimal("20.0"), "test10", new NoSplitStrategy());
 
             String id0_0 = groups.get(0).getDebts().get(0).getDebtID();
             String id0_1 = groups.get(0).getDebts().get(1).getDebtID();
@@ -245,7 +245,7 @@ class MockDatabase implements IDatabase {
     }
 
     @Override
-    public boolean addDebt(String groupID, String lender, Set<String> borrowers, BigDecimal amount, String description) {
+    public boolean addDebt(String groupID, String lender, Set<String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy) {
 
         Group group;
         try {
@@ -263,7 +263,7 @@ class MockDatabase implements IDatabase {
             borrowersSet.add(user);
         }
         try {
-            group.createDebt(getUserFromDatabase(lender), borrowersSet, amount, description);
+            group.createDebt(getUserFromDatabase(lender), borrowersSet, amount, description, splitStrategy);
         } catch (Exception e) {
             return false;
         }

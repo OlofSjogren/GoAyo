@@ -3,7 +3,8 @@
 @date   2020-09-22
 -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -139,6 +140,28 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <RadioGroup
+            android:layout_width="123dp"
+            android:layout_height="73dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/continueButton"
+            tools:layout_editor_absoluteY="691dp">
+
+            <RadioButton
+                android:id="@+id/add_debt_no_split_radiobutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="No split" />
+
+            <RadioButton
+                android:id="@+id/add_debt_even_split_radiobutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Split evenly" />
+        </RadioGroup>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

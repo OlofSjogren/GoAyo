@@ -4,8 +4,6 @@ import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -25,6 +23,8 @@ import java.util.Set;
  * 2020-09-30 Modified by Olof Sjögren and Oscar Sanner : Now implements IObservable and (for now) notifies on registration and login.
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
+ * 2020-10-09 Modified by Alex Phu and Yenan Wang: Added IDebtSplitStrategy to createDebt's parameter.
+ * 2020-10-11 Modified by Alex Phu: Fixed wrong order of arguments in registerUser();
  */
 
 public class ModelEngine {
@@ -65,7 +65,7 @@ public class ModelEngine {
      * is not met, or if some form of connection error occurs.
      */
     public void registerUser(String phoneNumber, String name, String password) throws UserAlreadyExistsException {
-        account.registerUser(phoneNumber, name, password);
+        account.registerUser(phoneNumber, password, name);
     }
 
     /**
@@ -203,11 +203,12 @@ public class ModelEngine {
      * @param borrower A list of one or more users.
      * @param owed     A positive double, representing the whole value spent by the lender.
      * @param description A short string, preferably <20 characters, that describes the debt
+     * @param splitStrategy How the debt is split
      * @return True if the operation was successful, server side and in the program.
      * False if the preconditions aren't met, or if some form of connection error occurs.
      */
-    public void createDebt(String groupID, String lender, Set<String> borrower, BigDecimal owed, String description) throws Exception {
-        account.createDebt(groupID, lender, borrower, owed, description);
+    public void createDebt(String groupID, String lender, Set<String> borrower, BigDecimal owed, String description, IDebtSplitStrategy splitStrategy) throws Exception {
+        account.createDebt(groupID, lender, borrower, owed, description, splitStrategy);
     }
 
     /**

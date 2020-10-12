@@ -15,6 +15,7 @@ import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.modelaccess.IPaymentData;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,12 +27,21 @@ import java.util.List;
  * <p>
  * RecyclerView adapter for the tranaction cardviews. Ensures that the correct information are shown on each cardItem.
  * <p>
- * 2020-09-28 Modified by Yenan: add debt description to the cardviews
+ * 2020-09-28 Modified by Yenan Wang: add debt description to the cardviews
  * <p>
- * 2020-09-30 Modified by Alex, Yenan: Refactored adapter.
- *
+ * 2020-09-30 Modified by Alex Phu, Yenan Wang: Refactored adapter.
+ * <p>
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
+ * <p>
+ * 2020-10-09 Modified by Yenan Wang, Alex Phu: Rounded decimals to 2 in balance
+ * <p>
+ * 2020-09-30 Modified by Alex, Yenan: Refactored adapter.
+ * <p>
+ * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
+ * return types and params of methods are correctly set as BigDecimal.
+ * <p>
+ * 2020-10-09 Modified by Yenan & Alex: add method updateData(...)
  */
 public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCardAdapter.TransactionCardViewHolder> {
 
@@ -81,6 +91,12 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
     @Override
     public int getItemCount() {
         return transactionData.size();
+    }
+
+    public void updateData(List<IDebtData> debtData) {
+        transactionData.clear();
+        transactionData.addAll(createTransactionDataSet(debtData));
+        notifyItemRangeChanged(0, transactionData.size());
     }
 
     private List<TransactionData> createTransactionDataSet(List<IDebtData> debtDataArray) {
@@ -146,7 +162,7 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
         }
     }
 
-    private class TransactionData {
+    private static class TransactionData {
         Date date;
         String description;
         String transactionType;
@@ -158,7 +174,7 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
             this.date = date;
             this.transactionType = transactionType;
             this.lenderBorrowerDescription = lenderBorrowerDescription;
-            this.balance = balance;
+            this.balance = balance.setScale(2, RoundingMode.HALF_UP);
         }
     }
 }

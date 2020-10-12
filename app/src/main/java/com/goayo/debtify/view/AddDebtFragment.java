@@ -41,6 +41,7 @@ import java.util.Set;
  * 2020-09-30 Modified by Yenan & Alex: Made it compatible with PickUser
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
+ * 2020-10-09 Modified by Yenan Wang, Alex Phu: Added radio button
  */
 public class AddDebtFragment extends Fragment {
     // the binding object which preloads all its xml components
@@ -165,7 +166,7 @@ public class AddDebtFragment extends Fragment {
             String description = binding.editTextDebtDescription.getText().toString();
 
             // create debt
-            addDebtViewModel.createDebt(groupID, lenderSet, borrowerSet, amount, description);
+            addDebtViewModel.createDebt(groupID, lenderSet, borrowerSet, amount, description, binding.addDebtNoSplitRadiobutton.isChecked());
             // once the debt is created, the activity is therefore useless and needs to be killed
             requireActivity().finish();
         } catch (Exception e) {

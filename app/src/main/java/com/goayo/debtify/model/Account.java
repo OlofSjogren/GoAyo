@@ -32,6 +32,7 @@ import java.util.Set;
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Made package private.
+ * 2020-10-09 Modified by Alex Phu and Yenan Wang: Added IDebtSplitStrategy to createDebt's parameter.
  */
 class Account {
 
@@ -171,10 +172,11 @@ class Account {
      * @param borrowers The borrower(s).
      * @param owed Amount of owed money.
      * @param description the brief description of the debt
+     * @param splitStrategy How the debt is split
      * @throws Exception Thrown if group or users are not found, or if the set of borrower is empty.
      */
 
-    public void createDebt(String groupID, String lender, Set<String> borrowers, BigDecimal owed, String description) throws Exception {
+    public void createDebt(String groupID, String lender, Set<String> borrowers, BigDecimal owed, String description, IDebtSplitStrategy splitStrategy) throws Exception {
         try {
             userIsLoggedIn();
         } catch (Exception e) {
@@ -186,7 +188,7 @@ class Account {
             //TODO ("Specify Exception")
             throw new Exception();
         }
-        database.addDebt(groupID, lender, borrowers, owed, description);
+        database.addDebt(groupID, lender, borrowers, owed, description, splitStrategy);
         loadAssociatedGroups();
         EventBus.getInstance().publish(new DetailedGroupEvent());
     }
