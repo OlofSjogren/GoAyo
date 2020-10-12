@@ -9,4 +9,8 @@
     <color name="registerGreen">#65CD34</color>
     <color name="logInBlue">#3C72FF</color>
     <color name="themeOrange">#FFC85C</color>
+    <color name="dividerGrey">#C4C4C4</color>
+    <color name="negativeDebtRed">#BD0000</color>
+    <color name="positiveDebtGreen">#027500</color>
+
 </resources>

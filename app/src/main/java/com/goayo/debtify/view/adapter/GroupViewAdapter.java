@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.goayo.debtify.R;
 import com.goayo.debtify.model.UserNotFoundException;
 import com.goayo.debtify.modelaccess.IGroupData;
+import com.goayo.debtify.modelaccess.IUserData;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -30,6 +33,9 @@ import java.util.List;
  * 2020-09-30 Modified by Alex Phu & Yenan Wang: Add setCommonClickListener and update method
  *
  * 2020-10-08 Modified by Alex Phu: Group-total in cardview now shows actual total debt.
+ *
+ * 2020-10-10 Modified by Olof Sjögren: Added property for groupmembers on card as well as init for it in setGroupData.
+ * Also added switch-statement for coloring text depending on debt situation.
  */
 public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.GroupViewHolder> {
 
@@ -125,6 +131,7 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
         private TextView groupName;
         private TextView balance;
         private CardView cardView;
+        private TextView groupMembers;
 
         /**
          * Binds the elements in the layout file to a variable
@@ -136,6 +143,7 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
             groupName = itemView.findViewById(R.id.pickuser_card_name_textview);
             balance = itemView.findViewById(R.id.group_card_balance_textview);
             cardView = itemView.findViewById(R.id.pickuser_cardView);
+            groupMembers = itemView.findViewById(R.id.pickuser_card_member_textview);
         }
 
         /**
@@ -146,9 +154,30 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
         @SuppressLint("SetTextI18n")
         public void setGroupData(IGroupData group, String currentLoggedInUsersPhoneNumber) {
             groupName.setText(group.getGroupName());
-            //TODO ("SET BALANCE IN GROUP_CARDVIEW")
+            StringBuilder sb = new StringBuilder();
+
+            for (IUserData iu : group.getIUserDataSet()){
+                sb.append(iu.getName());
+                sb.append(", ");
+            }
+
+            groupMembers.setText(sb.substring(0, sb.length()-2)); //Make substring of whole string except the last added ", ".
             try {
+                int i = group.getUserTotal(currentLoggedInUsersPhoneNumber).compareTo(new BigDecimal(0));
                 balance.setText(group.getUserTotal(currentLoggedInUsersPhoneNumber) + " kr");
+
+                switch (i){
+                    case 0:
+                        balance.setTextColor(balance.getResources().getColor(R.color.dividerGrey));
+                        break;
+                    case -1:
+                        balance.setTextColor(balance.getResources().getColor(R.color.negativeDebtRed));
+                        break;
+                    case 1:
+                        balance.setTextColor(balance.getResources().getColor(R.color.positiveDebtGreen));
+                        break;
+                }
+
             } catch (UserNotFoundException ignore) {}
         }
 
