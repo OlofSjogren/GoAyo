@@ -68,7 +68,11 @@ public class ModelEngine {
     }
 
     public void refreshWithDatabase(){
-        account.refreshWithDatabase();
+        try {
+            account.refreshWithDatabase();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -347,5 +347,7 @@ class Account {
     public void refreshWithDatabase() throws Exception {
         userIsLoggedIn();
         initAssociatedGroups();
+        EventBus.getInstance().publish(new GroupsEvent());
+        EventBus.getInstance().publish(new DetailedGroupEvent());
     }
 }
