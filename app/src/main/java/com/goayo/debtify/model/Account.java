@@ -39,6 +39,7 @@ import java.util.UUID;
  * 2020-10-09 Modified by Alex Phu and Yenan Wang: Added IDebtSplitStrategy to createDebt's parameter.
  * 2020-10-11 Modidied by Oscar Sanner: Made sure the logged in user gets added to the groups he creates.
  * 2020-10-11 Modidied by Oscar Sanner: UUIDs are created in this class and passed to the database and the groups respectively.
+ * 2020-10-12 Modified by Alex Phu: In createDebt and payOffDebt, publish for GroupsEvent too on EventBus
  */
 class Account {
 
@@ -230,6 +231,7 @@ class Account {
 
         g.createDebt(lenderUser, borrowerUserAndId, owed, description, splitStrategy);
         EventBus.getInstance().publish(new DetailedGroupEvent());
+        EventBus.getInstance().publish(new GroupsEvent());
     }
 
     /**
@@ -251,6 +253,7 @@ class Account {
         g.payOffDebt(amount, debtID);
 
         EventBus.getInstance().publish(new DetailedGroupEvent());
+        EventBus.getInstance().publish(new GroupsEvent());
     }
 
     /**
