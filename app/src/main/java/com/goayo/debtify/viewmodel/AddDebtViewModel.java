@@ -4,10 +4,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.goayo.debtify.model.EvenSplitStrategy;
+import com.goayo.debtify.model.DebtSplitFactory;
 import com.goayo.debtify.model.IDebtSplitStrategy;
 import com.goayo.debtify.model.ModelEngine;
-import com.goayo.debtify.model.NoSplitStrategy;
 import com.goayo.debtify.modelaccess.IUserData;
 
 import java.math.BigDecimal;
@@ -27,6 +26,8 @@ import java.util.Set;
  * return types and params of methods are correctly set as BigDecimal.
  * <p>
  * 2020-10-09 Modified by Yenan Wang and Alex Phu: Added IDebtStrategy to createDebt()
+ * <p>
+ * 2020-10-12 Modified by Alex Phu: Instantiation of ISplitStrategy are now done through DebtSplitFactory
  */
 public class AddDebtViewModel extends ViewModel {
 
@@ -91,9 +92,9 @@ public class AddDebtViewModel extends ViewModel {
         // TODO refactor all strings to IUserData
         IDebtSplitStrategy splitStrategy;
         if (isNoSplit) {
-            splitStrategy = new NoSplitStrategy();
+            splitStrategy = DebtSplitFactory.createNoSplitStrategy();
         } else {
-            splitStrategy = new EvenSplitStrategy();
+            splitStrategy = DebtSplitFactory.createEvenSplitStrategy();
         }
         modelEngine.createDebt(groupID,
                 // this is horrendous
