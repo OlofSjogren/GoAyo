@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavHostController;
 import androidx.navigation.Navigation;
 
 import com.goayo.debtify.R;
@@ -29,7 +28,7 @@ import com.goayo.debtify.viewmodel.PickUserViewModel;
  * <p>
  * 2020-09-30 Modified by Yenan Wang & Alex Phu: Refactored so that it now uses PickUserViewModel and
  * DetailedGroupViewModel to manage data
- *
+ * <p>
  * 2020-10-08 Modified by Alex Phu: Added third menu item (leave group) and its implementation.
  */
 public class DetailedGroupActivity extends AppCompatActivity {
