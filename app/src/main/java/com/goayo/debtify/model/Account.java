@@ -33,6 +33,7 @@ import java.util.Set;
  * return types and params of methods are correctly set as BigDecimal.
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Made package private.
  * 2020-10-09 Modified by Alex Phu and Yenan Wang: Added IDebtSplitStrategy to createDebt's parameter.
+ * 2020-10-12 Modified by Alex Phu: In createDebt, publish for GroupsEvent too on EventBus
  */
 class Account {
 
@@ -191,6 +192,7 @@ class Account {
         database.addDebt(groupID, lender, borrowers, owed, description, splitStrategy);
         loadAssociatedGroups();
         EventBus.getInstance().publish(new DetailedGroupEvent());
+        EventBus.getInstance().publish(new GroupsEvent());
     }
 
     /**
