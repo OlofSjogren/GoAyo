@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.GroupFragmentBinding;
@@ -47,18 +48,21 @@ import java.util.List;
  * <p>
  * 2020/09/25 Modified by Oscar Sanner, Alex Phu and Olof Sjögren: Added factory to ViewModelProvider.
  * <p>
- * 2020/09/30 Modified by Alex, Yenan: Refactored entire class.
+ * 2020/09/30 Modified by Alex Phu, Yenan Wang: Refactored entire class.
  * <p>
- * 2020-10-09 Modified by Yenan & Alex: Add observer to ViewModel so view updates correctly
+ * 2020-10-09 Modified by Yenan Wang & Alex Phu: Add observer to ViewModel so view updates correctly
+ *
+ * 2020-10-12 Modified by Alex Phu: Implemented initRefreshLayout() to be able to refresh data from database
  */
 public class GroupFragment extends Fragment {
     private DetailedGroupViewModel viewModel;
     private TransactionCardAdapter adapter;
+    private GroupFragmentBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final GroupFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.group_fragment, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.group_fragment, container, false);
 
         viewModel = ViewModelProviders.of(requireActivity()).get(DetailedGroupViewModel.class);
         try {
@@ -105,19 +109,20 @@ public class GroupFragment extends Fragment {
             }
         });
 
-        initBottomNavigation(binding);
-        initRecyclerView(binding);
+        initBottomNavigation();
+        initRecyclerView();
+        initRefreshLayout();
 
         return binding.getRoot();
     }
 
-    private void initRecyclerView(GroupFragmentBinding binding) {
+    private void initRecyclerView() {
         RecyclerView recyclerView = binding.detailedGroupRecyclerView;
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
     }
 
-    private void initBottomNavigation(GroupFragmentBinding binding) {
+    private void initBottomNavigation() {
         //Navigation
         final Intent intent = new Intent(getContext(), DebtActivity.class);
         intent.putExtra("GROUP_ID", viewModel.getCurrentGroup().getValue().getGroupID());
@@ -133,6 +138,16 @@ public class GroupFragment extends Fragment {
             public void onClick(View view) {
                 intent.putExtra("DEBT_CREATE", "SETTLE_DEBT");
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void initRefreshLayout(){
+        binding.detailedGroupRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                viewModel.updateDataFromDatabase();
+                binding.detailedGroupRefreshLayout.setRefreshing(false);
             }
         });
     }
