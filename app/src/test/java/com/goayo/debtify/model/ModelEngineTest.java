@@ -94,6 +94,9 @@ public class ModelEngineTest {
     private static void createSomeDebts(int amountOfDebtsToBeCreated) throws Exception {
         for (int i = 0; i < amountOfDebtsToBeCreated; i++){
             IGroupData group = getRandomGroupForLoggedInUser();
+            if(group.getIUserDataSet().size() < 2){
+                continue;
+            }
             Set<String> borrowers = getRandomSubsetOfPhoneNumberStringsFromIGroupData(group);
             int randomAmount = ThreadLocalRandom.current().nextInt(100, 1000);
 
