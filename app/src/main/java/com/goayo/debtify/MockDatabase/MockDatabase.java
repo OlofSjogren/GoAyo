@@ -1,10 +1,5 @@
 package com.goayo.debtify.MockDatabase;
 
-import com.goayo.debtify.Database.DbContactsFetcher;
-import com.goayo.debtify.Database.DbDebtsFetcher;
-import com.goayo.debtify.Database.DbGroupsFetcher;
-import com.goayo.debtify.Database.DbPaymentFetcher;
-import com.goayo.debtify.Database.DbUserFetcher;
 import com.goayo.debtify.Tuple;
 import com.goayo.debtify.model.DebtException;
 import com.goayo.debtify.model.GroupNotFoundException;
