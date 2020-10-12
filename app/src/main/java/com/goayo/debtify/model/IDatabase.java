@@ -35,27 +35,119 @@ import java.util.Set;
 
 public interface IDatabase {
     /**
-     * A method that returns a set of all groups containing the user with the given
+     * A method that returns a Json-String of all groups containing the user with the given
      * phone number.
      *
+     * Post condition: Will return a JSON string with the following properties.
+     *
+     *      groupJsonObjects: An array of Json-objects with the following properties:
+     *          {
+     *           "name": A String,
+     *           "date": A String,
+     *           "id": A String,
+     *           "members": An array with objects of the following JSON-Strings:
+     *                 {
+     *                  "name": A String,
+     *                  "phonenumber": A String,
+     *                  "password": A String,
+     *                  "contacts": An array of Strings.
+     *                  }
+     *           "debts": An array with objects of the following JSON-Strings:
+     *                  {
+     *                  "lender": An an object with the following JSON-Strings
+     *                      {
+     *                      "name": A String,
+     *                      "phonenumber": A String,
+     *                      "password": A String,
+     *                      "contacts": An array of Strings.
+     *                      }
+     *                  "borrower": An an object with the following JSON-Strings
+     *                      {
+     *                      "name": A String,
+     *                      "phonenumber": A String,
+     *                      "password": A String,
+     *                      "contacts": An array of Strings.
+     *                      }
+     *                  "owed": A String,
+     *                  "id": A String,
+     *                  "payments": borrower: An an object with the following JSON-Strings
+     *                      {
+     *                      "amount": A String,
+     *                      "id": A String,
+     *                      }
+     *                  "description": A String
+     *              }
+     *          }
+     *
      * @param phoneNumber The phone number of the user belonging to the sought groups.
-     * @return A set of all the groups in which the user with the provided phone number is a member.
+     * @return A json file with the above specified properties of all the groups in which the user with the provided phone number is a member.
      */
     String getGroups(String phoneNumber) throws UserNotFoundException, ConnectException;
 
     /**
-     * Returns a single group with the given id.
+     * Returns a single group with the given id, in the form of a Json object.
+     *
+     * Post condition: Will return a JSON string with the following properties.
+     *
+     *    {
+     *       "name": A String,
+     *       "date": A String,
+     *       "id": A String,
+     *       "members": An array with objects of the following JSON-Strings:
+     *             {
+     *             "name": A String,
+     *             "phonenumber": A String,
+     *             "password": A String,
+     *             "contacts": An array of Strings.
+     *              }
+     *        "debts": An array with objects of the following JSON-Strings:
+     *             {
+     *             "lender": An an object with the following JSON-Strings
+     *                  {
+     *                  "name": A String,
+     *                  "phonenumber": A String,
+     *                  "password": A String,
+     *                  "contacts": An array of Strings.
+     *                  }
+     *              "borrower": An an object with the following JSON-Strings
+     *                  {
+     *                  "name": A String,
+     *                  "phonenumber": A String,
+     *                  "password": A String,
+     *                  "contacts": An array of Strings.
+     *                  }
+     *              "owed": A String,
+     *              "id": A String,
+     *              "payments": borrower: An an object with the following JSON-Strings
+     *                  {
+     *                  "amount": A String,
+     *                  "id": A String,
+     *                  }
+     *              "description": A String
+     *             }
+     *         }
+     *    }
+     *
      *
      * @param groupID The id of the sought group.
-     * @return The group with the given id.
+     * @return A json file with the above specified properties of the group with specified ID.
      */
     String getGroupFromId(String groupID) throws GroupNotFoundException, ConnectException;
 
     /**
      * Returns a user with the given phone number.
      *
+     * Post condition: returns a JSON-String with the following properties:
+     *
+     *          {
+     *             "name": A String,
+     *             "phonenumber": A String,
+     *             "password": A String,
+     *             "contacts": An array of Strings.
+     *          }
+     *
      * @param phoneNumber The phone number of the user.
-     * @return The user with the phone number.
+     * @return A json file with the above specified properties the user with the specified phone number.
      */
     String getUser(String phoneNumber) throws UserNotFoundException, ConnectException;
 
@@ -157,9 +249,19 @@ public interface IDatabase {
      * Checks if a password and a phone number matches, and returns the user with the provided
      * phone number if it does.
      *
+     * Post Condition: Returns a JSON-String with the following properties.
+     *
+     *          {
+     *             "name": A String,
+     *             "phonenumber": A String,
+     *             "password": A String,
+     *             "contacts": An array of Strings.
+     *          }
+     *
+     *
      * @param phoneNumber The phone number of the user being logged in.
      * @param password    The password of the user being logged in.
-     * @return The user with the provided phone number, if the password matches mentioned phone
+     * @return The user with the provided phone number, as a json-string, if the password matches mentioned phone
      * number.
      */
     String getUserToBeLoggedIn(String phoneNumber, String password) throws LoginException, ConnectException;
@@ -167,8 +269,20 @@ public interface IDatabase {
     /**
      * Getter for a list of users in an other users contact list.
      *
+     * Post Condition: Returns a JSON-string with the following properties:
+     *
+     *      {
+     *          contacts: An array of JSON objects with the following properties:
+     *          {
+     *             "name": A String,
+     *             "phonenumber": A String,
+     *             "password": A String,
+     *             "contacts": An array of Strings.
+     *          }
+     *      }
+     *
      * @param phoneNumber The phone number of the user requesting the contact list.
-     * @return A set of users in the contact list of the user with the provided phone number.
+     * @return A json file with the above specified format.
      */
     String getContactList(String phoneNumber) throws UserNotFoundException;
 
