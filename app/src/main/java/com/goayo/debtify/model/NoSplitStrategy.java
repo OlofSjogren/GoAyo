@@ -1,15 +1,20 @@
 package com.goayo.debtify.model;
 
+import com.goayo.debtify.Tuple;
+import com.goayo.debtify.modelaccess.IUserData;
+
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Alex Phu, Yenan Wang
  * @date   2020-10-09
  *
  * Strategy where each user owes the owedTotal.
+ *
+ * Modified by Oscar Sanner: Changed the parameters of the function to become generic for IUserData
+ * It's now usable outside of the Model. Also returns a tuple with an ID and the total amount for the user.
  */
 public class NoSplitStrategy implements IDebtSplitStrategy {
 
@@ -20,10 +25,11 @@ public class NoSplitStrategy implements IDebtSplitStrategy {
      * @return A map with users and their respective owedTotal.
      */
     @Override
-    public Map<User, BigDecimal> splitDebt(Set<User> borrowers, BigDecimal owedTotal) {
-        Map<User, BigDecimal> tempMap = new HashMap<>();
-        for (User borrower : borrowers) {
-            tempMap.put(borrower, new BigDecimal(owedTotal.toString()));
+    public <T extends IUserData> Map<T, Tuple<BigDecimal, String>> splitDebt(Map<T, String> borrowers, BigDecimal owedTotal) {
+        Map<T, Tuple<BigDecimal, String>> tempMap = new HashMap<>();
+
+        for (Map.Entry<T, String> entry : borrowers.entrySet()) {
+            tempMap.put(entry.getKey(), new Tuple<>(new BigDecimal(owedTotal.toString()), entry.getValue()));
         }
         return tempMap;
     }

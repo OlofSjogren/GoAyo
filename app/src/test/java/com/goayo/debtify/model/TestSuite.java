@@ -9,8 +9,8 @@ import org.junit.runners.Suite;
         DebtTest.class,
         DebtTrackerTest.class,
         GroupTest.class,
+        ModelEngineTest.class,
         LedgerTest.class,
-        MockDatabaseTest.class,
         PaymentTest.class,
         UserTest.class,
 })

@@ -1,13 +1,13 @@
 package com.goayo.debtify.model;
 
 
+import com.goayo.debtify.Tuple;
 import com.goayo.debtify.modelaccess.IDebtData;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Gabriel Brattgård, Yenan Wang
@@ -24,6 +24,7 @@ import java.util.Set;
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
  * 2020-10-09 Modified by Alex Phu and Yenan Wang: Added IDebtSplitStrategy to createDebt's parameter.
+ * 2020-10-11 Modified by Oscar Sanner: Added rounding mode for BigDecimal.
  */
 class Ledger {
 
@@ -33,32 +34,34 @@ class Ledger {
      * Creates a debtTracker and adds it to the list of debtTrackers.
      *
      * @param lender    the user who lends out money
-     * @param borrowers either a single or several users who borrow from the lender
+     * @param borrowersAndId either a single or several users who borrow from the lender
      * @param owedTotal total amount lent out by the lender to the borrowers
      * @param description the brief description of the debt
      * @param splitStrategy How the debt is split
      * @throws Exception
      */
-    public void createDebt(User lender, Set<User> borrowers, BigDecimal owedTotal, String description, IDebtSplitStrategy splitStrategy) throws Exception {
 
-        Map<User, BigDecimal> usersInDebt = splitStrategy.splitDebt(borrowers, owedTotal);
+
+    public void createDebt(User lender, Map<User, String> borrowersAndId, BigDecimal owedTotal, String description, IDebtSplitStrategy splitStrategy) throws Exception {
+
+        Map<User, Tuple<BigDecimal, String>> usersInDebt = splitStrategy.splitDebt(borrowersAndId, owedTotal);
         List<DebtTracker> debtList = new ArrayList<>();
 
-        if (borrowers.size() == 0) {
+        if (borrowersAndId.size() == 0) {
             // TODO: Specify exception.
-            throw new Exception();
+            throw new RuntimeException();
         }
 
-        for (User u : borrowers) {
-            if (!debtList.add(new DebtTracker(usersInDebt.get(u), lender, u, description))) {
+        for (Map.Entry<User, Tuple<BigDecimal, String>> entry : usersInDebt.entrySet()) {
+            if (!debtList.add(new DebtTracker(usersInDebt.get(entry.getKey()).getFirst(), lender, entry.getKey(), description, entry.getValue().getSecond()))) {
                 //TODO: Specify exception.
-                throw new Exception();
+                throw new RuntimeException();
             }
         }
 
         if (!debtTrackerList.addAll(debtList)) {
             //TODO: Specify exception.
-            throw new Exception();
+            throw new RuntimeException();
         }
     }
 
@@ -69,7 +72,7 @@ class Ledger {
      * @param debtTrackerID ID used to retrieve the specific debtTracker.
      * @throws
      */
-    public void payOffDebt(BigDecimal amount, String debtTrackerID) throws Exception {
+    public void payOffDebt(BigDecimal amount, String debtTrackerID) {
         findDebtTracker(debtTrackerID).payOffDebt(amount);
     }
 

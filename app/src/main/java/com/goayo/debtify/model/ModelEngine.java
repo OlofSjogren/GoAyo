@@ -1,9 +1,11 @@
 package com.goayo.debtify.model;
 
+import com.goayo.debtify.Database.RealDatabase;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
 import java.math.BigDecimal;
+import java.net.ConnectException;
 import java.util.Set;
 
 /**
@@ -31,11 +33,9 @@ public class ModelEngine {
 
     private Account account;
     private static ModelEngine instance;
-    private IDatabase database;
 
-    private ModelEngine(Account account, IDatabase database) {
+    private ModelEngine(Account account) {
         this.account = account;
-        this.database = database;
         //TODO: AUTOMATICALLY LOGS THE USER IN WHEN THIS CLASS IS INSTANTIATED, BECAUSE
         //TODO LOGIN FUNCTIONALITY IS YET TO BE IMPLEMENTED
     }
@@ -47,8 +47,7 @@ public class ModelEngine {
      */
     public static ModelEngine getInstance() {
         if (instance == null) {
-            IDatabase tempDatabase = new MockDatabase();
-            instance = new ModelEngine(new Account(tempDatabase), tempDatabase);
+            instance = new ModelEngine(new Account(new RealDatabase()));
         }
         return instance;
     }
@@ -64,7 +63,7 @@ public class ModelEngine {
      * @return true if the operation was successful, server side. False if the precondition
      * is not met, or if some form of connection error occurs.
      */
-    public void registerUser(String phoneNumber, String name, String password) throws UserAlreadyExistsException {
+    public void registerUser(String phoneNumber, String name, String password) throws RegistrationException, ConnectException {
         account.registerUser(phoneNumber, password, name);
     }
 
@@ -246,7 +245,7 @@ public class ModelEngine {
      * @throws Exception thrown if a group with the groupID couldn't be found in the user's group.
      */
     public IGroupData getGroup(String groupID) throws Exception {
-        return account.getGroupFromID(groupID);
+        return account.getAssociatedGroupFromId(groupID);
     }
 
     public Set<IUserData> getContacts() {
