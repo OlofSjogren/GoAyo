@@ -18,10 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.MyGroupsFragmentBinding;
+import com.goayo.debtify.model.UserNotFoundException;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.view.adapter.GroupViewAdapter;
 import com.goayo.debtify.viewmodel.MyGroupsViewModel;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -42,7 +44,7 @@ import java.util.Set;
  *
  * 2020/10/08 Modified by Alex Phu: Injected currentLoggedInUsersPhoneNumber to GroupViewAdapter.
  *
- * 2020/10/12 Modified by Olof Sjögren: Created initHeader() for initializing header name and phone number.
+ * 2020/10/12 Modified by Olof Sjögren: Created initHeader() for initializing header name, phone number and total debt.
  */
 public class MyGroupsFragment extends Fragment {
 
@@ -65,6 +67,7 @@ public class MyGroupsFragment extends Fragment {
             @Override
             public void onChanged(Set<IGroupData> iGroupData) {
                 groupViewAdapter.update(new ArrayList<IGroupData>(iGroupData));
+                initHeader(binding, viewModel);
             }
         });
         //Fetches clicked group and sends it away.
@@ -96,6 +99,29 @@ public class MyGroupsFragment extends Fragment {
 
         binding.welcomeBannerNameTextView.setText(viewModel.getCurrentLoggedInUserName());
         binding.welcomeBannerPhoneNumberTextView.setText(sb.toString());
+
+        BigDecimal total = new BigDecimal(0);
+        for (IGroupData g : viewModel.getGroupsData().getValue()){
+            try {
+                total = total.add(g.getUserTotal(viewModel.getCurrentLoggedInUsersPhoneNumber()));
+            } catch (UserNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        switch (total.compareTo(new BigDecimal(0))){
+            case 0:
+                binding.totalBalanceTextView.setTextColor(binding.totalBalanceTextView.getResources().getColor(R.color.dividerGrey));
+                break;
+            case -1:
+                binding.totalBalanceTextView.setTextColor(binding.totalBalanceTextView.getResources().getColor(R.color.negativeDebtRed));
+                break;
+            case 1:
+                binding.totalBalanceTextView.setTextColor(binding.totalBalanceTextView.getResources().getColor(R.color.positiveDebtGreen));
+                break;
+        }
+
+        binding.totalBalanceTextView.setText(total.toString() + " kr");
     }
 
 
