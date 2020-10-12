@@ -67,12 +67,8 @@ public class ModelEngine {
         account.registerUser(phoneNumber, password, name);
     }
 
-    public void refreshWithDatabase(){
-        try {
-            account.refreshWithDatabase();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void refreshWithDatabase() throws Exception {
+        account.refreshWithDatabase();
     }
 
     /**

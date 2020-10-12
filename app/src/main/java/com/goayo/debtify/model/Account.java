@@ -200,10 +200,6 @@ class Account {
     public void createDebt(String groupID, String lender, Set<String> borrowers, BigDecimal owed, String description, IDebtSplitStrategy splitStrategy) throws Exception {
         userIsLoggedIn();
 
-        if (borrowers.isEmpty()) {
-            throw new EmptySelectionException("No Borrowers Selected!");
-        }
-
         Map<IUserData, String> borrowerIUserDataAndId = new HashMap<>();
         Map<User, String> borrowerUserAndId = new HashMap<>();
 
