@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,6 +41,8 @@ import java.util.Set;
  * 2020/09/30 Modified by Alex Phu and Yenan Wang: Refactored entire class.
  *
  * 2020/10/08 Modified by Alex Phu: Injected currentLoggedInUsersPhoneNumber to GroupViewAdapter.
+ *
+ * 2020/10/12 Modified by Olof Sjögren: Created initHeader() for initializing header name and phone number.
  */
 public class MyGroupsFragment extends Fragment {
 
@@ -72,6 +75,8 @@ public class MyGroupsFragment extends Fragment {
             }
         });
 
+        initHeader(binding, viewModel);
+
         return binding.getRoot();
     }
 
@@ -80,6 +85,19 @@ public class MyGroupsFragment extends Fragment {
         intent.putExtra("GROUP_ID", groupViewAdapter.getClickedGroup().getGroupID());
         startActivity(intent);
     }
+
+
+    private void initHeader(MyGroupsFragmentBinding binding, MyGroupsViewModel viewModel) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(viewModel.getCurrentLoggedInUsersPhoneNumber());
+        sb.insert(7, " ");
+        sb.insert(5, " ");
+        sb.insert(3, "-");
+
+        binding.welcomeBannerNameTextView.setText(viewModel.getCurrentLoggedInUserName());
+        binding.welcomeBannerPhoneNumberTextView.setText(sb.toString());
+    }
+
 
     /**
      * Initializes RecyclerView in MyGroups.

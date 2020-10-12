@@ -8,9 +8,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.ActivityMainBinding;
+import com.goayo.debtify.viewmodel.MyGroupsViewModel;
 import com.goayo.debtify.viewmodel.SignInAndOutViewModel;
 import com.google.android.material.navigation.NavigationView;
 
@@ -26,30 +28,22 @@ import com.google.android.material.navigation.NavigationView;
  * 2020-10-08 Modified by Yenan: add menu click handler for Contacts
  * 2020-10-08 Modified by Alex Phu: Minor bug fix where user could get back to MainActivity after logout
  * 2020-10-12 Modified by Alex Phu: Removed Tabs functionality.
+ * 2020-10-12 Modified by Olof Sjögren: Attribute signInAndOutViewModel is now created by ViewModelProvider.
+ * Also removed temporary sign in method.
  */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private SignInAndOutViewModel viewModel;
+    private SignInAndOutViewModel signInAndOutViewModel;
     private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        viewModel = new SignInAndOutViewModel();
+        signInAndOutViewModel = ViewModelProviders.of(this).get(SignInAndOutViewModel.class);
 
         initToolbar();
         setNavigationViewListener();
-    }
-
-    /**
-     * Temporary way of starting login activity.
-     * <p>
-     * TODO: Create a class that handles activities.
-     */
-    private void startLoginActivity() {
-        Intent loginIntent = new Intent(this, LoginActivity.class);
-        startActivity(loginIntent);
     }
 
     //================================================================================
@@ -91,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent;
         switch (item.getItemId()) {
             case R.id.logout_menu_item:
-                viewModel.logOutUser();
+                signInAndOutViewModel.logOutUser();
                 intent = new Intent(this.binding.getRoot().getContext(), LoginActivity.class);
                 startActivity(intent);
                 //Finishes activity so that the user can't popBackStack to MainActivity after logOut
