@@ -26,6 +26,7 @@ import com.goayo.debtify.modelaccess.IUserData;
 import com.goayo.debtify.view.adapter.PickUserAdapter;
 import com.goayo.debtify.viewmodel.PickUserViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -109,6 +110,7 @@ public class PickUsersFragment extends Fragment {
                 } else {
                     // else just pop the backstack
                     navController.popBackStack();
+                    pickUserViewModel.setSelectedUsersData(new ArrayList<>());
                 }
             }
         };

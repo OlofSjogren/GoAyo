@@ -8,14 +8,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.viewpager.widget.ViewPager;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.ActivityMainBinding;
-import com.goayo.debtify.view.handler.TabsPagerAdapter;
 import com.goayo.debtify.viewmodel.SignInAndOutViewModel;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
 
 /**
  * @author Alex Phu, Yenan Wang
@@ -28,6 +25,7 @@ import com.google.android.material.tabs.TabLayout;
  * also added SignInAndOutViewModel.
  * 2020-10-08 Modified by Yenan: add menu click handler for Contacts
  * 2020-10-08 Modified by Alex Phu: Minor bug fix where user could get back to MainActivity after logout
+ * 2020-10-12 Modified by Alex Phu: Removed Tabs functionality.
  */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -40,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         viewModel = new SignInAndOutViewModel();
 
-        initTabs();
         initToolbar();
         setNavigationViewListener();
     }
@@ -68,17 +65,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding.drawerlayout.addDrawerListener(toggle);
         toggle.setDrawerIndicatorEnabled(true);
         toggle.syncState();
-    }
-
-    /**
-     * Initializes tabs.
-     */
-    private void initTabs() {
-        TabsPagerAdapter tabsPagerAdapter = new TabsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = binding.viewPager;
-        viewPager.setAdapter(tabsPagerAdapter);
-        TabLayout tabs = binding.tabs;
-        tabs.setupWithViewPager(viewPager);
     }
 
     //================================================================================
