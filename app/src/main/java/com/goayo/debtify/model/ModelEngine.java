@@ -67,7 +67,7 @@ public class ModelEngine {
         account.registerUser(phoneNumber, password, name);
     }
 
-    public void refreshWithDatabase(){
+    public void refreshWithDatabase() throws Exception {
         account.refreshWithDatabase();
     }
 
