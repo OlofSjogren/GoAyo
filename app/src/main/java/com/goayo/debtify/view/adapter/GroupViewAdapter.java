@@ -28,8 +28,10 @@ import java.util.List;
  * set currentGroupData.
  * <p>
  * 2020-09-30 Modified by Alex Phu & Yenan Wang: Add setCommonClickListener and update method
- *
+ * <p>
  * 2020-10-08 Modified by Alex Phu: Group-total in cardview now shows actual total debt.
+ * <p>
+ * 2020-10-09 Modified by Alex Phu, Yenan Wang: Changed notifyItemRangedChanged() to notifyDataSetChanged(), ugliest bug in Android
  */
 public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.GroupViewHolder> {
 
@@ -94,7 +96,7 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
     public void update(List<IGroupData> groupData) {
         this.groupData.clear();
         this.groupData.addAll(groupData);
-        notifyItemRangeChanged(0, groupData.size());
+        notifyDataSetChanged();
     }
 
     public IGroupData getClickedGroup() {
@@ -149,7 +151,8 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
             //TODO ("SET BALANCE IN GROUP_CARDVIEW")
             try {
                 balance.setText(group.getUserTotal(currentLoggedInUsersPhoneNumber) + " kr");
-            } catch (UserNotFoundException ignore) {}
+            } catch (UserNotFoundException ignore) {
+            }
         }
 
         /**

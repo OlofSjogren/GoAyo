@@ -49,19 +49,19 @@ public class FromJsonFactory {
     }
 
     public Group getGroupFromId(String groupJson) {
-        GroupJsonObject object = gson.fromJson(groupJson, GroupJsonObject.class);
-        Group group = EntityFactory.createGroup(object.name, object.id);
+        GroupJsonObject deSerializedJsonGroup = gson.fromJson(groupJson, GroupJsonObject.class);
+        Group group = EntityFactory.createGroup(deSerializedJsonGroup.name, deSerializedJsonGroup.id);
 
-        for(UserJsonObject userJsonObject : object.members){
+        for(UserJsonObject userJsonObject : deSerializedJsonGroup.members){
             group.addUser(getUser(gson.toJson(userJsonObject)));
         }
 
-        for (DebtJsonObject debtJsonObject : object.debts){
+        for (DebtJsonObject debtJsonObject : deSerializedJsonGroup.debts){
             User borrower = getUser(gson.toJson(debtJsonObject.borrower));
             User lender = getUser(gson.toJson(debtJsonObject.lender, UserJsonObject.class));
             Map<User, String> borrowers = new HashMap<>();
             borrowers.put(borrower, debtJsonObject.id);
-            group.createDebt(lender, borrowers, new BigDecimal(debtJsonObject.owed), "IMPLEMENT!");
+            group.createDebt(lender, borrowers, new BigDecimal(debtJsonObject.owed), debtJsonObject.description);
 
             for(PaymentJsonObject paymentJsonObject : debtJsonObject.payments){
                 group.payOffDebt(new BigDecimal(paymentJsonObject.amount), debtJsonObject.id);
@@ -119,14 +119,17 @@ public class FromJsonFactory {
     }
 
     static class DebtJsonObject {
-        public DebtJsonObject(UserJsonObject lender, UserJsonObject borrower, String owed, String debtId, PaymentJsonObject[] payments) {
+        public DebtJsonObject(UserJsonObject lender, UserJsonObject borrower, String owed, String debtId, PaymentJsonObject[] payments, String description) {
             this.lender = lender;
             this.borrower = borrower;
             this.owed = owed;
             this.id = debtId;
             this.payments = payments;
+            this.description = description;
         }
 
+
+        String description;
         UserJsonObject lender;
         UserJsonObject borrower;
         String owed;

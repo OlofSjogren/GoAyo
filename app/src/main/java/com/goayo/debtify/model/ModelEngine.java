@@ -1,14 +1,11 @@
 package com.goayo.debtify.model;
 
 import com.goayo.debtify.Database.RealDatabase;
-import com.goayo.debtify.modelaccess.IDebtData;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
 import java.math.BigDecimal;
 import java.net.ConnectException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -28,6 +25,7 @@ import java.util.Set;
  * 2020-09-30 Modified by Olof Sjögren and Oscar Sanner : Now implements IObservable and (for now) notifies on registration and login.
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
+ * 2020-10-11 Modified by Alex Phu: Fixed wrong order of arguments in registerUser();
  */
 
 public class ModelEngine {

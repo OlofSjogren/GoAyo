@@ -47,7 +47,6 @@ public class MyGroupsViewModel extends ViewModel implements IEventHandler {
         return groupsData;
     }
 
-
     @Override
     public void onModelEvent(IModelEvent evt) {
         setGroupsData();

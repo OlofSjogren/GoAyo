@@ -44,14 +44,17 @@ public class DbObject {
     }
 
     static class Debt {
-        public Debt(User lender, User borrower, String owed, String debtId, Payment[] payments) {
+        public Debt(User lender, User borrower, String owed, String debtId, Payment[] payments, String description) {
             this.lender = lender;
             this.borrower = borrower;
             this.owed = owed;
             this.id = debtId;
             this.payments = payments;
+            this.description = description;
         }
 
+
+        String description;
         User lender;
         User borrower;
         String owed;

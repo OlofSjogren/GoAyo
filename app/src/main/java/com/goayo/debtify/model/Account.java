@@ -36,6 +36,9 @@ import java.util.UUID;
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Made package private.
+ * 2020-10-11 Modidied by Oscar Sanner: Made sure the logged in user gets added to the groups he creates.
+ * 2020-10-11 Modidied by Oscar Sanner: UUIDs are created in this class and passed to the database and the groups respectively.
+ *
  */
 class Account {
 
@@ -103,6 +106,7 @@ class Account {
                 usersToBeAdded.add(getUserFromSet(phoneNumber, contactList));
             }
         }
+        usersToBeAdded.add(loggedInUser);
 
         associatedGroups.add(new Group(groupName, id, usersToBeAdded));
         EventBus.getInstance().publish(new GroupsEvent());

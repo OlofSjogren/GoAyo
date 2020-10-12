@@ -4,6 +4,8 @@ package com.goayo.debtify.model;
 import com.goayo.debtify.modelaccess.IDebtData;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +25,7 @@ import java.util.Set;
  * 2020-09-29 Modified by Olof & Oscar : Created method for removing all debts of a specific user (removeSpecificUserDebt).
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
+ * 2020-10-11 Modified by Oscar Sanner: Added rounding mode for BigDecimal.
  */
 class Ledger {
 
@@ -38,7 +41,8 @@ class Ledger {
      * @throws Exception
      */
     public void createDebt(User lender, Map<User, String> borrowers, BigDecimal owedTotal, String description) {
-        BigDecimal individualAmount = owedTotal.divide(new BigDecimal(borrowers.size()));
+        MathContext mc = new MathContext(2, RoundingMode.HALF_UP) ;
+        BigDecimal individualAmount = owedTotal.divide(new BigDecimal(borrowers.size()), mc);
         List<DebtTracker> mockList = new ArrayList<>();
 
         if (borrowers.size() == 0) {

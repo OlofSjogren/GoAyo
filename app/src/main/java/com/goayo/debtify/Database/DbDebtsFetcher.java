@@ -4,6 +4,8 @@ import com.goayo.debtify.model.UserNotFoundException;
 import com.google.gson.Gson;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,7 +20,8 @@ public class DbDebtsFetcher {
 
         for(Map.Entry<String, String> entry : borrowers.entrySet()){
             String borrowerJson = fetcher.fetchUserFromPhoneNumber(entry.getKey());
-            debts[i] = new DbObject.Debt(new Gson().fromJson(lenderJson, DbObject.User.class), new Gson().fromJson(borrowerJson, DbObject.User.class), amount.divide(new BigDecimal(borrowers.size())).toString(), entry.getValue(), new DbObject.Payment[0]);
+            MathContext mc = new MathContext(2, RoundingMode.HALF_UP);
+            debts[i] = new DbObject.Debt(new Gson().fromJson(lenderJson, DbObject.User.class), new Gson().fromJson(borrowerJson, DbObject.User.class), amount.divide(new BigDecimal(borrowers.size()), mc).toString(), entry.getValue(), new DbObject.Payment[0], description);
             i++;
         }
 
