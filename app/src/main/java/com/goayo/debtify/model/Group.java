@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -113,10 +114,9 @@ class Group implements IGroupData {
      * @param owed      total amount lent out by the lender to the borrowers
      * @param description the brief description of the debt
      * @param splitStrategy How the debt is split
-     * @throws Exception
      */
     // TODO: Specify exception.
-    public void createDebt(User lender, Set<User> borrowers, BigDecimal owed, String description, IDebtSplitStrategy splitStrategy) throws Exception {
+    public void createDebt(User lender, Map<User, String> borrowers, BigDecimal owed, String description, IDebtSplitStrategy splitStrategy) {
         groupLedger.createDebt(lender, borrowers, owed, description, splitStrategy);
     }
 
@@ -128,7 +128,7 @@ class Group implements IGroupData {
      * @throws
      */
     // TODO: Specify exception.
-    public void payOffDebt(BigDecimal amount, String debtTrackerID) throws Exception {
+    public void payOffDebt(BigDecimal amount, String debtTrackerID) {
         groupLedger.payOffDebt(amount, debtTrackerID);
     }
 

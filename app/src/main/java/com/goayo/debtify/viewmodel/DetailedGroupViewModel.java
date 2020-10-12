@@ -29,8 +29,10 @@ import java.util.Set;
  * <p>
  * 2020-10-08 Modified by Alex Phu: Added leaveCurrentGroup() method
  * <p>
- * 2020-10-09 Modified by Yenan & Alex: connect with EventBus and divide up the currentGroup LiveData
+ * 2020-10-09 Modified by Yenan Wang & Alex Phu: connect with EventBus and divide up the currentGroup LiveData
  * so that it may observed individually
+ * <p>
+ * 2020-10-12 Modified by Alex Phu: Implemented updateDataFromDatabase() and refactored incomprehensible methods.
  */
 public class DetailedGroupViewModel extends ViewModel implements IEventHandler {
     private final ModelEngine modelEngine;
@@ -50,7 +52,6 @@ public class DetailedGroupViewModel extends ViewModel implements IEventHandler {
     public LiveData<IGroupData> getCurrentGroup() {
         if (currentGroup == null) {
             currentGroup = new MutableLiveData<>();
-
         }
         return currentGroup;
     }
@@ -62,9 +63,8 @@ public class DetailedGroupViewModel extends ViewModel implements IEventHandler {
         currentGroup.setValue(modelEngine.getGroup(groupID));
 
         // after the group is set, initialize the group components and fill them with data
-        getCurrentGroupBalance();
-        getCurrentGroupDebtsData();
-        updateGroupData();
+        setCurrentGroupBalance();
+        setCurrentGroupDebtsData();
     }
 
     public LiveData<List<IDebtData>> getCurrentGroupDebtsData() {
@@ -81,14 +81,8 @@ public class DetailedGroupViewModel extends ViewModel implements IEventHandler {
         return currentGroupBalance;
     }
 
-    public List<IDebtData> getCurrentGroupDebts(String groupID) throws Exception {
-        return modelEngine.getGroup(groupID).getDebts();
-    }
-
-    @Override
-    protected void onCleared() {
-        EventBus.getInstance().unRegister(this, DetailedGroupEvent.class);
-        super.onCleared();
+    public List<IDebtData> getCurrentGroupDebts(String groupID) {
+        return currentGroupDebtsData.getValue();
     }
 
     /**
@@ -134,14 +128,6 @@ public class DetailedGroupViewModel extends ViewModel implements IEventHandler {
         return true;
     }
 
-    @Override
-    public void onModelEvent(IModelEvent evt) {
-        try {
-            updateGroupData();
-        } catch (UserNotFoundException ignored) {
-        }
-    }
-
     /**
      * Leaves the current group.
      */
@@ -153,9 +139,44 @@ public class DetailedGroupViewModel extends ViewModel implements IEventHandler {
         }
     }
 
-    private void updateGroupData() throws UserNotFoundException {
+    /**
+     * Updates data from database
+     */
+    public void updateDataFromDatabase() {
+        modelEngine.refreshWithDatabase();
+    }
+
+    @Override
+    public void onModelEvent(IModelEvent evt) {
+        try {
+            setCurrentGroup(currentGroup.getValue().getGroupID());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onCleared() {
+        EventBus.getInstance().unRegister(this, DetailedGroupEvent.class);
+        super.onCleared();
+    }
+
+    private void setCurrentGroupDebtsData() {
+        if (currentGroupDebtsData == null) {
+            currentGroupDebtsData = new MutableLiveData<>();
+        }
         currentGroupDebtsData.setValue(new ArrayList<>(currentGroup.getValue().getDebts()));
-        currentGroupBalance.setValue(new BigDecimal(currentGroup.getValue().
-                getUserTotal(modelEngine.getLoggedInUser().getPhoneNumber()).toString()));
+    }
+
+    private void setCurrentGroupBalance() {
+        if (currentGroupBalance == null) {
+            currentGroupBalance = new MutableLiveData<>();
+        }
+        try {
+            currentGroupBalance.setValue(new BigDecimal(currentGroup.getValue().
+                    getUserTotal(modelEngine.getLoggedInUser().getPhoneNumber()).toString()));
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
