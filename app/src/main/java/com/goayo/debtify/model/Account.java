@@ -343,4 +343,9 @@ class Account {
             throw new UserNotLoggedInException("The user is not logged in");
         }
     }
+
+    public void refreshWithDatabase() throws Exception {
+        userIsLoggedIn();
+        initAssociatedGroups();
+    }
 }
