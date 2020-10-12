@@ -1,6 +1,7 @@
 package com.goayo.debtify.model;
 
 import com.goayo.debtify.Database.RealDatabase;
+import com.goayo.debtify.MockDatabase.MockDatabase;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
@@ -47,7 +48,7 @@ public class ModelEngine {
      */
     public static ModelEngine getInstance() {
         if (instance == null) {
-            instance = new ModelEngine(new Account(new RealDatabase()));
+            instance = new ModelEngine(new Account(new MockDatabase()));
         }
         return instance;
     }

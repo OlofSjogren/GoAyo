@@ -286,7 +286,7 @@ public interface IDatabase {
      * @param phoneNumber The phone number of the user requesting the contact list.
      * @return A json file with the above specified format.
      */
-    String getContactList(String phoneNumber) throws UserNotFoundException;
+    String getContactList(String phoneNumber) throws UserNotFoundException, ConnectException;
 
     /**
      * Removes a user from a group.

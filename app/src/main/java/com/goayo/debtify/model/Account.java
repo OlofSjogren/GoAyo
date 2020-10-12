@@ -337,7 +337,7 @@ class Account {
         contactList = null;
     }
 
-    private void initContactList(String phoneNumber) throws UserNotFoundException {
+    private void initContactList(String phoneNumber) throws UserNotFoundException, ConnectException {
         String contactListJson = database.getContactList(phoneNumber);
         contactList = fromJsonFactory.getContactList(contactListJson);
     }
