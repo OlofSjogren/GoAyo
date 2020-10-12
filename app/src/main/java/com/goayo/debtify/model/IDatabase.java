@@ -4,7 +4,6 @@ import com.goayo.debtify.modelaccess.IUserData;
 
 import java.math.BigDecimal;
 import java.net.ConnectException;
-import java.net.SocketException;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,6 +29,7 @@ import java.util.Set;
  *
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
+ *
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Made package private.
  */
 

@@ -119,6 +119,10 @@ public class ModelEngine {
         account.removeContact(phoneNumber);
     }
 
+    public IUserData getSingleUserFromDatabase(String phoneNumber) throws UserNotFoundException, ConnectException {
+        return account.getSingleUserFromDatabase(phoneNumber);
+    }
+
     /**
      * Creates a new group, associated to the logged in user. The logged in user is
      * automatically added into the new group, along with the user associated to the list

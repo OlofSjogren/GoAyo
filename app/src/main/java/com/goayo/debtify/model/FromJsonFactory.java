@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class FromJsonFactory {
-    Gson gson;
+    private Gson gson;
 
     public FromJsonFactory(){
         gson = new Gson();

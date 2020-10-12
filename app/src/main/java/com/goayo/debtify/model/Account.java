@@ -343,4 +343,9 @@ class Account {
             throw new UserNotLoggedInException("The user is not logged in");
         }
     }
+
+    public IUserData getSingleUserFromDatabase(String phoneNumber) throws UserNotFoundException, ConnectException {
+        String userJson = database.getUser(phoneNumber);
+        return fromJsonFactory.getUser(userJson);
+    }
 }
