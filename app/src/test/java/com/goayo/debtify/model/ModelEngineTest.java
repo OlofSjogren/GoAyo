@@ -5,13 +5,11 @@ import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
 import org.junit.After;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.net.ConnectException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -24,19 +22,21 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class ModelEngineTest {
 
-    Map<String, String> passwordAndNumber;
-    ModelEngine modelEngine = ModelEngine.getInstance();
-    Random random;
-    Set<String> someNumbers;
-    private int amountOfUsers = 7;
+    static Map<String, String> passwordAndNumber;
+    static ModelEngine modelEngine = ModelEngine.getInstance();
+    static Set<String> someNumbers;
+    static private int amountOfUsers = 5;
 
-    @Before @Test
-    public void setUp() throws Exception {
+
+
+    @BeforeClass
+    public static void setUp() throws Exception {
         passwordAndNumber = new HashMap<>();
         someNumbers = new HashSet<>();
 
@@ -54,7 +54,7 @@ public class ModelEngineTest {
         }
     }
 
-    private void registerAllUsersInHashSet() throws RegistrationException, ConnectException {
+    private static void registerAllUsersInHashSet() throws RegistrationException, ConnectException {
         int i = 1;
         for (Map.Entry<String, String> entry : passwordAndNumber.entrySet()) {
             modelEngine.registerUser(entry.getValue(), "TestUser" + i, entry.getKey());
@@ -62,11 +62,11 @@ public class ModelEngineTest {
         }
     }
 
-    private void logInAndDoStuff(Map.Entry<String, String> entry) throws Exception {
-        int amountOfContactsToBeCreated = 5;
+    private static void logInAndDoStuff(Map.Entry<String, String> entry) throws Exception {
+        int amountOfContactsToBeCreated = 3;
         int amountOfGroupsToBeCreated = 2;
-        int amountOfDebtsToBeCreated = 5;
-        int amountOfPaymentsToBeCreated = 2;
+        int amountOfDebtsToBeCreated = 2;
+        int amountOfPaymentsToBeCreated = 1;
 
 
         //Order of calls is important here.
@@ -78,7 +78,7 @@ public class ModelEngineTest {
 
     }
 
-    private void createSomePayments(int amountOfPaymentsToBeCreated) throws Exception {
+    private static void createSomePayments(int amountOfPaymentsToBeCreated) throws Exception {
         for (int i = 0; i < amountOfPaymentsToBeCreated; i++){
             IGroupData randomGroupData = getRandomGroupForLoggedInUser();
             IDebtData randomDebtData = getRandomDebtFromGroup(randomGroupData);
@@ -91,17 +91,17 @@ public class ModelEngineTest {
         }
     }
 
-    private void createSomeDebts(int amountOfDebtsToBeCreated) throws Exception {
+    private static void createSomeDebts(int amountOfDebtsToBeCreated) throws Exception {
         for (int i = 0; i < amountOfDebtsToBeCreated; i++){
             IGroupData group = getRandomGroupForLoggedInUser();
             Set<String> borrowers = getRandomSubsetOfPhoneNumberStringsFromIGroupData(group);
             int randomAmount = ThreadLocalRandom.current().nextInt(100, 1000);
 
-            modelEngine.createDebt(group.getGroupID(), modelEngine.getLoggedInUser().getPhoneNumber(), borrowers, new BigDecimal(Integer.toString(randomAmount)), "Test");
+            modelEngine.createDebt(group.getGroupID(), modelEngine.getLoggedInUser().getPhoneNumber(), borrowers, new BigDecimal(Integer.toString(randomAmount)), "Test", new EvenSplitStrategy());
         }
     }
 
-    private void createSomeGroups(int amountOfGroupsToBeCreated) throws Exception {
+    private static void createSomeGroups(int amountOfGroupsToBeCreated) throws Exception {
         int contactsSize = modelEngine.getContacts().size();
 
         for (int i = 0; i < amountOfGroupsToBeCreated; i++) {
@@ -114,13 +114,13 @@ public class ModelEngineTest {
         }
     }
 
-    private void addSomeContacts(int amountOfContactsToBeCreated) throws Exception {
+    private static void addSomeContacts(int amountOfContactsToBeCreated) throws Exception {
         for (int i = 0; i < amountOfContactsToBeCreated; i++) {
             modelEngine.addContact(getRandomUserFromHashMap().getValue());
         }
     }
 
-    private IDebtData getRandomDebtFromGroup(IGroupData randomGroupData) {
+    private static IDebtData getRandomDebtFromGroup(IGroupData randomGroupData) {
         if (randomGroupData.getDebts().size() != 0){
             int randomDebtIndex = ThreadLocalRandom.current().nextInt(0, randomGroupData.getDebts().size());
             System.out.println("FOUND A DEBT!");
@@ -131,7 +131,7 @@ public class ModelEngineTest {
     }
 
 
-    private Set<String> getRandomSubsetOfPhoneNumberStringsFromIGroupData(IGroupData group) {
+    private static Set<String> getRandomSubsetOfPhoneNumberStringsFromIGroupData(IGroupData group) {
         System.out.println("Amount of users in " + group.getGroupName() + ": " + group.getIUserDataSet().size());
         int sizeOfBorrowers = ThreadLocalRandom.current().nextInt(1, group.getIUserDataSet().size());
 
@@ -148,7 +148,7 @@ public class ModelEngineTest {
         return new HashSet<>(Arrays.asList(phoneNumbers));
     }
 
-    private IGroupData getRandomGroupForLoggedInUser() {
+    private static IGroupData getRandomGroupForLoggedInUser() {
         int randomGroupIndex = ThreadLocalRandom.current().nextInt(0, modelEngine.getGroups().size());
         return modelEngine.getGroups().toArray(new IGroupData[modelEngine.getGroups().size()])[randomGroupIndex];
     }
@@ -196,7 +196,7 @@ public class ModelEngineTest {
         String description = UUID.randomUUID().toString();
 
         //Will create a debt in the fresh group.
-        modelEngine.createDebt(g.getGroupID(), modelEngine.getLoggedInUser().getPhoneNumber(), borrowers, new BigDecimal(amount + 100), description);
+        modelEngine.createDebt(g.getGroupID(), modelEngine.getLoggedInUser().getPhoneNumber(), borrowers, new BigDecimal(amount + 100), description, new EvenSplitStrategy());
         List<IDebtData> debt = g.getDebts();
 
         String groupId = g.getGroupID();
@@ -221,45 +221,6 @@ public class ModelEngineTest {
     }
 
     @Test
-    public void registerUser() throws Exception {
-        modelEngine.registerUser("1111223344", "ExternalOne", "123");
-        modelEngine.registerUser("2222334455", "ExternalTwo", "456");
-        int i = 0;
-        for (Map.Entry<String, String> entry : passwordAndNumber.entrySet()) {
-            modelEngine.registerUser(entry.getValue(), "TestUser" + i, entry.getKey());
-            i++;
-        }
-        logInUser();
-    }
-
-    @Test
-    public void logInUser() throws Exception {
-        for (Map.Entry<String, String> entry : passwordAndNumber.entrySet()) {
-            someNumbers.add(entry.getValue());
-            modelEngine.logInUser(entry.getValue(), entry.getKey());
-            removeContact();
-            addContact();
-            createGroup();
-            addUserToGroup();
-            removeUserFromGroup();
-            leaveGroup();
-            logOutUser();
-        }
-    }
-
-    @Test
-    public void logOutUser() {
-        modelEngine.logOutUser();
-    }
-
-    @Test
-    public void addContact() throws Exception {
-        for (Map.Entry<String, String> entry : passwordAndNumber.entrySet()) {
-            modelEngine.addContact(entry.getValue());
-        }
-    }
-
-    @Test
     public void removeContact() throws Exception {
         int i = 0;
         for (Map.Entry<String, String> entry : passwordAndNumber.entrySet()) {
@@ -272,17 +233,6 @@ public class ModelEngineTest {
         }
     }
 
-    @Test
-    public void createGroup() throws Exception {
-        int i = someNumbers.size();
-        Set<String> addableUsers = new HashSet<>(someNumbers);
-        addableUsers.remove(modelEngine.getLoggedInUser().getPhoneNumber());
-
-        if (i == 1) {
-            return;
-        }
-        modelEngine.createGroup("TestGroup" + i, addableUsers);
-    }
 
     @Test
     public void leaveGroup() throws Exception {
@@ -291,13 +241,12 @@ public class ModelEngineTest {
         }
     }
 
-    @Test
-    public void getGroups() {
-        //todo: Nothing tested by above.
-    }
 
     @Test
     public void addUserToGroup() throws Exception {
+        Map.Entry<String, String> user = getRandomUserFromHashMap();
+        modelEngine.logInUser(user.getValue(), user.getKey());
+
         String one = getRandomUserFromHashMap().getValue();
         String two = getRandomUserFromHashMap().getValue();
         modelEngine.addContact(one);
@@ -307,44 +256,52 @@ public class ModelEngineTest {
             modelEngine.addUserToGroup(one, data.getGroupID());
             modelEngine.addUserToGroup(two, data.getGroupID());
         }
-
     }
 
     @Test
     public void removeUserFromGroup() throws Exception {
+        Map.Entry<String, String> user = getRandomUserFromHashMap();
+        modelEngine.logInUser(user.getValue(), user.getKey());
+
+        IGroupData data = getRandomGroupForLoggedInUser();
+
+        String one = getRandomUserFromHashMap().getValue();
+        modelEngine.addContact(one);
+        modelEngine.addUserToGroup(one, data.getGroupID());
+
+        modelEngine.removeUserFromGroup(one, data.getGroupID());
+    }
+
+
+    @Test
+    public void getLoggedInUser() throws Exception {
+        Map.Entry<String, String> user = getRandomUserFromHashMap();
+        modelEngine.logInUser(user.getValue(), user.getKey());
+
+        assertNotNull(modelEngine.getLoggedInUser());
     }
 
     @Test
-    public void createDebt() throws Exception {
-        modelEngine.logInUser("6130143699", "0");
-        Set<String> borrower = new HashSet<>();
-        borrower.add("3294566230");
-        String lender = "6130143699";
-        String groupId = "6a03c4c8-e963-49bc-8e7f-1ddaf7c67c36";
-        BigDecimal amount = new BigDecimal("200");
+    public void getGroup() throws Exception {
+        Map.Entry<String, String> user = getRandomUserFromHashMap();
+        modelEngine.logInUser(user.getValue(), user.getKey());
 
-        modelEngine.createDebt(groupId, lender, borrower, amount, "nope");
-        System.out.println("Hello World");
+        IGroupData data = getRandomGroupForLoggedInUser();
+        IGroupData fetchedData = modelEngine.getGroup(data.getGroupID());
+
+        assertEquals(data, fetchedData);
     }
 
     @Test
-    public void payOffDebt() throws Exception {
+    public void getContacts() throws Exception {
+        Map.Entry<String, String> user = getRandomUserFromHashMap();
+        modelEngine.logInUser(user.getValue(), user.getKey());
 
+        Set<IUserData> fetchedSet = modelEngine.getContacts();
+        assertNotNull(fetchedSet);
     }
 
-    @Test
-    public void getLoggedInUser() {
-    }
-
-    @Test
-    public void getGroup() {
-    }
-
-    @Test
-    public void getContacts() {
-    }
-
-    private Map.Entry<String, String> getRandomUserFromHashMap() {
+    private static Map.Entry<String, String> getRandomUserFromHashMap() {
         int randomIndex = ThreadLocalRandom.current().nextInt(0, amountOfUsers);
         int i = 0;
         for (Map.Entry<String, String> entry : passwordAndNumber.entrySet()) {

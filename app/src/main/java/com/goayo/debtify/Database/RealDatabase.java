@@ -2,12 +2,14 @@ package com.goayo.debtify.Database;
 
 import com.goayo.debtify.model.GroupNotFoundException;
 import com.goayo.debtify.model.IDatabase;
+import com.goayo.debtify.model.IDebtSplitStrategy;
 import com.goayo.debtify.model.InvalidDebtException;
 import com.goayo.debtify.model.InvalidPaymentException;
 import com.goayo.debtify.model.LoginException;
 import com.goayo.debtify.model.RegistrationException;
 import com.goayo.debtify.model.UserAlreadyExistsException;
 import com.goayo.debtify.model.UserNotFoundException;
+import com.goayo.debtify.modelaccess.IUserData;
 
 import java.math.BigDecimal;
 import java.net.ConnectException;
@@ -56,8 +58,8 @@ public class RealDatabase implements IDatabase {
     }
 
     @Override
-    public boolean addDebt(String groupID, String lender, Map<String, String> borrowers, BigDecimal amount, String description) throws GroupNotFoundException, UserNotFoundException, ConnectException, InvalidDebtException {
-        return debtsFetcher.addDebt(groupID, lender, borrowers, amount, description);
+    public boolean addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy) throws GroupNotFoundException, UserNotFoundException, ConnectException, InvalidDebtException {
+        return debtsFetcher.addDebt(groupID, lender, borrowers, amount, description, splitStrategy);
     }
 
     @Override

@@ -25,7 +25,7 @@ import java.util.Set;
  * 2020-09-29 Modified by Olof & Oscar : Fixed bug where one of the constructors wouldn't initiate the ledger.
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
- *
+ * 2020-10-09 Modified by Alex Phu and Yenan Wang: Added IDebtSplitStrategy to createDebt's parameter.
  */
 class Group implements IGroupData {
 
@@ -113,11 +113,12 @@ class Group implements IGroupData {
      * @param borrowers either a single or several users who borrow from the lender
      * @param owed      total amount lent out by the lender to the borrowers
      * @param description the brief description of the debt
+     * @param splitStrategy How the debt is split
      * @throws Exception
      */
     // TODO: Specify exception.
-    public void createDebt(User lender, Map<User, String> borrowers, BigDecimal owed, String description) {
-        groupLedger.createDebt(lender, borrowers, owed, description);
+    public void createDebt(User lender, Map<User, String> borrowers, BigDecimal owed, String description, IDebtSplitStrategy splitStrategy) throws Exception {
+        groupLedger.createDebt(lender, borrowers, owed, description, splitStrategy);
     }
 
     /**

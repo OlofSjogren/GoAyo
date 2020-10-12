@@ -36,9 +36,9 @@ import java.util.UUID;
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Made package private.
+ * 2020-10-09 Modified by Alex Phu and Yenan Wang: Added IDebtSplitStrategy to createDebt's parameter.
  * 2020-10-11 Modidied by Oscar Sanner: Made sure the logged in user gets added to the groups he creates.
  * 2020-10-11 Modidied by Oscar Sanner: UUIDs are created in this class and passed to the database and the groups respectively.
- *
  */
 class Account {
 
@@ -77,7 +77,7 @@ class Account {
      * @param password    Password input.
      * @throws Exception Thrown if user input is not valid.
      */
-    public void loginUser(String phoneNumber, String password) throws LoginException, ConnectException, UserNotFoundException {
+    public void loginUser(String phoneNumber, String password) throws Exception {
         String userToBeLoggedIn = database.getUserToBeLoggedIn(phoneNumber, password);
         loggedInUser = fromJsonFactory.getUser(userToBeLoggedIn);
         initContactList(phoneNumber);
@@ -193,33 +193,36 @@ class Account {
      * @param borrowers   The borrower(s).
      * @param owed        Amount of owed money.
      * @param description the brief description of the debt
+     * @param splitStrategy How the debt is split
      * @throws Exception Thrown if group or users are not found, or if the set of borrower is empty.
      */
 
-    public void createDebt(String groupID, String lender, Set<String> borrowers, BigDecimal owed, String description) throws UserNotFoundException, InvalidDebtException, ConnectException, GroupNotFoundException {
+    public void createDebt(String groupID, String lender, Set<String> borrowers, BigDecimal owed, String description, IDebtSplitStrategy splitStrategy) throws Exception {
         userIsLoggedIn();
 
         if (borrowers.isEmpty()) {
             throw new EmptySelectionException("No Borrowers Selected!");
         }
 
-        Map<String, String> borrowerStringAndId = new HashMap<>();
+        Map<IUserData, String> borrowerIUserDataAndId = new HashMap<>();
         Map<User, String> borrowerUserAndId = new HashMap<>();
 
         Group g = getAssociatedGroupFromId(groupID);
 
         for (String borrower : borrowers){
             String id = UUID.randomUUID().toString();
-            borrowerStringAndId.put(borrower, id);
+            borrowerIUserDataAndId.put(getUserFromSet(borrower, g.getGroupMembers()), id);
             borrowerUserAndId.put(getUserFromSet(borrower, g.getGroupMembers()), id);
         }
 
 
-        database.addDebt(groupID, lender, borrowerStringAndId, owed, description);
+
+
+        database.addDebt(groupID, lender, borrowerIUserDataAndId, owed, description, splitStrategy);
 
         User lenderUser = getUserFromSet(lender, g.getGroupMembers());
 
-        g.createDebt(lenderUser, borrowerUserAndId, owed, description);
+        g.createDebt(lenderUser, borrowerUserAndId, owed, description, splitStrategy);
         EventBus.getInstance().publish(new DetailedGroupEvent());
     }
 
@@ -308,7 +311,7 @@ class Account {
      */
 
     //Todo: Database call?
-    public Group getGroupFromID(String groupID) throws GroupNotFoundException, ConnectException {
+    public Group getGroupFromID(String groupID) throws Exception {
         String groupJson = database.getGroupFromId(groupID);
         return fromJsonFactory.getGroupFromId(groupJson);
     }
@@ -330,7 +333,7 @@ class Account {
         contactList = fromJsonFactory.getContactList(contactListJson);
     }
 
-    private void initAssociatedGroups() throws UserNotFoundException, ConnectException {
+    private void initAssociatedGroups() throws Exception {
         String associatedGroupsJson = database.getGroups(loggedInUser.getPhoneNumber());
         associatedGroups = fromJsonFactory.getGroups(associatedGroupsJson);
     }

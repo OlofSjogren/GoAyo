@@ -30,7 +30,7 @@ public class FromJsonFactory {
         return users;
     }
 
-    public Set<Group> getGroups(String associatedGroupsJson) {
+    public Set<Group> getGroups(String associatedGroupsJson) throws Exception {
 
         GroupJsonObject[] groupJsonObjects = null;
         try {
@@ -48,7 +48,7 @@ public class FromJsonFactory {
         return groups;
     }
 
-    public Group getGroupFromId(String groupJson) {
+    public Group getGroupFromId(String groupJson) throws Exception {
         GroupJsonObject deSerializedJsonGroup = gson.fromJson(groupJson, GroupJsonObject.class);
         Group group = EntityFactory.createGroup(deSerializedJsonGroup.name, deSerializedJsonGroup.id);
 
@@ -61,7 +61,7 @@ public class FromJsonFactory {
             User lender = getUser(gson.toJson(debtJsonObject.lender, UserJsonObject.class));
             Map<User, String> borrowers = new HashMap<>();
             borrowers.put(borrower, debtJsonObject.id);
-            group.createDebt(lender, borrowers, new BigDecimal(debtJsonObject.owed), debtJsonObject.description);
+            group.createDebt(lender, borrowers, new BigDecimal(debtJsonObject.owed), debtJsonObject.description, new EvenSplitStrategy());
 
             for(PaymentJsonObject paymentJsonObject : debtJsonObject.payments){
                 group.payOffDebt(new BigDecimal(paymentJsonObject.amount), debtJsonObject.id);

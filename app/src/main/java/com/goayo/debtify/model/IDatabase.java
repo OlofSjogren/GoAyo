@@ -1,5 +1,7 @@
 package com.goayo.debtify.model;
 
+import com.goayo.debtify.modelaccess.IUserData;
+
 import java.math.BigDecimal;
 import java.net.ConnectException;
 import java.net.SocketException;
@@ -93,7 +95,8 @@ public interface IDatabase {
      * doesn't exist.
      * @throws Exception if something goes wrong when connecting to the server.
      */
-    boolean addDebt(String groupID, String lender, Map<String, String> borrowers, BigDecimal amount, String description) throws GroupNotFoundException, UserNotFoundException, ConnectException, InvalidDebtException;
+
+    boolean addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy) throws Exception;
 
     /**
      * Add a new contact to a users list of contacts.

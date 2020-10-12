@@ -1,15 +1,13 @@
 package com.goayo.debtify.model;
 
 
+import com.goayo.debtify.Tuple;
 import com.goayo.debtify.modelaccess.IDebtData;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Gabriel Brattgård, Yenan Wang
@@ -25,7 +23,11 @@ import java.util.Set;
  * 2020-09-29 Modified by Olof & Oscar : Created method for removing all debts of a specific user (removeSpecificUserDebt).
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
+<<<<<<< HEAD
  * 2020-10-11 Modified by Oscar Sanner: Added rounding mode for BigDecimal.
+=======
+ * 2020-10-09 Modified by Alex Phu and Yenan Wang: Added IDebtSplitStrategy to createDebt's parameter.
+>>>>>>> a0d9a3992b77d0dd1661aeb4189280403281d5d9
  */
 class Ledger {
 
@@ -35,29 +37,32 @@ class Ledger {
      * Creates a debtTracker and adds it to the list of debtTrackers.
      *
      * @param lender    the user who lends out money
-     * @param borrowers either a single or several users who borrow from the lender
+     * @param borrowersAndId either a single or several users who borrow from the lender
      * @param owedTotal total amount lent out by the lender to the borrowers
      * @param description the brief description of the debt
+     * @param splitStrategy How the debt is split
      * @throws Exception
      */
-    public void createDebt(User lender, Map<User, String> borrowers, BigDecimal owedTotal, String description) {
-        MathContext mc = new MathContext(2, RoundingMode.HALF_UP) ;
-        BigDecimal individualAmount = owedTotal.divide(new BigDecimal(borrowers.size()), mc);
-        List<DebtTracker> mockList = new ArrayList<>();
 
-        if (borrowers.size() == 0) {
+
+    public void createDebt(User lender, Map<User, String> borrowersAndId, BigDecimal owedTotal, String description, IDebtSplitStrategy splitStrategy) throws Exception {
+
+        Map<User, Tuple<BigDecimal, String>> usersInDebt = splitStrategy.splitDebt(borrowersAndId, owedTotal);
+        List<DebtTracker> debtList = new ArrayList<>();
+
+        if (borrowersAndId.size() == 0) {
             // TODO: Specify exception.
             throw new RuntimeException();
         }
 
-        for (Map.Entry<User, String> entry : borrowers.entrySet()) {
-            if (!mockList.add(new DebtTracker(individualAmount, lender, entry.getKey(), description, entry.getValue()))) {
+        for (Map.Entry<User, Tuple<BigDecimal, String>> entry : usersInDebt.entrySet()) {
+            if (!debtList.add(new DebtTracker(usersInDebt.get(entry.getKey()).getFirst(), lender, entry.getKey(), description, entry.getValue().getSecond()))) {
                 //TODO: Specify exception.
                 throw new RuntimeException();
             }
         }
 
-        if (!debtTrackerList.addAll(mockList)) {
+        if (!debtTrackerList.addAll(debtList)) {
             //TODO: Specify exception.
             throw new RuntimeException();
         }
