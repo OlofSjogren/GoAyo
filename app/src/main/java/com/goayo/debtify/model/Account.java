@@ -130,9 +130,9 @@ class Account {
 
     public void addContact(String phoneNumber) throws UserNotFoundException, ConnectException {
         userIsLoggedIn();
-        database.addContact(loggedInUser.getPhoneNumber(), phoneNumber);
         String data = database.getUser(phoneNumber);
         User u = fromJsonFactory.getUser(data);
+        database.addContact(loggedInUser.getPhoneNumber(), phoneNumber);
 
         contactList.add(u);
         EventBus.getInstance().publish(new ContactEvent());
