@@ -44,22 +44,19 @@ import java.util.Set;
  * 2020-10-09 Modified by Yenan Wang, Alex Phu: Added radio button
  */
 public class AddDebtFragment extends Fragment {
+    private final String LENDER_DATA = "LENDER_DATA";
+    private final String BORROWER_DATA = "BORROWER_DATA";
     // the binding object which preloads all its xml components
     private AddDebtFragmentBinding binding;
     // the ViewModel for this class
     private AddDebtViewModel addDebtViewModel;
     // the shared ViewModel for data retrieval
     private PickUserViewModel pickUserViewModel;
-
     // the two adapters which will observe the ViewModel
     private UserCardViewAdapter lenderAdapter;
     private UserCardViewAdapter borrowersAdapter;
-
     // the variable will decide what data it has retrieved
     private String dataRetrieved = "";
-
-    private final String LENDER_DATA = "LENDER_DATA";
-    private final String BORROWER_DATA = "BORROWER_DATA";
 
     @Nullable
     @Override
@@ -98,7 +95,6 @@ public class AddDebtFragment extends Fragment {
 
         // set a observer to notify the recyclerview adapter whenever the borrowers data has changed
         addDebtViewModel.getSelectedBorrowersData().observe(getViewLifecycleOwner(), new Observer<Set<IUserData>>() {
-
             @Override
             public void onChanged(Set<IUserData> userDataSet) {
                 borrowersAdapter.updateList(new ArrayList<>(userDataSet));
@@ -109,10 +105,13 @@ public class AddDebtFragment extends Fragment {
         pickUserViewModel.getSelectedUsersData().observe(getViewLifecycleOwner(), new Observer<List<IUserData>>() {
             @Override
             public void onChanged(List<IUserData> iUserData) {
-                if (dataRetrieved.equals(LENDER_DATA)) {
-                    addDebtViewModel.setSelectedLenderData(new HashSet<>(iUserData));
-                } else if (dataRetrieved.equals(BORROWER_DATA)) {
-                    addDebtViewModel.setSelectedBorrowersData(new HashSet<>(iUserData));
+                // ignore it if the list is empty
+                if (iUserData.size() != 0) {
+                    if (dataRetrieved.equals(LENDER_DATA)) {
+                        addDebtViewModel.setSelectedLenderData(new HashSet<>(iUserData));
+                    } else if (dataRetrieved.equals(BORROWER_DATA)) {
+                        addDebtViewModel.setSelectedBorrowersData(new HashSet<>(iUserData));
+                    }
                 }
             }
         });
