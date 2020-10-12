@@ -5,9 +5,12 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.goayo.debtify.model.ModelEngine;
+import com.goayo.debtify.model.UserAlreadyExistsException;
 import com.goayo.debtify.model.UserNotFoundException;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
+
+import java.net.ConnectException;
 
 /**
  * @author Yenan Wang
@@ -48,7 +51,7 @@ public class AddContactViewModel extends ViewModel {
         throw new UserNotFoundException("No user with such phone number!");
     }
 
-    public void addUserToContacts(String phoneNumber) throws Exception {
+    public void addUserToContacts(String phoneNumber) throws UserNotFoundException, UserAlreadyExistsException, ConnectException {
         modelEngine.addContact(phoneNumber);
     }
 }

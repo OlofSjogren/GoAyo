@@ -128,12 +128,22 @@ class Account {
      * @throws Exception Thrown if the user is not found, or if the user is already in the contactList.
      */
 
-    public void addContact(String phoneNumber) throws UserNotFoundException, ConnectException {
+    public void addContact(String phoneNumber) throws UserNotFoundException, ConnectException, UserAlreadyExistsException {
         userIsLoggedIn();
         String data = database.getUser(phoneNumber);
-        User u = fromJsonFactory.getUser(data);
-        database.addContact(loggedInUser.getPhoneNumber(), phoneNumber);
 
+        // TODO Change this to exception
+        if (data.equals("BAD REQUEST, INCORRECT NUMBER")) {
+            throw new UserNotFoundException("This user doesn't exist!");
+        }
+        User u = fromJsonFactory.getUser(data);
+
+        // prevent adding yourself as a contact
+        if (u.equals(loggedInUser)) {
+            throw new UserAlreadyExistsException("Cannot add yourself as a contact!");
+        }
+
+        database.addContact(loggedInUser.getPhoneNumber(), phoneNumber);
         contactList.add(u);
         EventBus.getInstance().publish(new ContactEvent());
     }

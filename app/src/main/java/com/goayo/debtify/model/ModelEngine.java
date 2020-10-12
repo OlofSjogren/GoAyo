@@ -101,7 +101,7 @@ public class ModelEngine {
      * @param phoneNumber the phone number of the contact to be added.
      * @return True if the operation was successful, server side.
      */
-    public void addContact(String phoneNumber) throws Exception {
+    public void addContact(String phoneNumber) throws UserNotFoundException, UserAlreadyExistsException, ConnectException {
         account.addContact(phoneNumber);
     }
 
