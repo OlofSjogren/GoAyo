@@ -143,7 +143,11 @@ public class DetailedGroupViewModel extends ViewModel implements IEventHandler {
      * Updates data from database
      */
     public void updateDataFromDatabase() {
-        modelEngine.refreshWithDatabase();
+        try {
+            modelEngine.refreshWithDatabase();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
