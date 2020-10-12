@@ -65,6 +65,10 @@ public class MyGroupsViewModel extends ViewModel implements IEventHandler {
     }
 
     public void updateGroupsFromDatabase(){
-        modelEngine.refreshWithDatabase();
+        try {
+            modelEngine.refreshWithDatabase();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
