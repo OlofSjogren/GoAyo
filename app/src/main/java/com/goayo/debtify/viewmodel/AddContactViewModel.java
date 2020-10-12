@@ -37,6 +37,7 @@ public class AddContactViewModel extends ViewModel {
 
     // TODO you should not have to go through every group to find a single user,
     //      need to implement this method in ModelEngine
+    // TODO check if phone number has a length of 10
     public IUserData findUser(String phoneNumber) throws UserNotFoundException {
         for (IGroupData group : modelEngine.getGroups()) {
             for (IUserData user : group.getIUserDataSet()) {
