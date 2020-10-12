@@ -9,9 +9,23 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/themeOrange"
+        >
         <!--android:background="@color/pink"-->
 
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="313dp"
+            android:layout_height="500dp"
+            android:background="@drawable/rounded_corner_box"
+            android:elevation="4sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.6" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/signUpFragment_password_textInputEditText"
@@ -21,6 +35,7 @@
             android:hint="Password"
             android:inputType="text"
             android:maxLines="1"
+            android:elevation="4sp"
             app:layout_constraintBottom_toTopOf="@+id/signUpFragment_register_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -33,6 +48,7 @@
             android:hint="Phone Number"
             android:inputType="text"
             android:maxLines="1"
+            android:elevation="4sp"
             app:layout_constraintBottom_toTopOf="@+id/signUpFragment_password_textInputEditText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -45,6 +61,7 @@
             android:hint="Name"
             android:inputType="text"
             android:maxLines="1"
+            android:elevation="4sp"
             app:layout_constraintBottom_toTopOf="@+id/signUpFragment_phone_number_textInputEditText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -53,12 +70,14 @@
             android:id="@+id/signUpFragment_sign_up_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="220dp"
+            android:elevation="4sp"
             android:text="Create an account"
-            android:textSize="40sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:textSize="32sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,6 +87,11 @@
             android:layout_height="60dp"
             android:layout_marginBottom="156dp"
             android:text="Register"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:elevation="4sp"
+            android:stateListAnimator="@null"
+            android:backgroundTint="@color/registerGreen"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

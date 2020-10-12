@@ -6,4 +6,7 @@
     <color name="pink">#FFC0CB</color>
     <color name="redTransactionCard">#FFD9D9</color>
     <color name="greenTransactionCard">#D9FFC7</color>
+    <color name="registerGreen">#65CD34</color>
+    <color name="logInBlue">#3C72FF</color>
+    <color name="themeOrange">#FFC85C</color>
 </resources>
