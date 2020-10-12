@@ -47,28 +47,13 @@ class Ledger {
         Map<User, Tuple<BigDecimal, String>> usersInDebt = splitStrategy.splitDebt(borrowersAndId, owedTotal);
         List<DebtTracker> debtList = new ArrayList<>();
 
-        if (borrowersAndId.size() == 0) {
-            // TODO: Specify exception.
-            throw new DebtException("The borrowers cannot be empty!");
-        }
-
-        if (borrowersAndId.get(lender) != null) {
-            throw new DebtException("The lender cannot be a borrower!");
-        }
-
-        if (description.isEmpty()) {
-            throw new DebtException("The description cannot be empty!");
-        }
-
         for (Map.Entry<User, Tuple<BigDecimal, String>> entry : usersInDebt.entrySet()) {
             if (!debtList.add(new DebtTracker(usersInDebt.get(entry.getKey()).getFirst(), lender, entry.getKey(), description, entry.getValue().getSecond()))) {
-                //TODO: Specify exception.
                 throw new DebtException("Failed to create the debt.");
             }
         }
 
         if (!debtTrackerList.addAll(debtList)) {
-            //TODO: Specify exception.
             throw new DebtException("Failed to create the debt.");
         }
     }
