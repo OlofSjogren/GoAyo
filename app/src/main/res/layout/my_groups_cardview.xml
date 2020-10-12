@@ -22,7 +22,7 @@
         <TextView
             android:id="@+id/pickuser_card_name_textview"
             android:layout_width="211dp"
-            android:layout_height="26dp"
+            android:layout_height="32dp"
             android:layout_marginStart="16dp"
             android:text="GROUP_NAME"
             android:textColor="#000000"

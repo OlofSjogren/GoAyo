@@ -80,7 +80,6 @@ public class GroupFragment extends Fragment {
             }
         });
 
-
         // initialize the adapter for the debts and payments
         try {
             adapter = new TransactionCardAdapter(viewModel.getCurrentGroupDebts(getCurrentGroupID()));

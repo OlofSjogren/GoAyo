@@ -12,5 +12,6 @@
     <color name="dividerGrey">#C4C4C4</color>
     <color name="negativeDebtRed">#BD0000</color>
     <color name="positiveDebtGreen">#027500</color>
+    <color name="backGroundGrey">#F1F1F1</color>
 
 </resources>
