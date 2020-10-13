@@ -31,7 +31,7 @@ public class ModelEngineTest {
     static Map<String, String> passwordAndNumber;
     static ModelEngine modelEngine = ModelEngine.getInstance();
     static Set<String> someNumbers;
-    static private int amountOfUsers = 100;
+    static private int amountOfUsers = 5;
     static String randomNoFriendsUserName;
     static String randomNoFriendsUserPassword;
     static String randomNoFriendsUserPhoneNumber;
@@ -87,10 +87,10 @@ public class ModelEngineTest {
     }
 
     private static void createSomePayments(int amountOfPaymentsToBeCreated) throws Exception {
-        for (int i = 0; i < amountOfPaymentsToBeCreated; i++){
+        for (int i = 0; i < amountOfPaymentsToBeCreated; i++) {
             IGroupData randomGroupData = getRandomGroupForLoggedInUser();
             IDebtData randomDebtData = getRandomDebtFromGroup(randomGroupData);
-            if(randomDebtData == null) {
+            if (randomDebtData == null) {
                 continue;
             }
 
@@ -100,9 +100,9 @@ public class ModelEngineTest {
     }
 
     private static void createSomeDebts(int amountOfDebtsToBeCreated) throws Exception {
-        for (int i = 0; i < amountOfDebtsToBeCreated; i++){
+        for (int i = 0; i < amountOfDebtsToBeCreated; i++) {
             IGroupData group = getRandomGroupForLoggedInUser();
-            if(group.getIUserDataSet().size() < 2){
+            if (group.getIUserDataSet().size() < 2) {
                 continue;
             }
 
@@ -129,16 +129,22 @@ public class ModelEngineTest {
     private static void addSomeContacts(int amountOfContactsToBeCreated) throws Exception {
         for (int i = 0; i < amountOfContactsToBeCreated; i++) {
             String contact = getRandomUserFromHashMap().getValue();
-            if(!contact.equals(modelEngine.getLoggedInUser().getPhoneNumber())){
-                modelEngine.addContact(contact);
-            } else {
-                i--;
+            for (IUserData data : modelEngine.getContacts()) {
+                if (data.getPhoneNumber().equals(contact) {
+                    i--;
+                    continue;
+                }
+                if (!contact.equals(modelEngine.getLoggedInUser().getPhoneNumber())) {
+                    modelEngine.addContact(contact);
+                } else {
+                    i--;
+                }
             }
         }
     }
 
     private static IDebtData getRandomDebtFromGroup(IGroupData randomGroupData) {
-        if (randomGroupData.getDebts().size() != 0){
+        if (randomGroupData.getDebts().size() != 0) {
             int randomDebtIndex = ThreadLocalRandom.current().nextInt(0, randomGroupData.getDebts().size());
             System.out.println("FOUND A DEBT!");
             return randomGroupData.getDebts().get(randomDebtIndex);
@@ -152,7 +158,7 @@ public class ModelEngineTest {
         System.out.println("Amount of users in " + group.getGroupName() + ": " + group.getIUserDataSet().size());
 
         int sizeOfBorrowers;
-        if(group.getIUserDataSet().size() < 3){
+        if (group.getIUserDataSet().size() < 3) {
             sizeOfBorrowers = 1;
         } else {
             sizeOfBorrowers = ThreadLocalRandom.current().nextInt(1, group.getIUserDataSet().size() - 1);
@@ -165,15 +171,26 @@ public class ModelEngineTest {
         String[] phoneNumbers = new String[sizeOfBorrowers];
 
 
-        for(int i = 0; i < sizeOfBorrowers; i++){
+        for (int i = 0; i < sizeOfBorrowers; i++) {
             phoneNumbers[i] = toBeShuffled.get(i).getPhoneNumber();
         }
 
         return new HashSet<>(Arrays.asList(phoneNumbers));
     }
 
-    private static IGroupData getRandomGroupForLoggedInUser() {
-        int randomGroupIndex = ThreadLocalRandom.current().nextInt(0, modelEngine.getGroups().size());
+    private static IGroupData getRandomGroupForLoggedInUser() throws Exception {
+        int randomGroupIndex;
+        if (modelEngine.getGroups().size() != 0) {
+            randomGroupIndex = ThreadLocalRandom.current().nextInt(0, modelEngine.getGroups().size());
+        } else {
+            modelEngine.addContact(randomNoFriendsUserPhoneNumber);
+            Set<String> contacts = new HashSet<>();
+            for (IUserData data : modelEngine.getContacts()) {
+                contacts.add(data.getPhoneNumber());
+            }
+            modelEngine.createGroup("AllContactsGroup", contacts);
+            randomGroupIndex = 0;
+        }
         return modelEngine.getGroups().toArray(new IGroupData[modelEngine.getGroups().size()])[randomGroupIndex];
     }
 
@@ -197,8 +214,8 @@ public class ModelEngineTest {
         modelEngine.createGroup(groupName, new HashSet<>());
 
         IGroupData g = null;
-        for (IGroupData groupData : modelEngine.getGroups()){
-            if(groupData.getGroupName().equals(groupName)){
+        for (IGroupData groupData : modelEngine.getGroups()) {
+            if (groupData.getGroupName().equals(groupName)) {
                 g = groupData;
             }
         }
@@ -208,7 +225,7 @@ public class ModelEngineTest {
         Set<String> borrowers = new HashSet<>();
 
         //Add all contacts into the group.
-        for(IUserData userData : modelEngine.getContacts()){
+        for (IUserData userData : modelEngine.getContacts()) {
             modelEngine.addUserToGroup(userData.getPhoneNumber(), g.getGroupID());
             borrowers.add(userData.getPhoneNumber());
         }
@@ -227,8 +244,8 @@ public class ModelEngineTest {
 
         //Create assertion strings.
         List<String> assertionStrings = new ArrayList<>();
-        for(int i = 0; i < borrowers.size(); i++){
-            assertionStrings.add(debt.get(i).getBorrower().getPhoneNumber() + " OWES " + debt.get(i).getOriginalDebt().toString()  + " DESC: " + debt.get(i).getDescription());
+        for (int i = 0; i < borrowers.size(); i++) {
+            assertionStrings.add(debt.get(i).getBorrower().getPhoneNumber() + " OWES " + debt.get(i).getOriginalDebt().toString() + " DESC: " + debt.get(i).getDescription());
         }
 
         modelEngine.logOutUser();
@@ -238,8 +255,8 @@ public class ModelEngineTest {
         g = modelEngine.getGroup(groupId);
         debt = g.getDebts();
 
-        for(int i = 0; i < borrowers.size(); i++){
-            assertTrue(assertionStrings.contains(debt.get(i).getBorrower().getPhoneNumber() + " OWES " + debt.get(i).getOriginalDebt().toString()+ " DESC: " + debt.get(i).getDescription()));
+        for (int i = 0; i < borrowers.size(); i++) {
+            assertTrue(assertionStrings.contains(debt.get(i).getBorrower().getPhoneNumber() + " OWES " + debt.get(i).getOriginalDebt().toString() + " DESC: " + debt.get(i).getDescription()));
         }
 
     }
