@@ -2,9 +2,7 @@ package com.goayo.debtify.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.model.IUserData;
 
 import java.util.ArrayList;
@@ -18,8 +16,7 @@ import java.util.List;
  * <p>
  * 2020-09-30 Modified by Alex and Yenan: Implemented
  */
-public class PickUserViewModel extends ViewModel {
-    private final ModelEngine modelEngine;
+public class PickUserViewModel extends ModelEngineViewModel {
     private MutableLiveData<List<IUserData>> initialUsers;
     private MutableLiveData<List<IUserData>> selectedUsersData;
     private MutableLiveData<Boolean> isMultipleChoice;
@@ -30,7 +27,6 @@ public class PickUserViewModel extends ViewModel {
      */
     public PickUserViewModel() {
         super();
-        modelEngine = ModelEngine.getInstance();
         initialUsers = new MutableLiveData<>();
         initialUsers.setValue(new ArrayList<IUserData>());
         selectedUsersData = new MutableLiveData<>();
@@ -63,15 +59,15 @@ public class PickUserViewModel extends ViewModel {
         this.isMultipleChoice.setValue(isMultipleChoice);
     }
 
-    public void setDestination(int actionDestination) {
-        destination.setValue(actionDestination);
-    }
-
     public void clearDestination() {
         destination.setValue(null);
     }
 
     public Integer getDestination() {
         return destination.getValue();
+    }
+
+    public void setDestination(int actionDestination) {
+        destination.setValue(actionDestination);
     }
 }

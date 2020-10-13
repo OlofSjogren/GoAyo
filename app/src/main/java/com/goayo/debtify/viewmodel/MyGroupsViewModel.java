@@ -2,12 +2,11 @@ package com.goayo.debtify.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.goayo.debtify.model.EventBus;
 import com.goayo.debtify.model.IEventHandler;
-import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.model.IGroupData;
+import com.goayo.debtify.model.ModelEngine;
 
 import java.util.Set;
 
@@ -24,18 +23,17 @@ import java.util.Set;
  * 2020-10-08 Modified by Alex Phu: Added getCurrentLoggedInUsersPhoneNumber() for GroupViewAdapter. To be able to get
  * UserTotal in each group.
  * 2020-10-12 Modified by Olof Sjögren: Added getCurrentLoggedInUserName for getting logged in users name.
- *
+ * <p>
  * 2020-10-12 Modified by Alex Phu: Implemented updateGroupsFromDatabase()
  */
 
-public class MyGroupsViewModel extends ViewModel implements IEventHandler {
+public class MyGroupsViewModel extends ModelEngineViewModel implements IEventHandler {
+
     private MutableLiveData<Set<IGroupData>> groupsData;
-    private ModelEngine modelEngine;
 
     public MyGroupsViewModel() {
         super();
-        modelEngine = ModelEngine.getInstance();
-        Set<IGroupData> groupsData = modelEngine.getGroups();
+        Set<IGroupData> groupsData = getModel().getGroups();
         this.groupsData = new MutableLiveData<>(groupsData);
         EventBus.getInstance().register(this, EventBus.EVENT.GROUPS_EVENT);
     }
@@ -60,16 +58,16 @@ public class MyGroupsViewModel extends ViewModel implements IEventHandler {
     }
 
     public String getCurrentLoggedInUsersPhoneNumber() {
-        return modelEngine.getLoggedInUser().getPhoneNumber();
+        return getModel().getLoggedInUser().getPhoneNumber();
     }
 
     public String getCurrentLoggedInUserName() {
-        return modelEngine.getLoggedInUser().getName();
+        return getModel().getLoggedInUser().getName();
     }
 
-    public void updateGroupsFromDatabase(){
+    public void updateGroupsFromDatabase() {
         try {
-            modelEngine.refreshWithDatabase();
+            getModel().refreshWithDatabase();
         } catch (Exception e) {
             e.printStackTrace();
         }

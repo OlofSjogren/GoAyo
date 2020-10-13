@@ -1,9 +1,7 @@
 package com.goayo.debtify.viewmodel;
 
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.model.IDebtData;
 
 import java.math.BigDecimal;
@@ -19,9 +17,7 @@ import java.util.Objects;
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
  */
-public class SettleDebtViewModel extends ViewModel {
-
-    private ModelEngine modelEngine = ModelEngine.getInstance();
+public class SettleDebtViewModel extends ModelEngineViewModel {
 
     private MutableLiveData<List<IDebtData>> debtListData;
 
@@ -43,7 +39,7 @@ public class SettleDebtViewModel extends ViewModel {
      */
     public void retrieveData(String groupID) {
         try {
-            debtListData.setValue(modelEngine.getGroup(groupID).getDebts());
+            debtListData.setValue(getModel().getGroup(groupID).getDebts());
         } catch (Exception ignored) {
         }
     }
@@ -64,7 +60,7 @@ public class SettleDebtViewModel extends ViewModel {
      * @throws Exception to be specified later
      */
     public void settleDebt(BigDecimal amount, String debtID, String groupID) throws Exception {
-        modelEngine.payOffDebt(amount, debtID, groupID);
+        getModel().payOffDebt(amount, debtID, groupID);
     }
 
 }
