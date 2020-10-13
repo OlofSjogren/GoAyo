@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.model.UserAlreadyExistsException;
 import com.goayo.debtify.model.UserNotFoundException;
-import com.goayo.debtify.modelaccess.IUserData;
+import com.goayo.debtify.model.IUserData;
 
 import java.net.ConnectException;
 

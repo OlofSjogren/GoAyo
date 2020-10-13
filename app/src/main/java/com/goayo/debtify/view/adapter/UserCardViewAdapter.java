@@ -10,7 +10,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
-import com.goayo.debtify.modelaccess.IUserData;
+import com.goayo.debtify.model.IUserData;
 
 import java.util.ArrayList;
 import java.util.List;

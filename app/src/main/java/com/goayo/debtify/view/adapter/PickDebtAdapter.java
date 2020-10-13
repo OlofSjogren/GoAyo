@@ -12,7 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
-import com.goayo.debtify.modelaccess.IDebtData;
+import com.goayo.debtify.model.IDebtData;
 
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;

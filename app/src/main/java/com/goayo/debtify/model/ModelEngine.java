@@ -1,9 +1,6 @@
 package com.goayo.debtify.model;
 
-import com.goayo.debtify.Database.RealDatabase;
 import com.goayo.debtify.MockDatabase.MockDatabase;
-import com.goayo.debtify.modelaccess.IGroupData;
-import com.goayo.debtify.modelaccess.IUserData;
 
 import java.math.BigDecimal;
 import java.net.ConnectException;

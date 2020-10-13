@@ -1,4 +1,4 @@
-package com.goayo.debtify.modelaccess;
+package com.goayo.debtify.model;
 
 import java.math.BigDecimal;
 import java.util.Date;

@@ -2,8 +2,6 @@ package com.goayo.debtify.model;
 
 import androidx.annotation.Nullable;
 
-import com.goayo.debtify.modelaccess.IUserData;
-
 /**
  * @author Alex Phu, Olof Sjögren
  * @date 2020-09-15

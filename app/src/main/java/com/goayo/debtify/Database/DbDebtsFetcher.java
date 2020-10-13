@@ -1,8 +1,8 @@
 package com.goayo.debtify.Database;
 
 import com.goayo.debtify.model.IDebtSplitStrategy;
-import com.goayo.debtify.Tuple;
-import com.goayo.debtify.modelaccess.IUserData;
+import com.goayo.debtify.model.Tuple;
+import com.goayo.debtify.model.IUserData;
 import com.google.gson.Gson;
 
 import java.math.BigDecimal;

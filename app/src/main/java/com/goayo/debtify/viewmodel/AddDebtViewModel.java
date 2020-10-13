@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 import com.goayo.debtify.model.DebtSplitFactory;
 import com.goayo.debtify.model.IDebtSplitStrategy;
 import com.goayo.debtify.model.ModelEngine;
-import com.goayo.debtify.modelaccess.IUserData;
+import com.goayo.debtify.model.IUserData;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

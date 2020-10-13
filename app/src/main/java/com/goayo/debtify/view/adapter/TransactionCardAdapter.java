@@ -11,8 +11,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
-import com.goayo.debtify.modelaccess.IDebtData;
-import com.goayo.debtify.modelaccess.IPaymentData;
+import com.goayo.debtify.model.IDebtData;
+import com.goayo.debtify.model.IPaymentData;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

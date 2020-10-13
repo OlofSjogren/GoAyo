@@ -9,7 +9,7 @@ import com.goayo.debtify.model.GroupsEvent;
 import com.goayo.debtify.model.IEventHandler;
 import com.goayo.debtify.model.IModelEvent;
 import com.goayo.debtify.model.ModelEngine;
-import com.goayo.debtify.modelaccess.IGroupData;
+import com.goayo.debtify.model.IGroupData;
 
 import java.util.Set;
 

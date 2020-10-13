@@ -1,9 +1,5 @@
 package com.goayo.debtify.model;
 
-import com.goayo.debtify.modelaccess.IDebtData;
-import com.goayo.debtify.modelaccess.IGroupData;
-import com.goayo.debtify.modelaccess.IUserData;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;

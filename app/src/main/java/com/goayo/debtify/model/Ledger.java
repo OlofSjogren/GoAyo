@@ -1,9 +1,6 @@
 package com.goayo.debtify.model;
 
 
-import com.goayo.debtify.Tuple;
-import com.goayo.debtify.modelaccess.IDebtData;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
