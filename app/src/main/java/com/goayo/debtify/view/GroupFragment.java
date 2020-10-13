@@ -53,6 +53,8 @@ import java.util.List;
  * 2020-10-09 Modified by Yenan Wang & Alex Phu: Add observer to ViewModel so view updates correctly
  *
  * 2020-10-12 Modified by Alex Phu: Implemented initRefreshLayout() to be able to refresh data from database
+ *
+ * 2020-10-13 Modified by Alex Phu: Total balance now changes depending on the amount of debt. Refactored code out from the gigantic onCreateView() method.
  */
 public class GroupFragment extends Fragment {
     private DetailedGroupViewModel viewModel;
@@ -72,8 +74,8 @@ public class GroupFragment extends Fragment {
             // kill everything
             e.printStackTrace();
             android.os.Process.killProcess(android.os.Process.myPid());
-        } catch (Exception ignored) {
-            // i don't know what this is
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         // observe the selectedUserData and add the selected users
@@ -84,6 +86,42 @@ public class GroupFragment extends Fragment {
             }
         });
 
+        initHeader();
+        initAdapter();
+        initRecyclerView();
+        initRefreshLayout();
+        initBottomNavigation();
+
+        return binding.getRoot();
+    }
+
+    private void initHeader(){
+        //Sets group name label
+        binding.detailedGroupGroupNameTextView.setText(viewModel.getCurrentGroup().getValue().getGroupName());
+
+        //CardView below header
+        // observe the GroupBalance to update them after change
+        viewModel.getCurrentGroupBalance().observe(getViewLifecycleOwner(), new Observer<BigDecimal>() {
+            @Override
+            public void onChanged(BigDecimal bigDecimal) {
+                //Sets colour depending on total balance and amount
+                switch (bigDecimal.compareTo(new BigDecimal(0))) {
+                    case 0:
+                        binding.detailedGroupBalanceTextView.setTextColor(binding.detailedGroupBalanceTextView.getResources().getColor(R.color.dividerGrey));
+                        break;
+                    case -1:
+                        binding.detailedGroupBalanceTextView.setTextColor(binding.detailedGroupBalanceTextView.getResources().getColor(R.color.negativeDebtRed));
+                        break;
+                    case 1:
+                        binding.detailedGroupBalanceTextView.setTextColor(binding.detailedGroupBalanceTextView.getResources().getColor(R.color.positiveDebtGreen));
+                        break;
+                }
+                binding.detailedGroupBalanceTextView.setText(bigDecimal.toString() + "kr");
+            }
+        });
+    }
+
+    private void initAdapter(){
         // initialize the adapter for the debts and payments
         try {
             adapter = new TransactionCardAdapter(viewModel.getCurrentGroupDebts(getCurrentGroupID()));
@@ -99,22 +137,6 @@ public class GroupFragment extends Fragment {
                 adapter.updateData(iDebtData);
             }
         });
-
-        // observe the GroupBalance to update them after change
-        viewModel.getCurrentGroupBalance().observe(getViewLifecycleOwner(), new Observer<BigDecimal>() {
-            @Override
-            public void onChanged(BigDecimal bigDecimal) {
-                binding.detailedGroupBalanceTextView.setText(bigDecimal.toString() + "kr");
-            }
-        });
-
-        //Sets group name label
-        binding.detailedGroupGroupNameTextView.setText(viewModel.getCurrentGroup().getValue().getGroupName());
-        initBottomNavigation();
-        initRecyclerView();
-        initRefreshLayout();
-
-        return binding.getRoot();
     }
 
     private void initRecyclerView() {
