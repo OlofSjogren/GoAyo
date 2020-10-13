@@ -8,5 +8,9 @@ package com.goayo.debtify.model;
  */
 
 public interface IEventHandler {
+
+    /**
+     * Notification method used to update the handler when a corresponding event it is listening to is fired.
+     */
     void onModelEvent();
 }

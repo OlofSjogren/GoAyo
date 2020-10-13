@@ -46,6 +46,7 @@ class Account {
     private Set<Group> associatedGroups;
     private Set<User> contactList;
     private IDatabase database;
+
     /**
      * Constructor for Account class.
      *
@@ -57,11 +58,13 @@ class Account {
     }
 
     /**
-     * A method for registering
+     * A method for registering a user.
      *
      * @param phoneNumber the registered user's phonenumber.
      * @param name        the registered user's name.
      * @param password    the registered user's password.
+     * @throws RegistrationException thrown if the registration failed.
+     * @throws ConnectException      thrown if unable to make a database connection.
      */
     public void registerUser(String phoneNumber, String password, String name) throws RegistrationException, ConnectException {
         database.registerUser(phoneNumber, password, name);
