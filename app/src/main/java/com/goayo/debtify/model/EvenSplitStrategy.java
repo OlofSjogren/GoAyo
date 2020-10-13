@@ -1,7 +1,5 @@
 package com.goayo.debtify.model;
 
-import com.goayo.debtify.Tuple;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.HashMap;

@@ -1,6 +1,6 @@
 package com.goayo.debtify.MockDatabase;
 
-import com.goayo.debtify.Tuple;
+import com.goayo.debtify.model.Tuple;
 import com.goayo.debtify.model.DebtException;
 import com.goayo.debtify.model.GroupNotFoundException;
 import com.goayo.debtify.model.IDatabase;

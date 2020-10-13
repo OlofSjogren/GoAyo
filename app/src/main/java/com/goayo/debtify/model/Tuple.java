@@ -1,4 +1,4 @@
-package com.goayo.debtify;
+package com.goayo.debtify.model;
 
 /**
  * Simple tuple class for holding two element for when the elements are related to each other.
