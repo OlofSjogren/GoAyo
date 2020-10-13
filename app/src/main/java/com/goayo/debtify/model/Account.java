@@ -78,7 +78,7 @@ class Account {
      * @throws Exception Thrown if user input is not valid.
      */
     public void loginUser(String phoneNumber, String password) throws Exception {
-        String userToBeLoggedIn = database.getUserToBeLoggedIn(phoneNumber, password);
+        JsonString.UserJsonString userToBeLoggedIn = database.getUserToBeLoggedIn(phoneNumber, password);
         loggedInUser = fromJsonFactory.getUser(userToBeLoggedIn);
         initContactList(phoneNumber);
         initAssociatedGroups();
@@ -130,9 +130,9 @@ class Account {
 
     public void addContact(String phoneNumber) throws UserNotFoundException, ConnectException, UserAlreadyExistsException {
         userIsLoggedIn();
-        String data = database.getUser(phoneNumber);
+        JsonString.UserJsonString jsonString = database.getUser(phoneNumber);
 
-        User u = fromJsonFactory.getUser(data);
+        User u = fromJsonFactory.getUser(jsonString);
 
         // prevent adding yourself as a contact
         if (u.equals(loggedInUser)) {
@@ -335,8 +335,8 @@ class Account {
 
     //Todo: Database call?
     public Group getGroupFromID(String groupID) throws Exception {
-        String groupJson = database.getGroupFromId(groupID);
-        return fromJsonFactory.getGroupFromId(groupJson);
+        JsonString.GroupJsonString jsonString = database.getGroupFromId(groupID);
+        return fromJsonFactory.getGroupFromId(jsonString);
     }
 
 
@@ -352,12 +352,12 @@ class Account {
     }
 
     private void initContactList(String phoneNumber) throws UserNotFoundException, ConnectException {
-        String contactListJson = database.getContactList(phoneNumber);
+        JsonString.UserArrayJsonString contactListJson = database.getContactList(phoneNumber);
         contactList = fromJsonFactory.getContactList(contactListJson);
     }
 
     private void initAssociatedGroups() throws Exception {
-        String associatedGroupsJson = database.getGroups(loggedInUser.getPhoneNumber());
+        JsonString.GroupArrayJsonString associatedGroupsJson = database.getGroups(loggedInUser.getPhoneNumber());
         associatedGroups = fromJsonFactory.getGroups(associatedGroupsJson);
     }
 
@@ -368,7 +368,7 @@ class Account {
     }
 
     public IUserData getSingleUserFromDatabase(String phoneNumber) throws UserNotFoundException, ConnectException {
-        String userJson = database.getUser(phoneNumber);
+        JsonString.UserJsonString userJson = database.getUser(phoneNumber);
         return fromJsonFactory.getUser(userJson);
     }
 
