@@ -43,6 +43,11 @@ import java.util.UUID;
  */
 class Account {
 
+    private FromJsonFactory fromJsonFactory;
+    private User loggedInUser;
+    private Set<Group> associatedGroups;
+    private Set<User> contactList;
+    private IDatabase database;
     /**
      * Constructor for Account class.
      *
@@ -52,12 +57,6 @@ class Account {
         this.database = database;
         this.fromJsonFactory = new FromJsonFactory();
     }
-
-    private FromJsonFactory fromJsonFactory;
-    private User loggedInUser;
-    private Set<Group> associatedGroups;
-    private Set<User> contactList;
-    private IDatabase database;
 
     /**
      * A method for registering and
@@ -102,8 +101,8 @@ class Account {
         database.registerGroup(groupName, phoneNumberSet, id);
         Set<User> usersToBeAdded = new HashSet<>();
 
-        for(String phoneNumber : phoneNumberSet){
-            if(!phoneNumber.equals(loggedInUser.getPhoneNumber())){
+        for (String phoneNumber : phoneNumberSet) {
+            if (!phoneNumber.equals(loggedInUser.getPhoneNumber())) {
                 usersToBeAdded.add(getUserFromSet(phoneNumber, contactList));
             }
         }
@@ -114,8 +113,8 @@ class Account {
     }
 
     private User getUserFromSet(String phoneNumber, Set<User> set) {
-        for (User u : set){
-            if(u.getPhoneNumber().equals(phoneNumber)){
+        for (User u : set) {
+            if (u.getPhoneNumber().equals(phoneNumber)) {
                 return u;
             }
         }
@@ -133,15 +132,21 @@ class Account {
         userIsLoggedIn();
         String data = database.getUser(phoneNumber);
 
-        // TODO Change this to exception
-        if (data.equals("BAD REQUEST, INCORRECT NUMBER")) {
-            throw new UserNotFoundException("This user doesn't exist!");
-        }
         User u = fromJsonFactory.getUser(data);
 
         // prevent adding yourself as a contact
         if (u.equals(loggedInUser)) {
             throw new UserAlreadyExistsException("Cannot add yourself as a contact!");
+        }
+
+        // iterate through the whole Set,
+        // slightly inefficient, however HashSet.contains() does not work,
+        // HashSet.contains checks reference for key, it does not call equals()
+        // TODO possibly fix this?
+        for (User user : contactList) {
+            if (user.equals(u)) {
+                throw new UserAlreadyExistsException("You have already added this user as a contact!");
+            }
         }
 
         database.addContact(loggedInUser.getPhoneNumber(), phoneNumber);
@@ -168,8 +173,8 @@ class Account {
     }
 
     public Group getAssociatedGroupFromId(String groupID) {
-        for(Group g : associatedGroups){
-            if(g.getGroupID().equals(groupID)){
+        for (Group g : associatedGroups) {
+            if (g.getGroupID().equals(groupID)) {
                 return g;
             }
         }
@@ -199,11 +204,11 @@ class Account {
     /**
      * Creates a debt between a lender and one or more borrowers.
      *
-     * @param groupID     The group's ID.
-     * @param lender      The lender.
-     * @param borrowers   The borrower(s).
-     * @param owed        Amount of owed money.
-     * @param description the brief description of the debt
+     * @param groupID       The group's ID.
+     * @param lender        The lender.
+     * @param borrowers     The borrower(s).
+     * @param owed          Amount of owed money.
+     * @param description   the brief description of the debt
      * @param splitStrategy How the debt is split
      * @throws Exception Thrown if group or users are not found, or if the set of borrower is empty.
      */
@@ -216,7 +221,7 @@ class Account {
 
         Group g = getAssociatedGroupFromId(groupID);
 
-        for (String borrower : borrowers){
+        for (String borrower : borrowers) {
             String id = UUID.randomUUID().toString();
             borrowerIUserDataAndId.put(getUserFromSet(borrower, g.getGroupMembers()), id);
             borrowerUserAndId.put(getUserFromSet(borrower, g.getGroupMembers()), id);
