@@ -31,39 +31,35 @@
                 android:textStyle="bold" />
         </RelativeLayout>
 
-        <androidx.cardview.widget.CardView
+        <RelativeLayout
             android:id="@+id/detailed_group_cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/detailed_group_header_RelativeLayout"
             android:layout_marginTop="-20dp"
-            app:cardCornerRadius="20dp">
+            android:background="@drawable/rounded_corner_box"
+            android:elevation="10dp"
+            android:padding="10dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <TextView
+                android:id="@+id/textview6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:layout_marginStart="10dp"
-                android:padding="10dp">
+                android:text="Your group total:"
+                android:textSize="28sp" />
 
-                <TextView
-                    android:id="@+id/textview6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-
-                    android:text="Your group total:"
-                    android:textSize="28sp" />
-
-                <TextView
-                    android:id="@+id/detailed_group_balance_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/textview6"
-                    android:text="XX,XX SEK"
-                    android:textSize="40sp" />
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/detailed_group_balance_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview6"
+                android:layout_marginStart="10dp"
+                android:text="XX,XX SEK"
+                android:textSize="40sp" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/textView7"
