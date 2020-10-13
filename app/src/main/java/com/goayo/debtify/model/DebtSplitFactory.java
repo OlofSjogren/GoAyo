@@ -5,11 +5,10 @@ package com.goayo.debtify.model;
  * @date   2020-10-12
  *
  * Static factory for SplitStrategies
+ *
+ * 2020-10-13 Modified by Olof Sjögren: Removed empty constructor.
  */
 public final class DebtSplitFactory {
-
-    private DebtSplitFactory() {
-    }
 
     public static IDebtSplitStrategy createNoSplitStrategy(){
         return new NoSplitStrategy();
