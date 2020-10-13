@@ -7,6 +7,7 @@ import com.goayo.debtify.model.IDatabase;
 import com.goayo.debtify.model.IDebtSplitStrategy;
 import com.goayo.debtify.model.InvalidDebtException;
 import com.goayo.debtify.model.InvalidPaymentException;
+import com.goayo.debtify.model.JsonString;
 import com.goayo.debtify.model.LoginException;
 import com.goayo.debtify.model.RegistrationException;
 import com.goayo.debtify.model.UserAlreadyExistsException;
@@ -51,7 +52,7 @@ public class MockDatabase implements IDatabase {
     List<MockDbObject.Group> groups;
 
     @Override
-    public String getGroups(String phoneNumber) throws UserNotFoundException, ConnectException {
+    public JsonString.GroupArrayJsonString getGroups(String phoneNumber) throws UserNotFoundException, ConnectException {
         List<MockDbObject.Group> groupsWithUsers = new ArrayList<>();
 
         for (MockDbObject.Group group : groups) {
@@ -65,24 +66,24 @@ public class MockDatabase implements IDatabase {
 
         MockDbObject.Group[] returnArray = new MockDbObject.Group[groupsWithUsers.size()];
         MockDbObject.GroupsArrayJsonObject returnGroupsObject = new MockDbObject.GroupsArrayJsonObject(groupsWithUsers.toArray(returnArray));
-        return gson.toJson(returnGroupsObject);
+        return new JsonString.GroupArrayJsonString(gson.toJson(returnGroupsObject));
     }
 
     @Override
-    public String getGroupFromId(String groupID) throws GroupNotFoundException, ConnectException {
+    public JsonString.GroupJsonString getGroupFromId(String groupID) throws GroupNotFoundException, ConnectException {
         for (MockDbObject.Group g : groups) {
             if (g.id.equals(groupID)) {
-                return gson.toJson(g);
+                return new JsonString.GroupJsonString(gson.toJson(g));
             }
         }
         throw new GroupNotFoundException("The group wasn't found in the MOCK database");
     }
 
     @Override
-    public String getUser(String phoneNumber) throws UserNotFoundException, ConnectException {
+    public JsonString.UserJsonString getUser(String phoneNumber) throws UserNotFoundException, ConnectException {
         for (MockDbObject.User u : users) {
             if (u.phonenumber.equals(phoneNumber)) {
-                return gson.toJson(u);
+                return new JsonString.UserJsonString(gson.toJson(u));
             }
         }
         throw new UserNotFoundException("The user wasn't found in the MOCK database");
@@ -103,8 +104,8 @@ public class MockDatabase implements IDatabase {
 
         for (int i = 0; i < members.length; i++) {
             try {
-                String user = getUser(numbers[i]);
-                members[i] = gson.fromJson(user, MockDbObject.User.class);
+                JsonString.UserJsonString user = getUser(numbers[i]);
+                members[i] = gson.fromJson(user.getJson(), MockDbObject.User.class);
             } catch (UserNotFoundException e) {
                 e.printStackTrace();
                 return false;
@@ -116,15 +117,15 @@ public class MockDatabase implements IDatabase {
 
     @Override
     public boolean addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy) throws Exception {
-        String lenderJson = getUser(lender);
+        JsonString.UserJsonString lenderJson = getUser(lender);
         Map<IUserData, Tuple<BigDecimal, String>> usersTotalsAndId = splitStrategy.splitDebt(borrowers, amount);
         MockDbObject.Debt[] debts = new MockDbObject.Debt[borrowers.size()];
 
         int i = 0;
         for (Map.Entry<IUserData, Tuple<BigDecimal, String>> entry : usersTotalsAndId.entrySet()) {
-            String borrowerJson = getUser(entry.getKey().getPhoneNumber());
-            MockDbObject.User lenderUser = gson.fromJson(lenderJson, MockDbObject.User.class);
-            MockDbObject.User borrowerUser = gson.fromJson(borrowerJson, MockDbObject.User.class);
+            JsonString.UserJsonString borrowerJson = getUser(entry.getKey().getPhoneNumber());
+            MockDbObject.User lenderUser = gson.fromJson(lenderJson.getJson(), MockDbObject.User.class);
+            MockDbObject.User borrowerUser = gson.fromJson(borrowerJson.getJson(), MockDbObject.User.class);
             debts[i] = new MockDbObject.Debt(lenderUser, borrowerUser, entry.getValue().getFirst().toString(), entry.getValue().getSecond(), new MockDbObject.Payment[0], description);
             i++;
         }
@@ -196,7 +197,7 @@ public class MockDatabase implements IDatabase {
 
     @Override
     public boolean addUserToGroup(String groupID, String phoneNumber) throws UserNotFoundException, GroupNotFoundException, ConnectException, UserAlreadyExistsException {
-        MockDbObject.User u = gson.fromJson(getUser(phoneNumber), MockDbObject.User.class);
+        MockDbObject.User u = gson.fromJson(getUser(phoneNumber).getJson(), MockDbObject.User.class);
         for(MockDbObject.Group g : groups){
             if(g.id.equals(groupID)){
                 List<MockDbObject.User> members = new ArrayList<>(Arrays.asList(g.members));
@@ -210,25 +211,25 @@ public class MockDatabase implements IDatabase {
     }
 
     @Override
-    public String getUserToBeLoggedIn(String phoneNumber, String password) throws LoginException, ConnectException {
+    public JsonString.UserJsonString getUserToBeLoggedIn(String phoneNumber, String password) throws LoginException, ConnectException {
         for(MockDbObject.User u : users){
             if (u.phonenumber.equals(phoneNumber) && u.password.equals(password)){
-                return gson.toJson(u);
+                return new JsonString.UserJsonString(gson.toJson(u));
             }
         }
         throw new LoginException("Wrong password or number");
     }
 
     @Override
-    public String getContactList(String phoneNumber) throws UserNotFoundException, ConnectException {
-        MockDbObject.User u = gson.fromJson(getUser(phoneNumber), MockDbObject.User.class);
+    public JsonString.UserArrayJsonString getContactList(String phoneNumber) throws UserNotFoundException, ConnectException {
+        MockDbObject.User u = gson.fromJson(getUser(phoneNumber).getJson(), MockDbObject.User.class);
 
         MockDbObject.User[] contacts = new MockDbObject.User[u.contacts.length];
         for(int i = 0; i < u.contacts.length; i++) {
-            contacts[i] = gson.fromJson(getUser(u.contacts[i]), MockDbObject.User.class);
+            contacts[i] = gson.fromJson(getUser(u.contacts[i]).getJson(), MockDbObject.User.class);
         }
         MockDbObject.ContactsJsonObject contactsJsonObject = new MockDbObject.ContactsJsonObject(contacts);
-        return gson.toJson(contactsJsonObject);
+        return new JsonString.UserArrayJsonString(gson.toJson(contactsJsonObject));
     }
 
     @Override

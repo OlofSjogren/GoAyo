@@ -82,7 +82,7 @@ public interface IDatabase {
      * @param phoneNumber The phone number of the user belonging to the sought groups.
      * @return A json file with the above specified properties of all the groups in which the user with the provided phone number is a member.
      */
-    String getGroups(String phoneNumber) throws UserNotFoundException, ConnectException;
+    JsonString.GroupArrayJsonString getGroups(String phoneNumber) throws UserNotFoundException, ConnectException;
 
     /**
      * Returns a single group with the given id, in the form of a Json object.
@@ -132,7 +132,7 @@ public interface IDatabase {
      * @param groupID The id of the sought group.
      * @return A json file with the above specified properties of the group with specified ID.
      */
-    String getGroupFromId(String groupID) throws GroupNotFoundException, ConnectException;
+    JsonString.GroupJsonString getGroupFromId(String groupID) throws GroupNotFoundException, ConnectException;
 
     /**
      * Returns a user with the given phone number.
@@ -149,7 +149,7 @@ public interface IDatabase {
      * @param phoneNumber The phone number of the user.
      * @return A json file with the above specified properties the user with the specified phone number.
      */
-    String getUser(String phoneNumber) throws UserNotFoundException, ConnectException;
+    JsonString.UserJsonString getUser(String phoneNumber) throws UserNotFoundException, ConnectException;
 
     /**
      * Register a new user in the database.
@@ -264,7 +264,7 @@ public interface IDatabase {
      * @return The user with the provided phone number, as a json-string, if the password matches mentioned phone
      * number.
      */
-    String getUserToBeLoggedIn(String phoneNumber, String password) throws LoginException, ConnectException;
+    JsonString.UserJsonString getUserToBeLoggedIn(String phoneNumber, String password) throws LoginException, ConnectException;
 
     /**
      * Getter for a list of users in an other users contact list.
@@ -284,7 +284,7 @@ public interface IDatabase {
      * @param phoneNumber The phone number of the user requesting the contact list.
      * @return A json file with the above specified format.
      */
-    String getContactList(String phoneNumber) throws UserNotFoundException, ConnectException;
+    JsonString.UserArrayJsonString getContactList(String phoneNumber) throws UserNotFoundException, ConnectException;
 
     /**
      * Removes a user from a group.

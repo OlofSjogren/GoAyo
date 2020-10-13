@@ -15,26 +15,26 @@ public class FromJsonFactory {
         gson = new Gson();
     }
 
-    public User getUser(String userToBeLoggedIn) {
-        String name = gson.fromJson(userToBeLoggedIn, UserJsonObject.class).name;
-        String phoneNumber = gson.fromJson(userToBeLoggedIn, UserJsonObject.class).phonenumber;
+    public User getUser(JsonString.UserJsonString userToBeLoggedIn) {
+        String name = gson.fromJson(userToBeLoggedIn.getJson(), UserJsonObject.class).name;
+        String phoneNumber = gson.fromJson(userToBeLoggedIn.getJson(), UserJsonObject.class).phonenumber;
         return EntityFactory.createUser(phoneNumber, name);
     }
 
-    public Set<User> getContactList(String contactListJson) {
+    public Set<User> getContactList(JsonString.UserArrayJsonString contactListJson) {
         Set<User> users = new HashSet<>();
-        UserJsonObject[] contacts = gson.fromJson(contactListJson, ContactsJsonObject.class).contacts;
+        UserJsonObject[] contacts = gson.fromJson(contactListJson.getJson(), ContactsJsonObject.class).contacts;
         for (UserJsonObject object : contacts){
-            users.add(getUser(gson.toJson(object)));
+            users.add(getUser(new JsonString.UserJsonString(gson.toJson(object))));
         }
         return users;
     }
 
-    public Set<Group> getGroups(String associatedGroupsJson) throws Exception {
+    public Set<Group> getGroups(JsonString.GroupArrayJsonString associatedGroupsJson) throws Exception {
 
         GroupJsonObject[] groupJsonObjects = null;
         try {
-            groupJsonObjects = gson.fromJson(associatedGroupsJson, GroupsArrayJsonObject.class).groupJsonObjects;
+            groupJsonObjects = gson.fromJson(associatedGroupsJson.getJson(), GroupsArrayJsonObject.class).groupJsonObjects;
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -42,23 +42,23 @@ public class FromJsonFactory {
         Set<Group> groups = new HashSet<>();
 
         for (GroupJsonObject json : groupJsonObjects){
-            groups.add(getGroupFromId(gson.toJson(json)));
+            groups.add(getGroupFromId(new JsonString.GroupJsonString(gson.toJson(json))));
         }
 
         return groups;
     }
 
-    public Group getGroupFromId(String groupJson) throws Exception {
-        GroupJsonObject deSerializedJsonGroup = gson.fromJson(groupJson, GroupJsonObject.class);
+    public Group getGroupFromId(JsonString.GroupJsonString groupJson) throws Exception {
+        GroupJsonObject deSerializedJsonGroup = gson.fromJson(groupJson.getJson(), GroupJsonObject.class);
         Group group = EntityFactory.createGroup(deSerializedJsonGroup.name, deSerializedJsonGroup.id);
 
         for(UserJsonObject userJsonObject : deSerializedJsonGroup.members){
-            group.addUser(getUser(gson.toJson(userJsonObject)));
+            group.addUser(getUser(new JsonString.UserJsonString(gson.toJson(userJsonObject))));
         }
 
         for (DebtJsonObject debtJsonObject : deSerializedJsonGroup.debts){
-            User borrower = getUser(gson.toJson(debtJsonObject.borrower));
-            User lender = getUser(gson.toJson(debtJsonObject.lender, UserJsonObject.class));
+            User borrower = getUser(new JsonString.UserJsonString(gson.toJson(debtJsonObject.borrower)));
+            User lender = getUser(new JsonString.UserJsonString(gson.toJson(debtJsonObject.lender, UserJsonObject.class)));
             Map<User, String> borrowers = new HashMap<>();
             borrowers.put(borrower, debtJsonObject.id);
             group.createDebt(lender, borrowers, new BigDecimal(debtJsonObject.owed), debtJsonObject.description, new EvenSplitStrategy());
