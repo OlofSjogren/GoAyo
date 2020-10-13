@@ -222,8 +222,17 @@ class Account {
             borrowerUserAndId.put(getUserFromSet(borrower, g.getGroupMembers()), id);
         }
 
+        if (borrowerIUserDataAndId.size() == 0) {
+            throw new DebtException("The borrowers cannot be empty!");
+        }
 
+        if (borrowerIUserDataAndId.get(getUserFromSet(lender, g.getGroupMembers())) != null) {
+            throw new DebtException("The lender cannot be a borrower!");
+        }
 
+        if (description.isEmpty()) {
+            throw new DebtException("The description cannot be empty!");
+        }
 
         database.addDebt(groupID, lender, borrowerIUserDataAndId, owed, description, splitStrategy);
 
