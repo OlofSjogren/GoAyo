@@ -31,7 +31,7 @@ public class ModelEngineTest {
     static Map<String, String> passwordAndNumber;
     static ModelEngine modelEngine = ModelEngine.getInstance();
     static Set<String> someNumbers;
-    static private int amountOfUsers = 100;
+    static private int amountOfUsers = 5;
     static String randomNoFriendsUserName;
     static String randomNoFriendsUserPassword;
     static String randomNoFriendsUserPhoneNumber;
@@ -172,8 +172,19 @@ public class ModelEngineTest {
         return new HashSet<>(Arrays.asList(phoneNumbers));
     }
 
-    private static IGroupData getRandomGroupForLoggedInUser() {
-        int randomGroupIndex = ThreadLocalRandom.current().nextInt(0, modelEngine.getGroups().size());
+    private static IGroupData getRandomGroupForLoggedInUser() throws Exception {
+        int randomGroupIndex;
+        if (modelEngine.getGroups().size() != 0) {
+            randomGroupIndex = ThreadLocalRandom.current().nextInt(0, modelEngine.getGroups().size());
+        } else {
+            modelEngine.addContact(randomNoFriendsUserPhoneNumber);
+            Set<String> contacts = new HashSet<>();
+            for (IUserData data : modelEngine.getContacts()){
+                contacts.add(data.getPhoneNumber());
+            }
+            modelEngine.createGroup("AllContactsGroup", contacts);
+            randomGroupIndex = 0;
+        }
         return modelEngine.getGroups().toArray(new IGroupData[modelEngine.getGroups().size()])[randomGroupIndex];
     }
 
