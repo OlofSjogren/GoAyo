@@ -12,7 +12,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,6 +34,7 @@ import java.util.List;
  * <p>
  * 2020-09-18 Modified by Alex Phu and Olof Sjögren: Added listener for create button. Logic will be implemented later.
  * 2020-10-05 Modified by ALex & Yenan: implemented create group button and now it actually creates a group
+ * 2020-10-12 Modified by Alex Phu: Moved clicklistener logic to the empty initContinueButton() method
  */
 public class CreateGroupFragment extends Fragment {
 
@@ -59,13 +59,7 @@ public class CreateGroupFragment extends Fragment {
                 binding.createGroupNumTextView.setText(iUserData.size() + " participants");
             }
         });
-
-        binding.createGroupCreateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createGroup();
-            }
-        });
+        initContinueButton();
 
         return binding.getRoot();
     }
@@ -95,14 +89,12 @@ public class CreateGroupFragment extends Fragment {
 
     /**
      * Initializes the create-group button.
-     *
-     * @param binding Variable which can access the elements in the layout file.
      */
-    private void initContinueButton(CreateGroupFragmentBinding binding) {
+    private void initContinueButton() {
         binding.createGroupCreateButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                //TODO ("IMPLEMENT NAVIGATION FOR CREATE BUTTON")
+            public void onClick(View v) {
+                createGroup();
             }
         });
     }

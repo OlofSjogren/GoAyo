@@ -18,7 +18,7 @@ public class DebtTrackerTest {
 
     @Test
     public void getSumOfPayments() throws Exception {
-        DebtTracker dt = new DebtTracker(new BigDecimal(350), new User("244","bob"), new User("afa", "afaf"), "abs");
+        DebtTracker dt = new DebtTracker(new BigDecimal(350), new User("244","bob"), new User("1111001100", "afaf"), "abs", "TestID");
         dt.payOffDebt(new BigDecimal(50));
         dt.payOffDebt(new BigDecimal(25));
         dt.payOffDebt(new BigDecimal(25));
@@ -30,7 +30,7 @@ public class DebtTrackerTest {
         exceptionRule.expect(Exception.class);
         exceptionRule.expectMessage("PayOffDebt failed.");
 
-        DebtTracker dt = new DebtTracker(new BigDecimal(350), new User("244","bob"), new User("afa", "afaf"), "abs");
+        DebtTracker dt = new DebtTracker(new BigDecimal(350), new User("244","bob"), new User("1111001100", "afaf"), "abs", "TestID");
         dt.payOffDebt(new BigDecimal(400));
         dt.payOffDebt(new BigDecimal(349.9));
         assertEquals(new BigDecimal(0.01), dt.getAmountOwed());
@@ -38,7 +38,7 @@ public class DebtTrackerTest {
 
     @Test
     public void getPaymentHistory() throws Exception {
-        DebtTracker dt = new DebtTracker(new BigDecimal(350), new User("244","bob"), new User("afa", "afaf"), "abs");
+        DebtTracker dt = new DebtTracker(new BigDecimal(350), new User("244","bob"), new User("1111001100", "afaf"), "abs", "TestID");
         dt.payOffDebt(new BigDecimal(35));
         dt.payOffDebt(new BigDecimal(47));
         List<IPaymentData> listOfPaymentData = dt.getPaymentHistory();

@@ -20,11 +20,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.AddContactFragmentBinding;
+import com.goayo.debtify.model.UserAlreadyExistsException;
 import com.goayo.debtify.model.UserNotFoundException;
 import com.goayo.debtify.modelaccess.IUserData;
 import com.goayo.debtify.view.adapter.UserCardViewAdapter;
 import com.goayo.debtify.viewmodel.AddContactViewModel;
 
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -115,10 +117,9 @@ public class AddContactFragment extends Fragment {
             String phoneNumber = binding.phoneEditText.getText().toString();
             model.addUserToContacts(phoneNumber);
             stepBack();
-        } catch (Exception e) {
-            // TODO it never reaches here even if the given phone number is invalid
-            //      help
-            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        } catch (ConnectException | UserNotFoundException | UserAlreadyExistsException e) {
+            // dump the error message to the user
+           Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

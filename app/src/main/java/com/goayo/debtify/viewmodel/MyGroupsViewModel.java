@@ -25,7 +25,12 @@ import java.util.Set;
  * <p>
  * 2020-10-08 Modified by Alex Phu: Added getCurrentLoggedInUsersPhoneNumber() for GroupViewAdapter. To be able to get
  * UserTotal in each group.
+<<<<<<< HEAD
  * 2020-10-12 Modified by Olof Sjögren: Added getCurrentLoggedInUserName for getting logged in users name.
+=======
+ *
+ * 2020-10-12 Modified by Alex Phu: Implemented updateGroupsFromDatabase()
+>>>>>>> f87c9d9257703a67332c8720d3809dcfd5e5195c
  */
 
 public class MyGroupsViewModel extends ViewModel implements IEventHandler {
@@ -64,6 +69,13 @@ public class MyGroupsViewModel extends ViewModel implements IEventHandler {
     }
 
     public String getCurrentLoggedInUserName() {
-        return  modelEngine.getLoggedInUser().getName();
+        return modelEngine.getLoggedInUser().getName();
+    }
+    public void updateGroupsFromDatabase(){
+        try {
+            modelEngine.refreshWithDatabase();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

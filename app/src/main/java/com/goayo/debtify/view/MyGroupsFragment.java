@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.MyGroupsFragmentBinding;
@@ -43,24 +44,29 @@ import java.util.Set;
  * 2020/09/30 Modified by Alex Phu and Yenan Wang: Refactored entire class.
  *
  * 2020/10/08 Modified by Alex Phu: Injected currentLoggedInUsersPhoneNumber to GroupViewAdapter.
+<<<<<<< HEAD
  *
  * 2020/10/12 Modified by Olof Sjögren: Created initHeader() for initializing header name, phone number and total debt.
+=======
+ * 2020-10-12 Modified by Alex Phu: Implemented RefreshLayout, to be able to fetch new data from database.
+>>>>>>> f87c9d9257703a67332c8720d3809dcfd5e5195c
  */
 public class MyGroupsFragment extends Fragment {
+    MyGroupsFragmentBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //Binding instead of relying on findViewById
-        MyGroupsFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.my_groups_fragment, container, false);
-        addListenerToFloatingActionButton(binding);
+        binding = DataBindingUtil.inflate(inflater, R.layout.my_groups_fragment, container, false);
+        addListenerToFloatingActionButton();
 
         MyGroupsViewModel viewModel = ViewModelProviders.of(this).get(MyGroupsViewModel.class);
 
         List<IGroupData> groupData = new ArrayList<>(viewModel.getGroupsData().getValue());
 
         final GroupViewAdapter groupViewAdapter = new GroupViewAdapter(groupData, viewModel.getCurrentLoggedInUsersPhoneNumber());
-        initRecyclerView(binding, groupViewAdapter);
+        initRecyclerView(groupViewAdapter);
 
         //Updates RecyclerView when LiveData is changed.
         viewModel.getGroupsData().observe(getViewLifecycleOwner(), new Observer<Set<IGroupData>>() {
@@ -79,6 +85,7 @@ public class MyGroupsFragment extends Fragment {
         });
 
         initHeader(binding, viewModel);
+        initRefreshLayout(viewModel);
 
         return binding.getRoot();
     }
@@ -128,9 +135,8 @@ public class MyGroupsFragment extends Fragment {
     /**
      * Initializes RecyclerView in MyGroups.
      *
-     * @param binding Variable which can access the elements in the layout file.
      */
-    private void initRecyclerView(MyGroupsFragmentBinding binding, GroupViewAdapter groupViewAdapter) {
+    private void initRecyclerView(GroupViewAdapter groupViewAdapter) {
         RecyclerView recyclerView = binding.groupRecyclerView;
         recyclerView.setAdapter(groupViewAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
@@ -138,15 +144,24 @@ public class MyGroupsFragment extends Fragment {
 
     /**
      * Sets listener to the floatingActionButton.
-     *
-     * @param binding Variable which can access the elements in the layout file.
      */
-    private void addListenerToFloatingActionButton(MyGroupsFragmentBinding binding) {
+    private void addListenerToFloatingActionButton() {
         binding.addGroupFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent createGroupIntent = new Intent(getContext(), GroupCreationActivity.class);
                 startActivity(createGroupIntent);
+            }
+        });
+    }
+
+    private void initRefreshLayout(MyGroupsViewModel viewModel){
+        //Refreshlayout
+        binding.myGroupsRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                viewModel.updateGroupsFromDatabase();
+                binding.myGroupsRefreshLayout.setRefreshing(false);
             }
         });
     }
