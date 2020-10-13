@@ -304,6 +304,16 @@ public class ModelEngineTest {
         assertNotNull(fetchedSet);
     }
 
+    @Test
+    public void getSingleUserFromDatabase() throws UserNotFoundException, ConnectException {
+        String phoneNumber = getRandomUserFromHashMap().getValue();
+        IUserData data = modelEngine.getSingleUserFromDatabase(phoneNumber);
+        assertNotNull(data);
+        assertNotNull(data.getPhoneNumber());
+        assertNotNull(data.getName());
+
+    }
+
     private static Map.Entry<String, String> getRandomUserFromHashMap() {
         int randomIndex = ThreadLocalRandom.current().nextInt(0, amountOfUsers);
         int i = 0;

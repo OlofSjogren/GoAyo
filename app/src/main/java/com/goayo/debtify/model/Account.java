@@ -353,6 +353,11 @@ class Account {
         }
     }
 
+    public IUserData getSingleUserFromDatabase(String phoneNumber) throws UserNotFoundException, ConnectException {
+        String userJson = database.getUser(phoneNumber);
+        return fromJsonFactory.getUser(userJson);
+    }
+
     public void refreshWithDatabase() throws Exception {
         userIsLoggedIn();
         initAssociatedGroups();
