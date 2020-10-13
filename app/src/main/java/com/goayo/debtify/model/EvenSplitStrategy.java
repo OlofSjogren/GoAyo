@@ -1,7 +1,6 @@
 package com.goayo.debtify.model;
 
 import com.goayo.debtify.Tuple;
-import com.goayo.debtify.modelaccess.IUserData;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

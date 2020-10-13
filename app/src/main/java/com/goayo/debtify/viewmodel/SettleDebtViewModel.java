@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.goayo.debtify.model.ModelEngine;
-import com.goayo.debtify.modelaccess.IDebtData;
+import com.goayo.debtify.model.IDebtData;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

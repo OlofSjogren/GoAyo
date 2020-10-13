@@ -9,7 +9,7 @@ import com.goayo.debtify.model.LoginException;
 import com.goayo.debtify.model.RegistrationException;
 import com.goayo.debtify.model.UserAlreadyExistsException;
 import com.goayo.debtify.model.UserNotFoundException;
-import com.goayo.debtify.modelaccess.IUserData;
+import com.goayo.debtify.model.IUserData;
 
 import java.math.BigDecimal;
 import java.net.ConnectException;

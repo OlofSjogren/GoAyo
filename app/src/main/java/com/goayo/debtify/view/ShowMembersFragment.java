@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.ShowMembersFragmentBinding;
-import com.goayo.debtify.modelaccess.IUserData;
+import com.goayo.debtify.model.IUserData;
 import com.goayo.debtify.view.adapter.UserCardViewAdapter;
 import com.goayo.debtify.viewmodel.DetailedGroupViewModel;
 

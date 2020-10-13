@@ -1,4 +1,4 @@
-package com.goayo.debtify.modelaccess;
+package com.goayo.debtify.model;
 
 /**
  * @author Alex Phu, Olof Sjögren

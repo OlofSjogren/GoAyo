@@ -1,15 +1,10 @@
 package com.goayo.debtify.model;
 
 
-import com.goayo.debtify.modelaccess.IDebtData;
-import com.goayo.debtify.modelaccess.IPaymentData;
-import com.goayo.debtify.modelaccess.IUserData;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author Gabriel Brattgård, Yenan Wang

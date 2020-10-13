@@ -1,6 +1,4 @@
-package com.goayo.debtify.modelaccess;
-
-import com.goayo.debtify.model.UserNotFoundException;
+package com.goayo.debtify.model;
 
 import java.math.BigDecimal;
 import java.util.List;

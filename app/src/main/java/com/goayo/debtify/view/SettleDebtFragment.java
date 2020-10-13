@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.SettleDebtFragmentBinding;
-import com.goayo.debtify.modelaccess.IDebtData;
+import com.goayo.debtify.model.IDebtData;
 import com.goayo.debtify.view.adapter.PickDebtAdapter;
 import com.goayo.debtify.viewmodel.SettleDebtViewModel;
 

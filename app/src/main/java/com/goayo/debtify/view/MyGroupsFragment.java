@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,7 +19,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.MyGroupsFragmentBinding;
 import com.goayo.debtify.model.UserNotFoundException;
-import com.goayo.debtify.modelaccess.IGroupData;
+import com.goayo.debtify.model.IGroupData;
 import com.goayo.debtify.view.adapter.GroupViewAdapter;
 import com.goayo.debtify.viewmodel.MyGroupsViewModel;
 

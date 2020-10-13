@@ -9,7 +9,7 @@ import com.goayo.debtify.model.EventBus;
 import com.goayo.debtify.model.IEventHandler;
 import com.goayo.debtify.model.IModelEvent;
 import com.goayo.debtify.model.ModelEngine;
-import com.goayo.debtify.modelaccess.IUserData;
+import com.goayo.debtify.model.IUserData;
 
 import java.util.ArrayList;
 import java.util.List;

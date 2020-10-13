@@ -1,8 +1,6 @@
 package com.goayo.debtify.model;
 
 
-import com.goayo.debtify.modelaccess.IPaymentData;
-
 import java.math.BigDecimal;
 import java.util.Date;
 

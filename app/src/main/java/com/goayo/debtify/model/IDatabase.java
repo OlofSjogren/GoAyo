@@ -1,7 +1,5 @@
 package com.goayo.debtify.model;
 
-import com.goayo.debtify.modelaccess.IUserData;
-
 import java.math.BigDecimal;
 import java.net.ConnectException;
 import java.util.Map;

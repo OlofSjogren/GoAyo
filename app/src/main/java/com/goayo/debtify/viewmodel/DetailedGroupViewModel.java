@@ -10,9 +10,9 @@ import com.goayo.debtify.model.IEventHandler;
 import com.goayo.debtify.model.IModelEvent;
 import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.model.UserNotFoundException;
-import com.goayo.debtify.modelaccess.IDebtData;
-import com.goayo.debtify.modelaccess.IGroupData;
-import com.goayo.debtify.modelaccess.IUserData;
+import com.goayo.debtify.model.IDebtData;
+import com.goayo.debtify.model.IGroupData;
+import com.goayo.debtify.model.IUserData;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
