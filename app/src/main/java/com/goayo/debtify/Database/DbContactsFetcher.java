@@ -2,8 +2,7 @@ package com.goayo.debtify.Database;
 
 import com.google.gson.Gson;
 
-public class
-DbContactsFetcher {
+class DbContactsFetcher {
     public boolean removeContact(String userPhoneNumber, String phoneNumberOfContactToBeRemoved) {
         DbObject.ContactPost post = new DbObject.ContactPost(userPhoneNumber, phoneNumberOfContactToBeRemoved);
         Gson gson = new Gson();
@@ -25,7 +24,7 @@ DbContactsFetcher {
 
         DbObject.User u = gson.fromJson(user, DbObject.User.class);
         DbObject.User[] users = new DbObject.User[u.contacts.length];
-        for(int i = 0; i < u.contacts.length; i++){
+        for (int i = 0; i < u.contacts.length; i++) {
             users[i] = gson.fromJson(fetcher.fetchUserFromPhoneNumber(u.contacts[i]), DbObject.User.class);
         }
         DbObject.ContactsJsonObject contacts = new DbObject.ContactsJsonObject(users);

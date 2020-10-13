@@ -31,9 +31,10 @@ public class ModelEngineTest {
     static Map<String, String> passwordAndNumber;
     static ModelEngine modelEngine = ModelEngine.getInstance();
     static Set<String> someNumbers;
-    static private int amountOfUsers = 5;
-
-
+    static private int amountOfUsers = 100;
+    static String randomNoFriendsUserName;
+    static String randomNoFriendsUserPassword;
+    static String randomNoFriendsUserPhoneNumber;
 
     @BeforeClass
     public static void setUp() throws Exception {
@@ -46,6 +47,13 @@ public class ModelEngineTest {
             passwordAndNumber.put(Integer.toString(i), randomNum + Integer.toString(randomNumComp));
         }
 
+        randomNoFriendsUserPassword = "123";
+        randomNoFriendsUserName = "NOFRIENDSUSER";
+        int randomNum = ThreadLocalRandom.current().nextInt(10000, 99999);
+        int randomNumComp = ThreadLocalRandom.current().nextInt(10000, 99999);
+        randomNoFriendsUserPhoneNumber = randomNum + Integer.toString(randomNumComp);
+
+        modelEngine.registerUser(randomNoFriendsUserPhoneNumber, randomNoFriendsUserName, randomNoFriendsUserPassword);
         registerAllUsersInHashSet();
 
         for (Map.Entry<String, String> entry : passwordAndNumber.entrySet()) {
@@ -63,10 +71,10 @@ public class ModelEngineTest {
     }
 
     private static void logInAndDoStuff(Map.Entry<String, String> entry) throws Exception {
-        int amountOfContactsToBeCreated = 3;
-        int amountOfGroupsToBeCreated = 2;
-        int amountOfDebtsToBeCreated = 2;
-        int amountOfPaymentsToBeCreated = 1;
+        int amountOfContactsToBeCreated = 30;
+        int amountOfGroupsToBeCreated = 10;
+        int amountOfDebtsToBeCreated = 15;
+        int amountOfPaymentsToBeCreated = 20;
 
 
         //Order of calls is important here.
@@ -97,6 +105,7 @@ public class ModelEngineTest {
             if(group.getIUserDataSet().size() < 2){
                 continue;
             }
+
             Set<String> borrowers = getRandomSubsetOfPhoneNumberStringsFromIGroupData(group);
             int randomAmount = ThreadLocalRandom.current().nextInt(100, 1000);
 
@@ -119,7 +128,12 @@ public class ModelEngineTest {
 
     private static void addSomeContacts(int amountOfContactsToBeCreated) throws Exception {
         for (int i = 0; i < amountOfContactsToBeCreated; i++) {
-            modelEngine.addContact(getRandomUserFromHashMap().getValue());
+            String contact = getRandomUserFromHashMap().getValue();
+            if(!contact.equals(modelEngine.getLoggedInUser().getPhoneNumber())){
+                modelEngine.addContact(contact);
+            } else {
+                i--;
+            }
         }
     }
 
@@ -136,9 +150,16 @@ public class ModelEngineTest {
 
     private static Set<String> getRandomSubsetOfPhoneNumberStringsFromIGroupData(IGroupData group) {
         System.out.println("Amount of users in " + group.getGroupName() + ": " + group.getIUserDataSet().size());
-        int sizeOfBorrowers = ThreadLocalRandom.current().nextInt(1, group.getIUserDataSet().size());
+
+        int sizeOfBorrowers;
+        if(group.getIUserDataSet().size() < 3){
+            sizeOfBorrowers = 1;
+        } else {
+            sizeOfBorrowers = ThreadLocalRandom.current().nextInt(1, group.getIUserDataSet().size() - 1);
+        }
 
         List<IUserData> toBeShuffled = new ArrayList<>(group.getIUserDataSet());
+        toBeShuffled.remove(modelEngine.getLoggedInUser());
         Collections.shuffle(toBeShuffled);
 
         String[] phoneNumbers = new String[sizeOfBorrowers];
@@ -225,15 +246,10 @@ public class ModelEngineTest {
 
     @Test
     public void removeContact() throws Exception {
-        int i = 0;
-        for (Map.Entry<String, String> entry : passwordAndNumber.entrySet()) {
-            modelEngine.addContact(entry.getValue());
-            modelEngine.removeContact(entry.getValue());
-            i++;
-            if (i == 10) {
-                break;
-            }
-        }
+        Map.Entry<String, String> user = getRandomUserFromHashMap();
+        modelEngine.logInUser(user.getValue(), user.getKey());
+        IUserData contactToBeRemoved = modelEngine.getContacts().iterator().next();
+        modelEngine.removeContact(contactToBeRemoved.getPhoneNumber());
     }
 
 
@@ -247,17 +263,15 @@ public class ModelEngineTest {
 
     @Test
     public void addUserToGroup() throws Exception {
+
+
         Map.Entry<String, String> user = getRandomUserFromHashMap();
         modelEngine.logInUser(user.getValue(), user.getKey());
 
-        String one = getRandomUserFromHashMap().getValue();
-        String two = getRandomUserFromHashMap().getValue();
-        modelEngine.addContact(one);
-        modelEngine.addContact(two);
+        modelEngine.addContact(randomNoFriendsUserPhoneNumber);
 
         for (IGroupData data : modelEngine.getGroups()) {
-            modelEngine.addUserToGroup(one, data.getGroupID());
-            modelEngine.addUserToGroup(two, data.getGroupID());
+            modelEngine.addUserToGroup(randomNoFriendsUserPhoneNumber, data.getGroupID());
         }
     }
 
@@ -266,13 +280,12 @@ public class ModelEngineTest {
         Map.Entry<String, String> user = getRandomUserFromHashMap();
         modelEngine.logInUser(user.getValue(), user.getKey());
 
-        IGroupData data = getRandomGroupForLoggedInUser();
+        modelEngine.addContact(randomNoFriendsUserPhoneNumber);
 
-        String one = getRandomUserFromHashMap().getValue();
-        modelEngine.addContact(one);
-        modelEngine.addUserToGroup(one, data.getGroupID());
-
-        modelEngine.removeUserFromGroup(one, data.getGroupID());
+        for (IGroupData data : modelEngine.getGroups()) {
+            modelEngine.addUserToGroup(randomNoFriendsUserPhoneNumber, data.getGroupID());
+            modelEngine.removeUserFromGroup(randomNoFriendsUserPhoneNumber, data.getGroupID());
+        }
     }
 
 

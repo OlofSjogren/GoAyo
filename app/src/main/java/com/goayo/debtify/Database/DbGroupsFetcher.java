@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-public class DbGroupsFetcher {
+ class DbGroupsFetcher {
     public boolean removeUserFromGroup(String phoneNumber, String groupID) {
         Gson gson = new Gson();
         DbUserFetcher fetcher = new DbUserFetcher();
