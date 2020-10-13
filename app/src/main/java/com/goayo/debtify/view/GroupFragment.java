@@ -51,10 +51,12 @@ import java.util.List;
  * 2020/09/30 Modified by Alex Phu, Yenan Wang: Refactored entire class.
  * <p>
  * 2020-10-09 Modified by Yenan Wang & Alex Phu: Add observer to ViewModel so view updates correctly
- *
+ * <p>
  * 2020-10-12 Modified by Alex Phu: Implemented initRefreshLayout() to be able to refresh data from database
- *
+ * <p>
  * 2020-10-13 Modified by Alex Phu: Total balance now changes depending on the amount of debt. Refactored code out from the gigantic onCreateView() method.
+ * <p>
+ * 2020-10-13 Modified by Alex Phu: Made RecyclerView unfocusable.
  */
 public class GroupFragment extends Fragment {
     private DetailedGroupViewModel viewModel;
@@ -95,7 +97,7 @@ public class GroupFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void initHeader(){
+    private void initHeader() {
         //Sets group name label
         binding.detailedGroupGroupNameTextView.setText(viewModel.getCurrentGroup().getValue().getGroupName());
 
@@ -121,7 +123,7 @@ public class GroupFragment extends Fragment {
         });
     }
 
-    private void initAdapter(){
+    private void initAdapter() {
         // initialize the adapter for the debts and payments
         try {
             adapter = new TransactionCardAdapter(viewModel.getCurrentGroupDebts(getCurrentGroupID()));
@@ -143,6 +145,7 @@ public class GroupFragment extends Fragment {
         RecyclerView recyclerView = binding.detailedGroupRecyclerView;
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
+        binding.detailedGroupRecyclerView.setFocusable(false);
     }
 
     private void initBottomNavigation() {
@@ -165,7 +168,7 @@ public class GroupFragment extends Fragment {
         });
     }
 
-    private void initRefreshLayout(){
+    private void initRefreshLayout() {
         binding.detailedGroupRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

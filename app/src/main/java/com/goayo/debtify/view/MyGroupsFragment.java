@@ -50,6 +50,8 @@ import java.util.Set;
  * 2020/10/12 Modified by Olof Sjögren: Created initHeader() for initializing header name, phone number and total debt.
  * <p>
  * 2020-10-12 Modified by Alex Phu: Implemented RefreshLayout, to be able to fetch new data from database.
+ * <p>
+ * 2020-10-13 Modified by Alex Phu: Made RecyclerView unfocusable.
  **/
 
 public class MyGroupsFragment extends Fragment {
@@ -140,6 +142,7 @@ public class MyGroupsFragment extends Fragment {
         RecyclerView recyclerView = binding.groupRecyclerView;
         recyclerView.setAdapter(groupViewAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
+        binding.groupRecyclerView.setFocusable(false);
     }
 
     /**
