@@ -97,7 +97,7 @@ public class AddContactFragment extends Fragment {
             IUserData user = model.findUser(phoneNumber);
             model.setUserData(user);
             setUserFound(true);
-        } catch (UserNotFoundException e) {
+        } catch (UserNotFoundException | ConnectException e) {
             setUserFound(false);
         }
     }

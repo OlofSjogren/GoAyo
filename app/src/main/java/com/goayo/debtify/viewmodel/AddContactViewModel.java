@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel;
 import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.model.UserAlreadyExistsException;
 import com.goayo.debtify.model.UserNotFoundException;
-import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.modelaccess.IUserData;
 
 import java.net.ConnectException;
@@ -38,18 +37,8 @@ public class AddContactViewModel extends ViewModel {
         userToAdd.setValue(user);
     }
 
-    // TODO you should not have to go through every group to find a single user,
-    //      need to implement this method in ModelEngine
-    // TODO check if phone number has a length of 10
-    public IUserData findUser(String phoneNumber) throws UserNotFoundException {
-        for (IGroupData group : modelEngine.getGroups()) {
-            for (IUserData user : group.getIUserDataSet()) {
-                if (user.getPhoneNumber().equals(phoneNumber)) {
-                    return user;
-                }
-            }
-        }
-        throw new UserNotFoundException("No user with such phone number!");
+    public IUserData findUser(String phoneNumber) throws UserNotFoundException, ConnectException {
+        return modelEngine.getSingleUserFromDatabase(phoneNumber);
     }
 
     public void addUserToContacts(String phoneNumber) throws UserNotFoundException, UserAlreadyExistsException, ConnectException {
