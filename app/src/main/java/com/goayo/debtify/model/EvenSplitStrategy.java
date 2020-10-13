@@ -13,11 +13,13 @@ import java.util.Map;
  * @date 2020-10-09
  * <p>
  * Strategy where the owedTotal is split evenly among the borrowers.
+ *
  * 2020-10-12 Modified by GoAyo: Changed RoundingMode from HALF_UP to HALF_EVEN
  * Modified by Oscar Sanner: Changed the parameters of the function to become generic for IUserData
  * It's now usable outside of the Model. Also returns a tuple with an ID and the total amount for the user.
+ * 2020-10-13 Modified by Alex Phu: Changed to package private.
  */
-public class EvenSplitStrategy implements IDebtSplitStrategy {
+class EvenSplitStrategy implements IDebtSplitStrategy {
 
     /**
      * owedTotal is split evenly among the borrowers.
