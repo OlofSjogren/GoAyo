@@ -13,10 +13,11 @@ import java.util.Map;
  *
  * Strategy where each user owes the owedTotal.
  *
- * Modified by Oscar Sanner: Changed the parameters of the function to become generic for IUserData
+ * 2020-10-12 Modified by Oscar Sanner: Changed the parameters of the function to become generic for IUserData
  * It's now usable outside of the Model. Also returns a tuple with an ID and the total amount for the user.
+ * 2020-10-13 Modified by Alex Phu: Changed to package private.
  */
-public class NoSplitStrategy implements IDebtSplitStrategy {
+class NoSplitStrategy implements IDebtSplitStrategy {
 
     /**
      * Each borrower owes by the given owedTotal.
