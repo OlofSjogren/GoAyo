@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,10 +19,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.MyGroupsFragmentBinding;
+import com.goayo.debtify.model.UserNotFoundException;
 import com.goayo.debtify.modelaccess.IGroupData;
 import com.goayo.debtify.view.adapter.GroupViewAdapter;
 import com.goayo.debtify.viewmodel.MyGroupsViewModel;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -39,10 +42,17 @@ import java.util.Set;
  * 2020/09/25 Modified by Oscar Sanner, Alex Phu and Olof Sjögren: Added factory to ViewModelProvider.
  * <p>
  * 2020/09/30 Modified by Alex Phu and Yenan Wang: Refactored entire class.
- *
+ * <p>
  * 2020/10/08 Modified by Alex Phu: Injected currentLoggedInUsersPhoneNumber to GroupViewAdapter.
+ * <p>
+ * 2020/10/12 Modified by Olof Sjögren: Created initHeader() for initializing header name, phone number and total debt.
  * 2020-10-12 Modified by Alex Phu: Implemented RefreshLayout, to be able to fetch new data from database.
- */
+ * <p>
+ * 2020/10/12 Modified by Olof Sjögren: Created initHeader() for initializing header name, phone number and total debt.
+ * <p>
+ * 2020-10-12 Modified by Alex Phu: Implemented RefreshLayout, to be able to fetch new data from database.
+ **/
+
 public class MyGroupsFragment extends Fragment {
     MyGroupsFragmentBinding binding;
 
@@ -65,6 +75,7 @@ public class MyGroupsFragment extends Fragment {
             @Override
             public void onChanged(Set<IGroupData> iGroupData) {
                 groupViewAdapter.update(new ArrayList<IGroupData>(iGroupData));
+                initHeader(binding, viewModel);
             }
         });
         //Fetches clicked group and sends it away.
@@ -75,6 +86,7 @@ public class MyGroupsFragment extends Fragment {
             }
         });
 
+        initHeader(binding, viewModel);
         initRefreshLayout(viewModel);
 
         return binding.getRoot();
@@ -86,9 +98,44 @@ public class MyGroupsFragment extends Fragment {
         startActivity(intent);
     }
 
+
+    private void initHeader(MyGroupsFragmentBinding binding, MyGroupsViewModel viewModel) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(viewModel.getCurrentLoggedInUsersPhoneNumber());
+        sb.insert(7, " ");
+        sb.insert(5, " ");
+        sb.insert(3, "-");
+
+        binding.welcomeBannerNameTextView.setText(viewModel.getCurrentLoggedInUserName());
+        binding.welcomeBannerPhoneNumberTextView.setText(sb.toString());
+
+        BigDecimal total = new BigDecimal(0);
+        for (IGroupData g : viewModel.getGroupsData().getValue()) {
+            try {
+                total = total.add(g.getUserTotal(viewModel.getCurrentLoggedInUsersPhoneNumber()));
+            } catch (UserNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        switch (total.compareTo(new BigDecimal(0))) {
+            case 0:
+                binding.totalBalanceTextView.setTextColor(binding.totalBalanceTextView.getResources().getColor(R.color.dividerGrey));
+                break;
+            case -1:
+                binding.totalBalanceTextView.setTextColor(binding.totalBalanceTextView.getResources().getColor(R.color.negativeDebtRed));
+                break;
+            case 1:
+                binding.totalBalanceTextView.setTextColor(binding.totalBalanceTextView.getResources().getColor(R.color.positiveDebtGreen));
+                break;
+        }
+
+        binding.totalBalanceTextView.setText(total.toString() + " kr");
+    }
+
+
     /**
      * Initializes RecyclerView in MyGroups.
-     *
      */
     private void initRecyclerView(GroupViewAdapter groupViewAdapter) {
         RecyclerView recyclerView = binding.groupRecyclerView;
@@ -109,7 +156,7 @@ public class MyGroupsFragment extends Fragment {
         });
     }
 
-    private void initRefreshLayout(MyGroupsViewModel viewModel){
+    private void initRefreshLayout(MyGroupsViewModel viewModel) {
         //Refreshlayout
         binding.myGroupsRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

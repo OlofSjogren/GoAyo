@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+@author Olof Sjögren
+@date   2020-10-12
+-->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="25dp">
+
+            </corners>
+            <solid android:color="@color/dividerGrey">
+
+            </solid>
+
+        </shape>
+    </item>
+
+</selector>

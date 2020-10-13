@@ -2,13 +2,13 @@
 @author Alex Phu, Oscar Sanner
 @date   2020-09-22
 -->
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!--Change To RelativeLayout-->
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -30,8 +30,8 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/detailed_group_cardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="396dp"
+            android:layout_height="113dp"
             android:layout_margin="10dp"
             app:cardCornerRadius="20dp"
 
@@ -47,24 +47,21 @@
                     android:id="@+id/textview6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="307dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
                     android:text="Your group total:"
                     android:textSize="28sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.341" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/detailed_group_balance_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:text="XX,XX SEK"
                     android:textSize="40sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="@id/textview6"
                     app:layout_constraintTop_toBottomOf="@id/textview6" />
             </androidx.constraintlayout.widget.ConstraintLayout>
