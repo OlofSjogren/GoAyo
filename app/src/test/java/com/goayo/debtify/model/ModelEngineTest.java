@@ -31,7 +31,7 @@ public class ModelEngineTest {
     static Map<String, String> passwordAndNumber;
     static ModelEngine modelEngine = ModelEngine.getInstance();
     static Set<String> someNumbers;
-    static private int amountOfUsers = 5;
+    static private int amountOfUsers = 50;
     static String randomNoFriendsUserName;
     static String randomNoFriendsUserPassword;
     static String randomNoFriendsUserPhoneNumber;
@@ -128,17 +128,23 @@ public class ModelEngineTest {
 
     private static void addSomeContacts(int amountOfContactsToBeCreated) throws Exception {
         for (int i = 0; i < amountOfContactsToBeCreated; i++) {
+
             String contact = getRandomUserFromHashMap().getValue();
-            for (IUserData data : modelEngine.getContacts()) {
-                if (data.getPhoneNumber().equals(contact) {
-                    i--;
-                    continue;
+            boolean alreadyContact = false;
+
+            if (!contact.equals(modelEngine.getLoggedInUser().getPhoneNumber())) {
+                for (IUserData data : modelEngine.getContacts()) {
+                    if (data.getPhoneNumber().equals(contact)) {
+                        alreadyContact = true;
+                        break;
+                    }
                 }
-                if (!contact.equals(modelEngine.getLoggedInUser().getPhoneNumber())) {
-                    modelEngine.addContact(contact);
-                } else {
-                    i--;
-                }
+            }
+
+            if(alreadyContact || contact.equals(modelEngine.getLoggedInUser().getPhoneNumber())){
+                i--;
+            } else {
+                modelEngine.addContact(contact);
             }
         }
     }
