@@ -42,15 +42,17 @@ import java.util.Set;
  * 2020/09/25 Modified by Oscar Sanner, Alex Phu and Olof Sjögren: Added factory to ViewModelProvider.
  * <p>
  * 2020/09/30 Modified by Alex Phu and Yenan Wang: Refactored entire class.
- *
+ * <p>
  * 2020/10/08 Modified by Alex Phu: Injected currentLoggedInUsersPhoneNumber to GroupViewAdapter.
-<<<<<<< HEAD
- *
+ * <p>
  * 2020/10/12 Modified by Olof Sjögren: Created initHeader() for initializing header name, phone number and total debt.
-=======
  * 2020-10-12 Modified by Alex Phu: Implemented RefreshLayout, to be able to fetch new data from database.
->>>>>>> f87c9d9257703a67332c8720d3809dcfd5e5195c
- */
+ * <p>
+ * 2020/10/12 Modified by Olof Sjögren: Created initHeader() for initializing header name, phone number and total debt.
+ * <p>
+ * 2020-10-12 Modified by Alex Phu: Implemented RefreshLayout, to be able to fetch new data from database.
+ **/
+
 public class MyGroupsFragment extends Fragment {
     MyGroupsFragmentBinding binding;
 
@@ -108,7 +110,7 @@ public class MyGroupsFragment extends Fragment {
         binding.welcomeBannerPhoneNumberTextView.setText(sb.toString());
 
         BigDecimal total = new BigDecimal(0);
-        for (IGroupData g : viewModel.getGroupsData().getValue()){
+        for (IGroupData g : viewModel.getGroupsData().getValue()) {
             try {
                 total = total.add(g.getUserTotal(viewModel.getCurrentLoggedInUsersPhoneNumber()));
             } catch (UserNotFoundException e) {
@@ -116,7 +118,7 @@ public class MyGroupsFragment extends Fragment {
             }
         }
 
-        switch (total.compareTo(new BigDecimal(0))){
+        switch (total.compareTo(new BigDecimal(0))) {
             case 0:
                 binding.totalBalanceTextView.setTextColor(binding.totalBalanceTextView.getResources().getColor(R.color.dividerGrey));
                 break;
@@ -134,7 +136,6 @@ public class MyGroupsFragment extends Fragment {
 
     /**
      * Initializes RecyclerView in MyGroups.
-     *
      */
     private void initRecyclerView(GroupViewAdapter groupViewAdapter) {
         RecyclerView recyclerView = binding.groupRecyclerView;
@@ -155,7 +156,7 @@ public class MyGroupsFragment extends Fragment {
         });
     }
 
-    private void initRefreshLayout(MyGroupsViewModel viewModel){
+    private void initRefreshLayout(MyGroupsViewModel viewModel) {
         //Refreshlayout
         binding.myGroupsRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

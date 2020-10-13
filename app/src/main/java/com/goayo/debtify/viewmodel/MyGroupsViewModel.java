@@ -30,7 +30,11 @@ import java.util.Set;
 =======
  *
  * 2020-10-12 Modified by Alex Phu: Implemented updateGroupsFromDatabase()
+<<<<<<< HEAD
 >>>>>>> f87c9d9257703a67332c8720d3809dcfd5e5195c
+=======
+>>>>>>> b956476224f117a733eda493a7b2e86cb2094565
+>>>>>>> fe73e8eef046eef95e733c9aac1449fc6ed20f45
  */
 
 public class MyGroupsViewModel extends ViewModel implements IEventHandler {
@@ -71,6 +75,7 @@ public class MyGroupsViewModel extends ViewModel implements IEventHandler {
     public String getCurrentLoggedInUserName() {
         return modelEngine.getLoggedInUser().getName();
     }
+
     public void updateGroupsFromDatabase(){
         try {
             modelEngine.refreshWithDatabase();
