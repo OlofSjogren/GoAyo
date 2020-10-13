@@ -2,151 +2,117 @@
 @author Alex Phu, Olof Sjögren
 @date   2020-09-15
 -->
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white">
+        android:background="@color/backGroundGrey">
 
-        <View
-            android:id="@+id/grey_background_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/backGroundGrey"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:id="@+id/welcome_banner_view"
-            android:layout_width="394dp"
+        <RelativeLayout
+            android:id="@+id/my_groups_header_layout"
+            android:layout_width="match_parent"
             android:layout_height="168dp"
             android:background="@color/themeOrange"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <View
+            <TextView
+                android:id="@+id/welcome_banner_welcome_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Welcome"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/welcome_banner_name_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/welcome_banner_welcome_textView"
+                android:layout_marginStart="16dp"
+                android:text="NAME"
+                android:textColor="#000000"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/welcome_banner_phone_number_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/welcome_banner_name_textView"
+                android:layout_marginStart="16dp"
+                android:text="PHONENUMBER"
+                android:textColor="#000000" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/total_balance_view"
-            android:layout_width="393dp"
+            android:layout_width="match_parent"
             android:layout_height="95dp"
-            android:layout_marginBottom="510dp"
+            android:layout_below="@id/my_groups_header_layout"
+            android:layout_marginTop="-40dp"
             android:background="@drawable/rounded_corner_box"
-            app:layout_constraintBottom_toBottomOf="@+id/grey_background_view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/welcome_banner_view" />
+            android:paddingLeft="10dp">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="16dp"
+                android:text="Your total debt balance among all groups"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/total_balance_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textView6"
+                android:layout_marginTop="6dp"
+                android:text="TOTAL_BALANCE"
+                android:textSize="24sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/your_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/total_balance_view"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:text="Your groups"
+            android:textSize="24sp" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/myGroups_refreshLayout"
-            android:layout_width="396dp"
-            android:layout_height="405dp"
-            android:layout_marginBottom="4dp"
-            android:background="@color/backGroundGrey"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/your_group"
+            android:background="@color/backGroundGrey">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/group_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/backGroundGrey"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:background="@color/backGroundGrey" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addGroup_floatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="40dp"
             android:backgroundTint="@color/colorPrimaryDark"
             android:clickable="true"
             app:fabCustomSize="60dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:maxImageSize="45dp"
-            app:srcCompat="@drawable/ic_baseline_add_24">
-
-
-        </com.google.android.material.floatingactionbutton.FloatingActionButton>
-
-        <TextView
-            android:id="@+id/your_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            android:text="Your groups"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/total_balance_view" />
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Your total debt balance among all groups"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="@+id/total_balance_view"
-            app:layout_constraintStart_toStartOf="@+id/total_balance_view"
-            app:layout_constraintTop_toTopOf="@+id/total_balance_view" />
-
-        <TextView
-            android:id="@+id/total_balance_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="TOTAL_BALANCE"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/total_balance_view"
-            app:layout_constraintStart_toStartOf="@+id/textView6"
-            app:layout_constraintTop_toBottomOf="@+id/textView6"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/welcome_banner_welcome_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="Welcome"
-            android:textSize="24sp"
-            android:textColor="#000000"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/welcome_banner_name_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="NAME"
-            android:textColor="#000000"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/welcome_banner_welcome_textView" />
-
-        <TextView
-            android:id="@+id/welcome_banner_phone_number_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="PHONENUMBER"
-            android:textColor="#000000"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/welcome_banner_name_textView" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:srcCompat="@drawable/ic_baseline_add_24" />
+    </RelativeLayout>
 </layout>
