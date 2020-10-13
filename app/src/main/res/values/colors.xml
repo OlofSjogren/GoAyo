@@ -13,5 +13,6 @@
     <color name="negativeDebtRed">#BD0000</color>
     <color name="positiveDebtGreen">#027500</color>
     <color name="backGroundGrey">#F1F1F1</color>
+    <color name="confirmButton">#FFC85C</color>
 
 </resources>
