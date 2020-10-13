@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.goayo.debtify.model.EventBus;
-import com.goayo.debtify.model.GroupsEvent;
 import com.goayo.debtify.model.IEventHandler;
-import com.goayo.debtify.model.IModelEvent;
 import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.modelaccess.IGroupData;
 
@@ -39,7 +37,7 @@ public class MyGroupsViewModel extends ViewModel implements IEventHandler {
         modelEngine = ModelEngine.getInstance();
         Set<IGroupData> groupsData = modelEngine.getGroups();
         this.groupsData = new MutableLiveData<>(groupsData);
-        EventBus.getInstance().register(this, GroupsEvent.class);
+        EventBus.getInstance().register(this, EventBus.EVENT.GROUPS_EVENT);
     }
 
     private void setGroupsData() {
@@ -51,14 +49,14 @@ public class MyGroupsViewModel extends ViewModel implements IEventHandler {
     }
 
     @Override
-    public void onModelEvent(IModelEvent evt) {
+    public void onModelEvent() {
         setGroupsData();
     }
 
     @Override
     protected void onCleared() {
         super.onCleared();
-        EventBus.getInstance().unRegister(this, GroupsEvent.class);
+        EventBus.getInstance().unRegister(this, EventBus.EVENT.GROUPS_EVENT);
     }
 
     public String getCurrentLoggedInUsersPhoneNumber() {

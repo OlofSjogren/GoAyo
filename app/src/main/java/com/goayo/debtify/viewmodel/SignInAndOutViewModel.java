@@ -4,8 +4,6 @@ import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
-import com.goayo.debtify.model.IEventHandler;
-import com.goayo.debtify.model.IModelEvent;
 import com.goayo.debtify.model.ModelEngine;
 
 /**

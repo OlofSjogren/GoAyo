@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.goayo.debtify.model.ContactEvent;
 import com.goayo.debtify.model.EventBus;
 import com.goayo.debtify.model.IEventHandler;
-import com.goayo.debtify.model.IModelEvent;
 import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.modelaccess.IUserData;
 
@@ -31,7 +29,7 @@ public class ContactsViewModel extends ViewModel implements IEventHandler {
     public ContactsViewModel() {
         super();
         modelEngine = ModelEngine.getInstance();
-        EventBus.getInstance().register(this, ContactEvent.class);
+        EventBus.getInstance().register(this, EventBus.EVENT.CONTACT_EVENT);
     }
 
     public LiveData<List<IUserData>> getContactsData() {
@@ -59,7 +57,7 @@ public class ContactsViewModel extends ViewModel implements IEventHandler {
     }
 
     @Override
-    public void onModelEvent(IModelEvent evt) {
+    public void onModelEvent() {
         updateContactsData();
     }
 

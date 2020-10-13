@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.goayo.debtify.model.DetailedGroupEvent;
 import com.goayo.debtify.model.EventBus;
 import com.goayo.debtify.model.IEventHandler;
-import com.goayo.debtify.model.IModelEvent;
 import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.model.UserNotFoundException;
 import com.goayo.debtify.modelaccess.IDebtData;
@@ -42,7 +40,7 @@ public class DetailedGroupViewModel extends ViewModel implements IEventHandler {
 
     public DetailedGroupViewModel() {
         modelEngine = ModelEngine.getInstance();
-        EventBus.getInstance().register(this, DetailedGroupEvent.class);
+        EventBus.getInstance().register(this, EventBus.EVENT.SPECIFIC_GROUP_EVENT);
     }
 
     public IUserData getLoggedInUser() {
@@ -151,7 +149,7 @@ public class DetailedGroupViewModel extends ViewModel implements IEventHandler {
     }
 
     @Override
-    public void onModelEvent(IModelEvent evt) {
+    public void onModelEvent() {
         try {
             setCurrentGroup(currentGroup.getValue().getGroupID());
         } catch (Exception e) {
@@ -161,7 +159,7 @@ public class DetailedGroupViewModel extends ViewModel implements IEventHandler {
 
     @Override
     protected void onCleared() {
-        EventBus.getInstance().unRegister(this, DetailedGroupEvent.class);
+        EventBus.getInstance().unRegister(this, EventBus.EVENT.SPECIFIC_GROUP_EVENT);
         super.onCleared();
     }
 
