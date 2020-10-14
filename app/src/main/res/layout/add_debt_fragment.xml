@@ -81,7 +81,7 @@
                     android:text="Amount"
                     android:textSize="24sp" />
 
-                <androidx.cardview.widget.CardView
+                <RelativeLayout
                     android:id="@+id/editTextNumberCardView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -89,8 +89,8 @@
                     android:layout_centerInParent="true"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:elevation="8dp"
-                    app:cardCornerRadius="20dp">
+                    android:background="@drawable/rounded_corner_box"
+                    android:elevation="5dp">
 
                     <EditText
                         android:id="@+id/editTextNumberDecimal"
@@ -102,8 +102,7 @@
                         android:hint="XX kr"
                         android:inputType="numberDecimal"
                         android:textAlignment="center" />
-                </androidx.cardview.widget.CardView>
-
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/debtDescriptionTextView"
@@ -115,15 +114,17 @@
                     android:text="Desciption"
                     android:textSize="24sp" />
 
-                <androidx.cardview.widget.CardView
+                <RelativeLayout
                     android:id="@+id/settleAmount_cardView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/debtDescriptionTextView"
                     android:layout_centerInParent="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_marginBottom="20dp"
-                    android:elevation="8dp"
-                    app:cardCornerRadius="20dp">
+                    android:background="@drawable/rounded_corner_box"
+                    android:elevation="5dp">
 
                     <EditText
                         android:id="@+id/editTextDebtDescription"
@@ -136,7 +137,7 @@
                         android:maxLength="25"
                         android:maxLines="1"
                         android:textAlignment="center" />
-                </androidx.cardview.widget.CardView>
+                </RelativeLayout>
 
 
             </RelativeLayout>
@@ -148,15 +149,15 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true">
 
-            <androidx.cardview.widget.CardView
+            <RelativeLayout
                 android:id="@+id/continueCardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginBottom="25dp"
-                app:cardBackgroundColor="@color/confirmButton"
-                app:cardCornerRadius="20dp"
-                android:elevation="30dp">
+                android:background="@drawable/rounded_corner_box"
+                android:backgroundTint="@color/confirmButton"
+                android:elevation="4dp">
 
                 <Button
                     android:id="@+id/continueButton"
@@ -167,11 +168,12 @@
                     android:layout_marginEnd="30dp"
                     android:layout_marginBottom="5dp"
                     android:background="@color/confirmButton"
+                    android:stateListAnimator="@null"
                     android:text="Confirm"
                     android:textColor="@android:color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
-            </androidx.cardview.widget.CardView>
+            </RelativeLayout>
 
 
             <RadioGroup
