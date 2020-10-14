@@ -26,16 +26,15 @@ public class ModelEngineTest {
 
     static Map<String, String> passwordAndNumber;
     static ModelEngine modelEngine = ModelEngine.getInstance();
+    static List<String> noFriendsUsers;
     static Set<String> someNumbers;
     static private int amountOfUsers = 50;
-    static String randomNoFriendsUserName;
-    static String randomNoFriendsUserPassword;
-    static String randomNoFriendsUserPhoneNumber;
 
     @BeforeClass
     public static void setUp() throws Exception {
         passwordAndNumber = new HashMap<>();
         someNumbers = new HashSet<>();
+        noFriendsUsers = new ArrayList<>();
 
         for (int i = 0; i < amountOfUsers; i++) {
             int randomNum = ThreadLocalRandom.current().nextInt(10000, 99999);
@@ -43,13 +42,14 @@ public class ModelEngineTest {
             passwordAndNumber.put(Integer.toString(i), randomNum + Integer.toString(randomNumComp));
         }
 
-        randomNoFriendsUserPassword = "123";
-        randomNoFriendsUserName = "NOFRIENDSUSER";
-        int randomNum = ThreadLocalRandom.current().nextInt(10000, 99999);
-        int randomNumComp = ThreadLocalRandom.current().nextInt(10000, 99999);
-        randomNoFriendsUserPhoneNumber = randomNum + Integer.toString(randomNumComp);
+        for(int i = 0; i < amountOfUsers; i++){
+            int randomNum = ThreadLocalRandom.current().nextInt(10000, 99999);
+            int randomNumComp = ThreadLocalRandom.current().nextInt(10000, 99999);
+            noFriendsUsers.add(randomNum + Integer.toString(randomNumComp));
+            modelEngine.registerUser(randomNum + Integer.toString(randomNumComp), "NOFRIENDSUSER " + i, "123");
+        }
 
-        modelEngine.registerUser(randomNoFriendsUserPhoneNumber, randomNoFriendsUserName, randomNoFriendsUserPassword);
+
         registerAllUsersInHashSet();
 
         for (Map.Entry<String, String> entry : passwordAndNumber.entrySet()) {
@@ -185,7 +185,8 @@ public class ModelEngineTest {
         if (modelEngine.getGroups().size() != 0) {
             randomGroupIndex = ThreadLocalRandom.current().nextInt(0, modelEngine.getGroups().size());
         } else {
-            modelEngine.addContact(randomNoFriendsUserPhoneNumber);
+            modelEngine.addContact(noFriendsUsers.get(0));
+            noFriendsUsers.remove(0);
             Set<String> contacts = new HashSet<>();
             for (IUserData data : modelEngine.getContacts()) {
                 contacts.add(data.getPhoneNumber());
@@ -287,11 +288,12 @@ public class ModelEngineTest {
         Map.Entry<String, String> user = getRandomUserFromHashMap();
         modelEngine.logInUser(user.getValue(), user.getKey());
 
-        modelEngine.addContact(randomNoFriendsUserPhoneNumber);
+        modelEngine.addContact(noFriendsUsers.get(0));
 
         for (IGroupData data : modelEngine.getGroups()) {
-            modelEngine.addUserToGroup(randomNoFriendsUserPhoneNumber, data.getGroupID());
+            modelEngine.addUserToGroup(noFriendsUsers.get(0), data.getGroupID());
         }
+        noFriendsUsers.remove(0);
     }
 
     @Test
@@ -299,12 +301,13 @@ public class ModelEngineTest {
         Map.Entry<String, String> user = getRandomUserFromHashMap();
         modelEngine.logInUser(user.getValue(), user.getKey());
 
-        modelEngine.addContact(randomNoFriendsUserPhoneNumber);
+        modelEngine.addContact(noFriendsUsers.get(0));
 
         for (IGroupData data : modelEngine.getGroups()) {
-            modelEngine.addUserToGroup(randomNoFriendsUserPhoneNumber, data.getGroupID());
-            modelEngine.removeUserFromGroup(randomNoFriendsUserPhoneNumber, data.getGroupID());
+            modelEngine.addUserToGroup(noFriendsUsers.get(0), data.getGroupID());
+            modelEngine.removeUserFromGroup(noFriendsUsers.get(0), data.getGroupID());
         }
+        noFriendsUsers.remove(0);
     }
 
 
@@ -344,6 +347,13 @@ public class ModelEngineTest {
         assertNotNull(data.getPhoneNumber());
         assertNotNull(data.getName());
 
+    }
+
+    @Test
+    public void refreshWithDatabase() throws Exception {
+        Map.Entry<String, String> entry = getRandomUserFromHashMap();
+        modelEngine.logInUser(entry.getValue(), entry.getKey());
+        modelEngine.refreshWithDatabase();
     }
 
     private static Map.Entry<String, String> getRandomUserFromHashMap() {
