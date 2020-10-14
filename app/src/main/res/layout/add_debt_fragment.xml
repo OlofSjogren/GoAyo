@@ -6,24 +6,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/add_debt_header_RelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="@color/themeOrange"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Add debt"
+                android:textColor="@android:color/white"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
         <ScrollView
             android:id="@+id/addDebtScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="80dp"
-            android:fillViewport="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
+            android:layout_above="@id/add_debt_bottom_Relativelayout"
+            android:layout_below="@id/add_debt_header_RelativeLayout"
+            android:fillViewport="true">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -31,137 +45,151 @@
                     android:id="@+id/lenderTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:text="Lender:"
-                    android:textSize="24sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textSize="24sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/lenderRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/lenderTextView" />
-
+                    android:layout_below="@id/lenderTextView" />
 
                 <TextView
                     android:id="@+id/borrowerTextVIew"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/lenderRecyclerView"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
                     android:text="Borrower:"
-                    android:textSize="24sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/lenderRecyclerView" />
-
+                    android:textSize="24sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/borrowerRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    app:layout_constraintBottom_toTopOf="@+id/amountTextView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/borrowerTextVIew" />
-
-                <EditText
-                    android:id="@+id/editTextNumberDecimal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:autofillHints=""
-                    android:ems="10"
-                    android:hint="Amount"
-                    android:inputType="numberDecimal"
-                    android:textAlignment="center"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/amountTextView" />
+                    android:layout_below="@id/borrowerTextVIew" />
 
                 <TextView
                     android:id="@+id/amountTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginBottom="70dp"
+                    android:layout_below="@id/borrowerRecyclerView"
+                    android:layout_centerInParent="true"
                     android:text="Amount"
-                    android:textSize="24sp"
-                    app:layout_constraintBottom_toTopOf="@+id/debtDescriptionTextView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    android:textSize="24sp" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/editTextNumberCardView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/amountTextView"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:elevation="8dp"
+                    app:cardCornerRadius="20dp">
+
+                    <EditText
+                        android:id="@+id/editTextNumberDecimal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autofillHints=""
+                        android:ems="10"
+                        android:hint="XX kr"
+                        android:inputType="numberDecimal"
+                        android:textAlignment="center" />
+                </androidx.cardview.widget.CardView>
+
 
                 <TextView
                     android:id="@+id/debtDescriptionTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginBottom="70dp"
+                    android:layout_below="@id/editTextNumberCardView"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="10dp"
                     android:text="Desciption"
-                    android:textSize="24sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    android:textSize="24sp" />
 
-                <EditText
-                    android:id="@+id/editTextDebtDescription"
-                    android:layout_width="match_parent"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/settleAmount_cardView"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:ems="10"
-                    android:hint="Describe your debt"
-                    android:inputType="textPersonName"
-                    android:textAlignment="center"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/debtDescriptionTextView" />
+                    android:layout_below="@id/debtDescriptionTextView"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="20dp"
+                    android:elevation="8dp"
+                    app:cardCornerRadius="20dp">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <EditText
+                        android:id="@+id/editTextDebtDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="Describe your debt"
+                        android:inputType="textPersonName"
+                        android:maxLines="1"
+                        android:maxLength="25"
+                        android:textAlignment="center" />
+                </androidx.cardview.widget.CardView>
+
+
+            </RelativeLayout>
         </ScrollView>
 
-        <Button
-            android:id="@+id/continueButton"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/add_debt_bottom_Relativelayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
-            android:text="continue"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_alignParentBottom="true">
 
-        <RadioGroup
-            android:layout_width="123dp"
-            android:layout_height="73dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/continueButton"
-            tools:layout_editor_absoluteY="691dp">
-
-            <RadioButton
-                android:id="@+id/add_debt_no_split_radiobutton"
-                android:layout_width="match_parent"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/continueCardView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="No split" />
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="25dp"
+                app:cardBackgroundColor="@color/confirmButton"
+                app:cardCornerRadius="20dp">
 
-            <RadioButton
-                android:id="@+id/add_debt_even_split_radiobutton"
-                android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/continueButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/confirmButton"
+                    android:text="Confirm"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </androidx.cardview.widget.CardView>
+
+
+            <RadioGroup
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Split evenly" />
-        </RadioGroup>
+                android:layout_marginStart="20dp"
+                android:layout_toEndOf="@id/continueCardView">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <RadioButton
+                    android:id="@+id/add_debt_no_split_radiobutton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="No split" />
+
+                <RadioButton
+                    android:id="@+id/add_debt_even_split_radiobutton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Split evenly" />
+            </RadioGroup>
+        </RelativeLayout>
+    </RelativeLayout>
 </layout>
