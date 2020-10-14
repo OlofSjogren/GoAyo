@@ -5,68 +5,103 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/settleDebtButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:text="Create"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
-            android:id="@+id/settleAmountEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            app:layout_constraintBottom_toTopOf="@+id/settleDebtButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/howMuchTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="How much to settle?"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/settleAmountEditText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <ScrollView
-            android:id="@+id/debtScrollView"
+        <RelativeLayout
+            android:id="@+id/settle_debt_header_RelativeLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="60dp"
-            android:layout_marginBottom="160dp"
-            app:layout_constraintBottom_toTopOf="@+id/howMuchTextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/selectDebtTextView"
-            app:layout_constraintVertical_bias="0.0">
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="@color/themeOrange"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/settleDebtRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </ScrollView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Settle debt"
+                android:textColor="@android:color/white"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/selectDebtTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_below="@id/settle_debt_header_RelativeLayout"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="10dp"
             android:text="Selected a debt to settle"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="24sp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/settleDebtRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/howMuchTextView"
+            android:layout_below="@id/selectDebtTextView" />
+
+        <TextView
+            android:id="@+id/howMuchTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/settleAmount_cardView"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="10dp"
+            android:text="How much to settle?"
+            android:textSize="24sp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/settleAmount_cardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/settleDebtButton_CardView"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="20dp">
+
+            <EditText
+                android:id="@+id/settleAmountEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:ems="10"
+                android:inputType="numberDecimal" />
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/settleDebtButton_CardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="30dp"
+            app:cardBackgroundColor="@color/confirmButton"
+            app:cardCornerRadius="20dp">
+
+            <Button
+                android:id="@+id/settleDebtButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/confirmButton"
+                android:stateListAnimator="@null"
+                android:text="Confirm"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
+
+
+    </RelativeLayout>
 </layout>
