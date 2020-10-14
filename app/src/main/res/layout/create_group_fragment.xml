@@ -33,7 +33,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/createGroup_header_RelativeLayout"
+            android:layout_centerInParent="true"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
             android:text="Name your new group"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -42,10 +44,12 @@
             android:id="@+id/editText_cardview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_corner_box"
             android:layout_below="@id/textView2"
             android:layout_centerInParent="true"
-            >
+            android:layout_marginTop="5dp"
+            android:background="@drawable/rounded_corner_box"
+            android:elevation="4dp">
+
             <EditText
                 android:id="@+id/createGroup_group_name_textView"
                 android:layout_width="300dp"
@@ -62,8 +66,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/editText_cardview"
+            android:layout_centerInParent="true"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="NUMBER participants"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -73,8 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="350dp"
             android:layout_above="@id/createGroup_continue_cardview"
-            android:layout_below="@id/createGroupNumTextView"
-            android:layout_marginTop="16dp" />
+            android:layout_below="@id/createGroupNumTextView" />
 
         <RelativeLayout
             android:id="@+id/createGroup_continue_cardview"
