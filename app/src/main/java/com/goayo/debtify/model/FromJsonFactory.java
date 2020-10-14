@@ -33,6 +33,7 @@ public class FromJsonFactory {
 
     public Set<Group> getGroups(JsonString.GroupArrayJsonString associatedGroupsJson) throws Exception {
 
+
         GroupJsonObject[] groupJsonObjects = null;
         try {
             groupJsonObjects = gson.fromJson(associatedGroupsJson.getJson(), GroupsArrayJsonObject.class).groupJsonObjects;
@@ -72,6 +73,12 @@ public class FromJsonFactory {
     }
 
 
+    /**
+     * The following classes are static dataclasses used by the GSON library to convert JSON strings
+     * to objects readable in java. These classes are used to instantiate the more object oriented
+     * model classes. The data they hold mirrors the data contained in the different JSON strings
+     * sent out by the database.
+     */
 
     static class GroupJsonObject {
         public GroupJsonObject(String name, String date, String groupId, UserJsonObject[] members, DebtJsonObject[] debts) {
