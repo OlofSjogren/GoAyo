@@ -57,13 +57,15 @@
             android:text="How much to settle?"
             android:textSize="24sp" />
 
-        <androidx.cardview.widget.CardView
+        <RelativeLayout
             android:id="@+id/settleAmount_cardView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@id/settleDebtButton_CardView"
             android:layout_centerInParent="true"
             android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_corner_box"
+            android:elevation="4dp"
             app:cardCornerRadius="20dp">
 
             <EditText
@@ -73,18 +75,19 @@
                 android:layout_margin="10dp"
                 android:ems="10"
                 android:inputType="numberDecimal" />
-        </androidx.cardview.widget.CardView>
+        </RelativeLayout>
 
 
-        ö<androidx.cardview.widget.CardView
+        <RelativeLayout
             android:id="@+id/settleDebtButton_CardView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
             android:layout_marginBottom="30dp"
-            app:cardBackgroundColor="@color/confirmButton"
-            app:cardCornerRadius="20dp">
+            android:background="@drawable/rounded_corner_box"
+            android:backgroundTint="@color/confirmButton"
+            android:elevation="5dp">
 
             <Button
                 android:id="@+id/settleDebtButton"
@@ -100,8 +103,6 @@
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
-        </androidx.cardview.widget.CardView>
-
-
+        </RelativeLayout>
     </RelativeLayout>
 </layout>
