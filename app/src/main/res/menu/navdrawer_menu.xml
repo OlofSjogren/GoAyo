@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/contacts_menu_item"
-        android:title="Contacts" />
-    <item
-        android:id="@+id/logout_menu_item"
-        android:title="LogOut" />
+    <group android:id="@+id/groupTop">
+        <item
+            android:id="@+id/contacts_menu_item"
+            android:title="Contacts" />
+    </group>
 
+    <group android:id="@+id/groupBottom">
+        <item
+            android:id="@+id/logout_menu_item"
+            android:title="LogOut" />
+    </group>
 </menu>
