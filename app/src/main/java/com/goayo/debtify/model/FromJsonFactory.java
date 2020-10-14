@@ -16,6 +16,7 @@ public class FromJsonFactory {
     }
 
     public User getUser(JsonString.UserJsonString userToBeLoggedIn) {
+        
         String name = gson.fromJson(userToBeLoggedIn.getJson(), UserJsonObject.class).name;
         String phoneNumber = gson.fromJson(userToBeLoggedIn.getJson(), UserJsonObject.class).phonenumber;
         return EntityFactory.createUser(phoneNumber, name);
