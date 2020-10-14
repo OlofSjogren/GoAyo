@@ -16,16 +16,13 @@ import java.util.UUID;
  * <p>
  * 2020-09-17 Modified by Alex Phu and Olof Sjögren: Continued implementing methods.
  * Changed boolean functions to throw exceptions instead.
- * <p>
  * 2020-09-18 Modified by Oscar Sanner: Added method to check if loggedInUser is set before
  * running methods requiring the user to be logged in. Added getters needed by high level
  * classes and by extension, the view and controller package.
- * <p>
- * 2020-09-21 Modified by Alex and Oscar: Implemented Leave and remove feature.
- * <p>
- * 2020-09-23 Modified by Olof: getGroupFromID-method is now public and documented, called upon by ModelEngine to provide data to view.
+ * 2020-09-21 Modified by Alex Phu and Oscar Sanner: Implemented Leave and remove feature.
+ * 2020-09-23 Modified by Olof Sjögren: getGroupFromID-method is now public and documented, called upon by ModelEngine to provide data to view.
  * 2020-09-28 Modified by Oscar Sanner and Olof Sjögren: Reworked methods to depend on the database for calls before mutating model.
- * 2020-09-28 Modified by Yenan: refactor to add parameter description to createDebt method
+ * 2020-09-28 Modified by Yenan Wang: refactor to add parameter description to createDebt method
  * 2020-09-29 Modified by Oscar Sanner and Olof Sjögren: Fixed bug in login user method. Contact list will now mutate
  * the instance variable contactList instead of returning a new list. Also removed the getUserFromId method as this now
  * resides in the mock database.
@@ -38,6 +35,7 @@ import java.util.UUID;
  * 2020-10-11 Modidied by Oscar Sanner: UUIDs are created in this class and passed to the database and the groups respectively.
  * 2020-10-12 Modified by Alex Phu: In createDebt and payOffDebt, publish for GroupsEvent too on EventBus
  * 2020-10-13 Modified by Olof Sjögren: Refactored eventbus publications to publish enum-types instead of objects.
+ * 2020-10-14 Modified by Olof Sjögren: Updated JDocs.
  */
 class Account {
 
@@ -73,10 +71,11 @@ class Account {
     /**
      * Logs in the user if logged in information is matched in the database.
      * Also initializes contactList and associatedGroups for the user.
+     * Finally publishes a CONTACT_EVENT to the EventBus.
      *
-     * @param phoneNumber Phonenumber input.
+     * @param phoneNumber Phone number input.
      * @param password    Password input.
-     * @throws Exception Thrown if user input is not valid.
+     * @throws Exception Thrown if user input is not valid. //TODO NEEEEDS TO SPECIFY
      */
     public void loginUser(String phoneNumber, String password) throws Exception {
         JsonString.UserJsonString userToBeLoggedIn = database.getUserToBeLoggedIn(phoneNumber, password);
@@ -87,14 +86,17 @@ class Account {
     }
 
     /**
-     * Creates a group.
+     * Creates a group with the logged in user and all of the users with the given phone numbers.
+     * Generates an id for the group and attempts to register the group in the database.
+     * Finally publishes a GROUPS_EVENT to the EventBus.
      *
      * @param groupName      Group's name.
-     * @param phoneNumberSet Set with all of the potential users' phonenumber.
-     * @throws Exception Thrown if user is not found in the database.
+     * @param phoneNumberSet Set with all of the potential users' phone numbers.
+     * @throws RegistrationException thrown if the registration fails in the database.
+     * @throws ConnectException      thrown if unable to connect to the database.
+     * @throws UserNotFoundException thrown if a user with the given phone number can't be found in the database. //TODO NEVER THROWN?
      */
-
-    //TODO: Remove all but last two lines?
+    //TODO: Remove all but last two lines?    <---- What does this mean? Still relevant?
     public void createGroup(String groupName, Set<String> phoneNumberSet) throws RegistrationException, ConnectException, UserNotFoundException {
         userIsLoggedIn();
         phoneNumberSet.add(loggedInUser.getPhoneNumber());
@@ -113,22 +115,32 @@ class Account {
         EventBus.getInstance().publish(EventBus.EVENT.GROUPS_EVENT);
     }
 
+    /**
+     * Helper method for retrieving a user from a set given a phone number.
+     *
+     * @param phoneNumber the phone number of the user which is to be found in the set.
+     * @param set         the set of user's to search for a user with a matching phone number.
+     * @return the user with the matching phone number.
+     */
     private User getUserFromSet(String phoneNumber, Set<User> set) {
         for (User u : set) {
             if (u.getPhoneNumber().equals(phoneNumber)) {
                 return u;
             }
         }
+        //TODO still throw runtime?
         throw new RuntimeException("Something went wrong, selected user can not be found in contactList");
     }
 
     /**
-     * Adds a user to the contactList.
+     * Adds a user to the contactList if a user with the matching phone number exists in the database.
+     * Finally publishes a CONTACT_EVENT to the EventBus.
      *
-     * @param phoneNumber The to be added user's phoneNumber.
-     * @throws Exception Thrown if the user is not found, or if the user is already in the contactList.
+     * @param phoneNumber The to be added user's phone number.
+     * @throws UserNotFoundException thrown if a user with the given phone number can't be found in the database.
+     * @throws ConnectException thrown if unable to connect to the database.
+     * @throws UserAlreadyExistsException thrown if a user with the given phone number already exists in the contactList.
      */
-
     public void addContact(String phoneNumber) throws UserNotFoundException, ConnectException, UserAlreadyExistsException {
         userIsLoggedIn();
         JsonString.UserJsonString jsonString = database.getUser(phoneNumber);
@@ -156,14 +168,16 @@ class Account {
     }
 
     /**
-     * Adds a user to a specific group.
+     * Adds a user from the user's contacts to a specific group. Also attempts to update the database accordingly.
+     * Finally publishes a GROUPS_EVENT to the EventBus.
      *
-     * @param phoneNumber The to be added user's phoneNumber.
+     * @param phoneNumber The to be added user's phone number.
      * @param groupID     The id of the group.
-     * @throws Exception Thrown if the group is not found given the groupID, or if the user is not found, or if the user is
-     *                   already in the group.
+     * @throws UserNotFoundException thrown if a user with the given phone number can't be found in the database.
+     * @throws UserAlreadyExistsException thrown if a user with the given phone number already exists in the group.
+     * @throws ConnectException thrown if unable to connect to the database.
+     * @throws GroupNotFoundException thrown if a group with the given groupID can't be found in the database.
      */
-
     public void addUserToGroup(String phoneNumber, String groupID) throws UserNotFoundException, UserAlreadyExistsException, ConnectException, GroupNotFoundException {
         userIsLoggedIn();
         database.addUserToGroup(groupID, phoneNumber);
@@ -173,24 +187,33 @@ class Account {
         EventBus.getInstance().publish(EventBus.EVENT.SPECIFIC_GROUP_EVENT);
     }
 
+
+
+    /**
+     * Method for retrieving a group the logged in user is a member of, given the groupID.
+     * @param groupID the id of the group to retrieve.
+     * @return the group with the matching id.
+     */
     public Group getAssociatedGroupFromId(String groupID) {
         for (Group g : associatedGroups) {
             if (g.getGroupID().equals(groupID)) {
                 return g;
             }
         }
+        //TODO Runtime ok here?
         throw new RuntimeException("Group was not in group list. Something went wrong");
     }
 
-    /**
-     * Removes a user from a group.
-     *
-     * @param phoneNumber User's phoneNumber.
-     * @param groupID     Groups ID.
-     * @throws Exception Thrown if group is not found given the groupID, or if the user is not found,
-     *                   or if the user is not found given the group.
-     */
+    //TODO Continue from here ------------------------------------------------------------------------------------------------------
 
+    /**
+     * Removes a user from a group the logged in user is a member of.  Also attempts to update the database accordingly.
+     * @param phoneNumber
+     * @param groupID
+     * @throws UserNotFoundException
+     * @throws GroupNotFoundException
+     * @throws ConnectException
+     */
     public void removeUserFromGroup(String phoneNumber, String groupID) throws UserNotFoundException, GroupNotFoundException, ConnectException {
         userIsLoggedIn();
         database.removeUserFromGroup(phoneNumber, groupID);
