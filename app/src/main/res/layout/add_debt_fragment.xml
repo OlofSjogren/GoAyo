@@ -72,11 +72,40 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/borrowerTextVIew" />
 
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/borrowerRecyclerView"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="20dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/add_debt_no_split_radiobutton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:layout_weight="1"
+                        android:checked="true"
+                        android:text="No split"
+                        android:textSize="19sp" />
+
+                    <RadioButton
+                        android:id="@+id/add_debt_even_split_radiobutton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_weight="1"
+                        android:text="Split evenly"
+                        android:textSize="19sp" />
+                </RadioGroup>
+
                 <TextView
                     android:id="@+id/amountTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/borrowerRecyclerView"
+                    android:layout_below="@id/radioGroup"
                     android:layout_centerInParent="true"
                     android:text="Amount"
                     android:textSize="24sp" />
@@ -174,27 +203,6 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
             </RelativeLayout>
-
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_toEndOf="@id/continueCardView">
-
-                <RadioButton
-                    android:id="@+id/add_debt_no_split_radiobutton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="No split" />
-
-                <RadioButton
-                    android:id="@+id/add_debt_even_split_radiobutton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Split evenly" />
-            </RadioGroup>
         </RelativeLayout>
     </RelativeLayout>
 </layout>
