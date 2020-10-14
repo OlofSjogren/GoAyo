@@ -1,5 +1,16 @@
 package com.goayo.debtify.model;
 
+/**
+ * @Author Oscar Sanner
+ * @date 2020-10-12
+ *
+ * A class used for holding differently formatted json-stings.
+ * Each class has the same method but every class instantiating the internal classes
+ * must pay attention to how the strings are required to be formatted.
+ *
+ * 2020-10-14 Modified by Oscar Sanner: Added documentation.
+ */
+
 public abstract class JsonString {
 
     private final String json;

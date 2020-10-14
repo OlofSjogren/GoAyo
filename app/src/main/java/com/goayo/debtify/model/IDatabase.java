@@ -31,6 +31,9 @@ import java.util.Set;
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Made package private.
  *
  * 2020-10-12 Modified by Oscar Sanner: Added documentation for the specific json string.
+ *
+ * 2020-10-14 Modified by Oscar Sanner: Removed documentation for how specific JsonStrings will be formatted.
+ *
  */
 
 public interface IDatabase {
