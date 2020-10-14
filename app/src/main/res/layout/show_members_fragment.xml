@@ -3,36 +3,49 @@
 @date   2020-09-23
 -->
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/show_members_header_RelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/rounded_corner_bottom"
+            android:backgroundTint="@color/themeOrange"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Participants"
+                android:textColor="@android:color/white"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/show_members_groupname_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/show_members_header_RelativeLayout"
+            android:layout_centerInParent="true"
             android:layout_marginTop="10dp"
             android:text="Members of GROUP_NAME"
             android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/show_members_recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="680dp"
-            android:layout_marginTop="20dp"
-            android:padding="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/show_members_groupname_textview" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="match_parent"
+            android:layout_below="@id/show_members_groupname_textview"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="10dp"
+            android:padding="20dp" />
+    </RelativeLayout>
 </layout>

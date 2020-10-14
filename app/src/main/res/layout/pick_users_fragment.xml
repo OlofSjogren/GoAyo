@@ -15,7 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:background="@color/themeOrange"
+            android:background="@drawable/rounded_corner_bottom"
+            android:backgroundTint="@color/themeOrange"
             android:paddingTop="20dp"
             android:paddingBottom="20dp">
 
@@ -43,9 +44,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/rounded_corner_box"
             android:backgroundTint="@color/confirmButton"
-            android:layout_marginBottom="20dp"
             android:elevation="4dp">
 
             <Button
