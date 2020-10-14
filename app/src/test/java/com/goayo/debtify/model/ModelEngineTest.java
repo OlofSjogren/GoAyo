@@ -349,6 +349,13 @@ public class ModelEngineTest {
 
     }
 
+    @Test
+    public void refreshWithDatabase() throws Exception {
+        Map.Entry<String, String> entry = getRandomUserFromHashMap();
+        modelEngine.logInUser(entry.getValue(), entry.getKey());
+        modelEngine.refreshWithDatabase();
+    }
+
     private static Map.Entry<String, String> getRandomUserFromHashMap() {
         int randomIndex = ThreadLocalRandom.current().nextInt(0, amountOfUsers);
         int i = 0;
