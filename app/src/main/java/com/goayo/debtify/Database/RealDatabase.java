@@ -54,33 +54,33 @@ public class RealDatabase implements IDatabase {
     }
 
     @Override
-    public boolean registerGroup(String name, Set<String> usersPhoneNumber, String id) throws RegistrationException, ConnectException {
-        return groupsFetcher.registerGroup(name, usersPhoneNumber, id);
+    public void registerGroup(String name, Set<String> usersPhoneNumber, String id) throws RegistrationException, ConnectException {
+        groupsFetcher.registerGroup(name, usersPhoneNumber, id);
     }
 
     @Override
-    public boolean addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy) throws GroupNotFoundException, UserNotFoundException, ConnectException, InvalidDebtException {
-        return debtsFetcher.addDebt(groupID, lender, borrowers, amount, description, splitStrategy);
+    public void addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy) throws GroupNotFoundException, UserNotFoundException, ConnectException, InvalidDebtException {
+        debtsFetcher.addDebt(groupID, lender, borrowers, amount, description, splitStrategy);
     }
 
     @Override
-    public boolean addContact(String userPhoneNumber, String contactToBeAdded) throws UserNotFoundException, ConnectException {
-        return contactsFetcher.addContact(userPhoneNumber, contactToBeAdded);
+    public void addContact(String userPhoneNumber, String phoneNumberOfContactToBeAdded) throws UserNotFoundException, ConnectException {
+        contactsFetcher.addContact(userPhoneNumber, phoneNumberOfContactToBeAdded);
     }
 
     @Override
-    public boolean removeContact(String userPhoneNumber, String phoneNumberOfContactToBeRemoved) throws UserNotFoundException, ConnectException {
-        return contactsFetcher.removeContact(userPhoneNumber, phoneNumberOfContactToBeRemoved);
+    public void removeContact(String userPhoneNumber, String phoneNumberOfContactToBeRemoved) throws UserNotFoundException, ConnectException {
+        contactsFetcher.removeContact(userPhoneNumber, phoneNumberOfContactToBeRemoved);
     }
 
     @Override
-    public boolean addPayment(String groupID, String debtID, BigDecimal amount, String id) throws GroupNotFoundException, InvalidDebtException, InvalidPaymentException, ConnectException {
-        return paymentFetcher.addPayment(groupID, debtID, amount, id);
+    public void addPayment(String groupID, String debtID, BigDecimal amount, String id) throws GroupNotFoundException, InvalidDebtException, InvalidPaymentException, ConnectException {
+        paymentFetcher.addPayment(groupID, debtID, amount, id);
     }
 
     @Override
-    public boolean addUserToGroup(String groupID, String phoneNumber) throws UserNotFoundException, GroupNotFoundException, ConnectException, UserAlreadyExistsException {
-        return groupsFetcher.addUserToGroup(groupID, phoneNumber);
+    public void addUserToGroup(String groupID, String phoneNumber) throws UserNotFoundException, GroupNotFoundException, ConnectException, UserAlreadyExistsException {
+        groupsFetcher.addUserToGroup(groupID, phoneNumber);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class RealDatabase implements IDatabase {
     }
 
     @Override
-    public boolean removeUserFromGroup(String phoneNumber, String groupID) throws UserNotFoundException, GroupNotFoundException, ConnectException {
-        return groupsFetcher.removeUserFromGroup(phoneNumber, groupID);
+    public void removeUserFromGroup(String phoneNumber, String groupID) throws UserNotFoundException, GroupNotFoundException, ConnectException {
+        groupsFetcher.removeUserFromGroup(phoneNumber, groupID);
     }
 }

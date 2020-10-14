@@ -12,25 +12,25 @@ public abstract class JsonString {
         return json;
     }
 
-    public static class GroupJsonString extends JsonString{
+    public static class GroupJsonString extends JsonString {
         public GroupJsonString(String json) {
             super(json);
         }
     }
 
-    public static class GroupArrayJsonString extends JsonString{
+    public static class GroupArrayJsonString extends JsonString {
         public GroupArrayJsonString(String json) {
             super(json);
         }
     }
 
-    public static class UserArrayJsonString extends JsonString{
+    public static class UserArrayJsonString extends JsonString {
         public UserArrayJsonString(String json) {
             super(json);
         }
     }
 
-    public static class UserJsonString extends JsonString{
+    public static class UserJsonString extends JsonString {
         public UserJsonString(String json) {
             super(json);
         }

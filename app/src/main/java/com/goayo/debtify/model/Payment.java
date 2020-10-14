@@ -24,7 +24,7 @@ class Payment implements IPaymentData {
     }
 
     /**
-     * Getter for date.
+     * Method for retrieving payment date.
      *
      * @return clone of the date. Used to avoid unexpected mutations.
      */
@@ -33,7 +33,7 @@ class Payment implements IPaymentData {
     }
 
     /**
-     * Getter for paidAmount.
+     * Method for retrieving the payment's amount.
      *
      * @return a new BigDecimal with the same amount as the paidAmount. Used to avoid unexpected mutations.
      */

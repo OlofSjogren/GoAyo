@@ -21,7 +21,8 @@ class NoSplitStrategy implements IDebtSplitStrategy {
      *
      * @param borrowers The selected borrowers.
      * @param owedTotal The amount that each borrower will pay.
-     * @return A map with users and their respective owedTotal.
+     * @param <T>       is a subtype of IUserData (or just IUserData) and represents the user among which the debt will be split.
+     * @return a Map with the user as the key and a tuple with an ID and the specific user total as the map value.
      */
     @Override
     public <T extends IUserData> Map<T, Tuple<BigDecimal, String>> splitDebt(Map<T, String> borrowers, BigDecimal owedTotal) {

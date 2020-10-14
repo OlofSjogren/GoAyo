@@ -98,7 +98,11 @@ public class GroupTest {
         secondUserList.add(new User("12345566", "Bengt"));
         secondUserList.add(new User("987654", "Felix"));
 
-        assertFalse(tempGroup.removeUser(secondUserList));
+        tempGroup.removeUser(secondUserList);
+
+        for (User u : secondUserList){
+            assertFalse(tempGroup.getGroupMembers().contains(u));
+        }
     }
 
     @Test

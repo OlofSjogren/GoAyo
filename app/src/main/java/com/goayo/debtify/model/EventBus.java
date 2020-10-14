@@ -8,24 +8,48 @@ import java.util.Map;
 /**
  * @Author Oscar Sanner and Olof Sjögren
  * @date 2020-10-07
- *
+ * <p>
  * 2020-10-13 Modified by Olof Sjögren: Now utilizes enum-types instead of class-types.
+ * 2020-10-14 Modified by Olof Sjögren: Added JDocs.
  */
 public class EventBus {
 
+    /**
+     * All the different types of events which can be published.
+     */
     public enum EVENT {
+        /**
+         * Event associated with the user contacts.
+         */
         CONTACT_EVENT,
+
+        /**
+         * Event associated with the user's groups.
+         */
         GROUPS_EVENT,
+
+        /**
+         * Event associated with a specific group.
+         */
         SPECIFIC_GROUP_EVENT,
     }
 
     private static EventBus instance;
+
+    /**
+     * Map where an EVENT acts as a key to a corresponding list of IEventHandlers which are to be notified when an event of key's type is published.
+     */
     private Map<EVENT, List<IEventHandler>> listenerMap;
 
     private EventBus() {
         listenerMap = new HashMap<>();
     }
 
+    /**
+     * Method for getting the Singleton EventBus. Assures there is only one instantiated EventBus.
+     *
+     * @return a new EventBus if the EventBus hasn't been instantiated, otherwise the already existing EventBus.
+     */
     public static EventBus getInstance() {
         if (instance == null) {
             instance = new EventBus();
@@ -33,6 +57,11 @@ public class EventBus {
         return instance;
     }
 
+    /**
+     * Method for registering an IEventHandler to be notified when a specific event is published.
+     * @param handler the IEventHandler who wishes to be notified of a specific event.
+     * @param eventType the type of event publications the handler wishes to be notified of.
+     */
     public void register(IEventHandler handler, EVENT eventType) {
         if (listenerMap.get(eventType) == null) {
             listenerMap.put(eventType, new ArrayList<>());
@@ -40,11 +69,20 @@ public class EventBus {
         listenerMap.get(eventType).add(handler);
     }
 
+    /**
+     * Method for unregistering a handler from a specific event publication it is registered to.
+     * @param handler the handler who wishes to unregister.
+     * @param eventType the type of event publication the handler wants to unregister from.
+     */
     public void unRegister(IEventHandler handler, EVENT eventType) {
         listenerMap.get(eventType).remove(handler);
         //TODO: Handle null exception perhaps?
     }
 
+    /**
+     * Method for publishing an event and thus notifying all IEventHandlers registered to the publication of the that event to be notified.
+     * @param eventType the type of event to publish.
+     */
     public void publish(EVENT eventType) {
         List<IEventHandler> eventHandlerList = listenerMap.get(eventType);
         if (eventHandlerList == null) {
