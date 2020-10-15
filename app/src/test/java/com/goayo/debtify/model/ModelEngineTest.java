@@ -1,5 +1,7 @@
 package com.goayo.debtify.model;
 
+import com.goayo.debtify.MockDatabase.MockDatabase;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +27,7 @@ import static org.junit.Assert.assertTrue;
 public class ModelEngineTest {
 
     Map<String, String> passwordAndNumber;
-    static ModelEngine modelEngine = ModelEngine.getInstance();
+    static ModelEngine modelEngine = new ModelEngine(new MockDatabase());
     Set<String> someNumbers;
     private int amountOfUsers = 50;
     List<String> noFriendsUsers;
