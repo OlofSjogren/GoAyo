@@ -80,7 +80,7 @@ class Account {
     public void loginUser(String phoneNumber, String password) throws Exception {
         JsonString.UserJsonString userToBeLoggedIn = database.getUserToBeLoggedIn(phoneNumber, password);
         loggedInUser = fromJsonFactory.getUser(userToBeLoggedIn);
-        initContactList(phoneNumber);
+        initContactList();
         initAssociatedGroups();
         EventBus.getInstance().publish(EventBus.EVENT.CONTACT_EVENT);
     }
@@ -137,8 +137,8 @@ class Account {
      * Finally publishes a CONTACT_EVENT to the EventBus.
      *
      * @param phoneNumber The to be added user's phone number.
-     * @throws UserNotFoundException thrown if a user with the given phone number can't be found in the database.
-     * @throws ConnectException thrown if unable to connect to the database.
+     * @throws UserNotFoundException      thrown if a user with the given phone number can't be found in the database.
+     * @throws ConnectException           thrown if unable to connect to the database.
      * @throws UserAlreadyExistsException thrown if a user with the given phone number already exists in the contactList.
      */
     public void addContact(String phoneNumber) throws UserNotFoundException, ConnectException, UserAlreadyExistsException {
@@ -173,10 +173,10 @@ class Account {
      *
      * @param phoneNumber The to be added user's phone number.
      * @param groupID     The id of the group.
-     * @throws UserNotFoundException thrown if a user with the given phone number can't be found in the database.
+     * @throws UserNotFoundException      thrown if a user with the given phone number can't be found in the database.
      * @throws UserAlreadyExistsException thrown if a user with the given phone number already exists in the group.
-     * @throws ConnectException thrown if unable to connect to the database.
-     * @throws GroupNotFoundException thrown if a group with the given groupID can't be found in the database.
+     * @throws ConnectException           thrown if unable to connect to the database.
+     * @throws GroupNotFoundException     thrown if a group with the given groupID can't be found in the database.
      */
     public void addUserToGroup(String phoneNumber, String groupID) throws UserNotFoundException, UserAlreadyExistsException, ConnectException, GroupNotFoundException {
         userIsLoggedIn();
@@ -188,9 +188,9 @@ class Account {
     }
 
 
-
     /**
      * Method for retrieving a group the logged in user is a member of, given the groupID.
+     *
      * @param groupID the id of the group to retrieve.
      * @return the group with the matching id.
      */
@@ -204,15 +204,15 @@ class Account {
         throw new RuntimeException("Group was not in group list. Something went wrong");
     }
 
-    //TODO Continue from here ------------------------------------------------------------------------------------------------------
-
     /**
      * Removes a user from a group the logged in user is a member of.  Also attempts to update the database accordingly.
-     * @param phoneNumber
-     * @param groupID
-     * @throws UserNotFoundException
-     * @throws GroupNotFoundException
-     * @throws ConnectException
+     * Finally publishes a SPECIFIC_GROUP_EVENT to the EventBus.
+     *
+     * @param phoneNumber the phone number of the user to be removed.
+     * @param groupID     the id of the group from which a user is to be removed.
+     * @throws UserNotFoundException  thrown if a user with the given phone number can't be found in the database.
+     * @throws GroupNotFoundException thrown if a group with the given groupID can't be found in the database.
+     * @throws ConnectException       thrown if unable to connect to the database.
      */
     public void removeUserFromGroup(String phoneNumber, String groupID) throws UserNotFoundException, GroupNotFoundException, ConnectException {
         userIsLoggedIn();
@@ -226,17 +226,17 @@ class Account {
     }
 
     /**
-     * Creates a debt between a lender and one or more borrowers.
+     * Creates a debt between a lender and one or more borrowers using a split strategy. Also attempts to update the database accordingly.
+     * Finally publishes a SPECIFIC_GROUP_EVENT and a GROUPS_EVENT to the EventBus.
      *
      * @param groupID       The group's ID.
      * @param lender        The lender.
      * @param borrowers     The borrower(s).
      * @param owed          Amount of owed money.
-     * @param description   the brief description of the debt
-     * @param splitStrategy How the debt is split
-     * @throws Exception Thrown if group or users are not found, or if the set of borrower is empty.
+     * @param description   the brief description of the debt.
+     * @param splitStrategy How the debt is split.
+     * @throws Exception //TODO NEEEDS TO SPECIFY (Thrown if group or users are not found, or if the set of borrower is empty.)
      */
-
     public void createDebt(String groupID, String lender, Set<String> borrowers, BigDecimal owed, String description, IDebtSplitStrategy splitStrategy) throws Exception {
         userIsLoggedIn();
 
@@ -273,16 +273,19 @@ class Account {
     }
 
     /**
-     * Pays off a certain amount of the debt.
+     * Pays off a certain amount of a specific debt. Also attempts to update the database accordingly.
+     * Finally publishes a SPECIFIC_GROUP_EVENT and a GROUPS_EVENT to the EventBus.
      *
      * @param amount  Amount to be payed.
      * @param debtID  ID of the debt.
-     * @param groupID Group's ID.
-     * @throws Exception Thrown if group is not found, or if....
+     * @param groupID ID of the group in which the payment is to be made.
+     * @throws InvalidDebtException    thrown if the debt is invalid.
+     * @throws InvalidPaymentException thrown if the payment is invalid.
+     * @throws GroupNotFoundException  thrown if a group with the given id couldn't be found.
+     * @throws ConnectException        thrown if unable to connect to the database.
      */
-
     //Todo: Database.PayOfDebt -> No need to reload groups because same objects. Reload anyways.
-    public void payOffDebt(BigDecimal amount, String debtID, String groupID) throws InvalidDebtException, InvalidPaymentException, GroupNotFoundException, ConnectException, UserNotFoundException {
+    public void payOffDebt(BigDecimal amount, String debtID, String groupID) throws InvalidDebtException, InvalidPaymentException, GroupNotFoundException, ConnectException {
         userIsLoggedIn();
         String id = UUID.randomUUID().toString();
         database.addPayment(groupID, debtID, amount, id);
@@ -300,7 +303,7 @@ class Account {
      * Precondition: The user is logged in via the logInUser method, before calling
      * this method.
      *
-     * @return the logged in user in the shape of "IUserData".
+     * @return the logged in user wrapped in the IUserData type.
      */
     public IUserData getLoggedInUser() {
         return loggedInUser;
@@ -317,19 +320,21 @@ class Account {
 
     /**
      * The public getter for the contact list of the logged in user.
+     *
+     * @return a new HashSet of the contact list with each user object as a IUserData type.
      */
     public Set<IUserData> getContacts() {
         return new HashSet<>(contactList);
     }
 
     /**
-     * Removes a user from the contactList.
+     * Removes a user from the contactList. Also attempts to update the database accordingly.
+     * Finally publishes a CONTACT_EVENT to the EventBus.
      *
-     * @param phoneNumber The to be removed user's phoneNumber.
-     * @throws Exception Thrown if the user is not found in the contact list.
+     * @param phoneNumber the phone number of the contact to be removed.
+     * @throws UserNotFoundException thrown if a user with the given phone number is not a contact of the logged in user.
+     * @throws ConnectException      thrown if unable to connect to the database.
      */
-
-    //Todo: database.removeContact. -> Reload contact list.
     public void removeContact(String phoneNumber) throws UserNotFoundException, ConnectException {
         userIsLoggedIn();
         database.removeContact(loggedInUser.getPhoneNumber(), phoneNumber);
@@ -339,8 +344,15 @@ class Account {
         EventBus.getInstance().publish(EventBus.EVENT.CONTACT_EVENT);
     }
 
-
-    //TODO: NEEDS JDOCZ
+    /**
+     * Method for the logged in user to leave a specific group. Also attempts to update the database accordingly.
+     * Finally publishes a GROUPS_EVENT to the EventBus
+     *
+     * @param groupID the id of the group the logged in user will leave.
+     * @throws UserNotFoundException thrown if the logged in user is not found in the group it wishes to leave.
+     * @throws GroupNotFoundException thrown if a group with the given group id can't be found.
+     * @throws ConnectException thrown if unable to connect to the database.
+     */
     public void leaveGroup(String groupID) throws UserNotFoundException, GroupNotFoundException, ConnectException {
         database.removeUserFromGroup(loggedInUser.getPhoneNumber(), groupID);
         Group g = getAssociatedGroupFromId(groupID);
@@ -349,14 +361,14 @@ class Account {
         EventBus.getInstance().publish(EventBus.EVENT.GROUPS_EVENT);
     }
 
+
     /**
-     * Fetches the group with the specific groupID, provided that the user is a member of the group.
+     * Fetches the group with the specific groupID from the database.
      *
      * @param groupID id of the group to fetch.
      * @return the group with the given id.
-     * @throws Exception thrown if the logged in user isn't apart of the group, it can't be found.
+     * @throws Exception thrown if the logged in user isn't apart of the group, it can't be found. TODO NEEEEDS TO SPECIFY
      */
-
     //Todo: Database call?
     public Group getGroupFromID(String groupID) throws Exception {
         JsonString.GroupJsonString jsonString = database.getGroupFromId(groupID);
@@ -375,27 +387,53 @@ class Account {
         contactList = null;
     }
 
-    private void initContactList(String phoneNumber) throws UserNotFoundException, ConnectException {
-        JsonString.UserArrayJsonString contactListJson = database.getContactList(phoneNumber);
+    /**
+     * Makes a database call to load the contact list of the logged in user, given the logged in users phone number.
+     *
+     * @throws UserNotFoundException thrown if a user withe given phone number couldn't be found in the database.
+     * @throws ConnectException thrown if unable to connect to the database.
+     */
+    private void initContactList() throws UserNotFoundException, ConnectException {
+        JsonString.UserArrayJsonString contactListJson = database.getContactList(getLoggedInUser().getPhoneNumber());
         contactList = fromJsonFactory.getContactList(contactListJson);
     }
 
+    /**
+     * Makes a database call and initializes the logged in users groups.
+     * @throws Exception TODO NEEEDS TO SPECIFY
+     */
     private void initAssociatedGroups() throws Exception {
         JsonString.GroupArrayJsonString associatedGroupsJson = database.getGroups(loggedInUser.getPhoneNumber());
         associatedGroups = fromJsonFactory.getGroups(associatedGroupsJson);
     }
 
+    /**
+     * Checks that the user is logged in, otherwise an exception is thrown.
+     */
+    //TODO NEEDS TO THROW EXCEPTION
     private void userIsLoggedIn() {
         if (loggedInUser == null) {
             throw new UserNotLoggedInException("The user is not logged in");
         }
     }
 
+    /**
+     * Retrieves a single user from the database given a phone number.
+     * @param phoneNumber the phone number of the user to retrieve.
+     * @return the user with the matching phone number.
+     * @throws UserNotFoundException thrown if a user with the given phone number couldn't be found.
+     * @throws ConnectException thrown if unable to connect to the database.
+     */
     public IUserData getSingleUserFromDatabase(String phoneNumber) throws UserNotFoundException, ConnectException {
         JsonString.UserJsonString userJson = database.getUser(phoneNumber);
         return fromJsonFactory.getUser(userJson);
     }
 
+    /**
+     * Updates the logged in user's associated groups, groups with membership.
+     *
+     * @throws Exception //TODO Need to specify.
+     */
     public void refreshWithDatabase() throws Exception {
         userIsLoggedIn();
         initAssociatedGroups();
