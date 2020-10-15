@@ -42,6 +42,8 @@ import java.util.List;
  * return types and params of methods are correctly set as BigDecimal.
  * <p>
  * 2020-10-09 Modified by Yenan & Alex: add method updateData(...)
+ * <p>
+ * 2020-10-14 Modified by Alex Phu: Changed string "owes" to "lends".
  */
 public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCardAdapter.TransactionCardViewHolder> {
 
@@ -102,9 +104,9 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
     private List<TransactionData> createTransactionDataSet(List<IDebtData> debtDataArray) {
         List<TransactionData> transactionDataList = new ArrayList<>();
         for (IDebtData debtData : debtDataArray) {
-            transactionDataList.add(new TransactionData(debtData.getDate(), debtData.getDescription(), "Debt", debtData.getLender().getName() + " owes " + debtData.getBorrower().getName(), debtData.getOriginalDebt()));
+            transactionDataList.add(new TransactionData(debtData.getDate(), debtData.getDescription(), "Debt", debtData.getLender().getName() + " lent " + debtData.getBorrower().getName(), debtData.getOriginalDebt()));
             for (IPaymentData paymentData : debtData.getPaymentHistory()) {
-                transactionDataList.add(new TransactionData(paymentData.getDate(), debtData.getDescription(), "Payment", debtData.getBorrower().getName() + " payed " + debtData.getLender().getName(), paymentData.getPaidAmount()));
+                transactionDataList.add(new TransactionData(paymentData.getDate(), debtData.getDescription(), "Payment", debtData.getBorrower().getName() + " paid " + debtData.getLender().getName(), paymentData.getPaidAmount()));
             }
         }
         return transactionDataList;

@@ -2,6 +2,7 @@ package com.goayo.debtify.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 
+import com.goayo.debtify.MockDatabase.MockDatabase;
 import com.goayo.debtify.model.ModelEngine;
 
 /**
@@ -12,7 +13,7 @@ import com.goayo.debtify.model.ModelEngine;
  */
 abstract class ModelEngineViewModel extends ViewModel {
 
-    private static final ModelEngine model = ModelEngine.getInstance();
+    private static final ModelEngine model = new ModelEngine(new MockDatabase());
 
     protected final ModelEngine getModel() {
         return model;

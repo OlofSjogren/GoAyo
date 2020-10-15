@@ -3,6 +3,8 @@ package com.goayo.debtify.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -12,7 +14,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.ActivityMainBinding;
-import com.goayo.debtify.viewmodel.MyGroupsViewModel;
 import com.goayo.debtify.viewmodel.SignInAndOutViewModel;
 import com.google.android.material.navigation.NavigationView;
 
@@ -30,6 +31,7 @@ import com.google.android.material.navigation.NavigationView;
  * 2020-10-12 Modified by Alex Phu: Removed Tabs functionality.
  * 2020-10-12 Modified by Olof Sjögren: Attribute signInAndOutViewModel is now created by ViewModelProvider.
  * Also removed temporary sign in method.
+ * 2020-10-14 Modified by Alex Phu: Implemented initNavHeader() and cleaned up comments.
  */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -43,16 +45,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         signInAndOutViewModel = ViewModelProviders.of(this).get(SignInAndOutViewModel.class);
 
         initToolbar();
+        initNavHeader();
         setNavigationViewListener();
     }
 
-    //================================================================================
-    // Initialization
-    //================================================================================
-
-    /**
-     * Initializes toolbar.
-     */
     private void initToolbar() {
         setSupportActionBar(binding.toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.drawerlayout, binding.toolbar, R.string.open, R.string.close);
@@ -61,19 +57,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
     }
 
-    //================================================================================
-    // DrawerLayout
-    //================================================================================
+    private void initNavHeader() {
+        NavigationView navigationView = binding.navView;
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = headerView.findViewById(R.id.nav_header_username);
+        navUsername.setText(signInAndOutViewModel.getCurrentLoggedInUsersName());
+    }
 
-    /**
-     * Sets custom listener for the DrawerLayout
-     */
     private void setNavigationViewListener() {
         binding.navView.setNavigationItemSelectedListener(this);
     }
 
     /**
-     * TODO ____________________________________________________________WHAT DOES IT DO?____________________________________________________________
+     * Listeners for menuItems in drawerLayout
      *
      * @param item The menu item that is clicked by the user.
      * @return Returns a boolean value depending on if the navigation was successfully executed.

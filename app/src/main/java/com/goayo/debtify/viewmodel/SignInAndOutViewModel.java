@@ -7,6 +7,8 @@ import android.util.Log;
  * @date 2020-09-30
  * <p>
  * View model class responsible for handling logIn request from Views and calling upon ModelEngine accordingly.
+ * <p>
+ * 2020-10-14 Modified by Alex Phu: Implemented getCurrentLoggedInUsersName()
  */
 public class SignInAndOutViewModel extends ModelEngineViewModel {
 
@@ -25,6 +27,15 @@ public class SignInAndOutViewModel extends ModelEngineViewModel {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Gets the current logged in user's name
+     *
+     * @return string of user's name.
+     */
+    public String getCurrentLoggedInUsersName() {
+        return getModel().getLoggedInUser().getName();
     }
 
     /**

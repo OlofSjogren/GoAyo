@@ -10,21 +10,22 @@ import java.util.Map;
  * @date 2020-10-09
  * <p>
  * Strategy where the owedTotal is split evenly among the borrowers.
- *
- * 2020-10-12 Modified by GoAyo: Changed RoundingMode from HALF_UP to HALF_EVEN
- * Modified by Oscar Sanner: Changed the parameters of the function to become generic for IUserData
+ * <p>
+ * 2020-10-12 Modified by Alex Phu and Yenan Wang: Changed RoundingMode from HALF_UP to HALF_EVEN.
+ * 2020-10-13 Modified by Oscar Sanner: Changed the parameters of the function to become generic for IUserData.
  * It's now usable outside of the Model. Also returns a tuple with an ID and the total amount for the user.
  * 2020-10-13 Modified by Alex Phu: Changed to package private.
+ * 2020-10-14 Modified by Olof Sjögren: Updated JDocs.
  */
 class EvenSplitStrategy implements IDebtSplitStrategy {
 
     /**
-     * owedTotal is split evenly among the borrowers.
+     * Split strategy for splitting the debt (given the owedTotal amount) equally among all given borrowers.
      *
-     * @param borrowers A map. Each entry contains one borrower and a corresponding debt id for the
-     *                  debt to be created.
-     * @param owedTotal Amount that the borrowers are owed.
-     * @return A map with IUserData and a tuple with the total and the ID.
+     * @param borrowers The selected borrowers.
+     * @param owedTotal The total amount which will be split equally among all users.
+     * @param <T>       is a subtype of IUserData (or just IUserData) and represents the user among which the debt will be split.
+     * @return a Map with the user as the key and a tuple with an ID and the specific user total as the map value.
      */
     @Override
     public <T extends IUserData> Map<T, Tuple<BigDecimal, String>> splitDebt(Map<T, String> borrowers, BigDecimal owedTotal) {

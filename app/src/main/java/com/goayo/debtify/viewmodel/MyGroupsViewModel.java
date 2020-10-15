@@ -39,7 +39,7 @@ public class MyGroupsViewModel extends ModelEngineViewModel implements IEventHan
     }
 
     private void setGroupsData() {
-        groupsData.setValue(ModelEngine.getInstance().getGroups());
+        groupsData.setValue(getModel().getGroups());
     }
 
     public LiveData<Set<IGroupData>> getGroupsData() {
