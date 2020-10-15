@@ -31,6 +31,9 @@ import java.util.Set;
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Made package private.
  *
  * 2020-10-12 Modified by Oscar Sanner: Added documentation for the specific json string.
+ *
+ * 2020-10-14 Modified by Oscar Sanner: Removed documentation for how specific JsonStrings will be formatted.
+ *
  */
 
 public interface IDatabase {
@@ -38,46 +41,8 @@ public interface IDatabase {
      * A method that returns a Json-String of all groups containing the user with the given
      * phone number.
      *
-     * Post condition: Will return a JSON string with the following properties.
-     *
-     *      groupJsonObjects: An array of Json-objects with the following properties:
-     *          {
-     *           "name": A String,
-     *           "date": A String,
-     *           "id": A String,
-     *           "members": An array with objects of the following JSON-Strings:
-     *                 {
-     *                  "name": A String,
-     *                  "phonenumber": A String,
-     *                  "password": A String,
-     *                  "contacts": An array of Strings.
-     *                  }
-     *           "debts": An array with objects of the following JSON-Strings:
-     *                  {
-     *                  "lender": An an object with the following JSON-Strings
-     *                      {
-     *                      "name": A String,
-     *                      "phonenumber": A String,
-     *                      "password": A String,
-     *                      "contacts": An array of Strings.
-     *                      }
-     *                  "borrower": An an object with the following JSON-Strings
-     *                      {
-     *                      "name": A String,
-     *                      "phonenumber": A String,
-     *                      "password": A String,
-     *                      "contacts": An array of Strings.
-     *                      }
-     *                  "owed": A String,
-     *                  "id": A String,
-     *                  "payments": borrower: An an object with the following JSON-Strings
-     *                      {
-     *                      "amount": A String,
-     *                      "id": A String,
-     *                      }
-     *                  "description": A String
-     *              }
-     *          }
+     * Post condition: The Json string will follow the format specified in the GroupArrayJsonString
+     *                 documentation.
      *
      * @param phoneNumber The phone number of the user belonging to the sought groups.
      * @return A json file with the above specified properties of all the groups in which the user with the provided phone number is a member.
@@ -87,47 +52,8 @@ public interface IDatabase {
     /**
      * Returns a single group with the given id, in the form of a Json object.
      *
-     * Post condition: Will return a JSON string with the following properties.
-     *
-     *    {
-     *       "name": A String,
-     *       "date": A String,
-     *       "id": A String,
-     *       "members": An array with objects of the following JSON-Strings:
-     *             {
-     *             "name": A String,
-     *             "phonenumber": A String,
-     *             "password": A String,
-     *             "contacts": An array of Strings.
-     *              }
-     *        "debts": An array with objects of the following JSON-Strings:
-     *             {
-     *             "lender": An an object with the following JSON-Strings
-     *                  {
-     *                  "name": A String,
-     *                  "phonenumber": A String,
-     *                  "password": A String,
-     *                  "contacts": An array of Strings.
-     *                  }
-     *              "borrower": An an object with the following JSON-Strings
-     *                  {
-     *                  "name": A String,
-     *                  "phonenumber": A String,
-     *                  "password": A String,
-     *                  "contacts": An array of Strings.
-     *                  }
-     *              "owed": A String,
-     *              "id": A String,
-     *              "payments": borrower: An an object with the following JSON-Strings
-     *                  {
-     *                  "amount": A String,
-     *                  "id": A String,
-     *                  }
-     *              "description": A String
-     *             }
-     *         }
-     *    }
-     *
+     * Post condition: The Json string will follow the format specified in the GroupJsonString
+     *                 documentation.
      *
      * @param groupID The id of the sought group.
      * @return A json file with the above specified properties of the group with specified ID.
@@ -137,14 +63,8 @@ public interface IDatabase {
     /**
      * Returns a user with the given phone number.
      *
-     * Post condition: returns a JSON-String with the following properties:
-     *
-     *          {
-     *             "name": A String,
-     *             "phonenumber": A String,
-     *             "password": A String,
-     *             "contacts": An array of Strings.
-     *          }
+     * Post condition: The Json string will follow the format specified in the UserJsonString
+     *                 documentation.
      *
      * @param phoneNumber The phone number of the user.
      * @return A json file with the above specified properties the user with the specified phone number.
@@ -249,15 +169,8 @@ public interface IDatabase {
      * Checks if a password and a phone number matches, and returns the user with the provided
      * phone number if it does.
      *
-     * Post Condition: Returns a JSON-String with the following properties.
-     *
-     *          {
-     *             "name": A String,
-     *             "phonenumber": A String,
-     *             "password": A String,
-     *             "contacts": An array of Strings.
-     *          }
-     *
+     * Post condition: The Json string will follow the format specified in the UserJsonString
+     *                 documentation.
      *
      * @param phoneNumber The phone number of the user being logged in.
      * @param password    The password of the user being logged in.
@@ -269,17 +182,8 @@ public interface IDatabase {
     /**
      * Getter for a list of users in an other users contact list.
      *
-     * Post Condition: Returns a JSON-string with the following properties:
-     *
-     *      {
-     *          contacts: An array of JSON objects with the following properties:
-     *          {
-     *             "name": A String,
-     *             "phonenumber": A String,
-     *             "password": A String,
-     *             "contacts": An array of Strings.
-     *          }
-     *      }
+     * Post condition: The Json string will follow the format specified in the UserArrayJsonString
+     *                 documentation.
      *
      * @param phoneNumber The phone number of the user requesting the contact list.
      * @return A json file with the above specified format.
