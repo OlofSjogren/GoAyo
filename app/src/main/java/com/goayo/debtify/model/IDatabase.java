@@ -21,6 +21,7 @@ import java.util.Set;
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Made package private.
  * 2020-10-12 Modified by Oscar Sanner: Added documentation for the specific json string.
  * 2020-10-14 Modified by Olof Sjögren: Updated JDocs. Also removed some redundant boolean return values.
+ * 2020-10-14 Modified by Oscar Sanner: Removed documentation for how specific JsonStrings will be formatted.
  */
 
 public interface IDatabase {
@@ -28,122 +29,40 @@ public interface IDatabase {
     /**
      * A method that returns a Json-String of all groups containing the user with the given
      * phone number.
-     *
-     * Post condition: Will return a JSON string with the following properties.
-     *
-     *      groupJsonObjects: An array of Json-objects with the following properties:
-     *          {
-     *           "name": A String,
-     *           "date": A String,
-     *           "id": A String,
-     *           "members": An array with objects of the following JSON-Strings:
-     *                 {
-     *                  "name": A String,
-     *                  "phonenumber": A String,
-     *                  "password": A String,
-     *                  "contacts": An array of Strings.
-     *                  }
-     *           "debts": An array with objects of the following JSON-Strings:
-     *                  {
-     *                  "lender": An an object with the following JSON-Strings
-     *                      {
-     *                      "name": A String,
-     *                      "phonenumber": A String,
-     *                      "password": A String,
-     *                      "contacts": An array of Strings.
-     *                      }
-     *                  "borrower": An an object with the following JSON-Strings
-     *                      {
-     *                      "name": A String,
-     *                      "phonenumber": A String,
-     *                      "password": A String,
-     *                      "contacts": An array of Strings.
-     *                      }
-     *                  "owed": A String,
-     *                  "id": A String,
-     *                  "payments": borrower: An an object with the following JSON-Strings
-     *                      {
-     *                      "amount": A String,
-     *                      "id": A String,
-     *                      }
-     *                  "description": A String
-     *              }
-     *          }
+     * <p>
+     * Post condition: The Json string will follow the format specified in the GroupArrayJsonString
+     * documentation.
      *
      * @param phoneNumber The phone number of the user belonging to the sought groups.
      * @return A json file with the above specified properties of all the groups in which the user with the provided phone number is a member.
      * @throws UserNotFoundException thrown if a user with the given phoneNumber doesn't exist in the database.
-     * @throws ConnectException thrown if unable to make a database connection.
+     * @throws ConnectException      thrown if unable to make a database connection.
      */
     JsonString.GroupArrayJsonString getGroups(String phoneNumber) throws UserNotFoundException, ConnectException;
 
     /**
      * Returns a single group with the given id, in the form of a Json object.
-     *
-     * Post condition: Will return a JSON string with the following properties.
-     *
-     *    {
-     *       "name": A String,
-     *       "date": A String,
-     *       "id": A String,
-     *       "members": An array with objects of the following JSON-Strings:
-     *             {
-     *             "name": A String,
-     *             "phonenumber": A String,
-     *             "password": A String,
-     *             "contacts": An array of Strings.
-     *              }
-     *        "debts": An array with objects of the following JSON-Strings:
-     *             {
-     *             "lender": An an object with the following JSON-Strings
-     *                  {
-     *                  "name": A String,
-     *                  "phonenumber": A String,
-     *                  "password": A String,
-     *                  "contacts": An array of Strings.
-     *                  }
-     *              "borrower": An an object with the following JSON-Strings
-     *                  {
-     *                  "name": A String,
-     *                  "phonenumber": A String,
-     *                  "password": A String,
-     *                  "contacts": An array of Strings.
-     *                  }
-     *              "owed": A String,
-     *              "id": A String,
-     *              "payments": borrower: An an object with the following JSON-Strings
-     *                  {
-     *                  "amount": A String,
-     *                  "id": A String,
-     *                  }
-     *              "description": A String
-     *             }
-     *         }
-     *    }
+     * <p>
+     * Post condition: The Json string will follow the format specified in the GroupJsonString
+     * documentation.
      *
      * @param groupID The id of the sought group.
      * @return A json file with the above specified properties of the group with specified ID.
      * @throws GroupNotFoundException thrown if the  a group with the given id can't be found in the database.
-     * @throws ConnectException thrown if unable to make a database connection.
+     * @throws ConnectException       thrown if unable to make a database connection.
      */
     JsonString.GroupJsonString getGroupFromId(String groupID) throws GroupNotFoundException, ConnectException;
 
     /**
      * Returns a user with the given phone number.
-     *
-     * Post condition: returns a JSON-String with the following properties:
-     *
-     *          {
-     *             "name": A String,
-     *             "phonenumber": A String,
-     *             "password": A String,
-     *             "contacts": An array of Strings.
-     *          }
+     * <p>
+     * Post condition: The Json string will follow the format specified in the UserJsonString
+     * documentation.
      *
      * @param phoneNumber The phone number of the user.
      * @return A json file with the above specified properties the user with the specified phone number.
      * @throws UserNotFoundException thrown if a user with the given phone number doesn't exist in the database.
-     * @throws ConnectException thrown if unable to make a database connection.
+     * @throws ConnectException      thrown if unable to make a database connection.
      */
     JsonString.UserJsonString getUser(String phoneNumber) throws UserNotFoundException, ConnectException;
 
@@ -154,7 +73,7 @@ public interface IDatabase {
      * @param password    The password of the new user.
      * @param name        The name of the new user.
      * @return true if the operation was successful. False if the phone number is already registered.
-     * @throws ConnectException thrown if unable to make a database connection.
+     * @throws ConnectException      thrown if unable to make a database connection.
      * @throws RegistrationException thrown if the registration of the user failed in the database.
      */
     void registerUser(String phoneNumber, String password, String name) throws ConnectException, RegistrationException;
@@ -166,20 +85,20 @@ public interface IDatabase {
      * @param name             The name of the group.
      * @param usersPhoneNumber A set with phone numbers of all the user to be registered in
      *                         the group.
-     * @param id the group id of the group to be registered.
+     * @param id               the group id of the group to be registered.
      * @throws RegistrationException thrown if the registration of the group failed in the database.
-     * @throws ConnectException thrown if unable to make a database connection.
+     * @throws ConnectException      thrown if unable to make a database connection.
      */
     void registerGroup(String name, Set<String> usersPhoneNumber, String id) throws RegistrationException, ConnectException;
 
     /**
      * Adds a new debt in a group between two users.
      *
-     * @param groupID   The id of the group in which the debt will be added.
-     * @param lender    The phone number of the person lending the money out.
-     * @param borrowers A set of phone numbers of the users who borrows money.
-     * @param amount    The total amount of the loan.
-     * @param description a description of the loan.
+     * @param groupID       The id of the group in which the debt will be added.
+     * @param lender        The phone number of the person lending the money out.
+     * @param borrowers     A set of phone numbers of the users who borrows money.
+     * @param amount        The total amount of the loan.
+     * @param description   a description of the loan.
      * @param splitStrategy the strategy which determines how the debt will be split among the borrowers (if at all).
      * @throws Exception //TODO NEEEEDS TO SPECIFY
      */
@@ -188,10 +107,10 @@ public interface IDatabase {
     /**
      * Adds a new contact to a users list of contacts.
      *
-     * @param userPhoneNumber  Phone number of the user who is adding a contact.
+     * @param userPhoneNumber               Phone number of the user who is adding a contact.
      * @param phoneNumberOfContactToBeAdded Phone number of the user being added as a contact.
      * @throws UserNotFoundException thrown if either of the phone numbers given does not match an existing user in the database.
-     * @throws ConnectException thrown if unable to make a database connection.
+     * @throws ConnectException      thrown if unable to make a database connection.
      */
     void addContact(String userPhoneNumber, String phoneNumberOfContactToBeAdded) throws UserNotFoundException, ConnectException;
 
@@ -201,7 +120,7 @@ public interface IDatabase {
      * @param userPhoneNumber                 The phone number of the user removing the contact.
      * @param phoneNumberOfContactToBeRemoved The phone number of the user being removed as a contact.
      * @throws UserNotFoundException thrown if either of the phone numbers given does not match an existing user in the database.
-     * @throws ConnectException thrown if unable to make a database connection.
+     * @throws ConnectException      thrown if unable to make a database connection.
      */
     void removeContact(String userPhoneNumber, String phoneNumberOfContactToBeRemoved) throws UserNotFoundException, ConnectException;
 
@@ -211,11 +130,11 @@ public interface IDatabase {
      * @param GroupID The id of the group to which the debt belongs to.
      * @param debtID  The id of the debt towards which the payment is made.
      * @param amount  The amount being payed towards the debt.
-     * @param id the generated id for the payment which is to be created.
-     * @throws GroupNotFoundException thrown if a group with the given group id can't be found in the database.
-     * @throws InvalidDebtException thrown if the id of the debt, towards which a payment is to be made, can't be found in the database.
+     * @param id      the generated id for the payment which is to be created.
+     * @throws GroupNotFoundException  thrown if a group with the given group id can't be found in the database.
+     * @throws InvalidDebtException    thrown if the id of the debt, towards which a payment is to be made, can't be found in the database.
      * @throws InvalidPaymentException thrown if the payment failed to be made in the database.
-     * @throws ConnectException thrown if unable to make a database connection.
+     * @throws ConnectException        thrown if unable to make a database connection.
      */
     void addPayment(String GroupID, String debtID, BigDecimal amount, String id) throws GroupNotFoundException, InvalidDebtException, InvalidPaymentException, ConnectException;
 
@@ -224,9 +143,9 @@ public interface IDatabase {
      *
      * @param groupID     The id of the group.
      * @param phoneNumber The id of the user.
-     * @throws UserNotFoundException thrown if unable to find a user with the given phonenumber in the database.
-     * @throws GroupNotFoundException thrown if unable to find a group with the given id in the database.
-     * @throws ConnectException thrown if unable to make a database connection.
+     * @throws UserNotFoundException      thrown if unable to find a user with the given phonenumber in the database.
+     * @throws GroupNotFoundException     thrown if unable to find a group with the given id in the database.
+     * @throws ConnectException           thrown if unable to make a database connection.
      * @throws UserAlreadyExistsException thrown if the user which is to be added to the group already is a member of the group.
      */
     void addUserToGroup(String groupID, String phoneNumber) throws UserNotFoundException, GroupNotFoundException, ConnectException, UserAlreadyExistsException;
@@ -234,45 +153,29 @@ public interface IDatabase {
     /**
      * Checks if a password and a phone number matches, and returns the user with the provided
      * phone number if it does.
-     *
-     * Post Condition: Returns a JSON-String with the following properties.
-     *
-     *          {
-     *             "name": A String,
-     *             "phonenumber": A String,
-     *             "password": A String,
-     *             "contacts": An array of Strings.
-     *          }
-     *
+     * <p>
+     * Post condition: The Json string will follow the format specified in the UserJsonString
+     * documentation.
      *
      * @param phoneNumber The phone number of the user being logged in.
      * @param password    The password of the user being logged in.
      * @return The user with the provided phone number, as a json-string, if the password matches mentioned phone
      * number.
-     * @throws LoginException thrown if the attempt to login a user with the matching phone number and password failed.
+     * @throws LoginException   thrown if the attempt to login a user with the matching phone number and password failed.
      * @throws ConnectException thrown if unable to make a database connection.
      */
     JsonString.UserJsonString getUserToBeLoggedIn(String phoneNumber, String password) throws LoginException, ConnectException;
 
     /**
      * Getter for a list of users in an other users contact list.
-     *
-     * Post Condition: Returns a JSON-string with the following properties:
-     *
-     *      {
-     *          contacts: An array of JSON objects with the following properties:
-     *          {
-     *             "name": A String,
-     *             "phonenumber": A String,
-     *             "password": A String,
-     *             "contacts": An array of Strings.
-     *          }
-     *      }
+     * <p>
+     * Post condition: The Json string will follow the format specified in the UserArrayJsonString
+     * documentation.
      *
      * @param phoneNumber The phone number of the user requesting the contact list.
      * @return A json file with the above specified format.
      * @throws UserNotFoundException thrown if a user with the given phone number can't be found in the database.
-     * @throws ConnectException thrown if unable to make a database connection.
+     * @throws ConnectException      thrown if unable to make a database connection.
      */
     JsonString.UserArrayJsonString getContactList(String phoneNumber) throws UserNotFoundException, ConnectException;
 
@@ -281,9 +184,9 @@ public interface IDatabase {
      *
      * @param phoneNumber The phone number of the user being removed.
      * @param groupID     The id of the group in which the user will be removed.
-     * @throws UserNotFoundException thrown if a user with the given phone number can't be found in the database.
+     * @throws UserNotFoundException  thrown if a user with the given phone number can't be found in the database.
      * @throws GroupNotFoundException thrown if a group with the given id can't be found in the database.
-     * @throws ConnectException thrown if unable to make a database connection.
+     * @throws ConnectException       thrown if unable to make a database connection.
      */
     void removeUserFromGroup(String phoneNumber, String groupID) throws UserNotFoundException, GroupNotFoundException, ConnectException;
 

@@ -29,7 +29,7 @@ public class MockDatabase implements IDatabase {
 
     private Gson gson;
 
-    public MockDatabase()  {
+    public MockDatabase() {
         gson = new Gson();
         users = new ArrayList<>();
         groups = new ArrayList<>();
@@ -43,7 +43,7 @@ public class MockDatabase implements IDatabase {
             addContact("1231231231", "1231231232");
             addContact("1231231232", "1231231233");
             addContact("1231231233", "1231231230");
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -196,8 +196,8 @@ public class MockDatabase implements IDatabase {
     @Override
     public void addUserToGroup(String groupID, String phoneNumber) throws UserNotFoundException, GroupNotFoundException, ConnectException, UserAlreadyExistsException {
         MockDbObject.User u = gson.fromJson(getUser(phoneNumber).getJson(), MockDbObject.User.class);
-        for(MockDbObject.Group g : groups){
-            if(g.id.equals(groupID)){
+        for (MockDbObject.Group g : groups) {
+            if (g.id.equals(groupID)) {
                 List<MockDbObject.User> members = new ArrayList<>(Arrays.asList(g.members));
                 members.add(u);
                 int size = members.size();
@@ -210,8 +210,8 @@ public class MockDatabase implements IDatabase {
 
     @Override
     public JsonString.UserJsonString getUserToBeLoggedIn(String phoneNumber, String password) throws LoginException, ConnectException {
-        for(MockDbObject.User u : users){
-            if (u.phonenumber.equals(phoneNumber) && u.password.equals(password)){
+        for (MockDbObject.User u : users) {
+            if (u.phonenumber.equals(phoneNumber) && u.password.equals(password)) {
                 return new JsonString.UserJsonString(gson.toJson(u));
             }
         }
@@ -223,7 +223,7 @@ public class MockDatabase implements IDatabase {
         MockDbObject.User u = gson.fromJson(getUser(phoneNumber).getJson(), MockDbObject.User.class);
 
         MockDbObject.User[] contacts = new MockDbObject.User[u.contacts.length];
-        for(int i = 0; i < u.contacts.length; i++) {
+        for (int i = 0; i < u.contacts.length; i++) {
             contacts[i] = gson.fromJson(getUser(u.contacts[i]).getJson(), MockDbObject.User.class);
         }
         MockDbObject.ContactsJsonObject contactsJsonObject = new MockDbObject.ContactsJsonObject(contacts);
@@ -235,12 +235,13 @@ public class MockDatabase implements IDatabase {
         for (MockDbObject.Group g : groups){
             if (g.id.equals(groupID)){
                 List<MockDbObject.User> members = new ArrayList<>(Arrays.asList(g.members));
-                for(MockDbObject.User member : members){
-                    if (member.phonenumber.equals(phoneNumber)){
+                for (MockDbObject.User member : members) {
+                    if (member.phonenumber.equals(phoneNumber)) {
                         members.remove(member);
                         break;
                     }
                 }
+                removeAllDebtsForUser(g, phoneNumber);
                 int size = members.size();
                 g.members = members.toArray(new MockDbObject.User[size]);
                 return;
@@ -249,4 +250,14 @@ public class MockDatabase implements IDatabase {
         throw new GroupNotFoundException("Group not found when trying to remove a member from it");
     }
 
+    private void removeAllDebtsForUser(MockDbObject.Group g, String phoneNumber) {
+        List<MockDbObject.Debt> debts = new ArrayList<>(Arrays.asList(g.debts));
+
+        for (MockDbObject.Debt d : g.debts) {
+            if (d.borrower.phonenumber.equals(phoneNumber) || d.lender.phonenumber.equals(phoneNumber)) {
+                debts.remove(d);
+            }
+        }
+        g.debts = debts.toArray(new MockDbObject.Debt[debts.size()]);
+    }
 }

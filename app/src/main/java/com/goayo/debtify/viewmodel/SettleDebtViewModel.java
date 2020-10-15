@@ -18,6 +18,8 @@ import java.util.Objects;
  * ViewModel for SettleDebtFragment
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
+ *
+ * 2020-10-14 Modified by Yenan: add getUnfinishedDebts() method to filter out the paid debts
  */
 public class SettleDebtViewModel extends ViewModel {
 
@@ -43,7 +45,8 @@ public class SettleDebtViewModel extends ViewModel {
      */
     public void retrieveData(String groupID) {
         try {
-            debtListData.setValue(modelEngine.getGroup(groupID).getDebts());
+            // retrieve all debt that still can be paid into the list
+            debtListData.setValue(getUnfinishedDebts(modelEngine.getGroup(groupID).getDebts()));
         } catch (Exception ignored) {
         }
     }
@@ -65,6 +68,20 @@ public class SettleDebtViewModel extends ViewModel {
      */
     public void settleDebt(BigDecimal amount, String debtID, String groupID) throws Exception {
         modelEngine.payOffDebt(amount, debtID, groupID);
+    }
+
+    private List<IDebtData> getUnfinishedDebts(List<IDebtData> debts) {
+        List<IDebtData> filteredDebts = new ArrayList<>();
+        double epsilon = 0.01;
+        for (IDebtData debt : debts) {
+            // if a debt's left-over debt amount is more than epsilon
+            // then it still can be paid
+            // else it's a negligible amount of money and we yoink them
+            if (debt.getAmountOwed().doubleValue() > epsilon) {
+                filteredDebts.add(debt);
+            }
+        }
+        return filteredDebts;
     }
 
 }

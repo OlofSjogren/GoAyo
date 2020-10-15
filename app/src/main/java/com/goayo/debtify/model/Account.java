@@ -36,6 +36,7 @@ import java.util.UUID;
  * 2020-10-12 Modified by Alex Phu: In createDebt and payOffDebt, publish for GroupsEvent too on EventBus
  * 2020-10-13 Modified by Olof Sjögren: Refactored eventbus publications to publish enum-types instead of objects.
  * 2020-10-14 Modified by Olof Sjögren: Updated JDocs.
+ * 2020-10-14 Modified by Oscar Sanner: Removed the method get group from ID. This method was obsolete and relying on the database rather than the object oriented model.
  */
 class Account {
 
@@ -360,21 +361,6 @@ class Account {
         associatedGroups.remove(g);
         EventBus.getInstance().publish(EventBus.EVENT.GROUPS_EVENT);
     }
-
-
-    /**
-     * Fetches the group with the specific groupID from the database.
-     *
-     * @param groupID id of the group to fetch.
-     * @return the group with the given id.
-     * @throws Exception thrown if the logged in user isn't apart of the group, it can't be found. TODO NEEEEDS TO SPECIFY
-     */
-    //Todo: Database call?
-    public Group getGroupFromID(String groupID) throws Exception {
-        JsonString.GroupJsonString jsonString = database.getGroupFromId(groupID);
-        return fromJsonFactory.getGroupFromId(jsonString);
-    }
-
 
     /**
      * A method for logging out the current user. This method will make sure that no groups
