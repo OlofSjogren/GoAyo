@@ -23,7 +23,6 @@ public abstract class JsonString {
         return json;
     }
 
-
     /**
      * A class holding a group array json string. The string must have the following
      * format:
@@ -69,7 +68,7 @@ public abstract class JsonString {
      *          }
      * }
      */
-    public static class GroupJsonString extends JsonString{
+    public static class GroupJsonString extends JsonString {
         public GroupJsonString(String json) {
             super(json);
         }
@@ -119,8 +118,7 @@ public abstract class JsonString {
      *    }
      *
      */
-
-    public static class GroupArrayJsonString extends JsonString{
+    public static class GroupArrayJsonString extends JsonString {
         public GroupArrayJsonString(String json) {
             super(json);
         }
@@ -140,7 +138,6 @@ public abstract class JsonString {
      *          }
      *      }
      */
-
     public static class UserArrayJsonString extends JsonString{
         public UserArrayJsonString(String json) {
             super(json);
@@ -158,7 +155,6 @@ public abstract class JsonString {
      *             "contacts": An array of Strings.
      *          }
      */
-
     public static class UserJsonString extends JsonString{
         public UserJsonString(String json) {
             super(json);
