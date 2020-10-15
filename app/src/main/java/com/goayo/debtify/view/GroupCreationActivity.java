@@ -7,7 +7,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.goayo.debtify.R;
-import com.goayo.debtify.databinding.ActivityGroupCreationBinding;
 import com.goayo.debtify.viewmodel.GroupCreationViewModel;
 import com.goayo.debtify.viewmodel.PickUserViewModel;
 
@@ -21,17 +20,13 @@ import com.goayo.debtify.viewmodel.PickUserViewModel;
  */
 public class GroupCreationActivity extends AppCompatActivity {
 
-    private ActivityGroupCreationBinding binding;
-    private GroupCreationViewModel model;
-    private PickUserViewModel pickUserViewModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_group_creation);
-        model = ViewModelProviders.of(this).get(GroupCreationViewModel.class);
-        pickUserViewModel = ViewModelProviders.of(this).get(PickUserViewModel.class);
+        DataBindingUtil.setContentView(this, R.layout.activity_group_creation);
+        GroupCreationViewModel model = ViewModelProviders.of(this).get(GroupCreationViewModel.class);
+        PickUserViewModel pickUserViewModel = ViewModelProviders.of(this).get(PickUserViewModel.class);
 
         pickUserViewModel.setInitialUsers(model.getContacts());
         pickUserViewModel.setDestination(R.id.action_pickUsersFragment_to_createGroupFragment);

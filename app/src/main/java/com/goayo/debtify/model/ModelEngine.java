@@ -1,6 +1,6 @@
 package com.goayo.debtify.model;
 
-import com.goayo.debtify.MockDatabase.MockDatabase;
+import com.goayo.debtify.mockdatabase.MockDatabase;
 
 import java.math.BigDecimal;
 import java.net.ConnectException;
@@ -31,7 +31,7 @@ import java.util.Set;
 
 public class ModelEngine {
 
-    private Account account;
+    private final Account account;
     private static ModelEngine instance;
 
     private ModelEngine(Account account) {

@@ -29,8 +29,8 @@ import java.util.Set;
  */
 
 public class MyGroupsViewModel extends ViewModel implements IEventHandler {
-    private MutableLiveData<Set<IGroupData>> groupsData;
-    private ModelEngine modelEngine;
+    private final MutableLiveData<Set<IGroupData>> groupsData;
+    private final ModelEngine modelEngine;
 
     public MyGroupsViewModel() {
         super();

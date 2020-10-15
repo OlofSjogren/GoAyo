@@ -28,20 +28,9 @@ import java.util.List;
  * 2020-09-30 Modified by Alex & Yenan: Refactored it so that it now can be either multiple or single choice
  */
 public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUserViewHolder> {
-    private List<IUserData> userData;
+    private final List<IUserData> userData;
     private boolean isMultipleChoice;
-    private List<Integer> selectedUserPosList;
-
-    /**
-     * Default constructor
-     *
-     * @param userData the userData to adapt
-     */
-    public PickUserAdapter(List<IUserData> userData) {
-        this.userData = userData;
-        this.isMultipleChoice = true;
-        this.selectedUserPosList = new ArrayList<>();
-    }
+    private final List<Integer> selectedUserPosList;
 
     /**
      * Constructor allowing setting isMultipleChoice from start
@@ -112,10 +101,10 @@ public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUs
      * ViewHolder for PickUser
      */
     class PickUserViewHolder extends RecyclerView.ViewHolder {
-        private TextView username;
-        private TextView phoneNumber;
-        private CheckBox checkBox;
-        private RadioButton radioButton;
+        private final TextView username;
+        private final TextView phoneNumber;
+        private final CheckBox checkBox;
+        private final RadioButton radioButton;
 
         /**
          * Binds the elements in the layout file to a variable

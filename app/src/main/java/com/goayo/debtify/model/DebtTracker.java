@@ -47,21 +47,6 @@ class DebtTracker implements IDebtData {
     }
 
     /**
-     * Constructor for creating a clone of this DebtTracker for defensive copying.
-     *
-     * @param debtTracker the debtTracker to clone.
-     */
-    public DebtTracker(DebtTracker debtTracker) {
-        this.debt = debtTracker.debt;
-        this.payments = new ArrayList<>(debtTracker.payments);
-        this.lender = debtTracker.lender;
-        this.borrower = debtTracker.borrower;
-        this.description = debtTracker.description;
-        this.debtTrackerID = debtTracker.debtTrackerID;
-    }
-
-
-    /**
      * Adds a new payment to the list of payments.
      *
      * @param payOffAmount the amount to pay off.
@@ -93,7 +78,7 @@ class DebtTracker implements IDebtData {
      */
     @Override
     public List<IPaymentData> getPaymentHistory() {
-        return new ArrayList<IPaymentData>(payments);
+        return new ArrayList<>(payments);
     }
 
     /**

@@ -1,20 +1,20 @@
-package com.goayo.debtify.Database;
+package com.goayo.debtify.database;
 
 import com.google.gson.Gson;
 
 class DbContactsFetcher {
-    public boolean removeContact(String userPhoneNumber, String phoneNumberOfContactToBeRemoved) {
+    public void removeContact(String userPhoneNumber, String phoneNumberOfContactToBeRemoved) {
         DbObject.ContactPost post = new DbObject.ContactPost(userPhoneNumber, phoneNumberOfContactToBeRemoved);
         Gson gson = new Gson();
         String data = gson.toJson(post);
-        return DatabaseConnector.getInstance().postData(data, "users/removeContact");
+        DatabaseConnector.getInstance().postData(data, "users/removeContact");
     }
 
-    public boolean addContact(String userPhoneNumber, String contactToBeAdded) {
+    public void addContact(String userPhoneNumber, String contactToBeAdded) {
         DbObject.ContactPost post = new DbObject.ContactPost(userPhoneNumber, contactToBeAdded);
         Gson gson = new Gson();
         String data = gson.toJson(post);
-        return DatabaseConnector.getInstance().postData(data, "users/addContact");
+        DatabaseConnector.getInstance().postData(data, "users/addContact");
     }
 
     public String getContactList(String phoneNumber) {

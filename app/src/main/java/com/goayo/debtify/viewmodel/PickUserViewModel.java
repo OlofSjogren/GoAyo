@@ -19,22 +19,20 @@ import java.util.List;
  * 2020-09-30 Modified by Alex and Yenan: Implemented
  */
 public class PickUserViewModel extends ViewModel {
-    private final ModelEngine modelEngine;
-    private MutableLiveData<List<IUserData>> initialUsers;
-    private MutableLiveData<List<IUserData>> selectedUsersData;
-    private MutableLiveData<Boolean> isMultipleChoice;
-    private MutableLiveData<Integer> destination;
+    private final MutableLiveData<List<IUserData>> initialUsers;
+    private final MutableLiveData<List<IUserData>> selectedUsersData;
+    private final MutableLiveData<Boolean> isMultipleChoice;
+    private final MutableLiveData<Integer> destination;
 
     /**
      * Constructor for PickUserViewModel
      */
     public PickUserViewModel() {
         super();
-        modelEngine = ModelEngine.getInstance();
         initialUsers = new MutableLiveData<>();
-        initialUsers.setValue(new ArrayList<IUserData>());
+        initialUsers.setValue(new ArrayList<>());
         selectedUsersData = new MutableLiveData<>();
-        selectedUsersData.setValue(new ArrayList<IUserData>());
+        selectedUsersData.setValue(new ArrayList<>());
         isMultipleChoice = new MutableLiveData<>(true);
         destination = new MutableLiveData<>();
     }

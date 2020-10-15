@@ -26,8 +26,8 @@ import java.util.Set;
  */
 class Group implements IGroupData {
 
-    private String groupName;
-    private Ledger groupLedger;
+    private final String groupName;
+    private final Ledger groupLedger;
     private final String groupId;
     private Set<User> groupMembers = new HashSet<>();
 
@@ -143,7 +143,7 @@ class Group implements IGroupData {
      */
     @Override
     public Set<IUserData> getIUserDataSet() {
-        return new HashSet<IUserData>(groupMembers);
+        return new HashSet<>(groupMembers);
     }
 
     @Override

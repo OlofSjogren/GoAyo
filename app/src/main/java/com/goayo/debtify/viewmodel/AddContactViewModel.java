@@ -20,7 +20,7 @@ import java.net.ConnectException;
 public class AddContactViewModel extends ViewModel {
 
     private MutableLiveData<IUserData> userToAdd;
-    private ModelEngine modelEngine;
+    private final ModelEngine modelEngine;
 
     public AddContactViewModel() {
         modelEngine = ModelEngine.getInstance();

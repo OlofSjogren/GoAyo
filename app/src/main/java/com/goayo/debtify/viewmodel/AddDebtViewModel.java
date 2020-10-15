@@ -31,7 +31,7 @@ import java.util.Set;
  */
 public class AddDebtViewModel extends ViewModel {
 
-    private ModelEngine modelEngine = ModelEngine.getInstance();
+    private final ModelEngine modelEngine = ModelEngine.getInstance();
 
     private MutableLiveData<Set<IUserData>> selectedLenderData;
     private MutableLiveData<Set<IUserData>> selectedBorrowersData;
