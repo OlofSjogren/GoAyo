@@ -26,6 +26,8 @@ import com.goayo.debtify.model.IUserData;
 import com.goayo.debtify.view.adapter.UserCardViewAdapter;
 import com.goayo.debtify.viewmodel.AddContactViewModel;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +47,7 @@ public class AddContactFragment extends Fragment {
     private UserCardViewAdapter adapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.add_contact_fragment, container, false);
         model = ViewModelProviders.of(requireActivity()).get(AddContactViewModel.class);
@@ -131,7 +133,7 @@ public class AddContactFragment extends Fragment {
 
     private void initRecyclerView() {
         RecyclerView rv = binding.selectedUserRecyclerView;
-        adapter = new UserCardViewAdapter(new ArrayList<IUserData>());
+        adapter = new UserCardViewAdapter(new ArrayList<>());
 
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));

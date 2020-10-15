@@ -1,5 +1,6 @@
 package com.goayo.debtify.view.adapter;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,7 @@ import java.util.List;
  */
 public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCardAdapter.TransactionCardViewHolder> {
 
-    private List<TransactionData> transactionData;
+    private final List<TransactionData> transactionData;
 
     /**
      * Contructor for TransactionCardAdapter.
@@ -120,12 +121,12 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
      * <p>
      * 2020-09-28 Modified by Alex: Substituted cardview variable with ConstraintLayout (to set background colour)
      */
-    class TransactionCardViewHolder extends RecyclerView.ViewHolder {
-        private TextView transactionType;
-        private TextView lenderBorrowerDescription;
-        private TextView date;
-        private TextView balance;
-        private ConstraintLayout layout;
+    static class TransactionCardViewHolder extends RecyclerView.ViewHolder {
+        private final TextView transactionType;
+        private final TextView lenderBorrowerDescription;
+        private final TextView date;
+        private final TextView balance;
+        private final ConstraintLayout layout;
 
         /**
          * Binds the elements in the layout file to a variable
@@ -155,7 +156,7 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
         }
 
         private String convertDateToString(Date date) {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             return format.format(date);
         }
 
@@ -165,11 +166,11 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
     }
 
     private static class TransactionData {
-        Date date;
-        String description;
-        String transactionType;
-        String lenderBorrowerDescription;
-        BigDecimal balance;
+        final Date date;
+        final String description;
+        final String transactionType;
+        final String lenderBorrowerDescription;
+        final BigDecimal balance;
 
         public TransactionData(Date date, String description, String transactionType, String lenderBorrowerDescription, BigDecimal balance) {
             this.description = description;

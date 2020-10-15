@@ -1,4 +1,4 @@
-package com.goayo.debtify.Database;
+package com.goayo.debtify.database;
 
 import com.goayo.debtify.model.IDebtSplitStrategy;
 import com.goayo.debtify.model.Tuple;
@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 
  class DbDebtsFetcher {
-    public boolean addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy) {
+    public void addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy) {
         DbObject.Debt[] debts = new DbObject.Debt[borrowers.size()];
         int i = 0;
 
@@ -29,9 +29,8 @@ import java.util.Map;
             Gson gson = new Gson();
             String data = gson.toJson(debtPost);
             if (!(DatabaseConnector.getInstance().postData(data, "debts"))){
-                return false;
+                return;
             }
         }
-        return true;
     }
 }

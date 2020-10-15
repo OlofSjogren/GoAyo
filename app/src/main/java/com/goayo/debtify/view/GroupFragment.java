@@ -126,7 +126,7 @@ public class GroupFragment extends Fragment {
     private void initAdapter() {
         // initialize the adapter for the debts and payments
         try {
-            adapter = new TransactionCardAdapter(viewModel.getCurrentGroupDebts(getCurrentGroupID()));
+            adapter = new TransactionCardAdapter(viewModel.getCurrentGroupDebts());
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();

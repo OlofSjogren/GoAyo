@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class ContactsViewModel extends ViewModel implements IEventHandler {
     private MutableLiveData<List<IUserData>> contactsData;
-    private ModelEngine modelEngine;
+    private final ModelEngine modelEngine;
 
     public ContactsViewModel() {
         super();

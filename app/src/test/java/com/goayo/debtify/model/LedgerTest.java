@@ -12,12 +12,9 @@ import static org.junit.Assert.*;
 public class LedgerTest {
 
 
-    private IDatabase database;
-    private Account account;
-    private Group group;
-    private ModelEngine modelEngine;
-    String pnOne = "0101010101";
-    String pnTwo = "1010101010";
+
+    final String pnOne = "0101010101";
+    final String pnTwo = "1010101010";
     Ledger ledger;
     User user;
     User contact;

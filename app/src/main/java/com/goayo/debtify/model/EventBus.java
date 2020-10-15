@@ -39,7 +39,7 @@ public class EventBus {
     /**
      * Map where an EVENT acts as a key to a corresponding list of IEventHandlers which are to be notified when an event of key's type is published.
      */
-    private Map<EVENT, List<IEventHandler>> listenerMap;
+    private final Map<EVENT, List<IEventHandler>> listenerMap;
 
     private EventBus() {
         listenerMap = new HashMap<>();

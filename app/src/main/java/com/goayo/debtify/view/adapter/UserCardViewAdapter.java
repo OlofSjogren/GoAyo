@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class UserCardViewAdapter extends RecyclerView.Adapter<UserCardViewAdapter.UserCardViewHolder> {
 
-    private List<IUserData> userList;
+    private final List<IUserData> userList;
     private View.OnClickListener commonClickListener;
 
     /**
@@ -121,8 +121,8 @@ public class UserCardViewAdapter extends RecyclerView.Adapter<UserCardViewAdapte
      */
     static class UserCardViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView username;
-        private TextView phoneNumber;
+        private final TextView username;
+        private final TextView phoneNumber;
 
         /**
          * Constructor for UserCardViewHolder

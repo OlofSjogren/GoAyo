@@ -128,8 +128,8 @@ public class AddDebtFragment extends Fragment {
     }
 
     private void initAdapters() {
-        lenderAdapter = new UserCardViewAdapter(new ArrayList<IUserData>());
-        borrowersAdapter = new UserCardViewAdapter(new ArrayList<IUserData>());
+        lenderAdapter = new UserCardViewAdapter(new ArrayList<>());
+        borrowersAdapter = new UserCardViewAdapter(new ArrayList<>());
     }
 
     private void initRecyclerView() {

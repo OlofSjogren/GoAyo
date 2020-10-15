@@ -1,6 +1,5 @@
 package com.goayo.debtify.model;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,15 +24,13 @@ import static org.junit.Assert.assertTrue;
 public class ModelEngineTest {
 
     Map<String, String> passwordAndNumber;
-    static ModelEngine modelEngine = ModelEngine.getInstance();
-    Set<String> someNumbers;
-    private int amountOfUsers = 50;
+    static final ModelEngine modelEngine = ModelEngine.getInstance();
+    private final int amountOfUsers = 50;
     List<String> noFriendsUsers;
 
     @Before
     public void setUp() throws Exception {
         passwordAndNumber = new HashMap<>();
-        someNumbers = new HashSet<>();
         noFriendsUsers = new ArrayList<>();
 
         for (int i = 0; i < amountOfUsers; i++) {
@@ -195,10 +192,6 @@ public class ModelEngineTest {
             randomGroupIndex = 0;
         }
         return modelEngine.getGroups().toArray(new IGroupData[modelEngine.getGroups().size()])[randomGroupIndex];
-    }
-
-    @After
-    public void tearDown() throws Exception {
     }
 
 

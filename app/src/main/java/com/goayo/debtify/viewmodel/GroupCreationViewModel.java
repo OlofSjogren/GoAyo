@@ -18,7 +18,7 @@ import java.util.Set;
  */
 public class GroupCreationViewModel extends ViewModel {
 
-    private ModelEngine model;
+    private final ModelEngine model;
 
     public GroupCreationViewModel() {
         model = ModelEngine.getInstance();

@@ -1,4 +1,4 @@
-package com.goayo.debtify.MockDatabase;
+package com.goayo.debtify.mockdatabase;
 
 import com.goayo.debtify.model.Tuple;
 import com.goayo.debtify.model.DebtException;
@@ -27,7 +27,7 @@ import java.util.Set;
 
 public class MockDatabase implements IDatabase {
 
-    private Gson gson;
+    private final Gson gson;
 
     public MockDatabase() {
         gson = new Gson();
@@ -48,8 +48,8 @@ public class MockDatabase implements IDatabase {
         }
     }
 
-    List<MockDbObject.User> users;
-    List<MockDbObject.Group> groups;
+    final List<MockDbObject.User> users;
+    final List<MockDbObject.Group> groups;
 
     @Override
     public JsonString.GroupArrayJsonString getGroups(String phoneNumber) throws UserNotFoundException, ConnectException {
@@ -67,16 +67,6 @@ public class MockDatabase implements IDatabase {
         MockDbObject.Group[] returnArray = new MockDbObject.Group[groupsWithUsers.size()];
         MockDbObject.GroupsArrayJsonObject returnGroupsObject = new MockDbObject.GroupsArrayJsonObject(groupsWithUsers.toArray(returnArray));
         return new JsonString.GroupArrayJsonString(gson.toJson(returnGroupsObject));
-    }
-
-    @Override
-    public JsonString.GroupJsonString getGroupFromId(String groupID) throws GroupNotFoundException, ConnectException {
-        for (MockDbObject.Group g : groups) {
-            if (g.id.equals(groupID)) {
-                return new JsonString.GroupJsonString(gson.toJson(g));
-            }
-        }
-        throw new GroupNotFoundException("The group wasn't found in the MOCK database");
     }
 
     @Override

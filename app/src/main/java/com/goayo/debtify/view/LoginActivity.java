@@ -10,12 +10,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.goayo.debtify.R;
-import com.goayo.debtify.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
-
-    private NavController navController;
-    private ActivityLoginBinding binding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
-        navController = Navigation.findNavController(this, R.id.loginNavHostFragment);
+        DataBindingUtil.setContentView(this, R.layout.activity_login);
+        Navigation.findNavController(this, R.id.loginNavHostFragment);
     }
 }

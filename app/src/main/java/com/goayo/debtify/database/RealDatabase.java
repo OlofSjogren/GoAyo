@@ -1,4 +1,4 @@
-package com.goayo.debtify.Database;
+package com.goayo.debtify.database;
 
 import com.goayo.debtify.model.GroupNotFoundException;
 import com.goayo.debtify.model.IDatabase;
@@ -19,11 +19,11 @@ import java.util.Set;
 
 public class RealDatabase implements IDatabase {
 
-    private DbGroupsFetcher groupsFetcher;
-    private DbUserFetcher userFetcher;
-    private DbDebtsFetcher debtsFetcher;
-    private DbPaymentFetcher paymentFetcher;
-    private DbContactsFetcher contactsFetcher;
+    private final DbGroupsFetcher groupsFetcher;
+    private final DbUserFetcher userFetcher;
+    private final DbDebtsFetcher debtsFetcher;
+    private final DbPaymentFetcher paymentFetcher;
+    private final DbContactsFetcher contactsFetcher;
 
     public RealDatabase(){
         groupsFetcher = new DbGroupsFetcher();
@@ -36,11 +36,6 @@ public class RealDatabase implements IDatabase {
     @Override
     public JsonString.GroupArrayJsonString getGroups(String phoneNumber) throws UserNotFoundException, ConnectException {
         return new JsonString.GroupArrayJsonString(groupsFetcher.fetchGroupsForUser(phoneNumber));
-    }
-
-    @Override
-    public JsonString.GroupJsonString getGroupFromId(String groupID) throws GroupNotFoundException, ConnectException {
-        return new JsonString.GroupJsonString(groupsFetcher.fetchGroupFromId(groupID));
     }
 
     @Override
