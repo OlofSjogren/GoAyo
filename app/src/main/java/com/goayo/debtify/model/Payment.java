@@ -13,6 +13,7 @@ import java.util.Date;
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
  * 2020-10-13 Modified by Olof Sjögren: getPaidAmount now returns a new BigDecimal. Also added more JDocs.
+ * 2020-10-15 Modified by Yenan Wang & Alex Phu: implemented compareTo(..) method
  */
 class Payment implements IPaymentData {
     private final Date date;
@@ -39,5 +40,10 @@ class Payment implements IPaymentData {
      */
     public BigDecimal getPaidAmount() {
         return new BigDecimal(paidAmount.toString());
+    }
+
+    @Override
+    public int compareTo(IPaymentData payment) {
+        return date.compareTo(payment.getDate());
     }
 }

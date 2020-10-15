@@ -16,6 +16,8 @@ import com.goayo.debtify.model.IGroupData;
 import com.goayo.debtify.model.IUserData;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -56,6 +58,8 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
     public GroupViewAdapter(List<IGroupData> groupData, String currentLoggedInUsersPhoneNumber) {
         this.groupData = groupData;
         this.currentLoggedInUsersPhoneNumber = currentLoggedInUsersPhoneNumber;
+
+        Collections.sort(this.groupData);
     }
 
     /**
@@ -104,6 +108,8 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
     public void update(List<IGroupData> groupData) {
         this.groupData.clear();
         this.groupData.addAll(groupData);
+
+        Collections.sort(this.groupData);
         notifyDataSetChanged();
     }
 
@@ -159,8 +165,11 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
         public void setGroupData(IGroupData group, String currentLoggedInUsersPhoneNumber) {
             groupName.setText(group.getGroupName());
             StringBuilder sb = new StringBuilder();
+            List<IUserData> groupMemberList = new ArrayList<>(group.getIUserDataSet());
 
-            for (IUserData iu : group.getIUserDataSet()){
+            Collections.sort(groupMemberList);
+
+            for (IUserData iu : groupMemberList){
                 sb.append(iu.getName());
                 sb.append(", ");
             }

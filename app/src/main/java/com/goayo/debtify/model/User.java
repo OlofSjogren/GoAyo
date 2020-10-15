@@ -9,7 +9,8 @@ import androidx.annotation.Nullable;
  * Class representing user.
  * <p>
  * 2020-09-16 Modified by Olof & Alex: class implements IUserData.
- * 2020-10-13 Modified by Olof Sjögren:
+ * 2020-10-13 Modified by Olof Sjögren: Added JavaDoc
+ * 2020-10-15 Modified by Yenan Wang & Alex Phu: implemented compareTo(..) method
  */
 class User implements IUserData {
 
@@ -41,5 +42,10 @@ class User implements IUserData {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public int compareTo(IUserData user) {
+        return name.compareTo(user.getName());
     }
 }

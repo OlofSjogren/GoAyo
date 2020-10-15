@@ -13,6 +13,7 @@ import com.goayo.debtify.R;
 import com.goayo.debtify.model.IUserData;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -25,6 +26,7 @@ import java.util.List;
  * 2020-09-23 Modified by Gabriel Brattgård, Yenan Wang: Implemented.
  * 2020-09-29 Modified by Yenan: Refactored code to use a List instead of array
  * 2020-09-29 Modified by Yenan: Added a few methods for data handling
+ * 2020-10-15 Modified by Yenan Wang & Alex Phu: Adapter now sorts its items
  */
 public class UserCardViewAdapter extends RecyclerView.Adapter<UserCardViewAdapter.UserCardViewHolder> {
 
@@ -38,6 +40,8 @@ public class UserCardViewAdapter extends RecyclerView.Adapter<UserCardViewAdapte
      */
     public UserCardViewAdapter(final List<IUserData> userList) {
         this.userList = userList;
+
+        Collections.sort(this.userList);
     }
 
     /**
@@ -103,6 +107,8 @@ public class UserCardViewAdapter extends RecyclerView.Adapter<UserCardViewAdapte
     public void updateList(List<IUserData> userList) {
         this.userList.clear();
         this.userList.addAll(userList);
+
+        Collections.sort(this.userList);
         notifyItemRangeChanged(0, userList.size());
     }
 

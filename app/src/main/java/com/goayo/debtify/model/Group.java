@@ -23,6 +23,7 @@ import java.util.Set;
  * return types and params of methods are correctly set as BigDecimal.
  * 2020-10-09 Modified by Alex Phu and Yenan Wang: Added IDebtSplitStrategy to createDebt's parameter.
  * 2020-10-14 Modified by Olof Sjögren: Updated JDocs.
+ * 2020-10-15 Modified by Yenan Wang & Alex Phu: implemented compareTo(..) method
  */
 class Group implements IGroupData {
 
@@ -181,5 +182,8 @@ class Group implements IGroupData {
         return groupLedger.getUserTotal(user);
     }
 
-
+    @Override
+    public int compareTo(IGroupData group) {
+        return groupName.compareTo(group.getGroupName());
+    }
 }
