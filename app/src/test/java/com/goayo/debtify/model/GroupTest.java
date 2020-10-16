@@ -117,7 +117,7 @@ public class GroupTest {
         tempUserSet.add(user1);
         tempUserSet.add(user2);
 
-        Random rnd = new Random();
+        Random rnd = new Random(System.nanoTime());
         int random_int = rnd.nextInt();
 
         Group tempGroup = new Group("PPY", "9876", tempUserSet);
