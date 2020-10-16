@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -116,13 +117,16 @@ public class GroupTest {
         tempUserSet.add(user1);
         tempUserSet.add(user2);
 
+        Random rnd = new Random();
+        int random_int = rnd.nextInt();
+
         Group tempGroup = new Group("PPY", "9876", tempUserSet);
 
         Map<User, String> map1 = new HashMap<>();
         map1.put(user1, "0760460051");
-        tempGroup.createDebt(user1, map1, new BigDecimal(23), "Test", DebtSplitFactory.createNoSplitStrategy());
+        tempGroup.createDebt(user1, map1, new BigDecimal(random_int), "Test", DebtSplitFactory.createNoSplitStrategy());
         try {
-            assertEquals(new BigDecimal(23), tempGroup.getUserTotal("0760460051"));
+            assertEquals(new BigDecimal(random_int), tempGroup.getUserTotal("0760460051"));
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         }
