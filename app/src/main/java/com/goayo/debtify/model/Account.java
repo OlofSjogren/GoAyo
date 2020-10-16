@@ -2,6 +2,7 @@ package com.goayo.debtify.model;
 
 import java.math.BigDecimal;
 import java.net.ConnectException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -264,11 +265,12 @@ class Account {
             throw new DebtException("The description cannot be empty!");
         }
 
-        database.addDebt(groupID, lender, borrowerIUserDataAndId, owed, description, splitStrategy);
+        Date date = new Date();
+        database.addDebt(groupID, lender, borrowerIUserDataAndId, owed, description, splitStrategy, date);
 
         User lenderUser = getUserFromSet(lender, g.getGroupMembers());
 
-        g.createDebt(lenderUser, borrowerUserAndId, owed, description, splitStrategy);
+        g.createDebt(lenderUser, borrowerUserAndId, owed, description, splitStrategy, date);
         EventBus.getInstance().publish(EventBus.EVENT.SPECIFIC_GROUP_EVENT);
         EventBus.getInstance().publish(EventBus.EVENT.GROUPS_EVENT);
     }
@@ -289,10 +291,13 @@ class Account {
     public void payOffDebt(BigDecimal amount, String debtID, String groupID) throws InvalidDebtException, InvalidPaymentException, GroupNotFoundException, ConnectException {
         userIsLoggedIn();
         String id = UUID.randomUUID().toString();
-        database.addPayment(groupID, debtID, amount, id);
+
+        Date date = new Date();
+
+        database.addPayment(groupID, debtID, amount, id, date);
 
         Group g = getAssociatedGroupFromId(groupID);
-        g.payOffDebt(amount, debtID);
+        g.payOffDebt(amount, debtID, date);
 
         EventBus.getInstance().publish(EventBus.EVENT.SPECIFIC_GROUP_EVENT);
         EventBus.getInstance().publish(EventBus.EVENT.GROUPS_EVENT);

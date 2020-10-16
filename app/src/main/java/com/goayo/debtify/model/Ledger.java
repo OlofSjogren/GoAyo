@@ -3,6 +3,7 @@ package com.goayo.debtify.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -36,15 +37,16 @@ class Ledger {
      * @param owedTotal      total amount lent out by the lender to the borrowers
      * @param description    the brief description of the debt
      * @param splitStrategy  how the debt will be split (if at all) among the borrowers.
+     * @param date
      * @throws DebtException thrown if the debt creation failed.
      */
-    public void createDebt(User lender, Map<User, String> borrowersAndId, BigDecimal owedTotal, String description, IDebtSplitStrategy splitStrategy) throws DebtException {
+    public void createDebt(User lender, Map<User, String> borrowersAndId, BigDecimal owedTotal, String description, IDebtSplitStrategy splitStrategy, Date date) throws DebtException {
 
         Map<User, Tuple<BigDecimal, String>> usersInDebt = splitStrategy.splitDebt(borrowersAndId, owedTotal);
         List<DebtTracker> debtList = new ArrayList<>();
 
         for (Map.Entry<User, Tuple<BigDecimal, String>> entry : usersInDebt.entrySet()) {
-            if (!debtList.add(new DebtTracker(usersInDebt.get(entry.getKey()).getFirst(), lender, entry.getKey(), description, entry.getValue().getSecond()))) {
+            if (!debtList.add(new DebtTracker(usersInDebt.get(entry.getKey()).getFirst(), lender, entry.getKey(), description, entry.getValue().getSecond(), date))) {
                 throw new DebtException("Failed to create the debt.");
             }
         }
@@ -56,12 +58,12 @@ class Ledger {
 
     /**
      * Adds a new payment to a specific debtTracker.
-     *
-     * @param amount        Amount being paid back against the debt.
+     *  @param amount        Amount being paid back against the debt.
      * @param debtTrackerID ID used to retrieve the specific debtTracker.
+     * @param date
      */
-    public void payOffDebt(BigDecimal amount, String debtTrackerID) {
-        findDebtTracker(debtTrackerID).payOffDebt(amount);
+    public void payOffDebt(BigDecimal amount, String debtTrackerID, Date date) {
+        findDebtTracker(debtTrackerID).payOffDebt(amount, date);
     }
 
     /**

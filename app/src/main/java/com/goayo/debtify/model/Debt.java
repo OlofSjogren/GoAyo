@@ -17,8 +17,8 @@ class Debt {
     private final Date date;
     private final BigDecimal owed;
 
-    public Debt(BigDecimal owed) {
-        this.date = new Date();
+    public Debt(BigDecimal owed, Date date) {
+        this.date = date;
         this.owed = owed;
     }
 

@@ -30,15 +30,15 @@ class DebtTracker implements IDebtData {
 
     /**
      * Constructor for creating a debt and assigning a lender and borrower.
-     *
-     * @param debtAmount  how much the borrower owe to lender.
+     *  @param debtAmount  how much the borrower owe to lender.
      * @param lender      the user that lends out money.
      * @param borrower    the user that borrows money.
      * @param description the brief description of the debt.
      * @param id          the specific DebtTracker's id.
+     * @param date
      */
-    public DebtTracker(BigDecimal debtAmount, User lender, User borrower, String description, String id) {
-        this.debt = new Debt(debtAmount);
+    public DebtTracker(BigDecimal debtAmount, User lender, User borrower, String description, String id, Date date) {
+        this.debt = new Debt(debtAmount, date);
         this.payments = new ArrayList<>();
         this.lender = lender;
         this.borrower = borrower;
@@ -50,10 +50,11 @@ class DebtTracker implements IDebtData {
      * Adds a new payment to the list of payments.
      *
      * @param payOffAmount the amount to pay off.
+     * @param date
      */
-    public void payOffDebt(BigDecimal payOffAmount) {
+    public void payOffDebt(BigDecimal payOffAmount, Date date) {
         if (debt.getDebtAmount().subtract(getSumOfPayments()).doubleValue() >= payOffAmount.doubleValue()) {
-            payments.add(new Payment(payOffAmount));
+            payments.add(new Payment(payOffAmount, date));
         } else {
             //TODO: Runtime exception ok?
             throw new RuntimeException("PayOffDebt failed.");

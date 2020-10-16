@@ -6,10 +6,11 @@ import com.goayo.debtify.model.IUserData;
 import com.google.gson.Gson;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Map;
 
  class DbDebtsFetcher {
-    public void addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy) {
+    public void addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy, Date date) {
         DbObject.Debt[] debts = new DbObject.Debt[borrowers.size()];
         int i = 0;
 
@@ -20,7 +21,7 @@ import java.util.Map;
 
         for(Map.Entry<IUserData, Tuple<BigDecimal, String>> entry : map.entrySet()){
             String borrowerJson = fetcher.fetchUserFromPhoneNumber(entry.getKey().getPhoneNumber());
-            debts[i] = new DbObject.Debt(new Gson().fromJson(lenderJson, DbObject.User.class), new Gson().fromJson(borrowerJson, DbObject.User.class), entry.getValue().getFirst().toString(), entry.getValue().getSecond(), new DbObject.Payment[0], description);
+            debts[i] = new DbObject.Debt(new Gson().fromJson(lenderJson, DbObject.User.class), new Gson().fromJson(borrowerJson, DbObject.User.class), entry.getValue().getFirst().toString(), entry.getValue().getSecond(), new DbObject.Payment[0], description, date.toString());
             i++;
         }
 

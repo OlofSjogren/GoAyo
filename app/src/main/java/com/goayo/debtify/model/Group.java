@@ -1,7 +1,10 @@
 package com.goayo.debtify.model;
 
+import androidx.databinding.DataBindingUtil;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -102,16 +105,16 @@ class Group implements IGroupData {
 
     /**
      * Creates a debtTracker and adds it to the list of debtTrackers.
-     *
-     * @param lender        the user who lends out money
+     *  @param lender        the user who lends out money
      * @param borrowers     either a single or several users who borrow from the lender
      * @param owed          total amount lent out by the lender to the borrowers
      * @param description   the brief description of the debt
      * @param splitStrategy How the debt is split
+     * @param date
      */
     // TODO: Specify exception(?).
-    public void createDebt(User lender, Map<User, String> borrowers, BigDecimal owed, String description, IDebtSplitStrategy splitStrategy) {
-        groupLedger.createDebt(lender, borrowers, owed, description, splitStrategy);
+    public void createDebt(User lender, Map<User, String> borrowers, BigDecimal owed, String description, IDebtSplitStrategy splitStrategy, Date date) {
+        groupLedger.createDebt(lender, borrowers, owed, description, splitStrategy, date);
     }
 
     /**
@@ -121,8 +124,8 @@ class Group implements IGroupData {
      * @param debtTrackerID ID used to retrieve the specific debtTracker.
      */
     // TODO: Specify exception(?).
-    public void payOffDebt(BigDecimal amount, String debtTrackerID) {
-        groupLedger.payOffDebt(amount, debtTrackerID);
+    public void payOffDebt(BigDecimal amount, String debtTrackerID, Date date) {
+        groupLedger.payOffDebt(amount, debtTrackerID, date);
     }
 
     /**
