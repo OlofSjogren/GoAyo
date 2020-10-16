@@ -1,6 +1,6 @@
 package com.goayo.debtify.model;
 
-import com.goayo.debtify.MockDatabase.MockDatabase;
+import com.goayo.debtify.mockdatabase.MockDatabase;
 
 import java.math.BigDecimal;
 import java.net.ConnectException;

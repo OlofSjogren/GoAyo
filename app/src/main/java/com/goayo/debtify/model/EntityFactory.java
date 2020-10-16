@@ -1,7 +1,6 @@
 package com.goayo.debtify.model;
 
 import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @Author Oscar Sanner and Olof Sjögren.

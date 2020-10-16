@@ -21,7 +21,7 @@ import java.util.Set;
  */
 
 class FromJsonFactory {
-    private Gson gson;
+    private final Gson gson;
 
     public FromJsonFactory() {
         gson = new Gson();
@@ -153,11 +153,11 @@ class FromJsonFactory {
             this.debts = debts;
         }
 
-        String name;
-        String date;
-        String id;
-        UserJsonObject[] members;
-        DebtJsonObject[] debts;
+        final String name;
+        final String date;
+        final String id;
+        final UserJsonObject[] members;
+        final DebtJsonObject[] debts;
     }
 
     static class UserJsonObject {
@@ -169,10 +169,10 @@ class FromJsonFactory {
             this.contacts = contacts;
         }
 
-        String name;
-        String phonenumber;
-        String password;
-        String[] contacts;
+        final String name;
+        final String phonenumber;
+        final String password;
+        final String[] contacts;
     }
 
     static class ContactsJsonObject {
@@ -180,11 +180,11 @@ class FromJsonFactory {
             this.contacts = contacts;
         }
 
-        UserJsonObject[] contacts;
+        final UserJsonObject[] contacts;
     }
 
     static class GroupsArrayJsonObject {
-        GroupJsonObject[] groupJsonObjects;
+        final GroupJsonObject[] groupJsonObjects;
 
         public GroupsArrayJsonObject(GroupJsonObject[] groupJsonObjects) {
             this.groupJsonObjects = groupJsonObjects;
@@ -202,12 +202,12 @@ class FromJsonFactory {
         }
 
 
-        String description;
-        UserJsonObject lender;
-        UserJsonObject borrower;
-        String owed;
-        String id;
-        PaymentJsonObject[] payments;
+        final String description;
+        final UserJsonObject lender;
+        final UserJsonObject borrower;
+        final String owed;
+        final String id;
+        final PaymentJsonObject[] payments;
     }
 
     static class PaymentJsonObject {
@@ -216,7 +216,7 @@ class FromJsonFactory {
             this.id = paymentId;
         }
 
-        String amount;
-        String id;
+        final String amount;
+        final String id;
     }
 }

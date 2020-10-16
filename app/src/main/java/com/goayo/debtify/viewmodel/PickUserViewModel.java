@@ -21,16 +21,15 @@ public class PickUserViewModel extends ModelEngineViewModel {
     private MutableLiveData<List<IUserData>> selectedUsersData;
     private MutableLiveData<Boolean> isMultipleChoice;
     private MutableLiveData<Integer> destination;
-
     /**
      * Constructor for PickUserViewModel
      */
     public PickUserViewModel() {
         super();
         initialUsers = new MutableLiveData<>();
-        initialUsers.setValue(new ArrayList<IUserData>());
+        initialUsers.setValue(new ArrayList<>());
         selectedUsersData = new MutableLiveData<>();
-        selectedUsersData.setValue(new ArrayList<IUserData>());
+        selectedUsersData.setValue(new ArrayList<>());
         isMultipleChoice = new MutableLiveData<>(true);
         destination = new MutableLiveData<>();
     }

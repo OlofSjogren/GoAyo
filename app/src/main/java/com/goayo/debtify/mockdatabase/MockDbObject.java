@@ -1,6 +1,6 @@
-package com.goayo.debtify.Database;
+package com.goayo.debtify.mockdatabase;
 
- class DbObject {
+class MockDbObject {
     static class Group {
         public Group(String name, String date, String groupId, User[] members, Debt[] debts) {
             this.name = name;
@@ -10,9 +10,9 @@ package com.goayo.debtify.Database;
             this.debts = debts;
         }
 
-        String name;
-        String date;
-        String id;
+        final String name;
+        final String date;
+        final String id;
         User[] members;
         Debt[] debts;
     }
@@ -26,9 +26,9 @@ package com.goayo.debtify.Database;
             this.contacts = contacts;
         }
 
-        String name;
-        String phonenumber;
-        String password;
+        final String name;
+        final String phonenumber;
+        final String password;
         String[] contacts;
 
     }
@@ -39,8 +39,8 @@ package com.goayo.debtify.Database;
             this.debt = debt;
         }
 
-        String groupId;
-        Debt debt;
+        final String groupId;
+        final Debt debt;
     }
 
     static class Debt {
@@ -54,11 +54,11 @@ package com.goayo.debtify.Database;
         }
 
 
-        String description;
-        User lender;
-        User borrower;
-        String owed;
-        String id;
+        final String description;
+        final User lender;
+        final User borrower;
+        final String owed;
+        final String id;
         Payment [] payments;
     }
 
@@ -69,9 +69,9 @@ package com.goayo.debtify.Database;
             this.payment = payment;
         }
 
-        String groupId;
-        String debtId;
-        Payment payment;
+        final String groupId;
+        final String debtId;
+        final Payment payment;
     }
 
     static class Payment {
@@ -80,39 +80,19 @@ package com.goayo.debtify.Database;
             this.id = paymentId;
         }
 
-        String amount;
-        String id;
+        final String amount;
+        final String id;
     }
 
-    public static class ContactPost {
-        String contactPhoneNumber;
-        String userPhoneNumber;
-
-        public ContactPost(String userPhoneNumber, String contactToBeAdded) {
-            this.userPhoneNumber = userPhoneNumber;
-            this.contactPhoneNumber = contactToBeAdded;
-        }
-    }
-
-    public static class GroupMemberPost {
-
-        User member;
-        String groupId;
-
-        public GroupMemberPost(String groupID, User user) {
-            this.member = user;
-            groupId = groupID;
-        }
-    }
     public static class ContactsJsonObject {
         public ContactsJsonObject(User[] contacts) {
             this.contacts = contacts;
         }
-        User[] contacts;
+        final User[] contacts;
     }
 
     static class GroupsArrayJsonObject {
-        Group[] groupJsonObjects;
+        final Group[] groupJsonObjects;
 
         public GroupsArrayJsonObject(Group[] groupJsonObjects) {
             this.groupJsonObjects = groupJsonObjects;

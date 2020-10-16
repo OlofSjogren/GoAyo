@@ -41,19 +41,6 @@ public interface IDatabase {
     JsonString.GroupArrayJsonString getGroups(String phoneNumber) throws UserNotFoundException, ConnectException;
 
     /**
-     * Returns a single group with the given id, in the form of a Json object.
-     * <p>
-     * Post condition: The Json string will follow the format specified in the GroupJsonString
-     * documentation.
-     *
-     * @param groupID The id of the sought group.
-     * @return A json file with the above specified properties of the group with specified ID.
-     * @throws GroupNotFoundException thrown if the  a group with the given id can't be found in the database.
-     * @throws ConnectException       thrown if unable to make a database connection.
-     */
-    JsonString.GroupJsonString getGroupFromId(String groupID) throws GroupNotFoundException, ConnectException;
-
-    /**
      * Returns a user with the given phone number.
      * <p>
      * Post condition: The Json string will follow the format specified in the UserJsonString

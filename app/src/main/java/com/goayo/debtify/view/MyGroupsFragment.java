@@ -75,7 +75,7 @@ public class MyGroupsFragment extends Fragment {
         viewModel.getGroupsData().observe(getViewLifecycleOwner(), new Observer<Set<IGroupData>>() {
             @Override
             public void onChanged(Set<IGroupData> iGroupData) {
-                groupViewAdapter.update(new ArrayList<IGroupData>(iGroupData));
+                groupViewAdapter.update(new ArrayList<>(iGroupData));
                 initHeader(binding, viewModel);
             }
         });

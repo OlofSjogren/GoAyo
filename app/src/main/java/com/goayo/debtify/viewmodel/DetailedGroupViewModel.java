@@ -40,10 +40,6 @@ public class DetailedGroupViewModel extends ModelEngineViewModel implements IEve
         EventBus.getInstance().register(this, EventBus.EVENT.SPECIFIC_GROUP_EVENT);
     }
 
-    public IUserData getLoggedInUser() {
-        return getModel().getLoggedInUser();
-    }
-
     public LiveData<IGroupData> getCurrentGroup() {
         if (currentGroup == null) {
             currentGroup = new MutableLiveData<>();
@@ -76,7 +72,7 @@ public class DetailedGroupViewModel extends ModelEngineViewModel implements IEve
         return currentGroupBalance;
     }
 
-    public List<IDebtData> getCurrentGroupDebts(String groupID) {
+    public List<IDebtData> getCurrentGroupDebts() {
         return currentGroupDebtsData.getValue();
     }
 
@@ -105,11 +101,10 @@ public class DetailedGroupViewModel extends ModelEngineViewModel implements IEve
     /**
      * Adds the selected users from PickUserFragment to the current group in model.
      *
-     * @return False if usersToBeAdded has yet to be set or is empty.
      */
-    public boolean addSelectedMembersToCurrentGroup(Set<IUserData> users) {
+    public void addSelectedMembersToCurrentGroup(Set<IUserData> users) {
         if (users == null || users.isEmpty()) {
-            return false;
+            return;
         }
         for (IUserData user : users) {
             if (!currentGroup.getValue().getIUserDataSet().contains(user)) {
@@ -120,7 +115,6 @@ public class DetailedGroupViewModel extends ModelEngineViewModel implements IEve
                 }
             }
         }
-        return true;
     }
 
     /**

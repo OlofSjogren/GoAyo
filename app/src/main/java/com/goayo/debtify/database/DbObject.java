@@ -1,6 +1,6 @@
-package com.goayo.debtify.MockDatabase;
+package com.goayo.debtify.database;
 
-class MockDbObject {
+ class DbObject {
     static class Group {
         public Group(String name, String date, String groupId, User[] members, Debt[] debts) {
             this.name = name;
@@ -10,11 +10,11 @@ class MockDbObject {
             this.debts = debts;
         }
 
-        String name;
-        String date;
-        String id;
-        User[] members;
-        Debt[] debts;
+        final String name;
+        final String date;
+        final String id;
+        final User[] members;
+        final Debt[] debts;
     }
 
     static class User {
@@ -26,10 +26,10 @@ class MockDbObject {
             this.contacts = contacts;
         }
 
-        String name;
-        String phonenumber;
-        String password;
-        String[] contacts;
+        final String name;
+        final String phonenumber;
+        final String password;
+        final String[] contacts;
 
     }
 
@@ -39,8 +39,8 @@ class MockDbObject {
             this.debt = debt;
         }
 
-        String groupId;
-        Debt debt;
+        final String groupId;
+        final Debt debt;
     }
 
     static class Debt {
@@ -54,12 +54,12 @@ class MockDbObject {
         }
 
 
-        String description;
-        User lender;
-        User borrower;
-        String owed;
-        String id;
-        Payment [] payments;
+        final String description;
+        final User lender;
+        final User borrower;
+        final String owed;
+        final String id;
+        final Payment [] payments;
     }
 
     static class PaymentPost{
@@ -69,9 +69,9 @@ class MockDbObject {
             this.payment = payment;
         }
 
-        String groupId;
-        String debtId;
-        Payment payment;
+        final String groupId;
+        final String debtId;
+        final Payment payment;
     }
 
     static class Payment {
@@ -80,13 +80,13 @@ class MockDbObject {
             this.id = paymentId;
         }
 
-        String amount;
-        String id;
+        final String amount;
+        final String id;
     }
 
     public static class ContactPost {
-        String contactPhoneNumber;
-        String userPhoneNumber;
+        final String contactPhoneNumber;
+        final String userPhoneNumber;
 
         public ContactPost(String userPhoneNumber, String contactToBeAdded) {
             this.userPhoneNumber = userPhoneNumber;
@@ -96,8 +96,8 @@ class MockDbObject {
 
     public static class GroupMemberPost {
 
-        User member;
-        String groupId;
+        final User member;
+        final String groupId;
 
         public GroupMemberPost(String groupID, User user) {
             this.member = user;
@@ -108,11 +108,11 @@ class MockDbObject {
         public ContactsJsonObject(User[] contacts) {
             this.contacts = contacts;
         }
-        User[] contacts;
+        final User[] contacts;
     }
 
     static class GroupsArrayJsonObject {
-        Group[] groupJsonObjects;
+        final Group[] groupJsonObjects;
 
         public GroupsArrayJsonObject(Group[] groupJsonObjects) {
             this.groupJsonObjects = groupJsonObjects;

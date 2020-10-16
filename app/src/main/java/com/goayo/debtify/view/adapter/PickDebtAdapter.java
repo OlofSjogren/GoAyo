@@ -35,7 +35,7 @@ import java.text.SimpleDateFormat;
 
 public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDebtViewHolder> {
 
-    private IDebtData[] debtData;
+    private final IDebtData[] debtData;
     private int mSelectedDebt = -1;
 
     /**
@@ -81,12 +81,12 @@ public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDe
      * Constructor for the internal class PickDebtViewHolder
      */
     class PickDebtViewHolder extends RecyclerView.ViewHolder {
-        private RadioButton debtRadioButton;
-        private TextView date;
-        private TextView lender;
-        private TextView borrower;
-        private TextView amount;
-        private TextView description;
+        private final RadioButton debtRadioButton;
+        private final TextView date;
+        private final TextView lender;
+        private final TextView borrower;
+        private final TextView amount;
+        private final TextView description;
 
         /**
          * Binds the elements in the layout file to variables in this ViewHolder

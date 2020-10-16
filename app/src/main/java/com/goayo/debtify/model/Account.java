@@ -31,20 +31,20 @@ import java.util.UUID;
  * return types and params of methods are correctly set as BigDecimal.
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Made package private.
  * 2020-10-09 Modified by Alex Phu and Yenan Wang: Added IDebtSplitStrategy to createDebt's parameter.
- * 2020-10-11 Modidied by Oscar Sanner: Made sure the logged in user gets added to the groups he creates.
- * 2020-10-11 Modidied by Oscar Sanner: UUIDs are created in this class and passed to the database and the groups respectively.
+ * 2020-10-11 Modified by Oscar Sanner: Made sure the logged in user gets added to the groups he creates.
+ * 2020-10-11 Modified by Oscar Sanner: UUIDs are created in this class and passed to the database and the groups respectively.
  * 2020-10-12 Modified by Alex Phu: In createDebt and payOffDebt, publish for GroupsEvent too on EventBus
- * 2020-10-13 Modified by Olof Sjögren: Refactored eventbus publications to publish enum-types instead of objects.
+ * 2020-10-13 Modified by Olof Sjögren: Refactored EventBus publications to publish enum-types instead of objects.
  * 2020-10-14 Modified by Olof Sjögren: Updated JDocs.
  * 2020-10-14 Modified by Oscar Sanner: Removed the method get group from ID. This method was obsolete and relying on the database rather than the object oriented model.
  */
 class Account {
 
-    private FromJsonFactory fromJsonFactory;
+    private final FromJsonFactory fromJsonFactory;
     private User loggedInUser;
     private Set<Group> associatedGroups;
     private Set<User> contactList;
-    private IDatabase database;
+    private final IDatabase database;
 
     /**
      * Constructor for Account class.
@@ -59,7 +59,7 @@ class Account {
     /**
      * A method for registering a user.
      *
-     * @param phoneNumber the registered user's phonenumber.
+     * @param phoneNumber the registered user's phone number.
      * @param name        the registered user's name.
      * @param password    the registered user's password.
      * @throws RegistrationException thrown if the registration failed.
@@ -285,7 +285,7 @@ class Account {
      * @throws GroupNotFoundException  thrown if a group with the given id couldn't be found.
      * @throws ConnectException        thrown if unable to connect to the database.
      */
-    //Todo: Database.PayOfDebt -> No need to reload groups because same objects. Reload anyways.
+    //Todo: database.PayOfDebt -> No need to reload groups because same objects. Reload anyways.
     public void payOffDebt(BigDecimal amount, String debtID, String groupID) throws InvalidDebtException, InvalidPaymentException, GroupNotFoundException, ConnectException {
         userIsLoggedIn();
         String id = UUID.randomUUID().toString();
@@ -364,7 +364,7 @@ class Account {
 
     /**
      * A method for logging out the current user. This method will make sure that no groups
-     * can be saved between logins and that no contacts are saved between logins.
+     * can be saved between sessions and that no contacts are saved between logins.
      */
     public void logOutUser() {
         userIsLoggedIn();

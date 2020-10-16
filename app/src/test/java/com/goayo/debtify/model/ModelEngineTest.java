@@ -1,8 +1,10 @@
 package com.goayo.debtify.model;
 
-import com.goayo.debtify.MockDatabase.MockDatabase;
+<<<<<<< HEAD
+import com.goayo.debtify.mockdatabase.MockDatabase;
 
-import org.junit.After;
+=======
+>>>>>>> 5b7a7cdc921ea6277e9321fd137f08aeb146c53c
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,15 +29,19 @@ import static org.junit.Assert.assertTrue;
 public class ModelEngineTest {
 
     Map<String, String> passwordAndNumber;
+<<<<<<< HEAD
     static ModelEngine modelEngine = new ModelEngine(new MockDatabase());
     Set<String> someNumbers;
     private int amountOfUsers = 50;
+=======
+    static final ModelEngine modelEngine = ModelEngine.getInstance();
+    private final int amountOfUsers = 50;
+>>>>>>> 5b7a7cdc921ea6277e9321fd137f08aeb146c53c
     List<String> noFriendsUsers;
 
     @Before
     public void setUp() throws Exception {
         passwordAndNumber = new HashMap<>();
-        someNumbers = new HashSet<>();
         noFriendsUsers = new ArrayList<>();
 
         for (int i = 0; i < amountOfUsers; i++) {
@@ -197,10 +203,6 @@ public class ModelEngineTest {
             randomGroupIndex = 0;
         }
         return modelEngine.getGroups().toArray(new IGroupData[modelEngine.getGroups().size()])[randomGroupIndex];
-    }
-
-    @After
-    public void tearDown() throws Exception {
     }
 
 

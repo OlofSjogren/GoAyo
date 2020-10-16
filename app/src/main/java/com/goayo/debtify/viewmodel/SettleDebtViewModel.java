@@ -21,7 +21,7 @@ import java.util.Objects;
  */
 public class SettleDebtViewModel extends ModelEngineViewModel {
 
-    private MutableLiveData<List<IDebtData>> debtListData;
+    private final MutableLiveData<List<IDebtData>> debtListData;
 
     /**
      * the constructor,

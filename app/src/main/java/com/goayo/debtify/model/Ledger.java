@@ -26,7 +26,7 @@ import java.util.Map;
  */
 class Ledger {
 
-    private List<DebtTracker> debtTrackerList = new ArrayList<>();
+    private final List<DebtTracker> debtTrackerList = new ArrayList<>();
 
     /**
      * Creates a debtTracker and adds it to the list of debtTrackers.
@@ -94,7 +94,7 @@ class Ledger {
      * @return a new ArrayList with all debt trackers, each wrapped in the IDebtData type.
      */
     public List<IDebtData> getDebtDataList() {
-        return new ArrayList<IDebtData>(debtTrackerList);
+        return new ArrayList<>(debtTrackerList);
     }
 
     /**

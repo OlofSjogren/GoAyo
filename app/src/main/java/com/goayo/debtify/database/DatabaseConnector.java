@@ -1,4 +1,4 @@
-package com.goayo.debtify.Database;
+package com.goayo.debtify.database;
 
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
@@ -16,8 +16,8 @@ import java.util.Map;
 
 class DatabaseConnector {
     private static DatabaseConnector instance;
-    private String port = "2501";
-    private String ipAddr = "http://83.252.195.154" + ":" + port + "/";
+    private final String port = "2501";
+    private final String ipAddr = "http://83.252.195.154" + ":" + port + "/";
 
     private DatabaseConnector(){}
 
@@ -101,14 +101,6 @@ class DatabaseConnector {
             return false;
         }
         return true;
-    }
-
-    void putData(){
-
-    }
-
-    void deleteData(){
-
     }
 
 }

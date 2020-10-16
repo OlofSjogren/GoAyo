@@ -1,4 +1,4 @@
-package com.goayo.debtify.Database;
+package com.goayo.debtify.database;
 
 import com.google.gson.Gson;
 
@@ -27,11 +27,11 @@ import java.util.Map;
     }
 
 
-    public boolean registerUser(String phoneNumber, String password, String name) {
+    public void registerUser(String phoneNumber, String password, String name) {
         DbObject.User user = new DbObject.User(name, phoneNumber, password, new String[0]);
         Gson gson = new Gson();
         String data = gson.toJson(user);
-        return DatabaseConnector.getInstance().postData(data, "users");
+        DatabaseConnector.getInstance().postData(data, "users");
 
     }
 

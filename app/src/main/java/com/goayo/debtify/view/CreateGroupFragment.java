@@ -66,7 +66,7 @@ public class CreateGroupFragment extends Fragment {
 
     private void initRecyclerView(CreateGroupFragmentBinding binding) {
         RecyclerView recyclerView = binding.recyclerView;
-        userCardViewAdapter = new UserCardViewAdapter(new ArrayList<IUserData>());
+        userCardViewAdapter = new UserCardViewAdapter(new ArrayList<>());
         recyclerView.setAdapter(userCardViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
@@ -79,7 +79,7 @@ public class CreateGroupFragment extends Fragment {
             if (groupName.isEmpty()) {
                 throw new Exception("Group name cannot be empty!");
             } else {
-                model.createGroup(groupName, new HashSet(userData));
+                model.createGroup(groupName, new HashSet<>(userData));
                 requireActivity().finish();
             }
         } catch (Exception e) {

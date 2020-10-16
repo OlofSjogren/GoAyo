@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.goayo.debtify.R;
-import com.goayo.debtify.databinding.ActivityContactsBinding;
 
 /**
  * @author Gabriel Brattgård
@@ -18,15 +17,9 @@ import com.goayo.debtify.databinding.ActivityContactsBinding;
  */
 public class ContactsActivity extends AppCompatActivity {
 
-    private ActivityContactsBinding binding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_contacts);
-
-
-        // TODO: add an actionbar here
+        DataBindingUtil.setContentView(this, R.layout.activity_contacts);
     }
 }

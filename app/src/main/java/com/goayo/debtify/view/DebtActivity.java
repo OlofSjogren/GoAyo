@@ -8,7 +8,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.goayo.debtify.R;
-import com.goayo.debtify.databinding.ActivityDebtBinding;
 
 /**
  * @author Gabriel Brattgård, Yenan Wang
@@ -20,15 +19,12 @@ import com.goayo.debtify.databinding.ActivityDebtBinding;
  */
 public class DebtActivity extends AppCompatActivity {
 
-    private ActivityDebtBinding binding;
-    private NavController navController;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_debt);
-        navController = Navigation.findNavController(this, R.id.debtNavHostFragment);
+        DataBindingUtil.setContentView(this, R.layout.activity_debt);
+        NavController navController = Navigation.findNavController(this, R.id.debtNavHostFragment);
 
         String action = getIntent().getStringExtra("DEBT_CREATE");
         try {

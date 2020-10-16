@@ -43,10 +43,10 @@ import java.util.List;
  */
 public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.GroupViewHolder> {
 
-    private List<IGroupData> groupData;
+    private final List<IGroupData> groupData;
     private View.OnClickListener commonClickListener;
     private IGroupData clickedGroup;
-    private String currentLoggedInUsersPhoneNumber;
+    private final String currentLoggedInUsersPhoneNumber;
 
     /**
      * Constructor for GroupViewAdapter
@@ -131,11 +131,11 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
      * <p>
      * ViewHolder for group
      */
-    class GroupViewHolder extends RecyclerView.ViewHolder {
-        private TextView groupName;
-        private TextView balance;
-        private CardView cardView;
-        private TextView groupMembers;
+    static class GroupViewHolder extends RecyclerView.ViewHolder {
+        private final TextView groupName;
+        private final TextView balance;
+        private final CardView cardView;
+        private final TextView groupMembers;
 
         /**
          * Binds the elements in the layout file to a variable

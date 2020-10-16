@@ -22,11 +22,10 @@ public class SignUpViewModel extends ModelEngineViewModel {
      */
     public boolean registerUser(String phoneNumber, String name, String password) {
         try {
-            getModel().registerUser(phoneNumber, name, password);
-        } catch (RegistrationException e) {
+           getModel().registerUser(phoneNumber, name, password);
+        } catch (RegistrationException | ConnectException e) {
             e.printStackTrace();
-        } catch (ConnectException e) {
-            e.printStackTrace();
+            return false;
         }
         return true;
     }
