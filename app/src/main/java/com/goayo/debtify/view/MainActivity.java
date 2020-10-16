@@ -76,8 +76,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        //Todo ("Logic for when menu item is selected")
-        //Toast.makeText(this, "MENU_ITEM_CLICKED", Toast.LENGTH_SHORT).show();
         Intent intent;
         switch (item.getItemId()) {
             case R.id.logout_menu_item:
