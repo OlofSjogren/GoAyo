@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +31,7 @@ public class LedgerTest {
         members.put(contact, "TestID");
 
         ledger = new Ledger();
-        ledger.createDebt(user, members, new BigDecimal(100), "Test", new EvenSplitStrategy());
+        ledger.createDebt(user, members, new BigDecimal(100), "Test", new EvenSplitStrategy(), new Date());
     }
 
     @Test
@@ -46,7 +47,7 @@ public class LedgerTest {
 
     @Test
     public void testPayOffDebt() throws Exception {
-        ledger.payOffDebt(new BigDecimal(50), "TestID");
+        ledger.payOffDebt(new BigDecimal(50), "TestID", new Date());
     }
 
     @Test

@@ -11,7 +11,7 @@ public class PaymentTest {
 
     @Test
     public void testGetDate() {
-        Payment p = new Payment(new BigDecimal(10));
+        Payment p = new Payment(new BigDecimal(10), new Date());
         String paymentDate = p.getDate().toString();
         String testDate = (new Date()).toString();
         assertEquals(paymentDate, testDate);
@@ -19,7 +19,7 @@ public class PaymentTest {
 
     @Test
     public void testGetPaidAmount() {
-        Payment p = new Payment(new BigDecimal(25));
+        Payment p = new Payment(new BigDecimal(25), new Date());
         assertEquals(new BigDecimal("25.00"), p.getPaidAmount());
     }
 }
