@@ -20,7 +20,7 @@ public class DebtTrackerTest {
         dt.payOffDebt(new BigDecimal(50));
         dt.payOffDebt(new BigDecimal(25));
         dt.payOffDebt(new BigDecimal(25));
-        assertEquals(new BigDecimal(100), dt.getSumOfPayments());
+        assertEquals(new BigDecimal("100.00"), dt.getSumOfPayments());
     }
 
     @Test
@@ -40,8 +40,8 @@ public class DebtTrackerTest {
         dt.payOffDebt(new BigDecimal(35));
         dt.payOffDebt(new BigDecimal(47));
         List<IPaymentData> listOfPaymentData = dt.getPaymentHistory();
-        assertEquals(new BigDecimal(35), listOfPaymentData.get(0).getPaidAmount());
-        assertEquals(new BigDecimal(47), listOfPaymentData.get(1).getPaidAmount());
+        assertEquals(new BigDecimal("35.00"), listOfPaymentData.get(0).getPaidAmount());
+        assertEquals(new BigDecimal("47.00"), listOfPaymentData.get(1).getPaidAmount());
 
     }
 }

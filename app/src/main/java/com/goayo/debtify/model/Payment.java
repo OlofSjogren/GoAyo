@@ -2,6 +2,7 @@ package com.goayo.debtify.model;
 
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 
 /**
@@ -20,7 +21,7 @@ class Payment implements IPaymentData {
 
     public Payment(BigDecimal paidAmount) {
         this.date = new Date();
-        this.paidAmount = paidAmount;
+        this.paidAmount = paidAmount.setScale(2, RoundingMode.HALF_EVEN);;
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.goayo.debtify.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 
 /**
@@ -19,7 +20,7 @@ class Debt {
 
     public Debt(BigDecimal owed) {
         this.date = new Date();
-        this.owed = owed;
+        this.owed = owed.setScale(2, RoundingMode.HALF_EVEN);
     }
 
     /**
