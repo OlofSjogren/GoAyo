@@ -20,6 +20,6 @@ public class PaymentTest {
     @Test
     public void testGetPaidAmount() {
         Payment p = new Payment(new BigDecimal(25));
-        assertEquals(new BigDecimal(25), p.getPaidAmount());
+        assertEquals(new BigDecimal("25.00"), p.getPaidAmount());
     }
 }
