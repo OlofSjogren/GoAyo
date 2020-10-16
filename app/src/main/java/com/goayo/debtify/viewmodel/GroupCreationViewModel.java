@@ -1,8 +1,5 @@
 package com.goayo.debtify.viewmodel;
 
-import androidx.lifecycle.ViewModel;
-
-import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.model.IUserData;
 
 import java.util.ArrayList;
@@ -16,20 +13,14 @@ import java.util.Set;
  * <p>
  * ViewModel for GroupCreationActivity
  */
-public class GroupCreationViewModel extends ViewModel {
-
-    private final ModelEngine model;
-
-    public GroupCreationViewModel() {
-        model = ModelEngine.getInstance();
-    }
+public class GroupCreationViewModel extends ModelEngineViewModel {
 
     public List<IUserData> getContacts() {
-        return new ArrayList<>(model.getContacts());
+        return new ArrayList<>(getModel().getContacts());
     }
 
     public void createGroup(String groupName, Set<IUserData> users) throws Exception {
-        model.createGroup(groupName, convertToString(users));
+        getModel().createGroup(groupName, convertToString(users));
     }
 
     // TODO this method shouldn't be needed

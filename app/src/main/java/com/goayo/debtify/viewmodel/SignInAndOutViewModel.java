@@ -2,10 +2,6 @@ package com.goayo.debtify.viewmodel;
 
 import android.util.Log;
 
-import androidx.lifecycle.ViewModel;
-
-import com.goayo.debtify.model.ModelEngine;
-
 /**
  * @Author Oscar Sanner and Olof Sjögren
  * @date 2020-09-30
@@ -14,7 +10,7 @@ import com.goayo.debtify.model.ModelEngine;
  * <p>
  * 2020-10-14 Modified by Alex Phu: Implemented getCurrentLoggedInUsersName()
  */
-public class SignInAndOutViewModel extends ViewModel {
+public class SignInAndOutViewModel extends ModelEngineViewModel {
 
     /**
      * Method called upon by views for logging in a user with the input data from user.
@@ -25,7 +21,7 @@ public class SignInAndOutViewModel extends ViewModel {
      */
     public boolean logInUser(String phoneNumber, String password) {
         try {
-            ModelEngine.getInstance().logInUser(phoneNumber, password);
+            getModel().logInUser(phoneNumber, password);
         } catch (Exception e) {
             Log.d(e.getMessage(), "logInUser: ");
             return false;
@@ -39,13 +35,13 @@ public class SignInAndOutViewModel extends ViewModel {
      * @return string of user's name.
      */
     public String getCurrentLoggedInUsersName() {
-        return ModelEngine.getInstance().getLoggedInUser().getName();
+        return getModel().getLoggedInUser().getName();
     }
 
     /**
      * Method for logging out a logged in user in the model.
      */
     public void logOutUser() {
-        ModelEngine.getInstance().logOutUser();
+        getModel().logOutUser();
     }
 }
