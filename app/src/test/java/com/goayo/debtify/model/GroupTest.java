@@ -4,6 +4,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -124,9 +126,9 @@ public class GroupTest {
 
         Map<User, String> map1 = new HashMap<>();
         map1.put(user1, "0760460051");
-        tempGroup.createDebt(user1, map1, new BigDecimal(random_int), "Test", DebtSplitFactory.createNoSplitStrategy());
+        tempGroup.createDebt(user1, map1, new BigDecimal(random_int), "Test", DebtSplitFactory.createNoSplitStrategy(), new Date());
         try {
-            assertEquals(new BigDecimal(random_int), tempGroup.getUserTotal("0760460051"));
+            assertEquals(new BigDecimal(random_int).setScale(2, RoundingMode.HALF_EVEN), tempGroup.getUserTotal("0760460051"));
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         }
