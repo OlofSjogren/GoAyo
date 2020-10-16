@@ -1,5 +1,6 @@
 package com.goayo.debtify.model;
 
+import com.goayo.debtify.database.RealDatabase;
 import com.goayo.debtify.mockdatabase.MockDatabase;
 
 import java.math.BigDecimal;
@@ -45,7 +46,7 @@ public class ModelEngine {
      */
     public static ModelEngine getInstance() {
         if (instance == null) {
-            instance = new ModelEngine(new Account(new MockDatabase()));
+            instance = new ModelEngine(new Account(new RealDatabase()));
         }
         return instance;
     }

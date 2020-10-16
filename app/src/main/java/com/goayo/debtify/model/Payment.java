@@ -1,11 +1,8 @@
 package com.goayo.debtify.model;
 
 
-import androidx.databinding.DataBindingUtil;
-
 import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.math.RoundingMode;
 import java.util.Date;
 
 /**
@@ -24,7 +21,7 @@ class Payment implements IPaymentData {
 
     public Payment(BigDecimal paidAmount, Date date) {
         this.date = date;
-        this.paidAmount = paidAmount;
+        this.paidAmount = paidAmount.setScale(2, RoundingMode.HALF_EVEN);;
     }
 
 
