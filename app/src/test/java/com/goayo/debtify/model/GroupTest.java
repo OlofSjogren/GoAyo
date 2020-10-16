@@ -3,7 +3,10 @@ package com.goayo.debtify.model;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -80,7 +83,7 @@ public class GroupTest {
         tempGroup.addUser(secondUserList);
         tempGroup.removeUser(userSet);
 
-        for(User u: userSet) {
+        for (User u : userSet) {
             assertFalse(tempGroup.getGroupMembers().contains(u));
         }
 
@@ -100,9 +103,28 @@ public class GroupTest {
 
         tempGroup.removeUser(secondUserList);
 
-        for (User u : secondUserList){
+        for (User u : secondUserList) {
             assertFalse(tempGroup.getGroupMembers().contains(u));
         }
     }
 
+    @Test
+    public void testGetUserTotal() {
+        User user1 = new User("0760460051", "Alex");
+        User user2 = new User("0760460052", "Axel");
+        Set<User> tempUserSet = new HashSet<>();
+        tempUserSet.add(user1);
+        tempUserSet.add(user2);
+
+        Group tempGroup = new Group("PPY", "9876", tempUserSet);
+
+        Map<User, String> map1 = new HashMap<>();
+        map1.put(user1, "0760460051");
+        tempGroup.createDebt(user1, map1, new BigDecimal(23), "Test", DebtSplitFactory.createNoSplitStrategy());
+        try {
+            assertEquals(new BigDecimal(23), tempGroup.getUserTotal("0760460051"));
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }
