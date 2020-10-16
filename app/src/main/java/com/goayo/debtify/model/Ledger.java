@@ -24,6 +24,8 @@ import java.util.Map;
  * 2020-10-09 Modified by Alex Phu and Yenan Wang: Added IDebtSplitStrategy to createDebt's parameter.
  * 2020-10-11 Modified by Oscar Sanner: Added rounding mode for BigDecimal.
  * 2020-10-14 Modified by Olof Sjögren: Updated JDocs.
+ * 2020-10-16 Modified by Oscar Sanner: Debts and payments will now take in a date on creation. This has been adjusted for so that
+ * dates are sent in via the parameters of the create/add methods.
  */
 class Ledger {
 

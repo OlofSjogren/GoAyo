@@ -38,6 +38,8 @@ import java.util.UUID;
  * 2020-10-13 Modified by Olof Sjögren: Refactored EventBus publications to publish enum-types instead of objects.
  * 2020-10-14 Modified by Olof Sjögren: Updated JDocs.
  * 2020-10-14 Modified by Oscar Sanner: Removed the method get group from ID. This method was obsolete and relying on the database rather than the object oriented model.
+ * 2020-10-16 Modified by Oscar Sanner: Create debt and add payment methods will now take in a date. This has been adjusted and Account is responsible for creating these
+ * debts and sending them to the group and the database respectively.
  */
 class Account {
 

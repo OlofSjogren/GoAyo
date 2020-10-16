@@ -23,6 +23,8 @@ import java.util.Set;
  * 2020-10-14 Modified by Oscar Sanner: Refactored the whole code to make it readable. Removed
  * "GetGroupFromId()" as it was never user. Created smaller reusable helper methods for different tasks,
  * reusable in case we want to bring the "GetGroupFromId()" back, or add another method.
+ * 2020-10-16 Modified by Oscar Sanner: Since dates are now stored in database, this class has been extended
+ * to handle persistence in dates.
  */
 
 class FromJsonFactory {

@@ -19,6 +19,8 @@ import java.util.List;
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
  * 2020-10-14 Modified by Olof Sjögren: Updated JDocs.
+ * 2020-10-16 Modified by Oscar Sanner: A debt now takes in a date on creation instead of creating on itself.
+ * This will further persistence.
  */
 class DebtTracker implements IDebtData {
     private final Debt debt;
