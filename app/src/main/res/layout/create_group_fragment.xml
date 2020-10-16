@@ -58,6 +58,7 @@
                 android:layout_margin="10dp"
                 android:hint="Group name (required)"
                 android:inputType="text"
+                android:maxLength="30"
                 android:maxLines="1" />
         </RelativeLayout>
 
