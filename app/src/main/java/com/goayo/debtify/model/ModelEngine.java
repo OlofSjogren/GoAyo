@@ -1,6 +1,5 @@
 package com.goayo.debtify.model;
 
-import com.goayo.debtify.database.RealDatabase;
 import com.goayo.debtify.mockdatabase.MockDatabase;
 
 import java.math.BigDecimal;

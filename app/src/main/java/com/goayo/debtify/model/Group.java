@@ -1,7 +1,5 @@
 package com.goayo.debtify.model;
 
-import androidx.databinding.DataBindingUtil;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
