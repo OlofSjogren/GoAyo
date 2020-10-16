@@ -46,7 +46,7 @@ public class ModelEngine {
      */
     public static ModelEngine getInstance() {
         if (instance == null) {
-            instance = new ModelEngine(new Account(new RealDatabase()));
+            instance = new ModelEngine(new Account(new MockDatabase()));
         }
         return instance;
     }
