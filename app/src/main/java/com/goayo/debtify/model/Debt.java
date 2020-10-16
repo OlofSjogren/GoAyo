@@ -1,6 +1,7 @@
 package com.goayo.debtify.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 
 /**
@@ -12,14 +13,16 @@ import java.util.Date;
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
  * 2020-10-14 Modified by Olof Sjögren: getDebtAmount now returns a new BigDecimal, also updated JDocs.
+ * 2020-10-16 Modified by Oscar Sanner: A debt now takes in a date on creation instead of creating on itself.
+ * This will further persistence.
  */
 class Debt {
     private final Date date;
     private final BigDecimal owed;
 
-    public Debt(BigDecimal owed) {
-        this.date = new Date();
-        this.owed = owed;
+    public Debt(BigDecimal owed, Date date) {
+        this.date = date;
+        this.owed = owed.setScale(2, RoundingMode.HALF_EVEN);
     }
 
     /**

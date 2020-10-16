@@ -2,11 +2,9 @@ package com.goayo.debtify.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.goayo.debtify.model.EventBus;
 import com.goayo.debtify.model.IEventHandler;
-import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.model.IUserData;
 
 import java.util.ArrayList;
@@ -22,20 +20,18 @@ import java.util.List;
  * 2020-10-08 Modified by Yenan: refactor to interact with the ModelEngine, add removeContacts(...) method
  * 2020-10-09 Modified by Yenan & Alex: connect with EventBus so the LiveDatas updates immediately after modification
  */
-public class ContactsViewModel extends ViewModel implements IEventHandler {
+public class ContactsViewModel extends ModelEngineViewModel implements IEventHandler {
     private MutableLiveData<List<IUserData>> contactsData;
-    private final ModelEngine modelEngine;
 
     public ContactsViewModel() {
         super();
-        modelEngine = ModelEngine.getInstance();
         EventBus.getInstance().register(this, EventBus.EVENT.CONTACT_EVENT);
     }
 
     public LiveData<List<IUserData>> getContactsData() {
         if (contactsData == null) {
             contactsData = new MutableLiveData<>();
-            setContactsData(new ArrayList<>(modelEngine.getContacts()));
+            setContactsData(new ArrayList<>(getModel().getContacts()));
         }
         return contactsData;
     }
@@ -52,7 +48,7 @@ public class ContactsViewModel extends ViewModel implements IEventHandler {
      */
     public void removeContacts(List<IUserData> contactsToRemove) throws Exception {
         for (IUserData user : contactsToRemove) {
-            modelEngine.removeContact(user.getPhoneNumber());
+            getModel().removeContact(user.getPhoneNumber());
         }
     }
 
@@ -62,6 +58,6 @@ public class ContactsViewModel extends ViewModel implements IEventHandler {
     }
 
     private void updateContactsData() {
-        setContactsData(new ArrayList<>(modelEngine.getContacts()));
+        setContactsData(new ArrayList<>(getModel().getContacts()));
     }
 }

@@ -11,13 +11,13 @@ public class DebtTest {
 
     @Test
     public void testDebtCreation() {
-        Debt debt = new Debt(new BigDecimal(50));
+        Debt debt = new Debt(new BigDecimal(50), new Date());
         assertEquals(0, debt.getDebtAmount().compareTo(new BigDecimal(50)));
     }
 
     @Test
     public void testDebtDate() {
-        Debt debt = new Debt(new BigDecimal(10));
+        Debt debt = new Debt(new BigDecimal(10), new Date());
         String debtDate = debt.getDate().toString();
         String testDate = (new Date()).toString();
         assertEquals(debtDate, testDate);

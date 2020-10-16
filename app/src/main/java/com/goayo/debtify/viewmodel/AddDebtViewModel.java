@@ -2,11 +2,9 @@ package com.goayo.debtify.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.goayo.debtify.model.DebtSplitFactory;
 import com.goayo.debtify.model.IDebtSplitStrategy;
-import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.model.IUserData;
 
 import java.math.BigDecimal;
@@ -29,9 +27,7 @@ import java.util.Set;
  * <p>
  * 2020-10-12 Modified by Alex Phu: Instantiation of ISplitStrategy are now done through DebtSplitFactory
  */
-public class AddDebtViewModel extends ViewModel {
-
-    private final ModelEngine modelEngine = ModelEngine.getInstance();
+public class AddDebtViewModel extends ModelEngineViewModel {
 
     private MutableLiveData<Set<IUserData>> selectedLenderData;
     private MutableLiveData<Set<IUserData>> selectedBorrowersData;
@@ -96,7 +92,7 @@ public class AddDebtViewModel extends ViewModel {
         } else {
             splitStrategy = DebtSplitFactory.createEvenSplitStrategy();
         }
-        modelEngine.createDebt(groupID,
+        getModel().createDebt(groupID,
                 // this is horrendous
                 (new ArrayList<>(lender).get(0)).getPhoneNumber(),
                 convertToString(borrowers), amount, description,
@@ -104,7 +100,7 @@ public class AddDebtViewModel extends ViewModel {
     }
 
     public Set<IUserData> getGroupMembers(String groupID) throws Exception {
-        return modelEngine.getGroup(groupID).getIUserDataSet();
+        return getModel().getGroup(groupID).getIUserDataSet();
     }
 
     // TODO this method shouldn't be needed

@@ -2,6 +2,7 @@ package com.goayo.debtify.model;
 
 import java.math.BigDecimal;
 import java.net.ConnectException;
+import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
@@ -87,9 +88,10 @@ public interface IDatabase {
      * @param amount        The total amount of the loan.
      * @param description   a description of the loan.
      * @param splitStrategy the strategy which determines how the debt will be split among the borrowers (if at all).
+     * @param date
      * @throws Exception //TODO NEEEEDS TO SPECIFY
      */
-    void addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy) throws Exception;
+    void addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy, Date date) throws Exception;
 
     /**
      * Adds a new contact to a users list of contacts.
@@ -123,7 +125,7 @@ public interface IDatabase {
      * @throws InvalidPaymentException thrown if the payment failed to be made in the database.
      * @throws ConnectException        thrown if unable to make a database connection.
      */
-    void addPayment(String GroupID, String debtID, BigDecimal amount, String id) throws GroupNotFoundException, InvalidDebtException, InvalidPaymentException, ConnectException;
+    void addPayment(String GroupID, String debtID, BigDecimal amount, String id, Date date) throws GroupNotFoundException, InvalidDebtException, InvalidPaymentException, ConnectException;
 
     /**
      * Adds a user to a specific group.

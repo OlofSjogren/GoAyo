@@ -3,6 +3,7 @@ package com.goayo.debtify.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,8 @@ import java.util.Map;
  * 2020-10-09 Modified by Alex Phu and Yenan Wang: Added IDebtSplitStrategy to createDebt's parameter.
  * 2020-10-11 Modified by Oscar Sanner: Added rounding mode for BigDecimal.
  * 2020-10-14 Modified by Olof Sjögren: Updated JDocs.
+ * 2020-10-16 Modified by Oscar Sanner: Debts and payments will now take in a date on creation. This has been adjusted for so that
+ * dates are sent in via the parameters of the create/add methods.
  */
 class Ledger {
 
@@ -36,15 +39,16 @@ class Ledger {
      * @param owedTotal      total amount lent out by the lender to the borrowers
      * @param description    the brief description of the debt
      * @param splitStrategy  how the debt will be split (if at all) among the borrowers.
+     * @param date
      * @throws DebtException thrown if the debt creation failed.
      */
-    public void createDebt(User lender, Map<User, String> borrowersAndId, BigDecimal owedTotal, String description, IDebtSplitStrategy splitStrategy) throws DebtException {
+    public void createDebt(User lender, Map<User, String> borrowersAndId, BigDecimal owedTotal, String description, IDebtSplitStrategy splitStrategy, Date date) throws DebtException {
 
         Map<User, Tuple<BigDecimal, String>> usersInDebt = splitStrategy.splitDebt(borrowersAndId, owedTotal);
         List<DebtTracker> debtList = new ArrayList<>();
 
         for (Map.Entry<User, Tuple<BigDecimal, String>> entry : usersInDebt.entrySet()) {
-            if (!debtList.add(new DebtTracker(usersInDebt.get(entry.getKey()).getFirst(), lender, entry.getKey(), description, entry.getValue().getSecond()))) {
+            if (!debtList.add(new DebtTracker(usersInDebt.get(entry.getKey()).getFirst(), lender, entry.getKey(), description, entry.getValue().getSecond(), date))) {
                 throw new DebtException("Failed to create the debt.");
             }
         }
@@ -56,12 +60,12 @@ class Ledger {
 
     /**
      * Adds a new payment to a specific debtTracker.
-     *
-     * @param amount        Amount being paid back against the debt.
+     *  @param amount        Amount being paid back against the debt.
      * @param debtTrackerID ID used to retrieve the specific debtTracker.
+     * @param date
      */
-    public void payOffDebt(BigDecimal amount, String debtTrackerID) {
-        findDebtTracker(debtTrackerID).payOffDebt(amount);
+    public void payOffDebt(BigDecimal amount, String debtTrackerID, Date date) {
+        findDebtTracker(debtTrackerID).payOffDebt(amount, date);
     }
 
     /**

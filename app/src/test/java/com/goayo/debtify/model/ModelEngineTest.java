@@ -1,5 +1,7 @@
 package com.goayo.debtify.model;
 
+import com.goayo.debtify.mockdatabase.MockDatabase;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,9 +25,9 @@ import static org.junit.Assert.assertTrue;
 
 public class ModelEngineTest {
 
-    Map<String, String> passwordAndNumber;
-    static final ModelEngine modelEngine = ModelEngine.getInstance();
+    static final ModelEngine modelEngine = new ModelEngine(new MockDatabase());
     private final int amountOfUsers = 50;
+    Map<String, String> passwordAndNumber;
     List<String> noFriendsUsers;
 
     @Before
@@ -39,7 +41,7 @@ public class ModelEngineTest {
             passwordAndNumber.put(Integer.toString(i), randomNum + Integer.toString(randomNumComp));
         }
 
-        for(int i = 0; i < amountOfUsers; i++){
+        for (int i = 0; i < amountOfUsers; i++) {
             int randomNum = ThreadLocalRandom.current().nextInt(10000, 99999);
             int randomNumComp = ThreadLocalRandom.current().nextInt(10000, 99999);
             noFriendsUsers.add(randomNum + Integer.toString(randomNumComp));
@@ -134,7 +136,7 @@ public class ModelEngineTest {
                 }
             }
 
-            if(alreadyContact || contact.equals(modelEngine.getLoggedInUser().getPhoneNumber())){
+            if (alreadyContact || contact.equals(modelEngine.getLoggedInUser().getPhoneNumber())) {
                 i--;
             } else {
                 modelEngine.addContact(contact);
@@ -241,7 +243,7 @@ public class ModelEngineTest {
         //Create assertion strings.
         List<String> assertionStrings = new ArrayList<>();
         for (int i = 0; i < borrowers.size(); i++) {
-            assertionStrings.add(debt.get(i).getBorrower().getPhoneNumber() + " OWES " + debt.get(i).getOriginalDebt().toString() + " DESC: " + debt.get(i).getDescription());
+            assertionStrings.add(debt.get(i).getBorrower().getPhoneNumber() + " OWES " + debt.get(i).getOriginalDebt().toString() + " DESC: " + debt.get(i).getDescription() + debt.get(i).getDate());
         }
 
         modelEngine.logOutUser();
@@ -252,7 +254,7 @@ public class ModelEngineTest {
         debt = g.getDebts();
 
         for (int i = 0; i < borrowers.size(); i++) {
-            assertTrue(assertionStrings.contains(debt.get(i).getBorrower().getPhoneNumber() + " OWES " + debt.get(i).getOriginalDebt().toString() + " DESC: " + debt.get(i).getDescription()));
+            assertTrue(assertionStrings.contains(debt.get(i).getBorrower().getPhoneNumber() + " OWES " + debt.get(i).getOriginalDebt().toString() + " DESC: " + debt.get(i).getDescription() + debt.get(i).getDate()));
         }
 
     }

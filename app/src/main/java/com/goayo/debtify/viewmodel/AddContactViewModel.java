@@ -2,12 +2,10 @@ package com.goayo.debtify.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.goayo.debtify.model.ModelEngine;
+import com.goayo.debtify.model.IUserData;
 import com.goayo.debtify.model.UserAlreadyExistsException;
 import com.goayo.debtify.model.UserNotFoundException;
-import com.goayo.debtify.model.IUserData;
 
 import java.net.ConnectException;
 
@@ -17,14 +15,9 @@ import java.net.ConnectException;
  * <p>
  * ViewModel class for AddContactFragment
  */
-public class AddContactViewModel extends ViewModel {
+public class AddContactViewModel extends ModelEngineViewModel {
 
     private MutableLiveData<IUserData> userToAdd;
-    private final ModelEngine modelEngine;
-
-    public AddContactViewModel() {
-        modelEngine = ModelEngine.getInstance();
-    }
 
     public LiveData<IUserData> getUserData() {
         if (userToAdd == null) {
@@ -38,10 +31,10 @@ public class AddContactViewModel extends ViewModel {
     }
 
     public IUserData findUser(String phoneNumber) throws UserNotFoundException, ConnectException {
-        return modelEngine.getSingleUserFromDatabase(phoneNumber);
+        return getModel().getSingleUserFromDatabase(phoneNumber);
     }
 
     public void addUserToContacts(String phoneNumber) throws UserNotFoundException, UserAlreadyExistsException, ConnectException {
-        modelEngine.addContact(phoneNumber);
+        getModel().addContact(phoneNumber);
     }
 }

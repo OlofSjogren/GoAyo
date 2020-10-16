@@ -1,9 +1,7 @@
 package com.goayo.debtify.viewmodel;
 
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.goayo.debtify.model.ModelEngine;
 import com.goayo.debtify.model.IDebtData;
 
 import java.math.BigDecimal;
@@ -21,9 +19,7 @@ import java.util.Objects;
  *
  * 2020-10-14 Modified by Yenan: add getUnfinishedDebts() method to filter out the paid debts
  */
-public class SettleDebtViewModel extends ViewModel {
-
-    private final ModelEngine modelEngine = ModelEngine.getInstance();
+public class SettleDebtViewModel extends ModelEngineViewModel {
 
     private final MutableLiveData<List<IDebtData>> debtListData;
 
@@ -46,7 +42,7 @@ public class SettleDebtViewModel extends ViewModel {
     public void retrieveData(String groupID) {
         try {
             // retrieve all debt that still can be paid into the list
-            debtListData.setValue(getUnfinishedDebts(modelEngine.getGroup(groupID).getDebts()));
+            debtListData.setValue(getUnfinishedDebts(getModel().getGroup(groupID).getDebts()));
         } catch (Exception ignored) {
         }
     }
@@ -67,7 +63,7 @@ public class SettleDebtViewModel extends ViewModel {
      * @throws Exception to be specified later
      */
     public void settleDebt(BigDecimal amount, String debtID, String groupID) throws Exception {
-        modelEngine.payOffDebt(amount, debtID, groupID);
+        getModel().payOffDebt(amount, debtID, groupID);
     }
 
     private List<IDebtData> getUnfinishedDebts(List<IDebtData> debts) {

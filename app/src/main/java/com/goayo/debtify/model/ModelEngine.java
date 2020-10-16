@@ -27,27 +27,15 @@ import java.util.Set;
  * 2020-10-09 Modified by Alex Phu and Yenan Wang: Added IDebtSplitStrategy to createDebt's parameter.
  * 2020-10-11 Modified by Alex Phu: Fixed wrong order of arguments in registerUser();
  * 2020-10-13 Modified by Olof Sjögren: Updated JDocs
+ * 2020-10-15 Modified by Yenan Wang: Removed Singleton pattern
  */
 
 public class ModelEngine {
 
-    private final Account account;
-    private static ModelEngine instance;
+    private Account account;
 
-    private ModelEngine(Account account) {
-        this.account = account;
-    }
-
-    /**
-     * A standard singleton getInstance function.
-     *
-     * @return The single instance of the ModelEngine.
-     */
-    public static ModelEngine getInstance() {
-        if (instance == null) {
-            instance = new ModelEngine(new Account(new MockDatabase()));
-        }
-        return instance;
+    public ModelEngine(IDatabase database) {
+        this.account = new Account(database);
     }
 
     /**

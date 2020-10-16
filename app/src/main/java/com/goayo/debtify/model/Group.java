@@ -2,6 +2,7 @@ package com.goayo.debtify.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,8 @@ import java.util.Set;
  * 2020-10-09 Modified by Alex Phu and Yenan Wang: Added IDebtSplitStrategy to createDebt's parameter.
  * 2020-10-14 Modified by Olof Sjögren: Updated JDocs.
  * 2020-10-15 Modified by Yenan Wang & Alex Phu: implemented compareTo(..) method
+ * 2020-10-16 Modified by Oscar Sanner: A debt now takes in a date on creation instead of creating on itself.
+ * This will further persistence. This applies to the create debt method. The same however also applies to payments.
  */
 class Group implements IGroupData {
 
@@ -109,10 +112,11 @@ class Group implements IGroupData {
      * @param owed          total amount lent out by the lender to the borrowers
      * @param description   the brief description of the debt
      * @param splitStrategy How the debt is split
+     * @param date
      */
     // TODO: Specify exception(?).
-    public void createDebt(User lender, Map<User, String> borrowers, BigDecimal owed, String description, IDebtSplitStrategy splitStrategy) {
-        groupLedger.createDebt(lender, borrowers, owed, description, splitStrategy);
+    public void createDebt(User lender, Map<User, String> borrowers, BigDecimal owed, String description, IDebtSplitStrategy splitStrategy, Date date) {
+        groupLedger.createDebt(lender, borrowers, owed, description, splitStrategy, date);
     }
 
     /**
@@ -122,8 +126,8 @@ class Group implements IGroupData {
      * @param debtTrackerID ID used to retrieve the specific debtTracker.
      */
     // TODO: Specify exception(?).
-    public void payOffDebt(BigDecimal amount, String debtTrackerID) {
-        groupLedger.payOffDebt(amount, debtTrackerID);
+    public void payOffDebt(BigDecimal amount, String debtTrackerID, Date date) {
+        groupLedger.payOffDebt(amount, debtTrackerID, date);
     }
 
     /**

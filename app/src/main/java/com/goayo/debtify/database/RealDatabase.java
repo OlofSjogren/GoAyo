@@ -14,6 +14,7 @@ import com.goayo.debtify.model.IUserData;
 
 import java.math.BigDecimal;
 import java.net.ConnectException;
+import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
@@ -54,8 +55,8 @@ public class RealDatabase implements IDatabase {
     }
 
     @Override
-    public void addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy) throws GroupNotFoundException, UserNotFoundException, ConnectException, InvalidDebtException {
-        debtsFetcher.addDebt(groupID, lender, borrowers, amount, description, splitStrategy);
+    public void addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy, Date date) throws GroupNotFoundException, UserNotFoundException, ConnectException, InvalidDebtException {
+        debtsFetcher.addDebt(groupID, lender, borrowers, amount, description, splitStrategy, date);
     }
 
     @Override
@@ -69,8 +70,8 @@ public class RealDatabase implements IDatabase {
     }
 
     @Override
-    public void addPayment(String groupID, String debtID, BigDecimal amount, String id) throws GroupNotFoundException, InvalidDebtException, InvalidPaymentException, ConnectException {
-        paymentFetcher.addPayment(groupID, debtID, amount, id);
+    public void addPayment(String groupID, String debtID, BigDecimal amount, String id, Date date) throws GroupNotFoundException, InvalidDebtException, InvalidPaymentException, ConnectException {
+        paymentFetcher.addPayment(groupID, debtID, amount, id, date);
     }
 
     @Override

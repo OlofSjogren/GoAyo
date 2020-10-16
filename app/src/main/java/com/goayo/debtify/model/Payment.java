@@ -2,6 +2,7 @@ package com.goayo.debtify.model;
 
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 
 /**
@@ -14,15 +15,17 @@ import java.util.Date;
  * return types and params of methods are correctly set as BigDecimal.
  * 2020-10-13 Modified by Olof Sjögren: getPaidAmount now returns a new BigDecimal. Also added more JDocs.
  * 2020-10-15 Modified by Yenan Wang & Alex Phu: implemented compareTo(..) method
+ * 2020-10-16 Modified by Oscar Sanner: Payments will now take in a date in the constructor.
  */
 class Payment implements IPaymentData {
     private final Date date;
     private final BigDecimal paidAmount;
 
-    public Payment(BigDecimal paidAmount) {
-        this.date = new Date();
-        this.paidAmount = paidAmount;
+    public Payment(BigDecimal paidAmount, Date date) {
+        this.date = date;
+        this.paidAmount = paidAmount.setScale(2, RoundingMode.HALF_EVEN);;
     }
+
 
     /**
      * Method for retrieving payment date.
