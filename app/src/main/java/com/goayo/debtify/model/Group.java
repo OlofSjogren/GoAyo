@@ -105,7 +105,8 @@ class Group implements IGroupData {
 
     /**
      * Creates a debtTracker and adds it to the list of debtTrackers.
-     *  @param lender        the user who lends out money
+     *
+     * @param lender        the user who lends out money
      * @param borrowers     either a single or several users who borrow from the lender
      * @param owed          total amount lent out by the lender to the borrowers
      * @param description   the brief description of the debt
