@@ -59,7 +59,8 @@ public class EventBus {
 
     /**
      * Method for registering an IEventHandler to be notified when a specific event is published.
-     * @param handler the IEventHandler who wishes to be notified of a specific event.
+     *
+     * @param handler   the IEventHandler who wishes to be notified of a specific event.
      * @param eventType the type of event publications the handler wishes to be notified of.
      */
     public void register(IEventHandler handler, EVENT eventType) {
@@ -71,16 +72,19 @@ public class EventBus {
 
     /**
      * Method for unregistering a handler from a specific event publication it is registered to.
-     * @param handler the handler who wishes to unregister.
+     *
+     * @param handler   the handler who wishes to unregister.
      * @param eventType the type of event publication the handler wants to unregister from.
      */
     public void unRegister(IEventHandler handler, EVENT eventType) {
         listenerMap.get(eventType).remove(handler);
         //TODO: Handle null exception perhaps?
+        //TODO: Maybe we want a NPE to be thrown here. Maybe that's what they deserve.
     }
 
     /**
      * Method for publishing an event and thus notifying all IEventHandlers registered to the publication of the that event to be notified.
+     *
      * @param eventType the type of event to publish.
      */
     public void publish(EVENT eventType) {
@@ -88,6 +92,7 @@ public class EventBus {
         if (eventHandlerList == null) {
             return;
             //Todo; Maybe something else?
+            //Todo: no i think fine yes?
         }
         for (IEventHandler handler : eventHandlerList) {
             handler.onModelEvent();

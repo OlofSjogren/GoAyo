@@ -55,7 +55,7 @@ public class RealDatabase implements IDatabase {
     }
 
     @Override
-    public void addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy, Date date) throws GroupNotFoundException, UserNotFoundException, ConnectException, InvalidDebtException {
+    public void addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy, Date date) throws GroupNotFoundException, ConnectException {
         debtsFetcher.addDebt(groupID, lender, borrowers, amount, description, splitStrategy, date);
     }
 

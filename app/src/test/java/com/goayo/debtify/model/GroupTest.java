@@ -26,7 +26,7 @@ public class GroupTest {
     }
 
     @Test
-    public void testAddUser() {
+    public void testAddUser() throws UserAlreadyExistsException {
         Group tempGroup = new Group("Tyskland resa", "1234", user);
         User testUser = new User("4321", "Åke");
         int setSizeBefore = tempGroup.getGroupMembers().size();
@@ -36,7 +36,7 @@ public class GroupTest {
     }
 
     @Test
-    public void testAddMultipleUsers() {
+    public void testAddMultipleUsers() throws UserAlreadyExistsException {
         Group tempGroup = new Group("Belgien resa", "2345", userSet);
 
         assertTrue(tempGroup.getGroupMembers().containsAll(userSet));
@@ -52,7 +52,7 @@ public class GroupTest {
     }
 
     @Test
-    public void testRemoveUser() {
+    public void testRemoveUser() throws UserAlreadyExistsException, UserNotFoundException {
         Group tempGroup = new Group("Tyskland resa", "1234", user);
         User testUser = new User("4321", "Åke");
 
@@ -68,7 +68,7 @@ public class GroupTest {
     }
 
     @Test
-    public void testRemoveMultipleUsers() {
+    public void testRemoveMultipleUsers() throws UserAlreadyExistsException, UserNotFoundException {
         Group tempGroup = new Group("Belgien resa", "2345", userSet);
 
         Set<User> secondUserList = new HashSet<>();
@@ -89,7 +89,7 @@ public class GroupTest {
     }
 
     @Test
-    public void testRemoveNonExistingUser() {
+    public void testRemoveNonExistingUser() throws UserNotFoundException {
         Group tempGroup = new Group("Belgien resa", "2345", userSet);
 
         Set<User> secondUserList = new HashSet<>();

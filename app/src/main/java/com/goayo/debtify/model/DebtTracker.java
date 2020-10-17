@@ -21,6 +21,7 @@ import java.util.List;
  * 2020-10-14 Modified by Olof Sjögren: Updated JDocs.
  * 2020-10-16 Modified by Oscar Sanner: A debt now takes in a date on creation instead of creating on itself.
  * This will further persistence.
+ * 2020-10-16 Modified by Oscar Sanner and Olof Sjögren: Exceptions are now thrown as expected.
  */
 class DebtTracker implements IDebtData {
     private final Debt debt;
@@ -32,12 +33,13 @@ class DebtTracker implements IDebtData {
 
     /**
      * Constructor for creating a debt and assigning a lender and borrower.
-     *  @param debtAmount  how much the borrower owe to lender.
+     *
+     * @param debtAmount  how much the borrower owe to lender.
      * @param lender      the user that lends out money.
      * @param borrower    the user that borrows money.
      * @param description the brief description of the debt.
      * @param id          the specific DebtTracker's id.
-     * @param date
+     * @param date        the date of the new debt.
      */
     public DebtTracker(BigDecimal debtAmount, User lender, User borrower, String description, String id, Date date) {
         this.debt = new Debt(debtAmount, date);
@@ -52,14 +54,14 @@ class DebtTracker implements IDebtData {
      * Adds a new payment to the list of payments.
      *
      * @param payOffAmount the amount to pay off.
-     * @param date
+     * @param date the date of the debt.
+     * @throws InvalidPaymentException thrown if the payment can't be handled.
      */
-    public void payOffDebt(BigDecimal payOffAmount, Date date) {
+    public void payOffDebt(BigDecimal payOffAmount, Date date) throws InvalidPaymentException {
         if (debt.getDebtAmount().subtract(getSumOfPayments()).doubleValue() >= payOffAmount.doubleValue()) {
             payments.add(new Payment(payOffAmount, date));
         } else {
-            //TODO: Runtime exception ok?
-            throw new RuntimeException("PayOffDebt failed.");
+            throw new InvalidPaymentException("Payment larger than remainder of debt");
         }
     }
 

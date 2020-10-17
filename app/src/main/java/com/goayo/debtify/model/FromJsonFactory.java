@@ -121,7 +121,16 @@ class FromJsonFactory {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            g.payOffDebt(new BigDecimal(payment.amount), debt.id, date);
+
+            try {
+                g.payOffDebt(new BigDecimal(payment.amount), debt.id, date);
+            } catch (InvalidPaymentException e) {
+                e.printStackTrace();
+                System.out.println("ERROR WHEN TRYING TO CONVERT JSON PAYMENTS TO " +
+                        "PAYMENTS IN THE MODEL. This might be due to an improper database" +
+                        ". Make sure that the database provided to the model adhere to the" +
+                        " specifications.");
+            }
         }
     }
 
@@ -137,13 +146,26 @@ class FromJsonFactory {
                 e.printStackTrace();
             }
 
-            g.createDebt(getMemberFromPhoneNumber(g, debt.lender.phonenumber), borrower, new BigDecimal(debt.owed), debt.description, new EvenSplitStrategy(), date);
+            try {
+                g.createDebt(getMemberFromPhoneNumber(g, debt.lender.phonenumber), borrower, new BigDecimal(debt.owed), debt.description, new EvenSplitStrategy(), date);
+            } catch (DebtException e) {
+                e.printStackTrace();
+                System.out.println("ERROR WHEN TRYING TO CONVERT JSON DEBTS TO " +
+                        "DEBTS IN THE MODEL. This might be due to an improper database" +
+                        ". Make sure that the database provided to the model adhere to the" +
+                        " specifications.");
+            }
         }
     }
 
     private void addMembersFromGroupJsonToGroup(GroupJsonObject groupJson, Group g) {
         for (UserJsonObject user : groupJson.members){
-            g.addUser(EntityFactory.createUser(user.phonenumber, user.name));
+            try {
+                g.addUser(EntityFactory.createUser(user.phonenumber, user.name));
+            } catch (UserAlreadyExistsException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Same user was added twice to the same group during initiation of the groups.");
+            }
         }
     }
 

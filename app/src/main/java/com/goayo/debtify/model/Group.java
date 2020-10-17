@@ -66,8 +66,13 @@ class Group implements IGroupData {
      * Adding a single user to group.
      *
      * @param newUser the single user to add as a group member.
+     * @throws UserAlreadyExistsException Thrown if the user is already in the group.
      */
-    public void addUser(User newUser) {
+    public void addUser(User newUser) throws UserAlreadyExistsException {
+        if (groupMembers.contains(newUser)) {
+            throw new UserAlreadyExistsException("User " + newUser.getPhoneNumber() + " is already in group: " + groupName);
+        }
+
         groupMembers.add(newUser);
     }
 
@@ -75,17 +80,24 @@ class Group implements IGroupData {
      * Adding multiple users to the group as group members.
      *
      * @param newUsers set of the users to add.
+     * @throws UserAlreadyExistsException Thrown if one of the users is already in the group.
      */
-    public void addUser(Set<User> newUsers) {
-        groupMembers.addAll(newUsers);
+    public void addUser(Set<User> newUsers) throws UserAlreadyExistsException {
+        for (User u : newUsers) {
+            addUser(u);
+        }
     }
 
     /**
      * Removing a single user from group and all debts associated to it in the group.
      *
      * @param removeUser single user to remove.
+     * @throws UserNotFoundException thrown if the user being removed is not in the group.
      */
-    public void removeUser(User removeUser) {
+    public void removeUser(User removeUser) throws UserNotFoundException {
+        if (!groupMembers.contains(removeUser)) {
+            throw new UserNotFoundException("User " + removeUser.getPhoneNumber() + " was not found in group: " + groupName);
+        }
         groupLedger.removeSpecificUserDebt(removeUser);
         groupMembers.remove(removeUser);
     }
@@ -94,12 +106,12 @@ class Group implements IGroupData {
      * Removing multiple users from group and all debts associated to them in the group.
      *
      * @param removeUsers multiple users to remove.
+     * @throws UserNotFoundException thrown if on of the users being removed is not in the group.
      */
-    public void removeUser(Set<User> removeUsers) {
+    public void removeUser(Set<User> removeUsers) throws UserNotFoundException {
         for (User u : removeUsers) {
-            groupLedger.removeSpecificUserDebt(u);
+            removeUser(u);
         }
-        groupMembers.removeAll(removeUsers);
     }
 
 
@@ -111,10 +123,10 @@ class Group implements IGroupData {
      * @param owed          total amount lent out by the lender to the borrowers
      * @param description   the brief description of the debt
      * @param splitStrategy How the debt is split
-     * @param date
+     * @param date          the creation date of the debt
+     * @throws DebtException if the debt could not be created.
      */
-    // TODO: Specify exception(?).
-    public void createDebt(User lender, Map<User, String> borrowers, BigDecimal owed, String description, IDebtSplitStrategy splitStrategy, Date date) {
+    public void createDebt(User lender, Map<User, String> borrowers, BigDecimal owed, String description, IDebtSplitStrategy splitStrategy, Date date) throws DebtException {
         groupLedger.createDebt(lender, borrowers, owed, description, splitStrategy, date);
     }
 
@@ -123,9 +135,9 @@ class Group implements IGroupData {
      *
      * @param amount        Amount being paid back against the debt.
      * @param debtTrackerID ID used to retrieve the specific debtTracker.
+     * @throws InvalidPaymentException if the payment could not be created.
      */
-    // TODO: Specify exception(?).
-    public void payOffDebt(BigDecimal amount, String debtTrackerID, Date date) {
+    public void payOffDebt(BigDecimal amount, String debtTrackerID, Date date) throws InvalidPaymentException {
         groupLedger.payOffDebt(amount, debtTrackerID, date);
     }
 
@@ -180,10 +192,8 @@ class Group implements IGroupData {
             }
         }
         if (user == null) {
-            throw new UserNotFoundException("A User with that phonenumber doesn't exist in the group.");
+            throw new UserNotFoundException("User " + phoneNumber + " was not found in group: " + groupName);
         }
         return groupLedger.getUserTotal(user);
     }
-
-
 }
