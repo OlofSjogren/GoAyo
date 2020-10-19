@@ -17,8 +17,9 @@ import java.util.Set;
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
  * 2020-10-14 Modified by Olof Sjögren: Updated JDocs.
+ * 2020-10-15 Modified by Yenan Wang & Alex Phu: interface now extends Comparable
  */
-public interface IGroupData {
+public interface IGroupData extends Comparable<IGroupData> {
     /**
      * @return the id of the group.
      */

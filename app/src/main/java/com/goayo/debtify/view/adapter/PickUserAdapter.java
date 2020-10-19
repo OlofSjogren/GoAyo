@@ -14,6 +14,7 @@ import com.goayo.debtify.R;
 import com.goayo.debtify.model.IUserData;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -26,6 +27,8 @@ import java.util.List;
  * Removed Context, and userData from constructor. Added ViewModel in constructor. Gets data from viewModel instead.
  * <p>
  * 2020-09-30 Modified by Alex & Yenan: Refactored it so that it now can be either multiple or single choice
+ *
+ * 2020-10-15 Modified by Yenan Wang & Alex Phu: Adapter now sorts its items
  */
 public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUserViewHolder> {
     private final List<IUserData> userData;
@@ -42,6 +45,8 @@ public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUs
         this.userData = userData;
         this.isMultipleChoice = isMultipleChoice;
         this.selectedUserPosList = new ArrayList<>();
+
+        Collections.sort(this.userData);
     }
 
     /**
