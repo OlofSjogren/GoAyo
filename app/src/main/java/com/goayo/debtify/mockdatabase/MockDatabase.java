@@ -104,7 +104,7 @@ public class MockDatabase implements IDatabase {
     }
 
     @Override
-    public void addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy) throws Exception {
+    public void addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy, Date date) throws Exception {
         JsonString.UserJsonString lenderJson = getUser(lender);
         Map<IUserData, Tuple<BigDecimal, String>> usersTotalsAndId = splitStrategy.splitDebt(borrowers, amount);
         MockDbObject.Debt[] debts = new MockDbObject.Debt[borrowers.size()];
@@ -114,7 +114,7 @@ public class MockDatabase implements IDatabase {
             JsonString.UserJsonString borrowerJson = getUser(entry.getKey().getPhoneNumber());
             MockDbObject.User lenderUser = gson.fromJson(lenderJson.getJson(), MockDbObject.User.class);
             MockDbObject.User borrowerUser = gson.fromJson(borrowerJson.getJson(), MockDbObject.User.class);
-            debts[i] = new MockDbObject.Debt(lenderUser, borrowerUser, entry.getValue().getFirst().toString(), entry.getValue().getSecond(), new MockDbObject.Payment[0], description);
+            debts[i] = new MockDbObject.Debt(lenderUser, borrowerUser, entry.getValue().getFirst().toString(), entry.getValue().getSecond(), new MockDbObject.Payment[0], description, date.toString());
             i++;
         }
 
@@ -165,8 +165,8 @@ public class MockDatabase implements IDatabase {
     }
 
     @Override
-    public void addPayment(String GroupID, String debtID, BigDecimal amount, String id) throws GroupNotFoundException, InvalidDebtException, InvalidPaymentException, ConnectException {
-        MockDbObject.Payment payment = new MockDbObject.Payment(amount.toString(), id);
+    public void addPayment(String GroupID, String debtID, BigDecimal amount, String id, Date date) throws GroupNotFoundException, InvalidDebtException, InvalidPaymentException, ConnectException {
+        MockDbObject.Payment payment = new MockDbObject.Payment(amount.toString(), id, date.toString());
         for (MockDbObject.Group g : groups) {
             if (g.id.equals(GroupID)) {
                 for (MockDbObject.Debt debt : g.debts) {

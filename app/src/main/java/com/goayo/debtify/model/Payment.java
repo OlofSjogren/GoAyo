@@ -14,15 +14,17 @@ import java.util.Date;
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
  * 2020-10-13 Modified by Olof Sjögren: getPaidAmount now returns a new BigDecimal. Also added more JDocs.
+ * 2020-10-16 Modified by Oscar Sanner: Payments will now take in a date in the constructor.
  */
 class Payment implements IPaymentData {
     private final Date date;
     private final BigDecimal paidAmount;
 
-    public Payment(BigDecimal paidAmount) {
-        this.date = new Date();
+    public Payment(BigDecimal paidAmount, Date date) {
+        this.date = date;
         this.paidAmount = paidAmount.setScale(2, RoundingMode.HALF_EVEN);;
     }
+
 
     /**
      * Method for retrieving payment date.

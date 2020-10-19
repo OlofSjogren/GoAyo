@@ -108,20 +108,9 @@ public class DetailedGroupViewModel extends ModelEngineViewModel implements IEve
      * @return All users that may still be added to the current group
      */
     public List<IUserData> getAddableUsers() {
-        List<IUserData> addableUsers = new ArrayList<>();
-        for (IUserData contact : getModel().getContacts()) {
-            boolean userExists = false;
-            for (IUserData groupMember : currentGroup.getValue().getIUserDataSet()) {
-                if (contact.equals(groupMember)) {
-                    userExists = true;
-                    break;
-                }
-            }
-            if (!userExists) {
-                addableUsers.add(contact);
-            }
-        }
-        return addableUsers;
+        return new ArrayList<>(ViewModelUtil.getUserSetDifference(
+                getModel().getContacts(),
+                currentGroup.getValue().getIUserDataSet()));
     }
 
     /**

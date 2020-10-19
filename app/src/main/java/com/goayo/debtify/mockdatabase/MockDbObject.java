@@ -44,8 +44,9 @@ class MockDbObject {
     }
 
     static class Debt {
-        public Debt(User lender, User borrower, String owed, String debtId, Payment[] payments, String description) {
+        public Debt(User lender, User borrower, String owed, String debtId, Payment[] payments, String description, String date) {
             this.lender = lender;
+            this.date = date;
             this.borrower = borrower;
             this.owed = owed;
             this.id = debtId;
@@ -53,7 +54,7 @@ class MockDbObject {
             this.description = description;
         }
 
-
+        final String date;
         final String description;
         final User lender;
         final User borrower;
@@ -75,11 +76,13 @@ class MockDbObject {
     }
 
     static class Payment {
-        public Payment(String amount, String paymentId) {
+        public Payment(String amount, String paymentId, String date) {
             this.amount = amount;
+            this.date = date;
             this.id = paymentId;
         }
 
+        final String date;
         final String amount;
         final String id;
     }

@@ -3,7 +3,6 @@ package com.goayo.debtify.viewmodel;
 import com.goayo.debtify.model.IUserData;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -37,15 +36,7 @@ public class GroupCreationViewModel extends ModelEngineViewModel {
     public void createGroup(String groupName, Set<IUserData> users)
     // TODO SPECIFY IT!!!!
             throws Exception {
-        getModel().createGroup(groupName, convertToString(users));
+        getModel().createGroup(groupName, ViewModelUtil.convertToUserPhoneNumberSet(users));
     }
 
-    // TODO this method shouldn't be needed
-    private Set<String> convertToString(Set<IUserData> userDataSet) {
-        Set<String> userToString = new HashSet<>();
-        for (IUserData user : userDataSet) {
-            userToString.add(user.getPhoneNumber());
-        }
-        return userToString;
-    }
 }

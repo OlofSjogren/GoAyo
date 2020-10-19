@@ -3,8 +3,13 @@ package com.goayo.debtify.model;
 import com.google.gson.Gson;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,6 +23,8 @@ import java.util.Set;
  * 2020-10-14 Modified by Oscar Sanner: Refactored the whole code to make it readable. Removed
  * "GetGroupFromId()" as it was never user. Created smaller reusable helper methods for different tasks,
  * reusable in case we want to bring the "GetGroupFromId()" back, or add another method.
+ * 2020-10-16 Modified by Oscar Sanner: Since dates are now stored in database, this class has been extended
+ * to handle persistence in dates.
  */
 
 class FromJsonFactory {
@@ -107,7 +114,14 @@ class FromJsonFactory {
 
     private void addPaymentsFromJsonDebtToGroup(DebtJsonObject debt, Group g) {
         for (PaymentJsonObject payment : debt.payments){
-            g.payOffDebt(new BigDecimal(payment.amount), debt.id);
+            SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzzz yyyy", Locale.US);
+            Date date = new Date(0);
+            try {
+                date = format.parse(debt.date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            g.payOffDebt(new BigDecimal(payment.amount), debt.id, date);
         }
     }
 
@@ -115,7 +129,15 @@ class FromJsonFactory {
         for (DebtJsonObject debt : groupJson.debts){
             Map<User, String> borrower = new HashMap<>();
             borrower.put(getMemberFromPhoneNumber(g, debt.borrower.phonenumber),debt.id);
-            g.createDebt(getMemberFromPhoneNumber(g, debt.lender.phonenumber), borrower, new BigDecimal(debt.owed), debt.description, new EvenSplitStrategy());
+            SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
+            Date date = new Date(0);
+            try {
+                date = format.parse(debt.date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            g.createDebt(getMemberFromPhoneNumber(g, debt.lender.phonenumber), borrower, new BigDecimal(debt.owed), debt.description, new EvenSplitStrategy(), date);
         }
     }
 
@@ -192,8 +214,9 @@ class FromJsonFactory {
     }
 
     static class DebtJsonObject {
-        public DebtJsonObject(UserJsonObject lender, UserJsonObject borrower, String owed, String debtId, PaymentJsonObject[] payments, String description) {
+        public DebtJsonObject(UserJsonObject lender, UserJsonObject borrower, String owed, String debtId, PaymentJsonObject[] payments, String description, String date) {
             this.lender = lender;
+            this.date = date;
             this.borrower = borrower;
             this.owed = owed;
             this.id = debtId;
@@ -202,6 +225,7 @@ class FromJsonFactory {
         }
 
 
+        final String date;
         final String description;
         final UserJsonObject lender;
         final UserJsonObject borrower;
@@ -211,11 +235,13 @@ class FromJsonFactory {
     }
 
     static class PaymentJsonObject {
-        public PaymentJsonObject(String amount, String paymentId) {
+        public PaymentJsonObject(String amount, String paymentId, String date) {
             this.amount = amount;
             this.id = paymentId;
+            this.date = date;
         }
 
+        final String date;
         final String amount;
         final String id;
     }
