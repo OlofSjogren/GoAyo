@@ -16,6 +16,8 @@ import com.goayo.debtify.model.IDebtData;
 
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Gabriel Brattgård & Yenan Wang
@@ -29,13 +31,15 @@ import java.text.SimpleDateFormat;
  * <p>
  * 2020-10-09 Modified by Yenan Wang, Alex Phu: Rounded decimals to 2 in balance
  * <p>
- * 2020-10-11 Modified by AlexPhu: Fixed bug in configureName() which would crash if user has not entered a surname. Now also handles lots of edge cases which shouldn't even occur in the first place.
+ * 2020-10-11 Modified by Alex Phu: Fixed bug in configureName() which would crash if user has not entered a surname. Now also handles lots of edge cases which shouldn't even occur in the first place.
  * Ignores middle names.
+ *
+ * 2020-10-15 Modified by Yenan Wang & Alex Phu: Adapter now sorts its items
  */
 
 public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDebtViewHolder> {
 
-    private final IDebtData[] debtData;
+    private final List<IDebtData> debtData;
     private int mSelectedDebt = -1;
 
     /**
@@ -43,8 +47,11 @@ public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDe
      *
      * @param debtData array of IDebtData
      */
-    public PickDebtAdapter(IDebtData[] debtData) {
+    public PickDebtAdapter(List<IDebtData> debtData) {
         this.debtData = debtData;
+
+        Collections.sort(this.debtData);
+        Collections.reverse(this.debtData);
     }
 
     @NonNull
@@ -63,17 +70,17 @@ public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDe
      */
     @Override
     public void onBindViewHolder(@NonNull PickDebtViewHolder holder, int position) {
-        holder.setDebtData(debtData[position]);
+        holder.setDebtData(debtData.get(position));
         holder.debtRadioButton.setChecked(position == mSelectedDebt);
     }
 
     @Override
     public int getItemCount() {
-        return debtData.length;
+        return debtData.size();
     }
 
     public IDebtData getSelectedDebt() {
-        return debtData[mSelectedDebt];
+        return debtData.get(mSelectedDebt);
     }
 
 
@@ -107,7 +114,7 @@ public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDe
                 @Override
                 public void onClick(View v) {
                     mSelectedDebt = getAdapterPosition();
-                    notifyItemRangeChanged(0, debtData.length);
+                    notifyItemRangeChanged(0, debtData.size());
                 }
             };
             itemView.setOnClickListener(listener);

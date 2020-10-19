@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +46,8 @@ import java.util.List;
  * 2020-10-09 Modified by Yenan & Alex: add method updateData(...)
  * <p>
  * 2020-10-14 Modified by Alex Phu: Changed string "owes" to "lends".
+ *
+ * 2020-10-15 Modified by Yenan Wang & Alex Phu: Adapter now sorts its items
  */
 public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCardAdapter.TransactionCardViewHolder> {
 
@@ -104,11 +107,17 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
     private List<TransactionData> createTransactionDataSet(List<IDebtData> debtDataArray) {
         List<TransactionData> transactionDataList = new ArrayList<>();
         for (IDebtData debtData : debtDataArray) {
-            transactionDataList.add(new TransactionData(debtData.getDate(), debtData.getDescription(), "Debt", debtData.getLender().getName() + " lent " + debtData.getBorrower().getName(), debtData.getOriginalDebt()));
+            // creates a TransactionData object of a debt and adds it to the list
+            transactionDataList.add(new TransactionData(debtData));
+
             for (IPaymentData paymentData : debtData.getPaymentHistory()) {
-                transactionDataList.add(new TransactionData(paymentData.getDate(), debtData.getDescription(), "Payment", debtData.getBorrower().getName() + " paid " + debtData.getLender().getName(), paymentData.getPaidAmount()));
+                // creates a TransactionData object of a payment and adds it to the list
+                transactionDataList.add(new TransactionData(debtData, paymentData));
             }
         }
+
+        Collections.sort(transactionDataList);
+        Collections.reverse(transactionDataList);
         return transactionDataList;
     }
 
@@ -164,19 +173,34 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
         }
     }
 
-    private static class TransactionData {
+    private static class TransactionData implements Comparable<TransactionData> {
         final Date date;
         final String description;
         final String transactionType;
         final String lenderBorrowerDescription;
         final BigDecimal balance;
 
-        public TransactionData(Date date, String description, String transactionType, String lenderBorrowerDescription, BigDecimal balance) {
-            this.description = description;
-            this.date = date;
-            this.transactionType = transactionType;
-            this.lenderBorrowerDescription = lenderBorrowerDescription;
-            this.balance = balance.setScale(2, RoundingMode.HALF_UP);
+        public TransactionData(IDebtData debt) {
+            description = debt.getDescription();
+            date = debt.getDate();
+            transactionType = "Debt";
+            lenderBorrowerDescription = debt.getLender().getName()
+                    + " lent " + debt.getBorrower().getName();
+            balance = debt.getOriginalDebt();
+        }
+
+        public TransactionData(IDebtData debt, IPaymentData payment) {
+            description = debt.getDescription();
+            date = payment.getDate();
+            transactionType = "Payment";
+            lenderBorrowerDescription = debt.getLender().getName()
+                    + " paid " + debt.getBorrower().getName();
+            balance = payment.getPaidAmount();
+        }
+
+        @Override
+        public int compareTo(TransactionData transaction) {
+            return date.compareTo(transaction.date);
         }
     }
 }

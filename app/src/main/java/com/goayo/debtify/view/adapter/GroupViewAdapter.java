@@ -16,6 +16,8 @@ import com.goayo.debtify.model.IGroupData;
 import com.goayo.debtify.model.IUserData;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,21 +27,13 @@ import java.util.List;
  * RecyclerView adapter for the group cardviews. Ensures that the correct information are shown on each cardItem and its respective listeners.
  * <p>
  * 2020/09/18 Modified by Alex Phu and Olof Sjögren. Changed type Set to Array, conversion is done outside instead.
- * <p>
  * 2020/09/25 Modified by Alex Phu, Oscar Sanner and Olof Sjögren: Injected viewModel through constructor in order to
  * set currentGroupData.
- * <p>
  * 2020-09-30 Modified by Alex Phu & Yenan Wang: Add setCommonClickListener and update method
- * <p>
  * 2020-10-08 Modified by Alex Phu: Group-total in cardview now shows actual total debt.
-<<<<<<< HEAD
- *
  * 2020-10-10 Modified by Olof Sjögren: Added property for groupmembers on card as well as init for it in setGroupData.
  * Also added switch-statement for coloring text depending on debt situation.
-=======
- * <p>
  * 2020-10-09 Modified by Alex Phu, Yenan Wang: Changed notifyItemRangedChanged() to notifyDataSetChanged(), ugliest bug in Android
->>>>>>> a0d9a3992b77d0dd1661aeb4189280403281d5d9
  */
 public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.GroupViewHolder> {
 
@@ -56,6 +50,8 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
     public GroupViewAdapter(List<IGroupData> groupData, String currentLoggedInUsersPhoneNumber) {
         this.groupData = groupData;
         this.currentLoggedInUsersPhoneNumber = currentLoggedInUsersPhoneNumber;
+
+        Collections.sort(this.groupData);
     }
 
     /**
@@ -104,6 +100,8 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
     public void update(List<IGroupData> groupData) {
         this.groupData.clear();
         this.groupData.addAll(groupData);
+
+        Collections.sort(this.groupData);
         notifyDataSetChanged();
     }
 
@@ -159,8 +157,11 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
         public void setGroupData(IGroupData group, String currentLoggedInUsersPhoneNumber) {
             groupName.setText(group.getGroupName());
             StringBuilder sb = new StringBuilder();
+            List<IUserData> groupMemberList = new ArrayList<>(group.getIUserDataSet());
 
-            for (IUserData iu : group.getIUserDataSet()){
+            Collections.sort(groupMemberList);
+
+            for (IUserData iu : groupMemberList){
                 sb.append(iu.getName());
                 sb.append(", ");
             }

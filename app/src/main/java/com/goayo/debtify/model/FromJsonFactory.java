@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -26,6 +25,7 @@ import java.util.Set;
  * 2020-10-16 Modified by Oscar Sanner: Since dates are now stored in database, this class has been extended
  * to handle persistence in dates.
  * 2020-10-16 Modified by Oscar Sanner and Olof Sjögren: Class now throws appropriate exceptions.
+ * 2020-10-16 Modified by Alex Phu: Changed addPaymentsFromJsonDebtToGroup() where the date was set to the debt's date, not payment's date
  */
 
 class FromJsonFactory {
@@ -118,7 +118,7 @@ class FromJsonFactory {
             SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzzz yyyy", Locale.US);
             Date date = new Date(0);
             try {
-                date = format.parse(debt.date);
+                date = format.parse(payment.date);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
