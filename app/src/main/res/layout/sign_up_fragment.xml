@@ -10,10 +10,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/themeOrange"
+        android:background="@drawable/gradient_list"
+        android:id="@+id/singUpFragment_background_animation"
         >
-        <!--android:background="@color/pink"-->
-
 
         <View
             android:id="@+id/view"

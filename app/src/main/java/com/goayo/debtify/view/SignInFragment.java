@@ -1,6 +1,7 @@
 package com.goayo.debtify.view;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -26,6 +28,7 @@ import com.google.android.material.textfield.TextInputEditText;
  * Sign in page.
  *
  * 2020-09-30 Modified by Olof Sjögren and Oscar Sanner: Added all functionality: editable text-input fields, registration and login buttons as well as fragment's initialisation.
+ * 2020-10-19 Modified by Olof Sjögren: Added background animation functionality.
  */
 public class SignInFragment extends Fragment {
 
@@ -35,7 +38,9 @@ public class SignInFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         SignInFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.sign_in_fragment, container, false);
+
         viewModel = new SignInAndOutViewModel();
+        initBackgroundAnimation(binding);
         initLogInButton(binding);
         initRegisterButton(binding);
         return binding.getRoot();
@@ -77,5 +82,17 @@ public class SignInFragment extends Fragment {
                 }
             }
         });
+    }
+
+    /**
+     * Method for initializing the background animation of the log in screen.
+     * @param binding Variable which can access the elements in the layout file, sign_in_fragment.xml.
+     */
+    private void initBackgroundAnimation(final SignInFragmentBinding binding){
+        ConstraintLayout constraintLayout = binding.getRoot().findViewById(R.id.singInFragment_background_animation);
+        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+        animationDrawable.setEnterFadeDuration(2000);
+        animationDrawable.setExitFadeDuration(4000);
+        animationDrawable.start();
     }
 }
