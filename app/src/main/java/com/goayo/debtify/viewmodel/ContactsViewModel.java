@@ -32,7 +32,7 @@ public class ContactsViewModel extends ModelEngineViewModel implements IEventHan
      */
     public ContactsViewModel() {
         super();
-        EventBus.getInstance().register(this, EventBus.EVENT.CONTACT_EVENT);
+        EventBus.INSTANCE.register(this, EventBus.EVENT.CONTACT_EVENT);
     }
 
     /**

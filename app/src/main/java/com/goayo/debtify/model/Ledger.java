@@ -26,6 +26,7 @@ import java.util.Map;
  * 2020-10-14 Modified by Olof Sjögren: Updated JDocs.
  * 2020-10-16 Modified by Oscar Sanner: Debts and payments will now take in a date on creation. This has been adjusted for so that
  * dates are sent in via the parameters of the create/add methods.
+ * 2020-10-16 Modified by Oscar Sanner and Olof Sjögren: Exceptions are now thrown as expected.
  */
 class Ledger {
 
@@ -39,7 +40,7 @@ class Ledger {
      * @param owedTotal      total amount lent out by the lender to the borrowers
      * @param description    the brief description of the debt
      * @param splitStrategy  how the debt will be split (if at all) among the borrowers.
-     * @param date
+     * @param date           the date of the new debt.
      * @throws DebtException thrown if the debt creation failed.
      */
     public void createDebt(User lender, Map<User, String> borrowersAndId, BigDecimal owedTotal, String description, IDebtSplitStrategy splitStrategy, Date date) throws DebtException {
@@ -53,6 +54,7 @@ class Ledger {
             }
         }
 
+
         if (!debtTrackerList.addAll(debtList)) {
             throw new DebtException("Failed to create the debt.");
         }
@@ -60,11 +62,13 @@ class Ledger {
 
     /**
      * Adds a new payment to a specific debtTracker.
-     *  @param amount        Amount being paid back against the debt.
+     *
+     * @param amount        Amount being paid back against the debt.
      * @param debtTrackerID ID used to retrieve the specific debtTracker.
-     * @param date
+     * @param date          the date of the new debt.
+     * @throws InvalidPaymentException thrown if the payment can't be handled.
      */
-    public void payOffDebt(BigDecimal amount, String debtTrackerID, Date date) {
+    public void payOffDebt(BigDecimal amount, String debtTrackerID, Date date) throws InvalidPaymentException {
         findDebtTracker(debtTrackerID).payOffDebt(amount, date);
     }
 
@@ -87,8 +91,9 @@ class Ledger {
      *
      * @param debtID the id of the debt to retrieve.
      * @return the debt tracker associated with the given id, wrapped in the IDebtData type.
+     * @throws InvalidPaymentException thrown if the payment can't be handled.
      */
-    public IDebtData getDebtData(String debtID) {
+    public IDebtData getDebtData(String debtID) throws InvalidPaymentException {
         return findDebtTracker(debtID);
     }
 
@@ -124,13 +129,14 @@ class Ledger {
      *
      * @param debtTrackerID the id of the DebtTracker to find.
      * @return the DebtTracker with the given id. If a DebtTracker with the given id can't be found the method will return null.
+     * @throws InvalidPaymentException thrown if there's no debt tracker with the matching id.
      */
-    private DebtTracker findDebtTracker(String debtTrackerID) {
+    private DebtTracker findDebtTracker(String debtTrackerID) throws InvalidPaymentException {
         for (DebtTracker dt : debtTrackerList) {
             if (dt.getDebtID().equals(debtTrackerID)) {
                 return dt;
             }
         }
-        return null;
+        throw new InvalidPaymentException("There's no debt with the given debt ID");
     }
 }

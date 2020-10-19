@@ -2,6 +2,8 @@ package com.goayo.debtify.model;
 
 import androidx.annotation.Nullable;
 
+import java.util.Objects;
+
 /**
  * @author Alex Phu, Olof Sjögren
  * @date 2020-09-15
@@ -34,6 +36,15 @@ class User implements IUserData {
             return phoneNumber.equals(((User) obj).phoneNumber);
         }
         return false;
+    }
+
+    /**
+     * Generate a custom hash based on the properties of the object in it's current state.
+     * @return a hash value based of phoneNumber and name.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(phoneNumber, name);
     }
 
     public String getPhoneNumber() {

@@ -1,5 +1,6 @@
 package com.goayo.debtify.model;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -15,7 +16,7 @@ public class DebtTrackerTest {
     private final Random rnd = new Random(System.nanoTime());
 
     @Test
-    public void getSumOfPayments() {
+    public void getSumOfPayments() throws InvalidPaymentException {
         DebtTracker dt = new DebtTracker(new BigDecimal(500), new User("244","bob")
                 , new User("1111001100", "afaf")
                 , "abs", "TestID", new Date());
@@ -34,7 +35,7 @@ public class DebtTrackerTest {
     }
 
     @Test
-    public void payOffDebt() {
+    public void payOffDebt() throws InvalidPaymentException {
         BigDecimal totalDebt = new BigDecimal(rnd.nextInt(600-400)+400); //Bounds [400, 600)
 
         DebtTracker dt = new DebtTracker(totalDebt
@@ -54,7 +55,7 @@ public class DebtTrackerTest {
     }
 
     @Test
-    public void getPaymentHistory() {
+    public void getPaymentHistory() throws InvalidPaymentException {
         BigDecimal totalDebt = new BigDecimal(rnd.nextInt(600-400)+400); //Bounds [400, 600)
 
         DebtTracker dt = new DebtTracker(totalDebt

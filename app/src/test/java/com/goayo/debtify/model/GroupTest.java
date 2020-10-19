@@ -1,5 +1,6 @@
 package com.goayo.debtify.model;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -15,6 +16,7 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 
 public class GroupTest {
@@ -32,7 +34,7 @@ public class GroupTest {
     }
 
     @Test
-    public void testAddUser() {
+    public void testAddUser() throws UserAlreadyExistsException {
         Group tempGroup = new Group("Tyskland resa", "1234", user);
         User testUser = new User("4321", "Åke");
         int setSizeBefore = tempGroup.getGroupMembers().size();
@@ -42,7 +44,7 @@ public class GroupTest {
     }
 
     @Test
-    public void testAddMultipleUsers() {
+    public void testAddMultipleUsers() throws UserAlreadyExistsException {
         Group tempGroup = new Group("Belgien resa", "2345", userSet);
 
         assertTrue(tempGroup.getGroupMembers().containsAll(userSet));
@@ -58,7 +60,7 @@ public class GroupTest {
     }
 
     @Test
-    public void testRemoveUser() {
+    public void testRemoveUser() throws UserAlreadyExistsException, UserNotFoundException {
         Group tempGroup = new Group("Tyskland resa", "1234", user);
         User testUser = new User("4321", "Åke");
 
@@ -74,7 +76,7 @@ public class GroupTest {
     }
 
     @Test
-    public void testRemoveMultipleUsers() {
+    public void testRemoveMultipleUsers() throws UserAlreadyExistsException, UserNotFoundException {
         Group tempGroup = new Group("Belgien resa", "2345", userSet);
 
         Set<User> secondUserList = new HashSet<>();
@@ -104,15 +106,11 @@ public class GroupTest {
         secondUserList.add(new User("12345566", "Bengt"));
         secondUserList.add(new User("987654", "Felix"));
 
-        tempGroup.removeUser(secondUserList);
-
-        for (User u : secondUserList) {
-            assertFalse(tempGroup.getGroupMembers().contains(u));
-        }
+        Assert.assertThrows(UserNotFoundException.class, () -> tempGroup.removeUser(secondUserList));
     }
 
     @Test
-    public void testGetUserTotal() {
+    public void testGetUserTotal() throws DebtException {
         User user1 = new User("0760460051", "Alex");
         User user2 = new User("0760460052", "Axel");
         Set<User> tempUserSet = new HashSet<>();

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.goayo.debtify.model.DebtSplitFactory;
+import com.goayo.debtify.model.GroupNotFoundException;
 import com.goayo.debtify.model.IDebtSplitStrategy;
 import com.goayo.debtify.model.IUserData;
 
@@ -117,7 +118,7 @@ public class AddDebtViewModel extends ModelEngineViewModel {
      * @param groupID ID that belongs to a group
      * @return All users who are a member of the group that matches the groupID
      */
-    public Set<IUserData> getGroupMembers(String groupID) {
+    public Set<IUserData> getGroupMembers(String groupID) throws GroupNotFoundException {
         return getModel().getGroup(groupID).getIUserDataSet();
     }
 

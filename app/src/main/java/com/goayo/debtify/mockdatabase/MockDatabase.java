@@ -104,7 +104,7 @@ public class MockDatabase implements IDatabase {
     }
 
     @Override
-    public void addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy, Date date) throws Exception {
+    public void addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy, Date date) throws ConnectException, GroupNotFoundException, UserNotFoundException {
         JsonString.UserJsonString lenderJson = getUser(lender);
         Map<IUserData, Tuple<BigDecimal, String>> usersTotalsAndId = splitStrategy.splitDebt(borrowers, amount);
         MockDbObject.Debt[] debts = new MockDbObject.Debt[borrowers.size()];
@@ -180,7 +180,7 @@ public class MockDatabase implements IDatabase {
                 }
             }
         }
-        throw new DebtException("Debt not found");
+        throw new RuntimeException("Debt not found, this is probably because of a poorly written database rather than due to something in the model.");
     }
 
     @Override
