@@ -1,5 +1,6 @@
 package com.goayo.debtify.model;
 
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -25,14 +26,11 @@ public class DebtTrackerTest {
     }
 
     @Test
-    public void payOffDebt() throws Exception {
-        exceptionRule.expect(Exception.class);
-        exceptionRule.expectMessage("PayOffDebt failed.");
-
+    public void payOffDebt() throws InvalidPaymentException {
         DebtTracker dt = new DebtTracker(new BigDecimal(350), new User("244","bob"), new User("1111001100", "afaf"), "abs", "TestID", new Date());
-        dt.payOffDebt(new BigDecimal(400), new Date());
+        Assert.assertThrows(InvalidPaymentException.class, () -> dt.payOffDebt(new BigDecimal(400), new Date()));
         dt.payOffDebt(new BigDecimal("349.9"), new Date());
-        assertEquals(new BigDecimal("0.01"), dt.getAmountOwed());
+        assertEquals(new BigDecimal("0.10"), dt.getAmountOwed());
     }
 
     @Test

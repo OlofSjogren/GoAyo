@@ -26,6 +26,7 @@ import java.util.Set;
  * 2020-10-11 Modified by Alex Phu: Fixed wrong order of arguments in registerUser();
  * 2020-10-13 Modified by Olof Sjögren: Updated JDocs
  * 2020-10-15 Modified by Yenan Wang: Removed Singleton pattern
+ * 2020-10-16 Modified by Oscar Sanner and Olof Sjögren: Class now throws appropriate exceptions.
  */
 
 public class ModelEngine {

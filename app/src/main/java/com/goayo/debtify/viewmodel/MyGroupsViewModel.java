@@ -35,7 +35,7 @@ public class MyGroupsViewModel extends ModelEngineViewModel implements IEventHan
         super();
         Set<IGroupData> groupsData = getModel().getGroups();
         this.groupsData = new MutableLiveData<>(groupsData);
-        EventBus.getInstance().register(this, EventBus.EVENT.GROUPS_EVENT);
+        EventBus.INSTANCE.register(this, EventBus.EVENT.GROUPS_EVENT);
     }
 
     private void setGroupsData() {
@@ -54,7 +54,7 @@ public class MyGroupsViewModel extends ModelEngineViewModel implements IEventHan
     @Override
     protected void onCleared() {
         super.onCleared();
-        EventBus.getInstance().unRegister(this, EventBus.EVENT.GROUPS_EVENT);
+        EventBus.INSTANCE.unRegister(this, EventBus.EVENT.GROUPS_EVENT);
     }
 
     public String getCurrentLoggedInUsersPhoneNumber() {

@@ -17,9 +17,10 @@ public class DebtTest {
 
     @Test
     public void testDebtDate() {
-        Debt debt = new Debt(new BigDecimal(10), new Date());
+        Date date = new Date();
+        Debt debt = new Debt(new BigDecimal(10), date);
         String debtDate = debt.getDate().toString();
-        String testDate = (new Date()).toString();
+        String testDate = date.toString();
         assertEquals(debtDate, testDate);
     }
 }

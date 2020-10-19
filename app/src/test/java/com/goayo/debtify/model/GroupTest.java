@@ -9,6 +9,7 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 
 public class GroupTest {
@@ -80,7 +81,7 @@ public class GroupTest {
         tempGroup.addUser(secondUserList);
         tempGroup.removeUser(userSet);
 
-        for(User u: userSet) {
+        for (User u : userSet) {
             assertFalse(tempGroup.getGroupMembers().contains(u));
         }
 
@@ -98,11 +99,11 @@ public class GroupTest {
         secondUserList.add(new User("12345566", "Bengt"));
         secondUserList.add(new User("987654", "Felix"));
 
-        tempGroup.removeUser(secondUserList);
-
-        for (User u : secondUserList){
-            assertFalse(tempGroup.getGroupMembers().contains(u));
+        try {
+            tempGroup.removeUser(secondUserList);
+            fail();
+        } catch (UserNotFoundException e) {
+            assertTrue(true);
         }
     }
-
 }

@@ -11,8 +11,13 @@ import java.util.Map;
  * <p>
  * 2020-10-13 Modified by Olof Sjögren: Now utilizes enum-types instead of class-types.
  * 2020-10-14 Modified by Olof Sjögren: Added JDocs.
+ * 2020-10-15 Modified by Oscar Sanner and Olof Sjögren: Class now throws appropriate exceptions.
+ * 2020-10-19 Modified by Oscar Sanner and Olof Sjögren: Refactored singleton method to use
+ * enum instead of the traditional static instance.
  */
-public class EventBus {
+public enum EventBus {
+
+    INSTANCE;
 
     /**
      * All the different types of events which can be published.
@@ -39,23 +44,7 @@ public class EventBus {
     /**
      * Map where an EVENT acts as a key to a corresponding list of IEventHandlers which are to be notified when an event of key's type is published.
      */
-    private final Map<EVENT, List<IEventHandler>> listenerMap;
-
-    private EventBus() {
-        listenerMap = new HashMap<>();
-    }
-
-    /**
-     * Method for getting the Singleton EventBus. Assures there is only one instantiated EventBus.
-     *
-     * @return a new EventBus if the EventBus hasn't been instantiated, otherwise the already existing EventBus.
-     */
-    public static EventBus getInstance() {
-        if (instance == null) {
-            instance = new EventBus();
-        }
-        return instance;
-    }
+    private final Map<EVENT, List<IEventHandler>> listenerMap = new HashMap<>();
 
     /**
      * Method for registering an IEventHandler to be notified when a specific event is published.
@@ -78,8 +67,6 @@ public class EventBus {
      */
     public void unRegister(IEventHandler handler, EVENT eventType) {
         listenerMap.get(eventType).remove(handler);
-        //TODO: Handle null exception perhaps?
-        //TODO: Maybe we want a NPE to be thrown here. Maybe that's what they deserve.
     }
 
     /**
@@ -91,8 +78,6 @@ public class EventBus {
         List<IEventHandler> eventHandlerList = listenerMap.get(eventType);
         if (eventHandlerList == null) {
             return;
-            //Todo; Maybe something else?
-            //Todo: no i think fine yes?
         }
         for (IEventHandler handler : eventHandlerList) {
             handler.onModelEvent();

@@ -25,6 +25,7 @@ import java.util.Set;
  * reusable in case we want to bring the "GetGroupFromId()" back, or add another method.
  * 2020-10-16 Modified by Oscar Sanner: Since dates are now stored in database, this class has been extended
  * to handle persistence in dates.
+ * 2020-10-16 Modified by Oscar Sanner and Olof Sjögren: Class now throws appropriate exceptions.
  */
 
 class FromJsonFactory {
