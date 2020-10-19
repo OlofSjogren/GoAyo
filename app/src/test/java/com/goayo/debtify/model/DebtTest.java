@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Random;
 
 import static org.junit.Assert.*;
 
@@ -11,8 +12,10 @@ public class DebtTest {
 
     @Test
     public void testDebtCreation() {
-        Debt debt = new Debt(new BigDecimal(50), new Date());
-        assertEquals(0, debt.getDebtAmount().compareTo(new BigDecimal(50)));
+        Random rnd = new Random(System.nanoTime());
+        int random_int = rnd.nextInt();
+        Debt debt = new Debt(new BigDecimal(random_int), new Date());
+        assertEquals(0, debt.getDebtAmount().compareTo(new BigDecimal(random_int)));
     }
 
     @Test
