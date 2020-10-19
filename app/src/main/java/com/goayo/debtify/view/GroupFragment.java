@@ -27,6 +27,7 @@ import com.goayo.debtify.viewmodel.DetailedGroupViewModel;
 import com.goayo.debtify.viewmodel.PickUserViewModel;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -126,7 +127,7 @@ public class GroupFragment extends Fragment {
     private void initAdapter() {
         // initialize the adapter for the debts and payments
         try {
-            adapter = new TransactionCardAdapter(viewModel.getCurrentGroupDebts());
+            adapter = new TransactionCardAdapter(new ArrayList<>());
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
