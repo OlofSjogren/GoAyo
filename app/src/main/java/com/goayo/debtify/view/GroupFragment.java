@@ -19,6 +19,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.GroupFragmentBinding;
+import com.goayo.debtify.model.GroupNotFoundException;
 import com.goayo.debtify.model.UserNotFoundException;
 import com.goayo.debtify.model.IDebtData;
 import com.goayo.debtify.model.IUserData;
@@ -72,8 +73,8 @@ public class GroupFragment extends Fragment {
         viewModel = ViewModelProviders.of(requireActivity()).get(DetailedGroupViewModel.class);
         try {
             viewModel.setCurrentGroup(getCurrentGroupID());
-        } catch (UserNotFoundException e) {
-            // if user not found then this error could not get resolved in any way,
+        } catch (GroupNotFoundException e) {
+            // if group not found then this error could not get resolved in any way,
             // kill everything
             e.printStackTrace();
             android.os.Process.killProcess(android.os.Process.myPid());

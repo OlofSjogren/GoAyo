@@ -3,12 +3,15 @@ package com.goayo.debtify.viewmodel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.goayo.debtify.model.DebtException;
 import com.goayo.debtify.model.DebtSplitFactory;
 import com.goayo.debtify.model.GroupNotFoundException;
 import com.goayo.debtify.model.IDebtSplitStrategy;
 import com.goayo.debtify.model.IUserData;
+import com.goayo.debtify.model.UserNotFoundException;
 
 import java.math.BigDecimal;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -86,17 +89,18 @@ public class AddDebtViewModel extends ModelEngineViewModel {
      * @param amount      The total amount of the debt
      * @param description A brief description of the debt
      * @param isNoSplit   How the debt will be split
-     * @throws Exception To be specified later
+     * @throws GroupNotFoundException thrown if the group with the given groupID can't be found in the database or in the list "associated groups".
+     * @throws UserNotFoundException  thrown if the lender or borrowers are not members of the group.
+     * @throws DebtException          thrown if the creation of the debt failed.
+     * @throws ConnectException       thrown if unable to connect to the database.
      */
     public void createDebt(String groupID,
-                           // TODO refactor lender to IUserData instead of a Set
                            Set<IUserData> lender,
                            Set<IUserData> borrowers,
                            BigDecimal amount,
                            String description,
                            boolean isNoSplit)
-    // TODO SPECIFY IT!!!
-            throws Exception {
+            throws UserNotFoundException, ConnectException, GroupNotFoundException, DebtException {
 
         // decide how to split the debt
         IDebtSplitStrategy splitStrategy;

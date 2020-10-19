@@ -6,7 +6,9 @@ import androidx.lifecycle.MutableLiveData;
 import com.goayo.debtify.model.EventBus;
 import com.goayo.debtify.model.IEventHandler;
 import com.goayo.debtify.model.IUserData;
+import com.goayo.debtify.model.UserNotFoundException;
 
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,11 +65,11 @@ public class ContactsViewModel extends ModelEngineViewModel implements IEventHan
      * Remove a list of user from contacts in the model
      *
      * @param contactsToRemove The contacts to be removed from the logged in user
-     * @throws Exception e
+     * @throws UserNotFoundException thrown if a user with the given phone number is not a contact of the logged in user.
+     * @throws ConnectException      thrown if unable to connect to the database.
      */
     public void removeContacts(List<IUserData> contactsToRemove)
-    // TODO SPECIFY IT!!!!
-            throws Exception {
+            throws UserNotFoundException, ConnectException {
         for (IUserData user : contactsToRemove) {
             getModel().removeContact(user.getPhoneNumber());
         }

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.goayo.debtify.model.EventBus;
+import com.goayo.debtify.model.GroupNotFoundException;
 import com.goayo.debtify.model.IDebtData;
 import com.goayo.debtify.model.IEventHandler;
 import com.goayo.debtify.model.IGroupData;
@@ -61,10 +62,10 @@ public class DetailedGroupViewModel extends ModelEngineViewModel implements IEve
      * currentGroup and notifies everyone that observes this LiveData of the update
      *
      * @param groupID The groupID of the current group
+     * @throws GroupNotFoundException if the group with the given ID is not found in the list of associated groups to the logged in user.
      */
     public void setCurrentGroup(String groupID)
-    // TODO remove this Exception throws signature
-            throws Exception {
+            throws GroupNotFoundException {
         if (currentGroup == null) {
             currentGroup = new MutableLiveData<>();
         }

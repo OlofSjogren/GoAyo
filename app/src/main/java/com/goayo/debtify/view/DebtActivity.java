@@ -1,6 +1,7 @@
 package com.goayo.debtify.view;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -33,12 +34,11 @@ public class DebtActivity extends AppCompatActivity {
             } else if (action.equals("SETTLE_DEBT")) {
                 navController.setGraph(R.navigation.settle_debt_navigation_graph);
             } else {
-                finish();
-                // TODO send error message
+                throw new NullPointerException();
             }
         } catch (NullPointerException e) {
+            Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             finish();
-            // TODO send error message
         }
     }
 }
