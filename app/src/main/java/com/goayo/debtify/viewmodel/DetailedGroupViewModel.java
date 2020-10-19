@@ -22,13 +22,12 @@ import java.util.Set;
  * ViewModel for the DetailedGroupActivity
  * <p>
  * 2020-09-30 Modified by Alex Phu & Yenan Wang: Add getAddableUser method
- * <p>
  * 2020-10-08 Modified by Alex Phu: Added leaveCurrentGroup() method
- * <p>
  * 2020-10-09 Modified by Yenan Wang & Alex Phu: connect with EventBus and divide up the currentGroup LiveData
  * so that it may observed individually
- * <p>
  * 2020-10-12 Modified by Alex Phu: Implemented updateDataFromDatabase() and refactored incomprehensible methods.
+ * 2020-10-14 Modified by Yenan Wang: Changed super class to ModelEngineViewModel
+ * 2020-10-16 Modified by Yenan Wang: Updated JavaDoc for all public methods
  */
 public class DetailedGroupViewModel extends ModelEngineViewModel implements IEventHandler {
 
@@ -36,10 +35,20 @@ public class DetailedGroupViewModel extends ModelEngineViewModel implements IEve
     private MutableLiveData<List<IDebtData>> currentGroupDebtsData;
     private MutableLiveData<BigDecimal> currentGroupBalance;
 
+    /**
+     * Subscribe itself to the SPECIFIC_GROUP_EVENT so that it can be notifies of all updates to
+     * that specific event immediately
+     */
     public DetailedGroupViewModel() {
         EventBus.INSTANCE.register(this, EventBus.EVENT.SPECIFIC_GROUP_EVENT);
     }
 
+    /**
+     * Get the LiveData object so any views that uses this method may observe the LiveData
+     * and update themselves accordingly
+     *
+     * @return The LiveData object representing the current group
+     */
     public LiveData<IGroupData> getCurrentGroup() {
         if (currentGroup == null) {
             currentGroup = new MutableLiveData<>();
@@ -47,7 +56,15 @@ public class DetailedGroupViewModel extends ModelEngineViewModel implements IEve
         return currentGroup;
     }
 
-    public void setCurrentGroup(String groupID) throws Exception {
+    /**
+     * Retrieve the group that matches the given groupID, then sets the retrieve group to the
+     * currentGroup and notifies everyone that observes this LiveData of the update
+     *
+     * @param groupID The groupID of the current group
+     */
+    public void setCurrentGroup(String groupID)
+    // TODO remove this Exception throws signature
+            throws Exception {
         if (currentGroup == null) {
             currentGroup = new MutableLiveData<>();
         }
@@ -58,6 +75,12 @@ public class DetailedGroupViewModel extends ModelEngineViewModel implements IEve
         setCurrentGroupDebtsData();
     }
 
+    /**
+     * Get the LiveData object so any views that uses this method may observe the LiveData
+     * and update themselves accordingly
+     *
+     * @return The LiveData object representing a List of Debt that belongs to the current group
+     */
     public LiveData<List<IDebtData>> getCurrentGroupDebtsData() {
         if (currentGroupDebtsData == null) {
             currentGroupDebtsData = new MutableLiveData<>();
@@ -65,6 +88,12 @@ public class DetailedGroupViewModel extends ModelEngineViewModel implements IEve
         return currentGroupDebtsData;
     }
 
+    /**
+     * Get the LiveData object so any views that uses this method may observe the LiveData
+     * and update themselves accordingly
+     *
+     * @return The LiveData object representing the logged-in user's balance in the current group
+     */
     public LiveData<BigDecimal> getCurrentGroupBalance() {
         if (currentGroupBalance == null) {
             currentGroupBalance = new MutableLiveData<>();
@@ -72,37 +101,27 @@ public class DetailedGroupViewModel extends ModelEngineViewModel implements IEve
         return currentGroupBalance;
     }
 
-    public List<IDebtData> getCurrentGroupDebts() {
-        return currentGroupDebtsData.getValue();
-    }
-
     /**
-     * {Contact} \ {CurrentGroupMembers}
+     * Exclude all users who already are a member in the current group from the contact list and
+     * return all users that are left
      *
-     * @return Addable members to the group.
+     * @return All users that may still be added to the current group
      */
     public List<IUserData> getAddableUsers() {
-        List<IUserData> addableUsers = new ArrayList<>();
-        for (IUserData contact : getModel().getContacts()) {
-            boolean userExists = false;
-            for (IUserData groupMember : currentGroup.getValue().getIUserDataSet()) {
-                if (contact.equals(groupMember)) {
-                    userExists = true;
-                    break;
-                }
-            }
-            if (!userExists) {
-                addableUsers.add(contact);
-            }
-        }
-        return addableUsers;
+        return new ArrayList<>(ViewModelUtil.getUserSetDifference(
+                getModel().getContacts(),
+                currentGroup.getValue().getIUserDataSet()));
     }
 
     /**
-     * Adds the selected users from PickUserFragment to the current group in model.
+     * Given a Set of users, add them to the current group,
+     * assuming if the current group is already set
      *
+     * @param users The users to be added into current group
      */
     public void addSelectedMembersToCurrentGroup(Set<IUserData> users) {
+        // ignore if the Set doesn't hold any user
+        // this if-statement should never evaluate true
         if (users == null || users.isEmpty()) {
             return;
         }
@@ -118,7 +137,7 @@ public class DetailedGroupViewModel extends ModelEngineViewModel implements IEve
     }
 
     /**
-     * Leaves the current group.
+     * Leave the current group.
      */
     public void leaveCurrentGroup() {
         try {
@@ -129,7 +148,7 @@ public class DetailedGroupViewModel extends ModelEngineViewModel implements IEve
     }
 
     /**
-     * Updates data from database
+     * Update data from database
      */
     public void updateDataFromDatabase() {
         try {
@@ -139,6 +158,9 @@ public class DetailedGroupViewModel extends ModelEngineViewModel implements IEve
         }
     }
 
+    /**
+     * Update currentGroup by retrieving the current group from the model
+     */
     @Override
     public void onModelEvent() {
         try {
@@ -148,6 +170,9 @@ public class DetailedGroupViewModel extends ModelEngineViewModel implements IEve
         }
     }
 
+    /**
+     * When this ViewModel dies, unsubscribe itself from the EventBus
+     */
     @Override
     protected void onCleared() {
         EventBus.INSTANCE.unRegister(this, EventBus.EVENT.SPECIFIC_GROUP_EVENT);

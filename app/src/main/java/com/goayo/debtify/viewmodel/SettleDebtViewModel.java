@@ -20,16 +20,16 @@ import java.util.Objects;
  * ViewModel for SettleDebtFragment
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
- *
- * 2020-10-14 Modified by Yenan: add getUnfinishedDebts() method to filter out the paid debts
+ * 2020-10-14 Modified by Yenan Wang: Added getUnfinishedDebts() method to filter out the paid debts,
+ * Changed super class to ModelEngineViewModel
+ * 2020-10-16 Modified by Yenan Wang: Updated JavaDoc for all public methods
  */
 public class SettleDebtViewModel extends ModelEngineViewModel {
 
     private final MutableLiveData<List<IDebtData>> debtListData;
 
     /**
-     * the constructor,
-     * initialises the debtListData at creation
+     * Initialise the debtListData
      */
     public SettleDebtViewModel() {
         super();
@@ -39,9 +39,10 @@ public class SettleDebtViewModel extends ModelEngineViewModel {
     }
 
     /**
-     * loads data from the model into debtListData from the given groupID
+     * Retrieve a group that matches the given groupID and updates debtListData with all debts
+     * that exist in that group
      *
-     * @param groupID the current group's ID
+     * @param groupID The current group's ID
      */
     public void retrieveData(String groupID) {
         try {
@@ -52,21 +53,24 @@ public class SettleDebtViewModel extends ModelEngineViewModel {
     }
 
     /**
-     * @return the copy of debtList
+     * Retrieve the List of debts to be settled
+     *
+     * @return A copy of debtList in debtListData
      */
     public List<IDebtData> getDebtList() {
         return new ArrayList<>(Objects.requireNonNull(debtListData.getValue()));
     }
 
     /**
-     * creates a new payment in the backend to the given Debt
+     * Create a new payment in the backend to the given Debt
      *
-     * @param amount  the amount to be paid off
-     * @param debtID  the ID of the Debt that is to be paid
-     * @param groupID the ID of the Group the Debt belongs to
-     * @throws Exception to be specified later
+     * @param amount  The amount to be paid off
+     * @param debtID  The ID of the Debt that is to be paid
+     * @param groupID The ID of the Group the Debt belongs to
+     * @throws Exception To be specified later
      */
-    public void settleDebt(BigDecimal amount, String debtID, String groupID) throws InvalidDebtException, InvalidPaymentException, GroupNotFoundException, ConnectException {
+    public void settleDebt(BigDecimal amount, String debtID, String groupID)
+            throws InvalidDebtException, InvalidPaymentException, GroupNotFoundException, ConnectException {
         getModel().payOffDebt(amount, debtID, groupID);
     }
 

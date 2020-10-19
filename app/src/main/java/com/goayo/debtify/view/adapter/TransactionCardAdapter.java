@@ -85,7 +85,6 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
         holder.setTransactionTypeData(transactionData.get(position));
         if (transactionData.get(position).transactionType.equals("Payment")) {
             holder.setCardViewColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.greenTransactionCard));
-            //TODO: DOES THIS WORK? IF COLORS WONT CHANGE, DEBUG FROM HERE.
         } else {
             holder.setCardViewColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.redTransactionCard));
         }

@@ -80,7 +80,6 @@ public class SettleDebtFragment extends Fragment {
         return requireActivity().getIntent().getStringExtra("GROUP_ID");
     }
 
-    // TODO implement this
     private void settleDebt() {
         try {
             // the parameters needed to settle a debt
