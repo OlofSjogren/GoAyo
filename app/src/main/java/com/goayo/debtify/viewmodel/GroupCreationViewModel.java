@@ -1,7 +1,6 @@
 package com.goayo.debtify.viewmodel;
 
 import com.goayo.debtify.model.IUserData;
-import com.goayo.debtify.model.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,7 @@ public class GroupCreationViewModel extends ModelEngineViewModel {
     }
 
     public void createGroup(String groupName, Set<IUserData> users) throws Exception {
-        getModel().createGroup(groupName, Util.convertToUserPhoneNumberSet(users));
+        getModel().createGroup(groupName, ViewModelUtil.convertToUserPhoneNumberSet(users));
     }
 
 }

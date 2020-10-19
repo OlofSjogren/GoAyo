@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.goayo.debtify.model.DebtSplitFactory;
 import com.goayo.debtify.model.IDebtSplitStrategy;
 import com.goayo.debtify.model.IUserData;
-import com.goayo.debtify.model.Util;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -95,7 +94,7 @@ public class AddDebtViewModel extends ModelEngineViewModel {
         getModel().createDebt(groupID,
                 // this is horrendous
                 (new ArrayList<>(lender).get(0)).getPhoneNumber(),
-                Util.convertToUserPhoneNumberSet(borrowers), amount, description,
+                ViewModelUtil.convertToUserPhoneNumberSet(borrowers), amount, description,
                 splitStrategy);
     }
 

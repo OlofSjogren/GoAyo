@@ -9,7 +9,6 @@ import com.goayo.debtify.model.IEventHandler;
 import com.goayo.debtify.model.IGroupData;
 import com.goayo.debtify.model.IUserData;
 import com.goayo.debtify.model.UserNotFoundException;
-import com.goayo.debtify.model.Util;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -83,7 +82,7 @@ public class DetailedGroupViewModel extends ModelEngineViewModel implements IEve
      * @return Addable members to the group.
      */
     public List<IUserData> getAddableUsers() {
-        return new ArrayList<>(Util.getUserSetDifference(
+        return new ArrayList<>(ViewModelUtil.getUserSetDifference(
                 getModel().getContacts(),
                 currentGroup.getValue().getIUserDataSet()));
     }

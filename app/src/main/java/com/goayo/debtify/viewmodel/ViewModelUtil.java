@@ -1,4 +1,6 @@
-package com.goayo.debtify.model;
+package com.goayo.debtify.viewmodel;
+
+import com.goayo.debtify.model.IUserData;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,7 +11,7 @@ import java.util.Set;
  * <p>
  * Singleton utility class that performs pointless calculations for other classes
  */
-public enum Util {
+public enum ViewModelUtil {
     ;
 
     /**
