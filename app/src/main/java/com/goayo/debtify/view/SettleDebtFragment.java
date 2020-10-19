@@ -90,7 +90,6 @@ public class SettleDebtFragment extends Fragment {
             // if the debt is settled successfully, then finish the activity
             requireActivity().finish();
         } catch (Exception e) {
-            // TODO catch more specific exceptions
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
