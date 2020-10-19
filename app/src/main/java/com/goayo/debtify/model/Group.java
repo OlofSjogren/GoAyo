@@ -24,6 +24,7 @@ import java.util.Set;
  * return types and params of methods are correctly set as BigDecimal.
  * 2020-10-09 Modified by Alex Phu and Yenan Wang: Added IDebtSplitStrategy to createDebt's parameter.
  * 2020-10-14 Modified by Olof Sjögren: Updated JDocs.
+ * 2020-10-16 Modified by Oscar Sanner and Olof Sjögren: Class now throws appropriate exceptions.
  * 2020-10-16 Modified by Oscar Sanner: A debt now takes in a date on creation instead of creating on itself.
  * This will further persistence. This applies to the create debt method. The same however also applies to payments.
  */

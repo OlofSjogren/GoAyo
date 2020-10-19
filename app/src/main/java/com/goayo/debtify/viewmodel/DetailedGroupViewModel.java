@@ -37,7 +37,7 @@ public class DetailedGroupViewModel extends ModelEngineViewModel implements IEve
     private MutableLiveData<BigDecimal> currentGroupBalance;
 
     public DetailedGroupViewModel() {
-        EventBus.getInstance().register(this, EventBus.EVENT.SPECIFIC_GROUP_EVENT);
+        EventBus.INSTANCE.register(this, EventBus.EVENT.SPECIFIC_GROUP_EVENT);
     }
 
     public LiveData<IGroupData> getCurrentGroup() {
@@ -150,7 +150,7 @@ public class DetailedGroupViewModel extends ModelEngineViewModel implements IEve
 
     @Override
     protected void onCleared() {
-        EventBus.getInstance().unRegister(this, EventBus.EVENT.SPECIFIC_GROUP_EVENT);
+        EventBus.INSTANCE.unRegister(this, EventBus.EVENT.SPECIFIC_GROUP_EVENT);
         super.onCleared();
     }
 

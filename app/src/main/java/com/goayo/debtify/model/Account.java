@@ -40,6 +40,9 @@ import java.util.UUID;
  * 2020-10-14 Modified by Oscar Sanner: Removed the method get group from ID. This method was obsolete and relying on the database rather than the object oriented model.
  * 2020-10-16 Modified by Oscar Sanner: Create debt and add payment methods will now take in a date. This has been adjusted and Account is responsible for creating these
  * debts and sending them to the group and the database respectively.
+ * 2020-10-16 Modified by Oscar Sanner and Olof Sjögren: Class now throws appropriate exceptions.
+ * 2020-10-19 Modified by Oscar Sanner and Olof Sjögren: Adjusted calls to EventBus to make use of the new
+ * enum typed singleton.
  */
 class Account {
 
@@ -88,7 +91,7 @@ class Account {
         loggedInUser = fromJsonFactory.getUser(userToBeLoggedIn);
         initContactList();
         initAssociatedGroups();
-        EventBus.getInstance().publish(EventBus.EVENT.CONTACT_EVENT);
+        EventBus.INSTANCE.publish(EventBus.EVENT.CONTACT_EVENT);
     }
 
     /**
@@ -117,7 +120,7 @@ class Account {
         usersToBeAdded.add(loggedInUser);
 
         associatedGroups.add(new Group(groupName, id, usersToBeAdded));
-        EventBus.getInstance().publish(EventBus.EVENT.GROUPS_EVENT);
+        EventBus.INSTANCE.publish(EventBus.EVENT.GROUPS_EVENT);
     }
 
     /**
@@ -151,7 +154,7 @@ class Account {
 
         database.addContact(loggedInUser.getPhoneNumber(), phoneNumber);
         contactList.add(u);
-        EventBus.getInstance().publish(EventBus.EVENT.CONTACT_EVENT);
+        EventBus.INSTANCE.publish(EventBus.EVENT.CONTACT_EVENT);
     }
 
     /**
@@ -171,7 +174,7 @@ class Account {
         User u = getUserFromSet(phoneNumber, contactList);
         Group g = getAssociatedGroupFromId(groupID);
         g.addUser(u);
-        EventBus.getInstance().publish(EventBus.EVENT.SPECIFIC_GROUP_EVENT);
+        EventBus.INSTANCE.publish(EventBus.EVENT.SPECIFIC_GROUP_EVENT);
     }
 
 
@@ -209,7 +212,7 @@ class Account {
         User u = getUserFromSet(phoneNumber, g.getGroupMembers());
         g.removeUser(u);
 
-        EventBus.getInstance().publish(EventBus.EVENT.SPECIFIC_GROUP_EVENT);
+        EventBus.INSTANCE.publish(EventBus.EVENT.SPECIFIC_GROUP_EVENT);
     }
 
     /**
@@ -259,8 +262,8 @@ class Account {
         User lenderUser = getUserFromSet(lender, g.getGroupMembers());
 
         g.createDebt(lenderUser, borrowerUserAndId, owed, description, splitStrategy, date);
-        EventBus.getInstance().publish(EventBus.EVENT.SPECIFIC_GROUP_EVENT);
-        EventBus.getInstance().publish(EventBus.EVENT.GROUPS_EVENT);
+        EventBus.INSTANCE.publish(EventBus.EVENT.SPECIFIC_GROUP_EVENT);
+        EventBus.INSTANCE.publish(EventBus.EVENT.GROUPS_EVENT);
     }
 
     /**
@@ -286,8 +289,8 @@ class Account {
         Group g = getAssociatedGroupFromId(groupID);
         g.payOffDebt(amount, debtID, date);
 
-        EventBus.getInstance().publish(EventBus.EVENT.SPECIFIC_GROUP_EVENT);
-        EventBus.getInstance().publish(EventBus.EVENT.GROUPS_EVENT);
+        EventBus.INSTANCE.publish(EventBus.EVENT.SPECIFIC_GROUP_EVENT);
+        EventBus.INSTANCE.publish(EventBus.EVENT.GROUPS_EVENT);
     }
 
     /**
@@ -334,7 +337,7 @@ class Account {
         User u = getUserFromSet(phoneNumber, contactList);
         contactList.remove(u);
 
-        EventBus.getInstance().publish(EventBus.EVENT.CONTACT_EVENT);
+        EventBus.INSTANCE.publish(EventBus.EVENT.CONTACT_EVENT);
     }
 
     /**
@@ -351,7 +354,7 @@ class Account {
         Group g = getAssociatedGroupFromId(groupID);
         g.removeUser(loggedInUser);
         associatedGroups.remove(g);
-        EventBus.getInstance().publish(EventBus.EVENT.GROUPS_EVENT);
+        EventBus.INSTANCE.publish(EventBus.EVENT.GROUPS_EVENT);
     }
 
     /**
@@ -438,7 +441,7 @@ class Account {
     public void refreshWithDatabase() throws UserNotFoundException, ConnectException {
         userIsLoggedIn();
         initAssociatedGroups();
-        EventBus.getInstance().publish(EventBus.EVENT.GROUPS_EVENT);
-        EventBus.getInstance().publish(EventBus.EVENT.SPECIFIC_GROUP_EVENT);
+        EventBus.INSTANCE.publish(EventBus.EVENT.GROUPS_EVENT);
+        EventBus.INSTANCE.publish(EventBus.EVENT.SPECIFIC_GROUP_EVENT);
     }
 }
