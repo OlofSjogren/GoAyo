@@ -10,9 +10,10 @@ import static org.junit.Assert.*;
 
 public class DebtTest {
 
+    private final Random rnd = new Random(System.nanoTime());
+
     @Test
     public void testDebtCreation() {
-        Random rnd = new Random(System.nanoTime());
         int random_int = rnd.nextInt();
         Debt debt = new Debt(new BigDecimal(random_int), new Date());
         assertEquals(0, debt.getDebtAmount().compareTo(new BigDecimal(random_int)));

@@ -12,6 +12,8 @@ import static org.junit.Assert.assertEquals;
 
 public class DebtTrackerTest {
 
+    private final Random rnd = new Random(System.nanoTime());
+
     @Test
     public void getSumOfPayments() {
         DebtTracker dt = new DebtTracker(new BigDecimal(500), new User("244","bob")
@@ -19,7 +21,6 @@ public class DebtTrackerTest {
                 , "abs", "TestID", new Date());
 
         //Randomize payment size
-        Random rnd = new Random(System.nanoTime());
         BigDecimal firstPayment = new BigDecimal(rnd.nextInt(60-20+1)+20);  //Bounds [20, 60]
         BigDecimal secondPayment = new BigDecimal(rnd.nextInt(80-30)+30); //Bounds [30, 80)
 
@@ -34,8 +35,6 @@ public class DebtTrackerTest {
 
     @Test
     public void payOffDebt() {
-        Random rnd = new Random(System.nanoTime());
-
         BigDecimal totalDebt = new BigDecimal(rnd.nextInt(600-400)+400); //Bounds [400, 600)
 
         DebtTracker dt = new DebtTracker(totalDebt
@@ -56,7 +55,6 @@ public class DebtTrackerTest {
 
     @Test
     public void getPaymentHistory() {
-        Random rnd = new Random(System.nanoTime());
         BigDecimal totalDebt = new BigDecimal(rnd.nextInt(600-400)+400); //Bounds [400, 600)
 
         DebtTracker dt = new DebtTracker(totalDebt
