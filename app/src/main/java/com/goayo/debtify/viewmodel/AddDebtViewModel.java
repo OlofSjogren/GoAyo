@@ -9,7 +9,6 @@ import com.goayo.debtify.model.IUserData;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -95,7 +94,7 @@ public class AddDebtViewModel extends ModelEngineViewModel {
         getModel().createDebt(groupID,
                 // this is horrendous
                 (new ArrayList<>(lender).get(0)).getPhoneNumber(),
-                convertToString(borrowers), amount, description,
+                ViewModelUtil.convertToUserPhoneNumberSet(borrowers), amount, description,
                 splitStrategy);
     }
 
@@ -103,12 +102,4 @@ public class AddDebtViewModel extends ModelEngineViewModel {
         return getModel().getGroup(groupID).getIUserDataSet();
     }
 
-    // TODO this method shouldn't be needed
-    private Set<String> convertToString(Set<IUserData> userDataSet) {
-        Set<String> userToString = new HashSet<>();
-        for (IUserData user : userDataSet) {
-            userToString.add(user.getPhoneNumber());
-        }
-        return userToString;
-    }
 }
