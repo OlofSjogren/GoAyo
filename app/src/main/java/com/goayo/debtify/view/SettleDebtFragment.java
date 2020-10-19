@@ -21,7 +21,6 @@ import com.goayo.debtify.view.adapter.PickDebtAdapter;
 import com.goayo.debtify.viewmodel.SettleDebtViewModel;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -90,7 +89,7 @@ public class SettleDebtFragment extends Fragment {
             // if the debt is settled successfully, then finish the activity
             requireActivity().finish();
         } catch (Exception e) {
-            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Please enter a valid input", Toast.LENGTH_LONG).show();
         }
     }
 }
