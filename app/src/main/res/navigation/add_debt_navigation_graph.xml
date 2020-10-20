@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/addDebtFragment"
-        android:name="com.goayo.debtify.view.AddDebtFragment"
+        android:name="com.goayo.debtify.view.debt.AddDebtFragment"
         android:label="AddDebtFragment"
         tools:layout="@layout/add_debt_fragment">
         <action
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/pickUsersFragment"
-        android:name="com.goayo.debtify.view.PickUsersFragment"
+        android:name="com.goayo.debtify.view.util.PickUsersFragment"
         android:label="PickUsersFragment"
         tools:layout="@layout/pick_users_fragment">
         <action

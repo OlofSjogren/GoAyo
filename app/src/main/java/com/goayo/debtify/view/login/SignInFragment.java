@@ -1,4 +1,4 @@
-package com.goayo.debtify.view;
+package com.goayo.debtify.view.login;
 
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
@@ -18,6 +18,7 @@ import androidx.navigation.Navigation;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.SignInFragmentBinding;
+import com.goayo.debtify.view.MainActivity;
 import com.goayo.debtify.viewmodel.SignInAndOutViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 

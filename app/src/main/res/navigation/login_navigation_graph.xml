@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/signInFragment"
         tools:layout="@layout/sign_in_fragment"
-        android:name="com.goayo.debtify.view.SignInFragment"
+        android:name="com.goayo.debtify.view.login.SignInFragment"
         android:label="SignInFragment" >
         <action
             android:id="@+id/action_signInFragment_to_signUpFragment"
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.goayo.debtify.view.SignUpFragment"
+        android:name="com.goayo.debtify.view.login.SignUpFragment"
         tools:layout="@layout/sign_up_fragment"
         android:label="SignUpFragment" >
         <action

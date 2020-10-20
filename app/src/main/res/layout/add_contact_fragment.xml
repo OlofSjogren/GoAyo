@@ -5,7 +5,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.AddContactFragment">
+    tools:context=".view.contact.AddContactFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

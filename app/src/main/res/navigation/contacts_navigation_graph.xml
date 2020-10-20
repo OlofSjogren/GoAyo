@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/displayContactsFragment"
-        android:name="com.goayo.debtify.view.DisplayContactsFragment"
+        android:name="com.goayo.debtify.view.contact.DisplayContactsFragment"
         android:label="Display Contacts"
         tools:layout="@layout/display_contacts_fragment">
         <action
@@ -20,13 +20,13 @@
 
     <fragment
         android:id="@+id/pickUsersFragment"
-        android:name="com.goayo.debtify.view.PickUsersFragment"
+        android:name="com.goayo.debtify.view.util.PickUsersFragment"
         android:label="Pick User"
         tools:layout="@layout/pick_users_fragment">
     </fragment>
     <fragment
         android:id="@+id/addContactFragment"
-        android:name="com.goayo.debtify.view.AddContactFragment"
+        android:name="com.goayo.debtify.view.contact.AddContactFragment"
         android:label="add_contact_fragment"
         tools:layout="@layout/add_contact_fragment" />
 
