@@ -168,9 +168,12 @@ public class AddDebtFragment extends Fragment {
             addDebtViewModel.createDebt(groupID, lenderSet, borrowerSet, amount, description, binding.addDebtNoSplitRadiobutton.isChecked());
             // once the debt is created, the activity is therefore useless and needs to be killed
             requireActivity().finish();
+        } catch (NumberFormatException e) {
+            // send the error message
+            Toast.makeText(getContext(), "Please enter a valid number", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             // send the error message
-            Toast.makeText(getContext(), "Please enter valid input", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
