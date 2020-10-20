@@ -1,4 +1,4 @@
-package com.goayo.debtify.view;
+package com.goayo.debtify.view.login;
 
 import android.os.Bundle;
 import android.os.StrictMode;

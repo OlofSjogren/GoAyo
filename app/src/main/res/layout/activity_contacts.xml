@@ -6,7 +6,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.ContactsActivity">
+        tools:context=".view.contact.ContactsActivity">
 
         <!--IGNORE THE WARNING, THE APP CRASHES IF YOU LISTEN TO IT-->
         <fragment

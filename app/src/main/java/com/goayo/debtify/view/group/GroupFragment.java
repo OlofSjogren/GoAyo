@@ -1,4 +1,4 @@
-package com.goayo.debtify.view;
+package com.goayo.debtify.view.group;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,9 +20,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.GroupFragmentBinding;
 import com.goayo.debtify.model.GroupNotFoundException;
-import com.goayo.debtify.model.UserNotFoundException;
 import com.goayo.debtify.model.IDebtData;
 import com.goayo.debtify.model.IUserData;
+import com.goayo.debtify.view.debt.DebtActivity;
 import com.goayo.debtify.view.adapter.TransactionCardAdapter;
 import com.goayo.debtify.viewmodel.DetailedGroupViewModel;
 import com.goayo.debtify.viewmodel.PickUserViewModel;

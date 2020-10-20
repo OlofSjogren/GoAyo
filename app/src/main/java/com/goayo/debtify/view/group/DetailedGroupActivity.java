@@ -1,4 +1,4 @@
-package com.goayo.debtify.view;
+package com.goayo.debtify.view.group;
 
 import android.os.Bundle;
 import android.view.Menu;

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/myGroupsFragment2"
-        android:name="com.goayo.debtify.view.MyGroupsFragment"
+        android:name="com.goayo.debtify.view.group.MyGroupsFragment"
         android:label="MyGroupsFragment"
         tools:layout="@layout/my_groups_fragment"/>
 </navigation>

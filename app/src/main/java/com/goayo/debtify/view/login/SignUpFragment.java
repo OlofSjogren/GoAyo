@@ -1,4 +1,4 @@
-package com.goayo.debtify.view;
+package com.goayo.debtify.view.login;
 
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;

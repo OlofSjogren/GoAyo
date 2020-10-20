@@ -1,4 +1,4 @@
-package com.goayo.debtify.view;
+package com.goayo.debtify.view.group;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

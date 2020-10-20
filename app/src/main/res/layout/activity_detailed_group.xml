@@ -10,7 +10,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.DetailedGroupActivity">
+        tools:context=".view.group.DetailedGroupActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/detailed_group_app_bar"

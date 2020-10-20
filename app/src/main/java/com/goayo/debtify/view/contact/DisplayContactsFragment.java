@@ -1,4 +1,4 @@
-package com.goayo.debtify.view;
+package com.goayo.debtify.view.contact;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

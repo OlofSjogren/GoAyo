@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.ActivityMainBinding;
+import com.goayo.debtify.view.contact.ContactsActivity;
+import com.goayo.debtify.view.login.LoginActivity;
 import com.goayo.debtify.viewmodel.SignInAndOutViewModel;
 import com.google.android.material.navigation.NavigationView;
 

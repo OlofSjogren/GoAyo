@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/createGroupFragment"
-        android:name="com.goayo.debtify.view.CreateGroupFragment"
+        android:name="com.goayo.debtify.view.group.CreateGroupFragment"
         android:label="CreateGroupFragment"
         tools:layout="@layout/create_group_fragment">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/pickUsersFragment"
-        android:name="com.goayo.debtify.view.PickUsersFragment"
+        android:name="com.goayo.debtify.view.util.PickUsersFragment"
         android:label="PickUsersFragment"
         tools:layout="@layout/pick_users_fragment">
         <action
