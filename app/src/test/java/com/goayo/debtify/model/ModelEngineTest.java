@@ -17,7 +17,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -25,6 +24,7 @@ import static org.junit.Assert.assertTrue;
 
 public class ModelEngineTest {
 
+    private final Random rnd = new Random(System.nanoTime());
     static final ModelEngine modelEngine = new ModelEngine(new MockDatabase());
     private final int amountOfUsers = 50;
     Map<String, String> passwordAndNumber;
@@ -36,18 +36,19 @@ public class ModelEngineTest {
         noFriendsUsers = new ArrayList<>();
 
         for (int i = 0; i < amountOfUsers; i++) {
-            int randomNum = ThreadLocalRandom.current().nextInt(10000, 99999);
-            int randomNumComp = ThreadLocalRandom.current().nextInt(10000, 99999);
+            //Bounds [10000, 99999]
+            int randomNum = rnd.nextInt(99999 - 10000 + 1) + 10000;
+            int randomNumComp = rnd.nextInt(99999 - 10000 + 1) + 10000;
             passwordAndNumber.put(Integer.toString(i), randomNum + Integer.toString(randomNumComp));
         }
 
         for (int i = 0; i < amountOfUsers; i++) {
-            int randomNum = ThreadLocalRandom.current().nextInt(10000, 99999);
-            int randomNumComp = ThreadLocalRandom.current().nextInt(10000, 99999);
+            //Bounds [10000, 99999]
+            int randomNum = rnd.nextInt(99999 - 10000 + 1) + 10000;
+            int randomNumComp = rnd.nextInt(99999 - 10000 + 1) + 10000;
             noFriendsUsers.add(randomNum + Integer.toString(randomNumComp));
             modelEngine.registerUser(randomNum + Integer.toString(randomNumComp), "NOFRIENDSUSER " + i, "123");
         }
-
 
         registerAllUsersInHashSet();
 
@@ -88,8 +89,8 @@ public class ModelEngineTest {
             if (randomDebtData == null) {
                 continue;
             }
+            int payOffAmount = rnd.nextInt(randomDebtData.getAmountOwed().intValue()); //Bounds [0, 'randomDebtData.getAmountOwed().intValue()')
 
-            int payOffAmount = ThreadLocalRandom.current().nextInt(0, randomDebtData.getAmountOwed().intValue());
             modelEngine.payOffDebt(new BigDecimal(Integer.toString(payOffAmount)), randomDebtData.getDebtID(), randomGroupData.getGroupID());
         }
     }
@@ -100,11 +101,14 @@ public class ModelEngineTest {
             if (group.getIUserDataSet().size() < 2) {
                 continue;
             }
-
             Set<String> borrowers = getRandomSubsetOfPhoneNumberStringsFromIGroupData(group);
-            int randomAmount = ThreadLocalRandom.current().nextInt(100, 1000);
 
-            modelEngine.createDebt(group.getGroupID(), modelEngine.getLoggedInUser().getPhoneNumber(), borrowers, new BigDecimal(Integer.toString(randomAmount)), "Test", new EvenSplitStrategy());
+            int randomAmount = rnd.nextInt(1000 - 100) + 100; //Bounds [100, 1000)
+
+            modelEngine.createDebt(group.getGroupID()
+                    , modelEngine.getLoggedInUser().getPhoneNumber()
+                    , borrowers, new BigDecimal(Integer.toString(randomAmount))
+                    , "Test", new EvenSplitStrategy());
         }
     }
 
@@ -113,7 +117,7 @@ public class ModelEngineTest {
 
         for (int i = 0; i < amountOfGroupsToBeCreated; i++) {
             Set<String> phoneNumberSet = new HashSet<>();
-            int amount = ThreadLocalRandom.current().nextInt(2, contactsSize);
+            int amount = rnd.nextInt(contactsSize - 2) + 2; //Bounds [2, contactsSize)
             for (int t = 0; t < amount; t++) {
                 phoneNumberSet.add(modelEngine.getContacts().toArray(new IUserData[contactsSize])[t].getPhoneNumber());
             }
@@ -146,7 +150,7 @@ public class ModelEngineTest {
 
     private IDebtData getRandomDebtFromGroup(IGroupData randomGroupData) {
         if (randomGroupData.getDebts().size() != 0) {
-            int randomDebtIndex = ThreadLocalRandom.current().nextInt(0, randomGroupData.getDebts().size());
+            int randomDebtIndex = rnd.nextInt(randomGroupData.getDebts().size()); //Bounds [0, 'randomGroupData.getDebts().size()')
             System.out.println("FOUND A DEBT!");
             return randomGroupData.getDebts().get(randomDebtIndex);
         } else {
@@ -162,7 +166,8 @@ public class ModelEngineTest {
         if (group.getIUserDataSet().size() < 3) {
             sizeOfBorrowers = 1;
         } else {
-            sizeOfBorrowers = ThreadLocalRandom.current().nextInt(1, group.getIUserDataSet().size() - 1);
+            //sizeOfBorrowers = ThreadLocalRandom.current().nextInt(1, group.getIUserDataSet().size() - 1); Why "group.getIUserDataSet().size() - 1"
+            sizeOfBorrowers = rnd.nextInt(group.getIUserDataSet().size() - 1) + 1; //Bounds [1, 'group.getIUserDataSet().size()']
         }
 
         List<IUserData> toBeShuffled = new ArrayList<>(group.getIUserDataSet());
@@ -182,7 +187,7 @@ public class ModelEngineTest {
     private IGroupData getRandomGroupForLoggedInUser() throws Exception {
         int randomGroupIndex;
         if (modelEngine.getGroups().size() != 0) {
-            randomGroupIndex = ThreadLocalRandom.current().nextInt(0, modelEngine.getGroups().size());
+            randomGroupIndex = rnd.nextInt(modelEngine.getGroups().size()); //Bounds [0, 'modelEngine.getGroups().size()')
         } else {
             modelEngine.addContact(noFriendsUsers.get(0));
             noFriendsUsers.remove(0);
@@ -235,7 +240,9 @@ public class ModelEngineTest {
         String description = UUID.randomUUID().toString();
 
         //Will create a debt in the fresh group.
-        modelEngine.createDebt(g.getGroupID(), modelEngine.getLoggedInUser().getPhoneNumber(), borrowers, new BigDecimal(amount + 100), description, new EvenSplitStrategy());
+        modelEngine.createDebt(g.getGroupID(), modelEngine.getLoggedInUser().getPhoneNumber()
+                , borrowers, new BigDecimal(amount + 100)
+                , description, new EvenSplitStrategy());
         List<IDebtData> debt = g.getDebts();
 
         String groupId = g.getGroupID();
@@ -243,7 +250,10 @@ public class ModelEngineTest {
         //Create assertion strings.
         List<String> assertionStrings = new ArrayList<>();
         for (int i = 0; i < borrowers.size(); i++) {
-            assertionStrings.add(debt.get(i).getBorrower().getPhoneNumber() + " OWES " + debt.get(i).getOriginalDebt().toString() + " DESC: " + debt.get(i).getDescription() + debt.get(i).getDate());
+            assertionStrings.add(debt.get(i).getBorrower().getPhoneNumber()
+                    + " OWES " + debt.get(i).getOriginalDebt().toString()
+                    + " DESC: " + debt.get(i).getDescription()
+                    + debt.get(i).getDate());
         }
 
         modelEngine.logOutUser();
@@ -254,7 +264,10 @@ public class ModelEngineTest {
         debt = g.getDebts();
 
         for (int i = 0; i < borrowers.size(); i++) {
-            assertTrue(assertionStrings.contains(debt.get(i).getBorrower().getPhoneNumber() + " OWES " + debt.get(i).getOriginalDebt().toString() + " DESC: " + debt.get(i).getDescription() + debt.get(i).getDate()));
+            assertTrue(assertionStrings.contains(debt.get(i).getBorrower().getPhoneNumber()
+                    + " OWES " + debt.get(i).getOriginalDebt().toString()
+                    + " DESC: " + debt.get(i).getDescription()
+                    + debt.get(i).getDate()));
         }
 
     }
@@ -355,8 +368,7 @@ public class ModelEngineTest {
     }
 
     private Map.Entry<String, String> getRandomUserFromHashMap() {
-
-        int randomIndex = ThreadLocalRandom.current().nextInt(0, amountOfUsers);
+        int randomIndex = rnd.nextInt(amountOfUsers); //Bounds [0, amountOfUsers)
         int i = 0;
         for (Map.Entry<String, String> entry : passwordAndNumber.entrySet()) {
             if (i == randomIndex) {
