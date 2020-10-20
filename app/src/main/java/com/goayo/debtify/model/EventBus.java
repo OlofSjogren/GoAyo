@@ -39,8 +39,6 @@ public enum EventBus {
         SPECIFIC_GROUP_EVENT,
     }
 
-    private static EventBus instance;
-
     /**
      * Map where an EVENT acts as a key to a corresponding list of IEventHandlers which are to be notified when an event of key's type is published.
      */
