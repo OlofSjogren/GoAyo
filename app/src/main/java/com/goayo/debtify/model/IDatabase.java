@@ -88,10 +88,11 @@ public interface IDatabase {
      * @param amount        The total amount of the loan.
      * @param description   a description of the loan.
      * @param splitStrategy the strategy which determines how the debt will be split among the borrowers (if at all).
-     * @param date
-     * @throws Exception //TODO NEEEEDS TO SPECIFY
+     * @param date          timestamp for creation of the debt.
+     * @throws ConnectException       thrown if unable to make a database connection.
+     * @throws GroupNotFoundException thrown if a group with the given group id can't be found in the database.
      */
-    void addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy, Date date) throws Exception;
+    void addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy, Date date) throws ConnectException, GroupNotFoundException, UserNotFoundException;
 
     /**
      * Adds a new contact to a users list of contacts.

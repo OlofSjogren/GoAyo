@@ -26,6 +26,7 @@ import java.util.Set;
  * 2020-10-11 Modified by Alex Phu: Fixed wrong order of arguments in registerUser();
  * 2020-10-13 Modified by Olof Sjögren: Updated JDocs
  * 2020-10-15 Modified by Yenan Wang: Removed Singleton pattern
+ * 2020-10-16 Modified by Oscar Sanner and Olof Sjögren: Class now throws appropriate exceptions.
  */
 
 public class ModelEngine {
@@ -54,7 +55,8 @@ public class ModelEngine {
     /**
      * Method for force-updating the session towards the IDatabase.
      *
-     * @throws Exception //TODO NEEEEEEEEDS TO SPECIFY
+     * @throws UserNotFoundException thrown if a user with the given phone number couldn't be found.
+     * @throws ConnectException      thrown if unable to connect to the database.
      */
     public void refreshWithDatabase() throws Exception {
         session.refreshWithDatabase();
@@ -69,7 +71,9 @@ public class ModelEngine {
      *
      * @param phoneNumber phone number used to find the User in the database.
      * @param password    password associated with the phone number.
-     * @throws Exception //TODO NEEEEEEEEEEEEDS TO SPECIFY
+     * @throws LoginException        if the login failed.
+     * @throws ConnectException      thrown if unable to make a database connection.
+     * @throws UserNotFoundException unable to fetch a specific user.
      */
     public void logInUser(String phoneNumber, String password) throws Exception {
         session.loginUser(phoneNumber, password);
@@ -90,8 +94,8 @@ public class ModelEngine {
      *
      * @param phoneNumber the phone number of the user to be added, given that such a user exists in the database.
      * @throws UserNotFoundException      thrown if a user with the given phone number can't be found in the database.
-     * @throws UserAlreadyExistsException thrown if a user with that phone number already is a contact of the logged in user.
-     * @throws ConnectException           thrown if unable to make a database connection.
+     * @throws ConnectException           thrown if unable to connect to the database.
+     * @throws UserAlreadyExistsException thrown if a user with the given phone number already exists in the contactList.
      */
     public void addContact(String phoneNumber) throws UserNotFoundException, UserAlreadyExistsException, ConnectException {
         session.addContact(phoneNumber);
@@ -105,7 +109,8 @@ public class ModelEngine {
      *
      * @param phoneNumber The phone number associated to the user that will be removed from
      *                    the contact book.
-     * @throws Exception //TODO NEEEEEEDS TO SPECIFY
+     * @throws UserNotFoundException thrown if a user with the given phone number is not a contact of the logged in user.
+     * @throws ConnectException      thrown if unable to connect to the database.
      */
     public void removeContact(String phoneNumber) throws Exception {
         session.removeContact(phoneNumber);
@@ -116,8 +121,8 @@ public class ModelEngine {
      *
      * @param phoneNumber the specific user's phone number. This will be used to find the user in the database.
      * @return returns a User object if it was found in the database. The User object is returned wrapped in a IUserData type.
-     * @throws UserNotFoundException thrown if no user with the given phone number could be found in the database.
-     * @throws ConnectException      thrown if unable to make a database connection.
+     * @throws UserNotFoundException thrown if a user with the given phone number couldn't be found.
+     * @throws ConnectException      thrown if unable to connect to the database.
      */
     public IUserData getSingleUserFromDatabase(String phoneNumber) throws UserNotFoundException, ConnectException {
         return session.getSingleUserFromDatabase(phoneNumber);
@@ -131,7 +136,9 @@ public class ModelEngine {
      * @param groupName      The name of the group.
      * @param phoneNumberSet A set of phone numbers associated with users who will be added
      *                       into the group.
-     * @throws Exception //TODO NEEEEEEEEEEDS TO SPECIFY
+     * @throws RegistrationException thrown if the registration fails in the database.
+     * @throws ConnectException      thrown if unable to connect to the database.
+     * @throws UserNotFoundException if a group is created by the logged in user, but all of the members are not in the contact list of said user.
      */
     public void createGroup(String groupName, Set<String> phoneNumberSet) throws Exception {
         session.createGroup(groupName, phoneNumberSet);
@@ -143,7 +150,9 @@ public class ModelEngine {
      * Precondition: A user is logged in and in the group with the specified ID.
      *
      * @param groupID The ID specific to the group that the user will leave.
-     * @throws Exception //TODO NEEEEEEEEEEEEEEEEDS TO SPECIFY
+     * @throws UserNotFoundException  thrown if the logged in user is not found in the group it wishes to leave.
+     * @throws GroupNotFoundException thrown if a group with the given group id can't be found in database or associated groups.
+     * @throws ConnectException       thrown if unable to connect to the database.
      */
     public void leaveGroup(String groupID) throws Exception {
         session.leaveGroup(groupID);
@@ -167,7 +176,10 @@ public class ModelEngine {
      *
      * @param phoneNumber the phonenumber of the user to add to the group.
      * @param groupID     the ID of the group into which the user will be added.
-     * @throws Exception //TODO NEEEEEEEEEDS TO SPECIFY
+     * @throws UserNotFoundException      thrown if a user with the given phone number can't be found in the database or if the user is not in the contact list.
+     * @throws UserAlreadyExistsException thrown if a user with the given phone number already exists in the group, applies to database and model.
+     * @throws ConnectException           thrown if unable to connect to the database.
+     * @throws GroupNotFoundException     thrown if a group with the given groupID can't be found in the database or in the associated groups for the logged in user.
      */
     public void addUserToGroup(String phoneNumber, String groupID) throws Exception {
         session.addUserToGroup(phoneNumber, groupID);
@@ -182,7 +194,9 @@ public class ModelEngine {
      * @param phoneNumber The phone number associated to the user who is to be removed from
      *                    the group
      * @param groupID     The group ID of the group that the user will be removed from.
-     * @throws Exception //TODO NEEEEEEEEEEEEDS TO SPECIFY
+     * @throws UserNotFoundException  thrown if a user with the given phone number can't be found in the database, or in the group with the given ID.
+     * @throws GroupNotFoundException thrown if a group with the given groupID can't be found in the database or in the list "associated groups".
+     * @throws ConnectException       thrown if unable to connect to the database.
      */
     public void removeUserFromGroup(String phoneNumber, String groupID) throws Exception {
         session.removeUserFromGroup(phoneNumber, groupID);
@@ -203,7 +217,10 @@ public class ModelEngine {
      * @param owed          A positive BigDecimal, representing the whole value spent by the lender.
      * @param description   A short string, preferably <20 characters, that describes the debt
      * @param splitStrategy How the debt will be split (if at all) among the borrowers.
-     * @throws Exception //TODO NEEEEEEEEEEEEDS TO SPECIFY
+     * @throws GroupNotFoundException thrown if a group with the given groupID can't be found in the database or in the list "associated groups".
+     * @throws UserNotFoundException  thrown if the lender or borrowers are not members of the group.
+     * @throws DebtException          thrown if the creation of the debt failed.
+     * @throws ConnectException       thrown if unable to connect to the database.
      */
     public void createDebt(String groupID, String lender, Set<String> borrower, BigDecimal owed, String description, IDebtSplitStrategy splitStrategy) throws Exception {
         session.createDebt(groupID, lender, borrower, owed, description, splitStrategy);
@@ -219,7 +236,10 @@ public class ModelEngine {
      * @param amount  The amount to pay off on the debt.
      * @param debtID  The ID of the debt towards which the payment will be done.
      * @param groupID The ID of the group in which the payment will be made.
-     * @throws Exception //TODO NEEEEEEEEEDS TO SPECIFY
+     * @throws InvalidDebtException    thrown if the debt is invalid.
+     * @throws InvalidPaymentException thrown if the payment is invalid.
+     * @throws GroupNotFoundException  thrown if a group with the given groupID can't be found in the database or in the list "associated groups".
+     * @throws ConnectException        thrown if unable to connect to the database.
      */
     public void payOffDebt(BigDecimal amount, String debtID, String groupID) throws Exception {
         session.payOffDebt(amount, debtID, groupID);
@@ -241,8 +261,9 @@ public class ModelEngine {
      *
      * @param groupID the id of the group which is returned.
      * @return group with the provided groupID, wrapped in IGroupData type.
+     * @throws GroupNotFoundException if the group with the given ID is not found in the list of associated groups to the logged in user.
      */
-    public IGroupData getGroup(String groupID) {
+    public IGroupData getGroup(String groupID) throws GroupNotFoundException {
         return session.getAssociatedGroupFromId(groupID);
     }
 
@@ -254,5 +275,4 @@ public class ModelEngine {
     public Set<IUserData> getContacts() {
         return session.getContacts();
     }
-
 }

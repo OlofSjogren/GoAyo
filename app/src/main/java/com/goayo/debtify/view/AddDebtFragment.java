@@ -170,7 +170,6 @@ public class AddDebtFragment extends Fragment {
             requireActivity().finish();
         } catch (Exception e) {
             // send the error message
-            // TODO probably also highlight invalid text field if possible
             Toast.makeText(getContext(), "Please enter valid input", Toast.LENGTH_LONG).show();
         }
     }

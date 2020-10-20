@@ -89,9 +89,10 @@
             android:id="@+id/debtDesciption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="148dp"
-            android:text="Description"
+            android:layout_marginStart="124dp"
+            android:layout_marginTop="4dp"
 
+            android:text="Description"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/debtDate" />
 

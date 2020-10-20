@@ -68,7 +68,7 @@ public class MyGroupsFragment extends Fragment {
 
         List<IGroupData> groupData = new ArrayList<>(viewModel.getGroupsData().getValue());
 
-        final GroupViewAdapter groupViewAdapter = new GroupViewAdapter(groupData, viewModel.getCurrentLoggedInUsersPhoneNumber());
+        final GroupViewAdapter groupViewAdapter = new GroupViewAdapter(groupData, viewModel.getLoggedInUser().getPhoneNumber());
         initRecyclerView(groupViewAdapter);
 
         //Updates RecyclerView when LiveData is changed.
@@ -102,18 +102,18 @@ public class MyGroupsFragment extends Fragment {
 
     private void initHeader(MyGroupsFragmentBinding binding, MyGroupsViewModel viewModel) {
         StringBuilder sb = new StringBuilder();
-        sb.append(viewModel.getCurrentLoggedInUsersPhoneNumber());
+        sb.append(viewModel.getLoggedInUser().getPhoneNumber());
         sb.insert(7, " ");
         sb.insert(5, " ");
         sb.insert(3, "-");
 
-        binding.welcomeBannerNameTextView.setText(viewModel.getCurrentLoggedInUserName());
+        binding.welcomeBannerNameTextView.setText(viewModel.getLoggedInUser().getName());
         binding.welcomeBannerPhoneNumberTextView.setText(sb.toString());
 
         BigDecimal total = new BigDecimal(0);
         for (IGroupData g : viewModel.getGroupsData().getValue()) {
             try {
-                total = total.add(g.getUserTotal(viewModel.getCurrentLoggedInUsersPhoneNumber()));
+                total = total.add(g.getUserTotal(viewModel.getLoggedInUser().getPhoneNumber()));
             } catch (UserNotFoundException e) {
                 e.printStackTrace();
             }

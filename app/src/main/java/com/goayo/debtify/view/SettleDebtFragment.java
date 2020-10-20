@@ -34,6 +34,7 @@ import java.util.List;
  * 2020-09-29 Modified by Yenan: Connected with SettleDebtFragment
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
+ * 2020-10-15 Modified by Yenan Wang & Alex Phu: Removed conversion to array in initRecyclerView()
  */
 public class SettleDebtFragment extends Fragment {
     // the ViewModel for this fragment
@@ -67,11 +68,8 @@ public class SettleDebtFragment extends Fragment {
     private void initRecyclerView(List<IDebtData> debtList) {
         // retrieve the recyclerview
         RecyclerView recyclerView = binding.settleDebtRecyclerView;
-        // convert the list to array
-        IDebtData[] debtArray = new IDebtData[debtList.size()];
-        debtArray = debtList.toArray(debtArray);
         // initialise the recyclerview and adapter
-        pickDebtAdapter = new PickDebtAdapter(debtArray);
+        pickDebtAdapter = new PickDebtAdapter(debtList);
         recyclerView.setAdapter(pickDebtAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
     }
@@ -91,8 +89,7 @@ public class SettleDebtFragment extends Fragment {
             // if the debt is settled successfully, then finish the activity
             requireActivity().finish();
         } catch (Exception e) {
-            // TODO catch more specific exceptions
-            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Please enter a valid input", Toast.LENGTH_LONG).show();
         }
     }
 }

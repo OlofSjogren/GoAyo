@@ -2,6 +2,8 @@ package com.goayo.debtify.model;
 
 import androidx.annotation.Nullable;
 
+import java.util.Objects;
+
 /**
  * @author Alex Phu, Olof Sjögren
  * @date 2020-09-15
@@ -9,7 +11,8 @@ import androidx.annotation.Nullable;
  * Class representing user.
  * <p>
  * 2020-09-16 Modified by Olof & Alex: class implements IUserData.
- * 2020-10-13 Modified by Olof Sjögren:
+ * 2020-10-13 Modified by Olof Sjögren: Added JavaDoc
+ * 2020-10-15 Modified by Yenan Wang & Alex Phu: implemented compareTo(..) method
  */
 class User implements IUserData {
 
@@ -35,11 +38,25 @@ class User implements IUserData {
         return false;
     }
 
+    /**
+     * Generate a custom hash based on the properties of the object in it's current state.
+     * @return a hash value based of phoneNumber and name.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(phoneNumber, name);
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public int compareTo(IUserData user) {
+        return name.compareTo(user.getName());
     }
 }

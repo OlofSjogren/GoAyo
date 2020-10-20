@@ -6,7 +6,7 @@ package com.goayo.debtify.model;
  * <p>
  * Exception related to debt/payment creation
  */
-public class DebtException extends RuntimeException {
+public class DebtException extends Exception {
 
     /**
      * create a new exception with a given error message

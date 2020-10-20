@@ -35,7 +35,7 @@ public class LedgerTest {
     }
 
     @Test
-    public void testGetDebtData() throws Exception {
+    public void testGetDebtData() throws InvalidPaymentException {
         IDebtData debt = ledger.getDebtData("TestID");
         assertEquals("Test", debt.getDescription());
         assertEquals(100, debt.getAmountOwed().intValue());

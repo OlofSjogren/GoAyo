@@ -2,9 +2,13 @@ package com.goayo.debtify.viewmodel;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.goayo.debtify.model.GroupNotFoundException;
 import com.goayo.debtify.model.IDebtData;
+import com.goayo.debtify.model.InvalidDebtException;
+import com.goayo.debtify.model.InvalidPaymentException;
 
 import java.math.BigDecimal;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -66,8 +70,7 @@ public class SettleDebtViewModel extends ModelEngineViewModel {
      * @throws Exception To be specified later
      */
     public void settleDebt(BigDecimal amount, String debtID, String groupID)
-    // TODO SPECIFY IT!!!!
-            throws Exception {
+            throws InvalidDebtException, InvalidPaymentException, GroupNotFoundException, ConnectException {
         getModel().payOffDebt(amount, debtID, groupID);
     }
 
