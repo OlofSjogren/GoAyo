@@ -1,7 +1,5 @@
 package com.goayo.debtify.model;
 
-import com.goayo.debtify.mockdatabase.MockDatabase;
-
 import java.math.BigDecimal;
 import java.net.ConnectException;
 import java.util.Set;
@@ -32,10 +30,10 @@ import java.util.Set;
 
 public class ModelEngine {
 
-    private Account account;
+    private Session session;
 
     public ModelEngine(IDatabase database) {
-        this.account = new Account(database);
+        this.session = new Session(database);
     }
 
     /**
@@ -50,20 +48,20 @@ public class ModelEngine {
      * @throws ConnectException      thrown if unable to make a database connection.
      */
     public void registerUser(String phoneNumber, String name, String password) throws RegistrationException, ConnectException {
-        account.registerUser(phoneNumber, password, name);
+        session.registerUser(phoneNumber, password, name);
     }
 
     /**
-     * Method for force-updating the account towards the IDatabase.
+     * Method for force-updating the session towards the IDatabase.
      *
      * @throws Exception //TODO NEEEEEEEEDS TO SPECIFY
      */
     public void refreshWithDatabase() throws Exception {
-        account.refreshWithDatabase();
+        session.refreshWithDatabase();
     }
 
     /**
-     * Logs the user into the application. Other functions related to account management will
+     * Logs the user into the application. Other functions related to session management will
      * throw an exception if no user is logged in.
      * <p>
      * Precondition: The user exists in the database.
@@ -74,7 +72,7 @@ public class ModelEngine {
      * @throws Exception //TODO NEEEEEEEEEEEEDS TO SPECIFY
      */
     public void logInUser(String phoneNumber, String password) throws Exception {
-        account.loginUser(phoneNumber, password);
+        session.loginUser(phoneNumber, password);
     }
 
     /**
@@ -84,7 +82,7 @@ public class ModelEngine {
      * Precondition: The user is logged in to the model.
      */
     public void logOutUser() {
-        account.logOutUser();
+        session.logOutUser();
     }
 
     /**
@@ -96,7 +94,7 @@ public class ModelEngine {
      * @throws ConnectException           thrown if unable to make a database connection.
      */
     public void addContact(String phoneNumber) throws UserNotFoundException, UserAlreadyExistsException, ConnectException {
-        account.addContact(phoneNumber);
+        session.addContact(phoneNumber);
     }
 
 
@@ -110,7 +108,7 @@ public class ModelEngine {
      * @throws Exception //TODO NEEEEEEDS TO SPECIFY
      */
     public void removeContact(String phoneNumber) throws Exception {
-        account.removeContact(phoneNumber);
+        session.removeContact(phoneNumber);
     }
 
     /**
@@ -122,7 +120,7 @@ public class ModelEngine {
      * @throws ConnectException      thrown if unable to make a database connection.
      */
     public IUserData getSingleUserFromDatabase(String phoneNumber) throws UserNotFoundException, ConnectException {
-        return account.getSingleUserFromDatabase(phoneNumber);
+        return session.getSingleUserFromDatabase(phoneNumber);
     }
 
     /**
@@ -136,7 +134,7 @@ public class ModelEngine {
      * @throws Exception //TODO NEEEEEEEEEEDS TO SPECIFY
      */
     public void createGroup(String groupName, Set<String> phoneNumberSet) throws Exception {
-        account.createGroup(groupName, phoneNumberSet);
+        session.createGroup(groupName, phoneNumberSet);
     }
 
     /**
@@ -148,7 +146,7 @@ public class ModelEngine {
      * @throws Exception //TODO NEEEEEEEEEEEEEEEEDS TO SPECIFY
      */
     public void leaveGroup(String groupID) throws Exception {
-        account.leaveGroup(groupID);
+        session.leaveGroup(groupID);
     }
 
     /**
@@ -157,7 +155,7 @@ public class ModelEngine {
      * @return A set of the associated groups wrapped in the IGroupData type.
      */
     public Set<IGroupData> getGroups() {
-        return account.getAssociatedGroups();
+        return session.getAssociatedGroups();
     }
 
     /**
@@ -172,7 +170,7 @@ public class ModelEngine {
      * @throws Exception //TODO NEEEEEEEEEDS TO SPECIFY
      */
     public void addUserToGroup(String phoneNumber, String groupID) throws Exception {
-        account.addUserToGroup(phoneNumber, groupID);
+        session.addUserToGroup(phoneNumber, groupID);
     }
 
     /**
@@ -187,7 +185,7 @@ public class ModelEngine {
      * @throws Exception //TODO NEEEEEEEEEEEEDS TO SPECIFY
      */
     public void removeUserFromGroup(String phoneNumber, String groupID) throws Exception {
-        account.removeUserFromGroup(phoneNumber, groupID);
+        session.removeUserFromGroup(phoneNumber, groupID);
     }
 
     /**
@@ -208,7 +206,7 @@ public class ModelEngine {
      * @throws Exception //TODO NEEEEEEEEEEEEDS TO SPECIFY
      */
     public void createDebt(String groupID, String lender, Set<String> borrower, BigDecimal owed, String description, IDebtSplitStrategy splitStrategy) throws Exception {
-        account.createDebt(groupID, lender, borrower, owed, description, splitStrategy);
+        session.createDebt(groupID, lender, borrower, owed, description, splitStrategy);
     }
 
     /**
@@ -224,7 +222,7 @@ public class ModelEngine {
      * @throws Exception //TODO NEEEEEEEEEDS TO SPECIFY
      */
     public void payOffDebt(BigDecimal amount, String debtID, String groupID) throws Exception {
-        account.payOffDebt(amount, debtID, groupID);
+        session.payOffDebt(amount, debtID, groupID);
     }
 
     /**
@@ -235,7 +233,7 @@ public class ModelEngine {
      * @return the logged in user wrapped as in the IUserData type.
      */
     public IUserData getLoggedInUser() {
-        return account.getLoggedInUser();
+        return session.getLoggedInUser();
     }
 
     /**
@@ -245,7 +243,7 @@ public class ModelEngine {
      * @return group with the provided groupID, wrapped in IGroupData type.
      */
     public IGroupData getGroup(String groupID) {
-        return account.getAssociatedGroupFromId(groupID);
+        return session.getAssociatedGroupFromId(groupID);
     }
 
     /**
@@ -254,7 +252,7 @@ public class ModelEngine {
      * @return a set of the logged in user's contacts, each user is wrapped in IUserData type.
      */
     public Set<IUserData> getContacts() {
-        return account.getContacts();
+        return session.getContacts();
     }
 
 }

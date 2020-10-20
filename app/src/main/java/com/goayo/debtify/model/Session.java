@@ -13,7 +13,7 @@ import java.util.UUID;
  * @author Alex Phu, Olof Sjögren
  * @date 2020-09-16
  * <p>
- * Class representing Account.
+ * Class representing Session.
  * <p>
  * 2020-09-17 Modified by Alex Phu and Olof Sjögren: Continued implementing methods.
  * Changed boolean functions to throw exceptions instead.
@@ -38,10 +38,11 @@ import java.util.UUID;
  * 2020-10-13 Modified by Olof Sjögren: Refactored EventBus publications to publish enum-types instead of objects.
  * 2020-10-14 Modified by Olof Sjögren: Updated JDocs.
  * 2020-10-14 Modified by Oscar Sanner: Removed the method get group from ID. This method was obsolete and relying on the database rather than the object oriented model.
- * 2020-10-16 Modified by Oscar Sanner: Create debt and add payment methods will now take in a date. This has been adjusted and Account is responsible for creating these
+ * 2020-10-16 Modified by Oscar Sanner: Create debt and add payment methods will now take in a date. This has been adjusted and Session is responsible for creating these
  * debts and sending them to the group and the database respectively.
+ * 2020-10-20 Modified by Alex Phu: Renamed class to session.
  */
-class Account {
+class Session {
 
     private final FromJsonFactory fromJsonFactory;
     private User loggedInUser;
@@ -50,11 +51,11 @@ class Account {
     private final IDatabase database;
 
     /**
-     * Constructor for Account class.
+     * Constructor for Session class.
      *
      * @param database Instance of database.
      */
-    public Account(IDatabase database) {
+    public Session(IDatabase database) {
         this.database = database;
         this.fromJsonFactory = new FromJsonFactory();
     }
