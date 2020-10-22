@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author Oscar Sanner and Olof Sjögren
+ * @author Oscar Sanner and Olof Sjögren
  * @date 2020-10-07
  * <p>
  * 2020-10-13 Modified by Olof Sjögren: Now utilizes enum-types instead of class-types.

@@ -1,7 +1,7 @@
 package com.goayo.debtify.model;
 
 /**
- * @Author Oscar Sanner
+ * @author Oscar Sanner
  * @date 2020-10-12
  *
  * A class used for holding differently formatted json-stings.

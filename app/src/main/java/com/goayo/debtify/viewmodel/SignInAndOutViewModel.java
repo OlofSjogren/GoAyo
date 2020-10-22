@@ -7,7 +7,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * @Author Oscar Sanner and Olof Sjögren
+ * @author Oscar Sanner and Olof Sjögren
  * @date 2020-09-30
  * <p>
  * View model class responsible for handling logIn request from Views and calling upon ModelEngine accordingly.

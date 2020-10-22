@@ -5,7 +5,7 @@ import java.net.ConnectException;
 import java.util.Set;
 
 /**
- * @Author Oscar Sanner
+ * @author Oscar Sanner
  * @date 2020-09-15
  * <p>
  * A facade class for the model package. The purpose of the class is to be the face outwards towards other

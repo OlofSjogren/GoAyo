@@ -1,17 +1,16 @@
 package com.goayo.debtify.mockdatabase;
 
-import com.goayo.debtify.model.Tuple;
 import com.goayo.debtify.model.GroupNotFoundException;
 import com.goayo.debtify.model.IDatabase;
 import com.goayo.debtify.model.IDebtSplitStrategy;
+import com.goayo.debtify.model.IUserData;
 import com.goayo.debtify.model.InvalidPaymentException;
 import com.goayo.debtify.model.JsonString;
 import com.goayo.debtify.model.LoginException;
 import com.goayo.debtify.model.RegistrationException;
+import com.goayo.debtify.model.Tuple;
 import com.goayo.debtify.model.UserAlreadyExistsException;
 import com.goayo.debtify.model.UserNotFoundException;
-import com.goayo.debtify.model.IUserData;
-import com.goayo.debtify.viewmodel.ViewModelUtil;
 import com.google.gson.Gson;
 
 import java.math.BigDecimal;
@@ -36,10 +35,10 @@ public class MockDatabase implements IDatabase {
         users = new ArrayList<>();
         groups = new ArrayList<>();
         try {
-            registerUser("1231231230", hashSha256("123"), "Olof Sjögren");
-            registerUser("1231231231", hashSha256("123"), "Oscar Sanner");
-            registerUser("1231231232", hashSha256("123"), "Alex Phu");
-            registerUser("1231231233", hashSha256("123"), "Yenan Wang");
+            registerUser("1231231230", pHashSha256("123"), "Olof Sjögren");
+            registerUser("1231231231", pHashSha256("123"), "Oscar Sanner");
+            registerUser("1231231232", pHashSha256("123"), "Alex Phu");
+            registerUser("1231231233", pHashSha256("123"), "Yenan Wang");
 
             addContact("1231231230", "1231231231");
             addContact("1231231231", "1231231232");
@@ -258,7 +257,7 @@ public class MockDatabase implements IDatabase {
         g.debts = debts.toArray(new MockDbObject.Debt[debts.size()]);
     }
 
-    private String hashSha256(String password){
+    private String pHashSha256(String password){
         MessageDigest digest;
         try {
             digest = MessageDigest.getInstance("SHA-256");
