@@ -41,6 +41,11 @@ public class GroupTest {
         tempGroup.addUser(testUser);
         int setSizeAfter = tempGroup.getGroupMembers().size();
         assertTrue(setSizeBefore < setSizeAfter);
+
+        //Adding the same user again should throw exception.
+        Assert.assertThrows(UserAlreadyExistsException.class,
+                () -> tempGroup.addUser(testUser)
+        );
     }
 
     @Test
@@ -57,6 +62,12 @@ public class GroupTest {
 
         tempGroup.addUser(secondUserList);
         assertTrue(tempGroup.getGroupMembers().containsAll(secondUserList));
+
+        for (User user : secondUserList) {
+            Assert.assertThrows(UserAlreadyExistsException.class,
+                    () -> tempGroup.addUser(user)
+            );
+        }
     }
 
     @Test
@@ -68,11 +79,23 @@ public class GroupTest {
         tempGroup.addUser(testUser);
         assertTrue(tempGroup.getGroupMembers().contains(testUser));
 
+        //Check that user already in group can't be added again, expect exception to be thrown.
+        Assert.assertThrows(UserAlreadyExistsException.class,
+                () -> tempGroup.addUser(testUser)
+        );
+
         tempGroup.removeUser(testUser);
         int sizeAfter = tempGroup.getGroupMembers().size();
         assertEquals(sizebefore, sizeAfter);
 
         assertFalse(tempGroup.getGroupMembers().contains(testUser));
+
+        User testUserNotInGroup = new User("070123456", "Kent");
+
+        //Check that user not in group can't be removed from a group, expect exception to be thrown.
+        Assert.assertThrows(UserNotFoundException.class,
+                () -> tempGroup.removeUser(testUserNotInGroup)
+        );
     }
 
     @Test
@@ -90,6 +113,11 @@ public class GroupTest {
 
         for (User u : userSet) {
             assertFalse(tempGroup.getGroupMembers().contains(u));
+
+            //Check that user not in group can't be removed from a group, expect exception to be thrown.
+            Assert.assertThrows(UserNotFoundException.class,
+                    () -> tempGroup.removeUser(u)
+            );
         }
 
         tempGroup.removeUser(secondUserList);
@@ -97,20 +125,7 @@ public class GroupTest {
     }
 
     @Test
-    public void testRemoveNonExistingUser() {
-        Group tempGroup = new Group("Belgien resa", "2345", userSet);
-
-        Set<User> secondUserList = new HashSet<>();
-        secondUserList.add(new User("12345566", "Lars"));
-        secondUserList.add(new User("987654", "Holme"));
-        secondUserList.add(new User("12345566", "Bengt"));
-        secondUserList.add(new User("987654", "Felix"));
-
-        Assert.assertThrows(UserNotFoundException.class, () -> tempGroup.removeUser(secondUserList));
-    }
-
-    @Test
-    public void testGetUserTotal() throws DebtException {
+    public void testGetUserTotal() throws DebtException, UserNotFoundException {
         User user1 = new User("0760460051", "Alex");
         User user2 = new User("0760460052", "Axel");
         Set<User> tempUserSet = new HashSet<>();
@@ -125,10 +140,6 @@ public class GroupTest {
         Map<User, String> map1 = new HashMap<>();
         map1.put(user1, "0760460051");
         tempGroup.createDebt(user1, map1, new BigDecimal(random_int), "Test", DebtSplitFactory.createNoSplitStrategy(), new Date());
-        try {
-            assertEquals(new BigDecimal(random_int).setScale(2, RoundingMode.HALF_EVEN), tempGroup.getUserTotal("0760460051"));
-        } catch (UserNotFoundException e) {
-            e.printStackTrace();
-        }
+        assertEquals(new BigDecimal(random_int).setScale(2, RoundingMode.HALF_EVEN), tempGroup.getUserTotal("0760460051"));
     }
 }
