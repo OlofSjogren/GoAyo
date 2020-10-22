@@ -24,7 +24,7 @@ public class SignUpViewModel extends ModelEngineViewModel {
      */
     public boolean registerUser(String phoneNumber, String name, String password) {
         try {
-            getModel().registerUser(phoneNumber, name, password);
+            getModel().registerUser(phoneNumber, name, ViewModelUtil.hashSha256(password));
         } catch (RegistrationException | ConnectException e) {
             e.printStackTrace();
             return false;

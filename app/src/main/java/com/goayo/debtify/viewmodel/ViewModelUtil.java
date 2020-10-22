@@ -2,6 +2,9 @@ package com.goayo.debtify.viewmodel;
 
 import com.goayo.debtify.model.IUserData;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,6 +29,19 @@ public enum ViewModelUtil {
             userNameSet.add(user.getPhoneNumber());
         }
         return userNameSet;
+    }
+
+    public static String hashSha256(String password){
+        MessageDigest digest;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+        byte[] encodedhash = digest.digest(
+                password.getBytes(StandardCharsets.UTF_8));
+        return new String(encodedhash);
     }
 
     /**

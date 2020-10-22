@@ -2,6 +2,10 @@ package com.goayo.debtify.viewmodel;
 
 import android.util.Log;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * @Author Oscar Sanner and Olof Sjögren
  * @date 2020-09-30
@@ -21,8 +25,9 @@ public class SignInAndOutViewModel extends ModelEngineViewModel {
      * @return true if login was successful, false if login failed.
      */
     public boolean logInUser(String phoneNumber, String password) {
+
         try {
-            getModel().logInUser(phoneNumber, password);
+            getModel().logInUser(phoneNumber, ViewModelUtil.hashSha256(password));
         } catch (Exception e) {
             Log.d(e.getMessage(), "logInUser: ");
             return false;
