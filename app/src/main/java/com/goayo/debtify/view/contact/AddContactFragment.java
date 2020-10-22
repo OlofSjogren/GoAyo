@@ -20,9 +20,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.AddContactFragmentBinding;
+import com.goayo.debtify.model.IUserData;
 import com.goayo.debtify.model.UserAlreadyExistsException;
 import com.goayo.debtify.model.UserNotFoundException;
-import com.goayo.debtify.model.IUserData;
 import com.goayo.debtify.view.adapter.UserCardViewAdapter;
 import com.goayo.debtify.viewmodel.AddContactViewModel;
 
@@ -37,6 +37,8 @@ import java.util.List;
  * @date 2020-10-08
  * <p>
  * Fragment class to add a user to the logged in user's contacts
+ * <p>
+ * 2020-10-22 Modified by Yenan Wang: Updated code formatting
  */
 public class AddContactFragment extends Fragment {
     // binding object that generates all widgets that belong to this class's xml file
@@ -70,6 +72,7 @@ public class AddContactFragment extends Fragment {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // ignored
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // ignored
@@ -121,7 +124,7 @@ public class AddContactFragment extends Fragment {
             stepBack();
         } catch (ConnectException | UserNotFoundException | UserAlreadyExistsException e) {
             // dump the error message to the user
-           Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -141,7 +144,7 @@ public class AddContactFragment extends Fragment {
 
     // forces the back button to pop the backstack instead of doing whatever it was doing
     private void setOnBackPressed() {
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 stepBack();

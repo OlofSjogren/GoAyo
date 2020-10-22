@@ -32,19 +32,23 @@ import java.util.List;
  * <p>
  * Create-a-group page.
  * <p>
- * 2020-09-18 Modified by Alex Phu and Olof Sjögren: Added listener for create button. Logic will be implemented later.
- * 2020-10-05 Modified by ALex & Yenan: implemented create group button and now it actually creates a group
+ * 2020-09-18 Modified by Alex Phu & Olof Sjögren: Added listener for create button. Logic will be implemented later.
+ * 2020-10-05 Modified by ALex Phu & Yenan Wang: implemented create group button and now it actually creates a group
  * 2020-10-12 Modified by Alex Phu: Moved clicklistener logic to the empty initContinueButton() method
+ * 2020-10-22 Modified by Yenan Wang: Updated code formatting
  */
 public class CreateGroupFragment extends Fragment {
-
+    // binding object that generates all widgets that belong to this class's xml file
     private CreateGroupFragmentBinding binding;
+    // ViewModel specific to this class
     private GroupCreationViewModel model;
+    // adapter that displays all users that match the phone number
     private UserCardViewAdapter userCardViewAdapter;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.create_group_fragment, container, false);
 
         model = ViewModelProviders.of(requireActivity()).get(GroupCreationViewModel.class);
@@ -59,6 +63,7 @@ public class CreateGroupFragment extends Fragment {
                 binding.createGroupNumTextView.setText(iUserData.size() + " participants");
             }
         });
+
         initContinueButton();
 
         return binding.getRoot();

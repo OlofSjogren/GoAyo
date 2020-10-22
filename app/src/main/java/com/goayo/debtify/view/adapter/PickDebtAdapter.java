@@ -18,6 +18,7 @@ import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Gabriel Brattgård & Yenan Wang
@@ -26,17 +27,13 @@ import java.util.List;
  * RecyclerView adapter for pick_debt_cardview. Ensures that the correct information are shown on each cardItem and its respective listeners.
  * <p>
  * 2020-09-28 Modified by Yenan Wang: Add debt description to the cardview
- * <p>
  * 2020-10-08 Modified by Alex Phu: Refactored setDebtData and added configureName() method.
- * <p>
  * 2020-10-09 Modified by Yenan Wang, Alex Phu: Rounded decimals to 2 in balance
- * <p>
  * 2020-10-11 Modified by Alex Phu: Fixed bug in configureName() which would crash if user has not entered a surname. Now also handles lots of edge cases which shouldn't even occur in the first place.
  * Ignores middle names.
- *
  * 2020-10-15 Modified by Yenan Wang & Alex Phu: Adapter now sorts its items
+ * 2020-10-22 Modified by Yenan Wang: Updated code formatting
  */
-
 public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDebtViewHolder> {
 
     private final List<IDebtData> debtData;
@@ -57,7 +54,8 @@ public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDe
     @NonNull
     @Override
     public PickDebtViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        CardView v = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.pick_debt_cardview, parent, false);
+        CardView v = (CardView) LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.pick_debt_cardview, parent, false);
 
         return new PickDebtViewHolder(v);
     }
@@ -124,7 +122,7 @@ public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDe
         @SuppressLint("SetTextI18n")
         public void setDebtData(IDebtData debtData) {
             //Formats the date
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm", Locale.US);
             date.setText(format.format(debtData.getDate()));
             lender.setText(configureName(debtData.getLender().getName()));
             borrower.setText(configureName(debtData.getBorrower().getName()));
@@ -133,17 +131,17 @@ public class PickDebtAdapter extends RecyclerView.Adapter<PickDebtAdapter.PickDe
         }
 
         private String configureName(String name) {
-          //Trims name and removes multiple spaces in between name and surname
-          String temporaryNameHolder = name.trim().replaceAll("\\s+", " ");
-          if(temporaryNameHolder.contains(" ")){
-              //If First name and surname exists
-              String[] nameArray = temporaryNameHolder.split(" ");
-              StringBuilder sb = new StringBuilder();
-              String firstLetterOfSurname = nameArray[nameArray.length-1].substring(0, 1);
-              sb.append(nameArray[0]).append(" ").append(firstLetterOfSurname);
-              return sb.toString();
-          }
-          return temporaryNameHolder;
+            //Trims name and removes multiple spaces in between name and surname
+            String temporaryNameHolder = name.trim().replaceAll("\\s+", " ");
+            if (temporaryNameHolder.contains(" ")) {
+                //If First name and surname exists
+                String[] nameArray = temporaryNameHolder.split(" ");
+                StringBuilder sb = new StringBuilder();
+                String firstLetterOfSurname = nameArray[nameArray.length - 1].substring(0, 1);
+                sb.append(nameArray[0]).append(" ").append(firstLetterOfSurname);
+                return sb.toString();
+            }
+            return temporaryNameHolder;
         }
     }
 }

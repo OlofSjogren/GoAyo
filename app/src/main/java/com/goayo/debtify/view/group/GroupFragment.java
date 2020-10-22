@@ -22,8 +22,8 @@ import com.goayo.debtify.databinding.GroupFragmentBinding;
 import com.goayo.debtify.model.GroupNotFoundException;
 import com.goayo.debtify.model.IDebtData;
 import com.goayo.debtify.model.IUserData;
-import com.goayo.debtify.view.debt.DebtActivity;
 import com.goayo.debtify.view.adapter.TransactionCardAdapter;
+import com.goayo.debtify.view.debt.DebtActivity;
 import com.goayo.debtify.viewmodel.DetailedGroupViewModel;
 import com.goayo.debtify.viewmodel.PickUserViewModel;
 
@@ -38,36 +38,32 @@ import java.util.List;
  * <p>
  * Page representing a Group
  * <p>
- * 2020-09-22 Modified by Oscar Sanner and Alex Phu: Added binding methods
+ * 2020-09-22 Modified by Oscar Sanner & Alex Phu: Added binding methods
  * and initializer for recycler view.
- * <p>
- * 2020-09-23 Modified by Alex: Added fetchDebtData method. Will probably be changed later depending on
+ * 2020-09-23 Modified by Alex Phu: Added fetchDebtData method. Will probably be changed later depending on
  * if IDebtData's type will be changed to Set from List.
- * <p>
- * 25-09-2020 Modified by Alex: Refactored bottom-buttons to GroupFragment from DetailedGroupActivity.
- * <p>
- * 25-09-2020 Modified by Alex Phu, Oscar Sanner, Olof Sjögren: Setup communication with ViewModel instead ModelEngine.
- * <p>
- * 2020/09/25 Modified by Oscar Sanner, Alex Phu and Olof Sjögren: Added factory to ViewModelProvider.
- * <p>
- * 2020/09/30 Modified by Alex Phu, Yenan Wang: Refactored entire class.
- * <p>
+ * 2020-09-25 Modified by Alex Phu: Refactored bottom-buttons to GroupFragment from DetailedGroupActivity.
+ * 2020-09-25 Modified by Alex Phu & Oscar Sanner & Olof Sjögren: Setup communication with ViewModel instead ModelEngine.
+ * 2020-09-25 Modified by Oscar Sanner, Alex Phu and Olof Sjögren: Added factory to ViewModelProvider.
+ * 2020-09-30 Modified by Alex Phu, Yenan Wang: Refactored entire class.
  * 2020-10-09 Modified by Yenan Wang & Alex Phu: Add observer to ViewModel so view updates correctly
- * <p>
  * 2020-10-12 Modified by Alex Phu: Implemented initRefreshLayout() to be able to refresh data from database
- * <p>
  * 2020-10-13 Modified by Alex Phu: Total balance now changes depending on the amount of debt. Refactored code out from the gigantic onCreateView() method.
- * <p>
  * 2020-10-13 Modified by Alex Phu: Made RecyclerView unfocusable.
+ * 2020-10-22 Modified by Yenan Wang: Updated code formatting
  */
 public class GroupFragment extends Fragment {
+    // ViewModel specific to this class
     private DetailedGroupViewModel viewModel;
+    // adapter that displays the debts and payments in this group
     private TransactionCardAdapter adapter;
+    // binding object that generates all widgets that belong to this class's xml file
     private GroupFragmentBinding binding;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.group_fragment, container, false);
 
         viewModel = ViewModelProviders.of(requireActivity()).get(DetailedGroupViewModel.class);
@@ -83,7 +79,8 @@ public class GroupFragment extends Fragment {
         }
 
         // observe the selectedUserData and add the selected users
-        ViewModelProviders.of(requireActivity()).get(PickUserViewModel.class).getSelectedUsersData().observe(getViewLifecycleOwner(), new Observer<List<IUserData>>() {
+        ViewModelProviders.of(requireActivity()).get(PickUserViewModel.class)
+                .getSelectedUsersData().observe(getViewLifecycleOwner(), new Observer<List<IUserData>>() {
             @Override
             public void onChanged(List<IUserData> iUserData) {
                 viewModel.addSelectedMembersToCurrentGroup(new HashSet<>(iUserData));
@@ -111,13 +108,19 @@ public class GroupFragment extends Fragment {
                 //Sets colour depending on total balance and amount
                 switch (bigDecimal.compareTo(new BigDecimal(0))) {
                     case 0:
-                        binding.detailedGroupBalanceTextView.setTextColor(binding.detailedGroupBalanceTextView.getResources().getColor(R.color.dividerGrey));
+                        binding.detailedGroupBalanceTextView
+                                .setTextColor(binding.detailedGroupBalanceTextView.getResources()
+                                        .getColor(R.color.dividerGrey));
                         break;
                     case -1:
-                        binding.detailedGroupBalanceTextView.setTextColor(binding.detailedGroupBalanceTextView.getResources().getColor(R.color.negativeDebtRed));
+                        binding.detailedGroupBalanceTextView
+                                .setTextColor(binding.detailedGroupBalanceTextView.getResources()
+                                        .getColor(R.color.negativeDebtRed));
                         break;
                     case 1:
-                        binding.detailedGroupBalanceTextView.setTextColor(binding.detailedGroupBalanceTextView.getResources().getColor(R.color.positiveDebtGreen));
+                        binding.detailedGroupBalanceTextView
+                                .setTextColor(binding.detailedGroupBalanceTextView.getResources()
+                                        .getColor(R.color.positiveDebtGreen));
                         break;
                 }
                 binding.detailedGroupBalanceTextView.setText(bigDecimal.toString() + "kr");

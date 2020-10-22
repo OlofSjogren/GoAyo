@@ -34,7 +34,7 @@ import java.util.Objects;
  * Fragment class to display a list of personal contacts to the logged in user.
  * Has buttons to add or remove contacts to the list.
  * <p>
- * 2020-10-08 Modified by Yenan: removed the dependency to model, implemented add/remove contacts
+ * 2020-10-08 Modified by Yenan Wang: removed the dependency to model, implemented add/remove contacts
  */
 public class DisplayContactsFragment extends Fragment {
     // binding object that generates all widgets belong to this class's xml file
@@ -48,7 +48,8 @@ public class DisplayContactsFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.display_contacts_fragment, container, false);
         model = ViewModelProviders.of(requireActivity()).get(ContactsViewModel.class);
         pickUserViewModel = ViewModelProviders.of(requireActivity()).get(PickUserViewModel.class);
@@ -69,6 +70,7 @@ public class DisplayContactsFragment extends Fragment {
                 }
             }
         });
+
         // update the view whenever the data updates
         model.getContactsData().observe(getViewLifecycleOwner(), new Observer<List<IUserData>>() {
             @Override
@@ -107,12 +109,14 @@ public class DisplayContactsFragment extends Fragment {
         // send the users to be selected from to PickUserFragment
         pickUserViewModel.setInitialUsers(model.getContactsData().getValue());
         // navigate to PickUserFragment
-        NavHostFragment.findNavController(this).navigate(R.id.action_displayContactsFragment_to_pickUserFragment);
+        NavHostFragment.findNavController(this)
+                .navigate(R.id.action_displayContactsFragment_to_pickUserFragment);
     }
 
     private void addContacts() {
         // navigate to AddContactFragment
-        NavHostFragment.findNavController(this).navigate(R.id.action_displayContactsFragment_to_addContactFragment);
+        NavHostFragment.findNavController(this)
+                .navigate(R.id.action_displayContactsFragment_to_addContactFragment);
     }
 
     private void initRecyclerView(List<IUserData> userData) {

@@ -34,20 +34,22 @@ import java.util.Set;
  * <p>
  * Show members fragment.
  * <p>
- * 2020-09-29 Modified by Alex: Implemented RecyclerView and connected it with GroupsViewModel.
- * BackbuttonPressed now won't exit activity.
- * Disabled OptionsMenu.
- *
- * 2020-09-30 Modified by Alex, Yenan: Small changes to make it use DetailedGroupViewModel.
+ * 2020-09-29 Modified by Alex Phu: Implemented RecyclerView and connected it with GroupsViewModel,
+ * backbutton press now won't exit activity, disabled OptionsMenu.
+ * 2020-09-30 Modified by Alex Phu & Yenan Wang: Small changes to make it use DetailedGroupViewModel.
+ * 2020-10-22 Modified by Yenan Wang: Updated code formatting
  */
 public class ShowMembersFragment extends Fragment {
-    DetailedGroupViewModel detailedGroupViewModel;
+    // ViewModel specific to this class
+    private DetailedGroupViewModel detailedGroupViewModel;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ShowMembersFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.show_members_fragment, container, false);
-        detailedGroupViewModel  = ViewModelProviders.of(requireActivity()).get(DetailedGroupViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        ShowMembersFragmentBinding binding = DataBindingUtil
+                .inflate(inflater, R.layout.show_members_fragment, container, false);
+        detailedGroupViewModel = ViewModelProviders.of(requireActivity()).get(DetailedGroupViewModel.class);
 
         initTextView(binding);
         initRecyclerView(binding);
@@ -65,12 +67,14 @@ public class ShowMembersFragment extends Fragment {
     }
 
     private void onBackButtonPressed() {
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                Navigation.findNavController(requireActivity(), R.id.group_nav_host).navigate(R.id.action_showMembersFragment_to_groupFragment);
-            }
-        });
+        requireActivity().getOnBackPressedDispatcher()
+                .addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        Navigation.findNavController(requireActivity(), R.id.group_nav_host)
+                                .navigate(R.id.action_showMembersFragment_to_groupFragment);
+                    }
+                });
     }
 
     private void initRecyclerView(ShowMembersFragmentBinding binding) {

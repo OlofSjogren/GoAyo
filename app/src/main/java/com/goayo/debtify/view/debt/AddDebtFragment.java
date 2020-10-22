@@ -35,11 +35,11 @@ import java.util.Set;
  * <p>
  * Page for adding a debt to a group.
  * <p>
- * 2020-09-18 Modified by Yenan & Gabriel: Added AddDebt view, tested with hard-coded value
- * 2020-09-22 Modified by Yenan & Gabriel: Removed hard-coded values, added defaults.
- * 2020-09-29 Modified by Yenan: Connected with AddDebtViewModel
- * 2020-09-30 Modified by Yenan & Alex: Made it compatible with PickUser
- * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
+ * 2020-09-18 Modified by Yenan Wang & Gabriel Brattgård: Added AddDebt view, tested with hard-coded value
+ * 2020-09-22 Modified by Yenan Wang & Gabriel Brattgård: Removed hard-coded values, added defaults.
+ * 2020-09-29 Modified by Yenan Wang: Connected with AddDebtViewModel
+ * 2020-09-30 Modified by Yenan Wang & Alex Phu: Made it compatible with PickUser
+ * 2020-10-05 Modified by Oscar Sanner & Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
  * 2020-10-09 Modified by Yenan Wang, Alex Phu: Added radio button
  */
@@ -86,35 +86,38 @@ public class AddDebtFragment extends Fragment {
         });
 
         // set a observer to notify the recyclerview adapter whenever the lender data has changed
-        addDebtViewModel.getSelectedLenderData().observe(getViewLifecycleOwner(), new Observer<Set<IUserData>>() {
-            @Override
-            public void onChanged(Set<IUserData> userDataSet) {
-                lenderAdapter.updateList(new ArrayList<>(userDataSet));
-            }
-        });
+        addDebtViewModel.getSelectedLenderData()
+                .observe(getViewLifecycleOwner(), new Observer<Set<IUserData>>() {
+                    @Override
+                    public void onChanged(Set<IUserData> userDataSet) {
+                        lenderAdapter.updateList(new ArrayList<>(userDataSet));
+                    }
+                });
 
         // set a observer to notify the recyclerview adapter whenever the borrowers data has changed
-        addDebtViewModel.getSelectedBorrowersData().observe(getViewLifecycleOwner(), new Observer<Set<IUserData>>() {
-            @Override
-            public void onChanged(Set<IUserData> userDataSet) {
-                borrowersAdapter.updateList(new ArrayList<>(userDataSet));
-            }
-        });
+        addDebtViewModel.getSelectedBorrowersData()
+                .observe(getViewLifecycleOwner(), new Observer<Set<IUserData>>() {
+                    @Override
+                    public void onChanged(Set<IUserData> userDataSet) {
+                        borrowersAdapter.updateList(new ArrayList<>(userDataSet));
+                    }
+                });
 
         // this observer sets data to AddDebtViewModel whenever something is selected
-        pickUserViewModel.getSelectedUsersData().observe(getViewLifecycleOwner(), new Observer<List<IUserData>>() {
-            @Override
-            public void onChanged(List<IUserData> iUserData) {
-                // ignore it if the list is empty
-                if (iUserData.size() != 0) {
-                    if (dataRetrieved.equals(LENDER_DATA)) {
-                        addDebtViewModel.setSelectedLenderData(new HashSet<>(iUserData));
-                    } else if (dataRetrieved.equals(BORROWER_DATA)) {
-                        addDebtViewModel.setSelectedBorrowersData(new HashSet<>(iUserData));
+        pickUserViewModel.getSelectedUsersData()
+                .observe(getViewLifecycleOwner(), new Observer<List<IUserData>>() {
+                    @Override
+                    public void onChanged(List<IUserData> iUserData) {
+                        // ignore it if the list is empty
+                        if (iUserData.size() != 0) {
+                            if (dataRetrieved.equals(LENDER_DATA)) {
+                                addDebtViewModel.setSelectedLenderData(new HashSet<>(iUserData));
+                            } else if (dataRetrieved.equals(BORROWER_DATA)) {
+                                addDebtViewModel.setSelectedBorrowersData(new HashSet<>(iUserData));
+                            }
+                        }
                     }
-                }
-            }
-        });
+                });
 
         // set a click listener for the button to create the debt and finish activity
         binding.continueButton.setOnClickListener(new View.OnClickListener() {
@@ -146,11 +149,14 @@ public class AddDebtFragment extends Fragment {
     private void openPickUser(boolean isMultipleChoice) {
         pickUserViewModel.setIsMultipleChoice(isMultipleChoice);
         try {
-            pickUserViewModel.setInitialUsers(new ArrayList<>(addDebtViewModel.getGroupMembers(getCurrentGroupID())));
+            pickUserViewModel.setInitialUsers(
+                    new ArrayList<>(addDebtViewModel.getGroupMembers(getCurrentGroupID())));
             NavHostFragment.findNavController(this)
                     .navigate(R.id.action_addDebtFragment_to_pickUsersFragment);
         } catch (Exception e) {
-            Toast.makeText(getContext(), "Oops, seems like our code monkeys made an woopsies daisy, please try again UwU", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(),
+                    "Oops, seems like our code monkeys made an woopsies daisy, please try again UwU",
+                    Toast.LENGTH_LONG).show();
             requireActivity().finish();
         }
     }
@@ -165,7 +171,8 @@ public class AddDebtFragment extends Fragment {
             String description = binding.editTextDebtDescription.getText().toString();
 
             // create debt
-            addDebtViewModel.createDebt(groupID, lenderSet, borrowerSet, amount, description, binding.addDebtNoSplitRadiobutton.isChecked());
+            addDebtViewModel.createDebt(groupID, lenderSet, borrowerSet, amount, description,
+                    binding.addDebtNoSplitRadiobutton.isChecked());
             // once the debt is created, the activity is therefore useless and needs to be killed
             requireActivity().finish();
         } catch (NumberFormatException e) {

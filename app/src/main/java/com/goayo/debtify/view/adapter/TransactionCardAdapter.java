@@ -16,7 +16,6 @@ import com.goayo.debtify.model.IDebtData;
 import com.goayo.debtify.model.IPaymentData;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,24 +29,13 @@ import java.util.List;
  * RecyclerView adapter for the tranaction cardviews. Ensures that the correct information are shown on each cardItem.
  * <p>
  * 2020-09-28 Modified by Yenan Wang: add debt description to the cardviews
- * <p>
- * 2020-09-30 Modified by Alex Phu, Yenan Wang: Refactored adapter.
- * <p>
+ * 2020-09-30 Modified by Alex Phu & Yenan Wang: Refactored adapter.
  * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
- * <p>
- * 2020-10-09 Modified by Yenan Wang, Alex Phu: Rounded decimals to 2 in balance
- * <p>
- * 2020-09-30 Modified by Alex, Yenan: Refactored adapter.
- * <p>
- * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
- * return types and params of methods are correctly set as BigDecimal.
- * <p>
- * 2020-10-09 Modified by Yenan & Alex: add method updateData(...)
- * <p>
+ * 2020-10-09 Modified by Yenan Wang & Alex Phu: Rounded decimals to 2 in balance and added method updateData(...)
  * 2020-10-14 Modified by Alex Phu: Changed string "owes" to "lends".
- *
  * 2020-10-15 Modified by Yenan Wang & Alex Phu: Adapter now sorts its items
+ * 2020-10-22 Modified by Yenan Wang: Updated code formatting
  */
 public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCardAdapter.TransactionCardViewHolder> {
 
@@ -87,9 +75,11 @@ public class TransactionCardAdapter extends RecyclerView.Adapter<TransactionCard
     public void onBindViewHolder(@NonNull TransactionCardViewHolder holder, int position) {
         holder.setTransactionTypeData(transactionData.get(position));
         if (transactionData.get(position).transactionType.equals("Payment")) {
-            holder.setCardViewColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.greenTransactionCard));
+            holder.setCardViewColor(ContextCompat
+                    .getColor(holder.itemView.getContext(), R.color.greenTransactionCard));
         } else {
-            holder.setCardViewColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.redTransactionCard));
+            holder.setCardViewColor(ContextCompat
+                    .getColor(holder.itemView.getContext(), R.color.redTransactionCard));
         }
     }
 

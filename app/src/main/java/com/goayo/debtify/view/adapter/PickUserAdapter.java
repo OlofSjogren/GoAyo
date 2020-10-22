@@ -25,15 +25,14 @@ import java.util.List;
  * <p>
  * 2020-09-29 Modified by Alex Phu: Changed userData type from Array to ArrayList.
  * Removed Context, and userData from constructor. Added ViewModel in constructor. Gets data from viewModel instead.
- * <p>
- * 2020-09-30 Modified by Alex & Yenan: Refactored it so that it now can be either multiple or single choice
- *
+ * 2020-09-30 Modified by Alex Phu & Yenan Wang: Refactored it so that it now can be either multiple or single choice
  * 2020-10-15 Modified by Yenan Wang & Alex Phu: Adapter now sorts its items
+ * 2020-10-22 Modified by Yenan Wang: Updated code formatting
  */
 public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUserViewHolder> {
     private final List<IUserData> userData;
-    private boolean isMultipleChoice;
     private final List<Integer> selectedUserPosList;
+    private boolean isMultipleChoice;
 
     /**
      * Constructor allowing setting isMultipleChoice from start
@@ -59,7 +58,8 @@ public class PickUserAdapter extends RecyclerView.Adapter<PickUserAdapter.PickUs
     @NonNull
     @Override
     public PickUserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.pick_user_cardview, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.pick_user_cardview, parent, false);
         return new PickUserViewHolder(view);
     }
 

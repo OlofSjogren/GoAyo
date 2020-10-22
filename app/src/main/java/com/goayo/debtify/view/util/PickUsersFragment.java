@@ -37,18 +37,22 @@ import java.util.List;
  * <p>
  * 2020-09-29 Modified by Alex Phu: Implementation of RecyclerView, continueButton, differentiating
  * which Activity started PickUserFragment. Connected with PickUserViewModel. Disabled OptionsMenu.
- * 2020-09-30 Modified by Alex & Yenan: Refactored everything, now this class is dumb
- * 2020-10-08 Modified by Yenan: Add setOnBackPressed() method
+ * 2020-09-30 Modified by Alex Phu & Yenan Wang: Refactored everything, now this class is dumb
+ * 2020-10-08 Modified by Yenan Wang: Add setOnBackPressed() method
+ * 2020-10-22 Modified by Yenan Wang: Updated code formatting and add JavaDoc
  */
 public class PickUsersFragment extends Fragment {
-
+    // adapter that displays users as a cardview in a recyclerview
     private PickUserAdapter pickUserAdapter;
+    // shared ViewModel for this fragment and other fragments that need to use this fragment
     private PickUserViewModel pickUserViewModel;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        PickUsersFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.pick_users_fragment, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        PickUsersFragmentBinding binding = DataBindingUtil
+                .inflate(inflater, R.layout.pick_users_fragment, container, false);
 
         pickUserViewModel = ViewModelProviders.of(requireActivity()).get(PickUserViewModel.class);
         pickUserAdapter = new PickUserAdapter(pickUserViewModel.getInitialUsers(), pickUserViewModel.getIsMultipleChoice());

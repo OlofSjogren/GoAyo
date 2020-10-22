@@ -22,14 +22,12 @@ import com.goayo.debtify.viewmodel.PickUserViewModel;
  * <p>
  * Activity for the detailed view of a group.
  * <p>
- * 25-09-2020 Modified by Alex Phu: Refactored bottom-buttons to GroupFragment.
- * <p>
- * 2020/09/25 Modified by Oscar Sanner, Alex Phu and Olof Sjögren: Removed duplicate "setContentView".
- * <p>
+ * 2020-09-25 Modified by Alex Phu: Refactored bottom-buttons to GroupFragment.
+ * 2020-09-25 Modified by Oscar Sanner, Alex Phu and Olof Sjögren: Removed duplicate "setContentView".
  * 2020-09-30 Modified by Yenan Wang & Alex Phu: Refactored so that it now uses PickUserViewModel and
  * DetailedGroupViewModel to manage data
- * <p>
  * 2020-10-08 Modified by Alex Phu: Added third menu item (leave group) and its implementation.
+ * 2020-10-22 Modified by Yenan Wang: Updated code formatting
  */
 public class DetailedGroupActivity extends AppCompatActivity {
 
@@ -57,10 +55,12 @@ public class DetailedGroupActivity extends AppCompatActivity {
                 pickUserViewModel.setInitialUsers(detailedGroupViewModel.getAddableUsers());
                 pickUserViewModel.setIsMultipleChoice(true);
 
-                Navigation.findNavController(this, R.id.group_nav_host).navigate(R.id.action_groupFragment_to_pickUsersFragment);
+                Navigation.findNavController(this, R.id.group_nav_host)
+                        .navigate(R.id.action_groupFragment_to_pickUsersFragment);
                 break;
             case R.id.action_show_group_informaion:
-                Navigation.findNavController(this, R.id.group_nav_host).navigate(R.id.action_groupFragment_to_showMembersFragment);
+                Navigation.findNavController(this, R.id.group_nav_host)
+                        .navigate(R.id.action_groupFragment_to_showMembersFragment);
                 break;
             case R.id.action_leave_group:
                 detailedGroupViewModel.leaveCurrentGroup();
