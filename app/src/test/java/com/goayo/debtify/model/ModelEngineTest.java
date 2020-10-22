@@ -289,7 +289,7 @@ public class ModelEngineTest {
     }
 
     @Test
-    public void generalExceptions() throws LoginException, UserNotFoundException, ConnectException, UserAlreadyExistsException {
+    public void generalExceptions() throws LoginException, UserNotFoundException, ConnectException, UserAlreadyExistsException, RegistrationException {
         Map.Entry<String, String> userEntity = getRandomUserFromHashMap();
         modelEngine.logInUser(userEntity.getValue(), userEntity.getKey());
 
@@ -302,6 +302,12 @@ public class ModelEngineTest {
         String phoneNumberOfUserNotInGroup = noFriendsUsers.get(noFriendsUsers.size() - 1);
         modelEngine.addContact(noFriendsUsers.get(noFriendsUsers.size() - 1));
         String fakeGroupId = UUID.randomUUID().toString();
+
+        modelEngine.registerUser("1231231239", "duplicateName", "123");
+        //Assert exception when trying to register two users with the same phone number.
+        assertThrows(RegistrationException.class,
+                () -> modelEngine.registerUser("1231231239", "notDuplicateName", "321")
+        );
 
         assertThrows(GroupNotFoundException.class, () -> modelEngine.addUserToGroup(phoneNumberOfUserNotInGroup, fakeGroupId));
     }

@@ -109,6 +109,15 @@ public class GroupTest {
         secondUserList.add(new User("987654", "Felix"));
 
         tempGroup.addUser(secondUserList);
+
+        for (User u : secondUserList) {
+
+            //Check that user not in group can't be removed from a group, expect exception to be thrown.
+            Assert.assertThrows(UserAlreadyExistsException.class,
+                    () -> tempGroup.addUser(u)
+            );
+        }
+
         tempGroup.removeUser(userSet);
 
         for (User u : userSet) {
@@ -133,13 +142,14 @@ public class GroupTest {
         tempUserSet.add(user2);
 
         Random rnd = new Random(System.nanoTime());
-        int random_int = rnd.nextInt();
+        int random_int = Math.abs(rnd.nextInt());
 
         Group tempGroup = new Group("PPY", "9876", tempUserSet);
 
         Map<User, String> map1 = new HashMap<>();
         map1.put(user1, "0760460051");
         tempGroup.createDebt(user1, map1, new BigDecimal(random_int), "Test", DebtSplitFactory.createNoSplitStrategy(), new Date());
+
         assertEquals(new BigDecimal(random_int).setScale(2, RoundingMode.HALF_EVEN), tempGroup.getUserTotal("0760460051"));
     }
 }
