@@ -11,9 +11,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.goayo.debtify.R;
-import com.goayo.debtify.model.UserNotFoundException;
 import com.goayo.debtify.model.IGroupData;
 import com.goayo.debtify.model.IUserData;
+import com.goayo.debtify.model.UserNotFoundException;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -27,20 +27,21 @@ import java.util.List;
  * RecyclerView adapter for the group cardviews. Ensures that the correct information are shown on each cardItem and its respective listeners.
  * <p>
  * 2020/09/18 Modified by Alex Phu and Olof Sjögren. Changed type Set to Array, conversion is done outside instead.
- * 2020/09/25 Modified by Alex Phu, Oscar Sanner and Olof Sjögren: Injected viewModel through constructor in order to
+ * 2020/09/25 Modified by Alex Phu & Oscar Sanner & Olof Sjögren: Injected viewModel through constructor in order to
  * set currentGroupData.
  * 2020-09-30 Modified by Alex Phu & Yenan Wang: Add setCommonClickListener and update method
  * 2020-10-08 Modified by Alex Phu: Group-total in cardview now shows actual total debt.
  * 2020-10-10 Modified by Olof Sjögren: Added property for groupmembers on card as well as init for it in setGroupData.
  * Also added switch-statement for coloring text depending on debt situation.
- * 2020-10-09 Modified by Alex Phu, Yenan Wang: Changed notifyItemRangedChanged() to notifyDataSetChanged(), ugliest bug in Android
+ * 2020-10-09 Modified by Alex Phu & Yenan Wang: Changed notifyItemRangedChanged() to notifyDataSetChanged() to fix a related bug
+ * 2020-10-22 Modified by Yenan Wang: Updated code formatting
  */
 public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.GroupViewHolder> {
 
     private final List<IGroupData> groupData;
+    private final String currentLoggedInUsersPhoneNumber;
     private View.OnClickListener commonClickListener;
     private IGroupData clickedGroup;
-    private final String currentLoggedInUsersPhoneNumber;
 
     /**
      * Constructor for GroupViewAdapter
@@ -161,16 +162,20 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
 
             Collections.sort(groupMemberList);
 
-            for (IUserData iu : groupMemberList){
+            for (IUserData iu : groupMemberList) {
                 sb.append(iu.getName());
                 sb.append(", ");
             }
 
-            groupMembers.setText(sb.substring(0, sb.length()-2)); //Make substring of whole string except the last added ", ".
+            // Make substring of whole string except the last added ", ".
+            groupMembers.setText(sb.substring(0, sb.length() - 2));
             try {
-                int i = group.getUserTotal(currentLoggedInUsersPhoneNumber).compareTo(new BigDecimal(0));
                 balance.setText(group.getUserTotal(currentLoggedInUsersPhoneNumber) + " kr");
-                switch (i){
+
+                int i = group
+                        .getUserTotal(currentLoggedInUsersPhoneNumber)
+                        .compareTo(new BigDecimal(0));
+                switch (i) {
                     case 0:
                         balance.setTextColor(balance.getResources().getColor(R.color.dividerGrey));
                         break;
@@ -182,7 +187,8 @@ public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.Grou
                         break;
                 }
 
-            } catch (UserNotFoundException ignore) {}
+            } catch (UserNotFoundException ignore) {
+            }
         }
 
         /**

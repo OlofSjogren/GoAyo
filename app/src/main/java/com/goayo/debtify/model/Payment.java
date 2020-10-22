@@ -16,6 +16,7 @@ import java.util.Date;
  * 2020-10-13 Modified by Olof Sjögren: getPaidAmount now returns a new BigDecimal. Also added more JDocs.
  * 2020-10-15 Modified by Yenan Wang & Alex Phu: implemented compareTo(..) method
  * 2020-10-16 Modified by Oscar Sanner: Payments will now take in a date in the constructor.
+ * 2020-10-22 Modified by Yenan Wang: Removed redundant semicolon
  */
 class Payment implements IPaymentData {
     private final Date date;
@@ -23,7 +24,7 @@ class Payment implements IPaymentData {
 
     public Payment(BigDecimal paidAmount, Date date) {
         this.date = date;
-        this.paidAmount = paidAmount.setScale(2, RoundingMode.HALF_EVEN);;
+        this.paidAmount = paidAmount.setScale(2, RoundingMode.HALF_EVEN);
     }
 
 

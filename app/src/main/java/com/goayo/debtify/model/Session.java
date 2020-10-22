@@ -44,14 +44,15 @@ import java.util.UUID;
  * 2020-10-19 Modified by Oscar Sanner and Olof Sjögren: Adjusted calls to EventBus to make use of the new
  * enum typed singleton.
  * 2020-10-20 Modified by Alex Phu: Renamed Account class to Session
+ * 2020-10-22 Modified by Yenan Wang: Updated code formatting
  */
 class Session {
 
     private final FromJsonFactory fromJsonFactory;
+    private final IDatabase database;
     private User loggedInUser;
     private Set<Group> associatedGroups;
     private Set<User> contactList;
-    private final IDatabase database;
 
     /**
      * Constructor for Session class.
@@ -72,7 +73,8 @@ class Session {
      * @throws RegistrationException thrown if the registration failed.
      * @throws ConnectException      thrown if unable to make a database connection.
      */
-    public void registerUser(String phoneNumber, String password, String name) throws RegistrationException, ConnectException {
+    public void registerUser(String phoneNumber, String password, String name)
+            throws RegistrationException, ConnectException {
         database.registerUser(phoneNumber, password, name);
     }
 
@@ -87,11 +89,14 @@ class Session {
      * @throws ConnectException      thrown if unable to make a database connection.
      * @throws UserNotFoundException unable to fetch a specific user.
      */
-    public void loginUser(String phoneNumber, String password) throws LoginException, ConnectException, UserNotFoundException {
+    public void loginUser(String phoneNumber, String password)
+            throws LoginException, ConnectException, UserNotFoundException {
         JsonString.UserJsonString userToBeLoggedIn = database.getUserToBeLoggedIn(phoneNumber, password);
         loggedInUser = fromJsonFactory.getUser(userToBeLoggedIn);
+
         initContactList();
         initAssociatedGroups();
+
         EventBus.INSTANCE.publish(EventBus.EVENT.CONTACT_EVENT);
     }
 
@@ -106,13 +111,14 @@ class Session {
      * @throws ConnectException      thrown if unable to connect to the database.
      * @throws UserNotFoundException if a group is created by the logged in user, but all of the members are not in the contact list of said user.
      */
-    public void createGroup(String groupName, Set<String> phoneNumberSet) throws RegistrationException, ConnectException, UserNotFoundException {
+    public void createGroup(String groupName, Set<String> phoneNumberSet)
+            throws RegistrationException, ConnectException, UserNotFoundException {
         userIsLoggedIn();
         phoneNumberSet.add(loggedInUser.getPhoneNumber());
         String id = UUID.randomUUID().toString();
         database.registerGroup(groupName, phoneNumberSet, id);
-        Set<User> usersToBeAdded = new HashSet<>();
 
+        Set<User> usersToBeAdded = new HashSet<>();
         for (String phoneNumber : phoneNumberSet) {
             if (!phoneNumber.equals(loggedInUser.getPhoneNumber())) {
                 usersToBeAdded.add(getUserFromSet(phoneNumber, contactList));
@@ -133,12 +139,12 @@ class Session {
      * @throws ConnectException           thrown if unable to connect to the database.
      * @throws UserAlreadyExistsException thrown if a user with the given phone number already exists in the contactList.
      */
-    public void addContact(String phoneNumber) throws UserNotFoundException, ConnectException, UserAlreadyExistsException {
+    public void addContact(String phoneNumber)
+            throws UserNotFoundException, ConnectException, UserAlreadyExistsException {
         userIsLoggedIn();
         JsonString.UserJsonString jsonString = database.getUser(phoneNumber);
 
         User u = fromJsonFactory.getUser(jsonString);
-
         // prevent adding yourself as a contact
         if (u.equals(loggedInUser)) {
             throw new UserAlreadyExistsException("Cannot add yourself as a contact!");
@@ -169,7 +175,8 @@ class Session {
      * @throws ConnectException           thrown if unable to connect to the database.
      * @throws GroupNotFoundException     thrown if a group with the given groupID can't be found in the database or in the associated groups for the logged in user.
      */
-    public void addUserToGroup(String phoneNumber, String groupID) throws UserNotFoundException, UserAlreadyExistsException, ConnectException, GroupNotFoundException {
+    public void addUserToGroup(String phoneNumber, String groupID)
+            throws UserNotFoundException, UserAlreadyExistsException, ConnectException, GroupNotFoundException {
         userIsLoggedIn();
         database.addUserToGroup(groupID, phoneNumber);
         User u = getUserFromSet(phoneNumber, contactList);
@@ -205,7 +212,8 @@ class Session {
      * @throws GroupNotFoundException thrown if a group with the given groupID can't be found in the database or in the list "associated groups".
      * @throws ConnectException       thrown if unable to connect to the database.
      */
-    public void removeUserFromGroup(String phoneNumber, String groupID) throws UserNotFoundException, GroupNotFoundException, ConnectException {
+    public void removeUserFromGroup(String phoneNumber, String groupID)
+            throws UserNotFoundException, GroupNotFoundException, ConnectException {
         userIsLoggedIn();
         database.removeUserFromGroup(phoneNumber, groupID);
 
@@ -231,7 +239,9 @@ class Session {
      * @throws DebtException          thrown if the creation of the debt failed.
      * @throws ConnectException       thrown if unable to connect to the database.
      */
-    public void createDebt(String groupID, String lender, Set<String> borrowers, BigDecimal owed, String description, IDebtSplitStrategy splitStrategy) throws ConnectException, GroupNotFoundException, UserNotFoundException, DebtException {
+    public void createDebt(String groupID, String lender, Set<String> borrowers, BigDecimal owed,
+                           String description, IDebtSplitStrategy splitStrategy)
+            throws ConnectException, GroupNotFoundException, UserNotFoundException, DebtException {
         userIsLoggedIn();
 
         Map<IUserData, String> borrowerIUserDataAndId = new HashMap<>();
@@ -261,8 +271,8 @@ class Session {
         database.addDebt(groupID, lender, borrowerIUserDataAndId, owed, description, splitStrategy, date);
 
         User lenderUser = getUserFromSet(lender, g.getGroupMembers());
-
         g.createDebt(lenderUser, borrowerUserAndId, owed, description, splitStrategy, date);
+
         EventBus.INSTANCE.publish(EventBus.EVENT.SPECIFIC_GROUP_EVENT);
         EventBus.INSTANCE.publish(EventBus.EVENT.GROUPS_EVENT);
     }
@@ -278,7 +288,8 @@ class Session {
      * @throws GroupNotFoundException  thrown if a group with the given groupID can't be found in the database or in the list "associated groups".
      * @throws ConnectException        thrown if unable to connect to the database.
      */
-    public void payOffDebt(BigDecimal amount, String debtID, String groupID) throws InvalidPaymentException, GroupNotFoundException, ConnectException {
+    public void payOffDebt(BigDecimal amount, String debtID, String groupID)
+            throws InvalidPaymentException, GroupNotFoundException, ConnectException {
         userIsLoggedIn();
         String id = UUID.randomUUID().toString();
 
@@ -334,6 +345,7 @@ class Session {
     public void removeContact(String phoneNumber) throws UserNotFoundException, ConnectException {
         userIsLoggedIn();
         database.removeContact(loggedInUser.getPhoneNumber(), phoneNumber);
+
         User u = getUserFromSet(phoneNumber, contactList);
         contactList.remove(u);
 
@@ -426,7 +438,8 @@ class Session {
      * @throws UserNotFoundException thrown if a user with the given phone number couldn't be found.
      * @throws ConnectException      thrown if unable to connect to the database.
      */
-    public IUserData getSingleUserFromDatabase(String phoneNumber) throws UserNotFoundException, ConnectException {
+    public IUserData getSingleUserFromDatabase(String phoneNumber)
+            throws UserNotFoundException, ConnectException {
         JsonString.UserJsonString userJson = database.getUser(phoneNumber);
         return fromJsonFactory.getUser(userJson);
     }
@@ -441,6 +454,7 @@ class Session {
     public void refreshWithDatabase() throws UserNotFoundException, ConnectException {
         userIsLoggedIn();
         initAssociatedGroups();
+
         EventBus.INSTANCE.publish(EventBus.EVENT.GROUPS_EVENT);
         EventBus.INSTANCE.publish(EventBus.EVENT.SPECIFIC_GROUP_EVENT);
     }

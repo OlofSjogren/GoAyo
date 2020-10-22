@@ -13,7 +13,7 @@ import java.util.Set;
  * @date 2020-10-16
  * <p>
  * Singleton utility class that performs pointless calculations for other classes
- *
+ * <p>
  * 2020-10-22 Modified by Oscar Sanner: Added method for hashing passwords.
  */
 public enum ViewModelUtil {
@@ -33,7 +33,7 @@ public enum ViewModelUtil {
         return userNameSet;
     }
 
-    public static String hashSha256(String password){
+    public static String hashSha256(String password) {
         MessageDigest digest;
         try {
             digest = MessageDigest.getInstance("SHA-256");
@@ -41,9 +41,9 @@ public enum ViewModelUtil {
             e.printStackTrace();
             throw new RuntimeException();
         }
-        byte[] encodedhash = digest.digest(
+        byte[] encodedHash = digest.digest(
                 password.getBytes(StandardCharsets.UTF_8));
-        return new String(encodedhash);
+        return new String(encodedHash);
     }
 
     /**

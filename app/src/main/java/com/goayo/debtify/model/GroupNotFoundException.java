@@ -5,8 +5,7 @@ package com.goayo.debtify.model;
  * @date 2020-09-22
  * <p>
  * Exception for instances where the a specific Group can't be found.
- **/
-
+ */
 public class GroupNotFoundException extends Exception {
 
     /**

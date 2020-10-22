@@ -71,7 +71,7 @@ public class MyGroupsViewModel extends ModelEngineViewModel implements IEventHan
      *
      * @return The logged-in user of the IUserData type.
      */
-    public IUserData getLoggedInUser(){
+    public IUserData getLoggedInUser() {
         return getModel().getLoggedInUser();
     }
 

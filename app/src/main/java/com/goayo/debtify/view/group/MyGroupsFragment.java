@@ -18,8 +18,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.goayo.debtify.R;
 import com.goayo.debtify.databinding.MyGroupsFragmentBinding;
-import com.goayo.debtify.model.UserNotFoundException;
 import com.goayo.debtify.model.IGroupData;
+import com.goayo.debtify.model.UserNotFoundException;
 import com.goayo.debtify.view.adapter.GroupViewAdapter;
 import com.goayo.debtify.viewmodel.MyGroupsViewModel;
 
@@ -34,32 +34,25 @@ import java.util.Set;
  * <p>
  * Second tab of the main screen.
  * <p>
- * 2020/09/15 Modified by Alex Phu. Added init function for RecyclerView. Will be activated when backend is resolved.
- * <p>
- * 2020/09/16 Modified by Alex Phu. Added listener for FloatingActionButton.
- * <p>
- * 2020/09/25 Modified by Oscar Sanner, Alex Phu and Olof Sjögren: Added factory to ViewModelProvider.
- * <p>
- * 2020/09/30 Modified by Alex Phu and Yenan Wang: Refactored entire class.
- * <p>
- * 2020/10/08 Modified by Alex Phu: Injected currentLoggedInUsersPhoneNumber to GroupViewAdapter.
- * <p>
- * 2020/10/12 Modified by Olof Sjögren: Created initHeader() for initializing header name, phone number and total debt.
+ * 2020-09-15 Modified by Alex Phu: Added init function for RecyclerView. Will be activated when backend is resolved.
+ * 2020-09-16 Modified by Alex Phu: Added listener for FloatingActionButton.
+ * 2020-09-25 Modified by Oscar Sanner & Alex Phu & Olof Sjögren: Added factory to ViewModelProvider.
+ * 2020-09-30 Modified by Alex Phu & Yenan Wang: Refactored entire class.
+ * 2020-10-08 Modified by Alex Phu: Injected currentLoggedInUsersPhoneNumber to GroupViewAdapter.
+ * 2020-10-12 Modified by Olof Sjögren: Created initHeader() for initializing header name, phone number and total debt.
  * 2020-10-12 Modified by Alex Phu: Implemented RefreshLayout, to be able to fetch new data from database.
- * <p>
- * 2020/10/12 Modified by Olof Sjögren: Created initHeader() for initializing header name, phone number and total debt.
- * <p>
- * 2020-10-12 Modified by Alex Phu: Implemented RefreshLayout, to be able to fetch new data from database.
- * <p>
  * 2020-10-13 Modified by Alex Phu: Made RecyclerView unfocusable.
+ * 2020-10-22 Modified by Yenan Wang: Updated code formatting
  **/
 
 public class MyGroupsFragment extends Fragment {
-    MyGroupsFragmentBinding binding;
+    // binding object that generates all widgets that belong to this class's xml file
+    private MyGroupsFragmentBinding binding;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         //Binding instead of relying on findViewById
         binding = DataBindingUtil.inflate(inflater, R.layout.my_groups_fragment, container, false);
         addListenerToFloatingActionButton();
@@ -121,13 +114,19 @@ public class MyGroupsFragment extends Fragment {
 
         switch (total.compareTo(new BigDecimal(0))) {
             case 0:
-                binding.totalBalanceTextView.setTextColor(binding.totalBalanceTextView.getResources().getColor(R.color.dividerGrey));
+                binding.totalBalanceTextView
+                        .setTextColor(binding.totalBalanceTextView.getResources()
+                                .getColor(R.color.dividerGrey));
                 break;
             case -1:
-                binding.totalBalanceTextView.setTextColor(binding.totalBalanceTextView.getResources().getColor(R.color.negativeDebtRed));
+                binding.totalBalanceTextView
+                        .setTextColor(binding.totalBalanceTextView.getResources()
+                                .getColor(R.color.negativeDebtRed));
                 break;
             case 1:
-                binding.totalBalanceTextView.setTextColor(binding.totalBalanceTextView.getResources().getColor(R.color.positiveDebtGreen));
+                binding.totalBalanceTextView
+                        .setTextColor(binding.totalBalanceTextView.getResources()
+                                .getColor(R.color.positiveDebtGreen));
                 break;
         }
 
@@ -159,7 +158,6 @@ public class MyGroupsFragment extends Fragment {
     }
 
     private void initRefreshLayout(MyGroupsViewModel viewModel) {
-        //Refreshlayout
         binding.myGroupsRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

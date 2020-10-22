@@ -14,30 +14,11 @@ import java.util.Map;
  * 2020-10-15 Modified by Oscar Sanner and Olof Sjögren: Class now throws appropriate exceptions.
  * 2020-10-19 Modified by Oscar Sanner and Olof Sjögren: Refactored singleton method to use
  * enum instead of the traditional static instance.
+ * 2020-10-22 Modified by Yenan Wang: Updated code formatting
  */
 public enum EventBus {
 
     INSTANCE;
-
-    /**
-     * All the different types of events which can be published.
-     */
-    public enum EVENT {
-        /**
-         * Event associated with the user contacts.
-         */
-        CONTACT_EVENT,
-
-        /**
-         * Event associated with the user's groups.
-         */
-        GROUPS_EVENT,
-
-        /**
-         * Event associated with a specific group.
-         */
-        SPECIFIC_GROUP_EVENT,
-    }
 
     /**
      * Map where an EVENT acts as a key to a corresponding list of IEventHandlers which are to be notified when an event of key's type is published.
@@ -80,5 +61,25 @@ public enum EventBus {
         for (IEventHandler handler : eventHandlerList) {
             handler.onModelEvent();
         }
+    }
+
+    /**
+     * All the different types of events which can be published.
+     */
+    public enum EVENT {
+        /**
+         * Event associated with the user contacts.
+         */
+        CONTACT_EVENT,
+
+        /**
+         * Event associated with the user's groups.
+         */
+        GROUPS_EVENT,
+
+        /**
+         * Event associated with a specific group.
+         */
+        SPECIFIC_GROUP_EVENT,
     }
 }

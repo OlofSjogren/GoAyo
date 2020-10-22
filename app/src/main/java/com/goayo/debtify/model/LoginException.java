@@ -5,8 +5,7 @@ package com.goayo.debtify.model;
  * @date 2020-09-22
  * <p>
  * Exception for a login failure.
- **/
-
+ */
 public class LoginException extends Exception {
 
     /**

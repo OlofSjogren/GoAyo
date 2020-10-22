@@ -16,7 +16,7 @@ import com.goayo.debtify.R;
  * <p>
  * Activity for creating or settling debt
  * <p>
- * 2020-09-28 Modified by Yenan : Removed method call on supportBar since it doesn't exist anymore
+ * 2020-09-28 Modified by Yenan Wang: Removed method call on supportBar since it doesn't exist anymore
  */
 public class DebtActivity extends AppCompatActivity {
 

@@ -54,7 +54,8 @@ public class UserCardViewAdapter extends RecyclerView.Adapter<UserCardViewAdapte
     @NonNull
     @Override
     public UserCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        CardView v = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.user_cardview, parent, false);
+        CardView v = (CardView) LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.user_cardview, parent, false);
         return new UserCardViewHolder(v);
     }
 

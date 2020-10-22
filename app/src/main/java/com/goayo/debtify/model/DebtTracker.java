@@ -23,6 +23,7 @@ import java.util.List;
  * 2020-10-16 Modified by Oscar Sanner: A debt now takes in a date on creation instead of creating on itself.
  * This will further persistence.
  * 2020-10-16 Modified by Oscar Sanner and Olof Sjögren: Exceptions are now thrown as expected.
+ * 2020-10-22 Modified by Yenan Wang: Updated code formatting
  */
 class DebtTracker implements IDebtData {
     private final Debt debt;
@@ -42,7 +43,8 @@ class DebtTracker implements IDebtData {
      * @param id          the specific DebtTracker's id.
      * @param date        the date of the new debt.
      */
-    public DebtTracker(BigDecimal debtAmount, User lender, User borrower, String description, String id, Date date) {
+    public DebtTracker(BigDecimal debtAmount, User lender, User borrower, String description,
+                       String id, Date date) {
         this.debt = new Debt(debtAmount, date);
         this.payments = new ArrayList<>();
         this.lender = lender;
@@ -55,11 +57,13 @@ class DebtTracker implements IDebtData {
      * Adds a new payment to the list of payments.
      *
      * @param payOffAmount the amount to pay off.
-     * @param date the date of the debt.
+     * @param date         the date of the debt.
      * @throws InvalidPaymentException thrown if the payment can't be handled.
      */
     public void payOffDebt(BigDecimal payOffAmount, Date date) throws InvalidPaymentException {
-        if (debt.getDebtAmount().subtract(getSumOfPayments()).doubleValue() >= payOffAmount.doubleValue()) {
+        if (debt.getDebtAmount()
+                .subtract(getSumOfPayments()).doubleValue() >= payOffAmount.doubleValue()) {
+            // if the remainder of debt is greater or equals than the amount to pay off
             payments.add(new Payment(payOffAmount, date));
         } else {
             throw new InvalidPaymentException("Payment larger than remainder of debt");

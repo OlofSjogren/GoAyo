@@ -40,6 +40,7 @@ class User implements IUserData {
 
     /**
      * Generate a custom hash based on the properties of the object in it's current state.
+     *
      * @return a hash value based of phoneNumber and name.
      */
     @Override

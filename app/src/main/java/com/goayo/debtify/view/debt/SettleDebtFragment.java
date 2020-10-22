@@ -29,12 +29,13 @@ import java.util.List;
  * <p>
  * Page for paying off debt.
  * <p>
- * 2020-09-18 Modified by Yenan & Gabriel: Added SettleDebt view, tested with hard-coded value
- * 2020-09-25 Modified by Yenan & Gabriel: Implemented initRecyclerView
- * 2020-09-29 Modified by Yenan: Connected with SettleDebtFragment
- * 2020-10-05 Modified by Oscar Sanner and Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
+ * 2020-09-18 Modified by Yenan Wang & Gabriel Brattgård: Added SettleDebt view, tested with hard-coded value
+ * 2020-09-25 Modified by Yenan Wang & Gabriel Brattgård: Implemented initRecyclerView
+ * 2020-09-29 Modified by Yenan Wang: Connected with SettleDebtFragment
+ * 2020-10-05 Modified by Oscar Sanner & Olof Sjögren: Switched all them doubles to them BigDecimals, and made sure all the
  * return types and params of methods are correctly set as BigDecimal.
  * 2020-10-15 Modified by Yenan Wang & Alex Phu: Removed conversion to array in initRecyclerView()
+ * 2020-10-22 Modified by Yenan Wang: Updated code formatting
  */
 public class SettleDebtFragment extends Fragment {
     // the ViewModel for this fragment
@@ -46,7 +47,8 @@ public class SettleDebtFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.settle_debt_fragment, container, false);
         model = new ViewModelProvider(this).get(SettleDebtViewModel.class);
         // load in the debt data by retrieving the group from groupID

@@ -2,10 +2,6 @@ package com.goayo.debtify.viewmodel;
 
 import android.util.Log;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 /**
  * @author Oscar Sanner and Olof Sjögren
  * @date 2020-09-30
