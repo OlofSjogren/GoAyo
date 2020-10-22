@@ -52,6 +52,14 @@ public class DebtTrackerTest {
         //Actual current state of total debt
         totalDebt = totalDebt.subtract(firstPayment).subtract(secondPayment);
         assertEquals(totalDebt.setScale(2, RoundingMode.HALF_EVEN), dt.getAmountOwed());
+
+        BigDecimal remaining = dt.getAmountOwed();
+
+        //Can't pay off 1 more than the remaining debt
+        Assert.assertThrows(InvalidPaymentException.class,
+                ()->dt.payOffDebt(
+                        remaining.add(new BigDecimal("1")),new Date())
+        );
     }
 
     @Test

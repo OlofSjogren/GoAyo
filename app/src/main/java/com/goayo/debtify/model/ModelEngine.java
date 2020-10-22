@@ -236,12 +236,11 @@ public class ModelEngine {
      * @param amount  The amount to pay off on the debt.
      * @param debtID  The ID of the debt towards which the payment will be done.
      * @param groupID The ID of the group in which the payment will be made.
-     * @throws InvalidDebtException    thrown if the debt is invalid.
      * @throws InvalidPaymentException thrown if the payment is invalid.
      * @throws GroupNotFoundException  thrown if a group with the given groupID can't be found in the database or in the list "associated groups".
      * @throws ConnectException        thrown if unable to connect to the database.
      */
-    public void payOffDebt(BigDecimal amount, String debtID, String groupID) throws InvalidDebtException, InvalidPaymentException, GroupNotFoundException, ConnectException {
+    public void payOffDebt(BigDecimal amount, String debtID, String groupID) throws InvalidPaymentException, GroupNotFoundException, ConnectException {
         session.payOffDebt(amount, debtID, groupID);
     }
 

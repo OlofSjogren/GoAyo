@@ -29,6 +29,7 @@ class EvenSplitStrategy implements IDebtSplitStrategy {
      */
     @Override
     public <T extends IUserData> Map<T, Tuple<BigDecimal, String>> splitDebt(Map<T, String> borrowers, BigDecimal owedTotal) {
+
         // Splits the owedTotal by the number of borrowers
         BigDecimal splitAmount = owedTotal
                 .divide(BigDecimal.valueOf(borrowers.size()), 10, RoundingMode.HALF_EVEN);

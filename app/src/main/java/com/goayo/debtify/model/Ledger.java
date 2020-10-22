@@ -45,6 +45,27 @@ class Ledger {
      */
     public void createDebt(User lender, Map<User, String> borrowersAndId, BigDecimal owedTotal, String description, IDebtSplitStrategy splitStrategy, Date date) throws DebtException {
 
+        if (lender == null) {
+            throw new DebtException("Debt creation failed. Lender is null.");
+        }
+        if (borrowersAndId.entrySet().isEmpty()) {
+            throw new DebtException("Debt creation failed. Selected borrower list is empty.");
+        }
+        for (Map.Entry<User, String> entry : borrowersAndId.entrySet()) {
+            if (entry.getValue() == null || entry.getKey() == null) {
+                throw new DebtException("Debt creation failed. User: " + entry.getKey() + " with id: " + entry.getValue());
+            }
+        }
+        if (owedTotal.compareTo(new BigDecimal(0)) == 0) {
+            throw new DebtException("Debt creation failed. Debt amount is 0.");
+        }
+        if (owedTotal.compareTo(new BigDecimal(0)) < 0) {
+            throw new DebtException("Debt creation failed. Debt amount can't be negative.");
+        }
+        if (date == null) {
+            throw new DebtException("Debt creation failed. Date is null.");
+        }
+
         Map<User, Tuple<BigDecimal, String>> usersInDebt = splitStrategy.splitDebt(borrowersAndId, owedTotal);
         List<DebtTracker> debtList = new ArrayList<>();
 
