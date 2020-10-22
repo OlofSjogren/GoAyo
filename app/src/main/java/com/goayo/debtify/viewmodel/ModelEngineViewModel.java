@@ -2,6 +2,7 @@ package com.goayo.debtify.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 
+import com.goayo.debtify.database.RealDatabase;
 import com.goayo.debtify.mockdatabase.MockDatabase;
 import com.goayo.debtify.model.ModelEngine;
 
