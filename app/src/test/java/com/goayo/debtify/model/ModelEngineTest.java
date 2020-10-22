@@ -154,7 +154,7 @@ public class ModelEngineTest {
     private IDebtData getRandomDebtFromGroup(IGroupData randomGroupData) {
         if (randomGroupData.getDebts().size() != 0) {
             int randomDebtIndex = rnd.nextInt(randomGroupData.getDebts().size()); //Bounds [0, 'randomGroupData.getDebts().size()')
-            System.out.println("FOUND A DEBT!");
+            //System.out.println("FOUND A DEBT!");
             return randomGroupData.getDebts().get(randomDebtIndex);
         } else {
             return null;
@@ -163,7 +163,7 @@ public class ModelEngineTest {
 
 
     private Set<String> getRandomSubsetOfPhoneNumberStringsFromIGroupData(IGroupData group) {
-        System.out.println("Amount of users in " + group.getGroupName() + ": " + group.getIUserDataSet().size());
+        //System.out.println("Amount of users in " + group.getGroupName() + ": " + group.getIUserDataSet().size());
 
         int sizeOfBorrowers;
         if (group.getIUserDataSet().size() < 3) {

@@ -8,6 +8,7 @@ import org.junit.runners.Suite;
         DebtTest.class,
         DebtTrackerTest.class,
         GroupTest.class,
+        EventBusTest.class,
         ModelEngineTest.class,
         LedgerTest.class,
         PaymentTest.class,
