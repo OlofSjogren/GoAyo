@@ -11,6 +11,7 @@ import java.net.ConnectException;
  * View model class responsible for handling registration request from Views and calling upon ModelEngine accordingly.
  * <p>
  * 2020-10-14 Modified by Yenan Wang: Changed super class to ModelEngineViewModel
+ * 2020-10-22 Modified by Oscar Sanner: This viewmodel will now hash passwords before sending them to the model.
  */
 public class SignUpViewModel extends ModelEngineViewModel {
 

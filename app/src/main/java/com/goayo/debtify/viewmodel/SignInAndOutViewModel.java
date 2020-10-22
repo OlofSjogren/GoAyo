@@ -14,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
  * <p>
  * 2020-10-14 Modified by Alex Phu: Implemented getCurrentLoggedInUsersName()
  * 2020-10-14 Modified by Yenan Wang: Changed super class to ModelEngineViewModel
+ * 2020-10-22 Modified by Oscar Sanner: This viewmodel will now hash passwords before sending them to the model.
  */
 public class SignInAndOutViewModel extends ModelEngineViewModel {
 

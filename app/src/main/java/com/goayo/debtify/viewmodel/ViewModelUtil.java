@@ -13,6 +13,8 @@ import java.util.Set;
  * @date 2020-10-16
  * <p>
  * Singleton utility class that performs pointless calculations for other classes
+ *
+ * 2020-10-22 Modified by Oscar Sanner: Added method for hashing passwords.
  */
 public enum ViewModelUtil {
     ;
