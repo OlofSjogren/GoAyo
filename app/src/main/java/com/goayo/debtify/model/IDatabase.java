@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @Author Oscar Sanner
+ * @author Oscar Sanner
  * @date 2020-09-15
  * <p>
  * An interface implemented by database classes.

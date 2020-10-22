@@ -3,7 +3,7 @@ package com.goayo.debtify.model;
 import java.util.HashSet;
 
 /**
- * @Author Oscar Sanner and Olof Sjögren.
+ * @author Oscar Sanner and Olof Sjögren.
  * @date 2020-10-09
  *
  * A class with static methods for instantiating new objects.

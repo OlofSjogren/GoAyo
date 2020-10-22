@@ -5,7 +5,7 @@ import com.goayo.debtify.model.RegistrationException;
 import java.net.ConnectException;
 
 /**
- * @Author Oscar Sanner and Olof Sjögren.
+ * @author Oscar Sanner and Olof Sjögren.
  * @date 2020-09-30
  * <p>
  * View model class responsible for handling registration request from Views and calling upon ModelEngine accordingly.

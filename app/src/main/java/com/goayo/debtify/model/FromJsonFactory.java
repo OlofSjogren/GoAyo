@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @Author Oscar Sanner and Olof Sjögren.
+ * @author Oscar Sanner and Olof Sjögren.
  * @date 2020-10-09
  *
  * A creation class responsible for taking in un-parsed JSON-Strings of different formats and parsing

@@ -3,7 +3,7 @@ package com.goayo.debtify.viewmodel;
 import android.util.Log;
 
 /**
- * @Author Oscar Sanner and Olof Sjögren
+ * @author Oscar Sanner and Olof Sjögren
  * @date 2020-09-30
  * <p>
  * View model class responsible for handling logIn request from Views and calling upon ModelEngine accordingly.
