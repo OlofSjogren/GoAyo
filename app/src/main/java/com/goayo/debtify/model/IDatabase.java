@@ -122,11 +122,10 @@ public interface IDatabase {
      * @param amount  The amount being payed towards the debt.
      * @param id      the generated id for the payment which is to be created.
      * @throws GroupNotFoundException  thrown if a group with the given group id can't be found in the database.
-     * @throws InvalidDebtException    thrown if the id of the debt, towards which a payment is to be made, can't be found in the database.
      * @throws InvalidPaymentException thrown if the payment failed to be made in the database.
      * @throws ConnectException        thrown if unable to make a database connection.
      */
-    void addPayment(String GroupID, String debtID, BigDecimal amount, String id, Date date) throws GroupNotFoundException, InvalidDebtException, InvalidPaymentException, ConnectException;
+    void addPayment(String GroupID, String debtID, BigDecimal amount, String id, Date date) throws GroupNotFoundException, InvalidPaymentException, ConnectException;
 
     /**
      * Adds a user to a specific group.

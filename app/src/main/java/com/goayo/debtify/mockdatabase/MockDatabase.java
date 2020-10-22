@@ -1,11 +1,9 @@
 package com.goayo.debtify.mockdatabase;
 
 import com.goayo.debtify.model.Tuple;
-import com.goayo.debtify.model.DebtException;
 import com.goayo.debtify.model.GroupNotFoundException;
 import com.goayo.debtify.model.IDatabase;
 import com.goayo.debtify.model.IDebtSplitStrategy;
-import com.goayo.debtify.model.InvalidDebtException;
 import com.goayo.debtify.model.InvalidPaymentException;
 import com.goayo.debtify.model.JsonString;
 import com.goayo.debtify.model.LoginException;
@@ -82,6 +80,11 @@ public class MockDatabase implements IDatabase {
 
     @Override
     public void registerUser(String phoneNumber, String password, String name) throws ConnectException, RegistrationException {
+        for (MockDbObject.User user : users){
+            if (user.phonenumber.equals(phoneNumber)){
+                throw new RegistrationException("A user with the phone number: " + phoneNumber + " already exists.");
+            }
+        }
         users.add(new MockDbObject.User(name, phoneNumber, password, new String[0]));
     }
 
@@ -166,7 +169,7 @@ public class MockDatabase implements IDatabase {
     }
 
     @Override
-    public void addPayment(String GroupID, String debtID, BigDecimal amount, String id, Date date) throws GroupNotFoundException, InvalidDebtException, InvalidPaymentException, ConnectException {
+    public void addPayment(String GroupID, String debtID, BigDecimal amount, String id, Date date) throws GroupNotFoundException, InvalidPaymentException, ConnectException {
         MockDbObject.Payment payment = new MockDbObject.Payment(amount.toString(), id, date.toString());
         for (MockDbObject.Group g : groups) {
             if (g.id.equals(GroupID)) {

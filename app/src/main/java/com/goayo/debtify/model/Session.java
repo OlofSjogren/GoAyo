@@ -274,12 +274,11 @@ class Session {
      * @param amount  Amount to be payed.
      * @param debtID  ID of the debt.
      * @param groupID ID of the group in which the payment is to be made.
-     * @throws InvalidDebtException    thrown if the debt is invalid.
      * @throws InvalidPaymentException thrown if the payment is invalid.
      * @throws GroupNotFoundException  thrown if a group with the given groupID can't be found in the database or in the list "associated groups".
      * @throws ConnectException        thrown if unable to connect to the database.
      */
-    public void payOffDebt(BigDecimal amount, String debtID, String groupID) throws InvalidDebtException, InvalidPaymentException, GroupNotFoundException, ConnectException {
+    public void payOffDebt(BigDecimal amount, String debtID, String groupID) throws InvalidPaymentException, GroupNotFoundException, ConnectException {
         userIsLoggedIn();
         String id = UUID.randomUUID().toString();
 

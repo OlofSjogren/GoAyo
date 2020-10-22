@@ -4,6 +4,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 
 public class UserTest {
 
@@ -22,6 +24,13 @@ public class UserTest {
     @Test
     public void testGetName() {
         assertEquals(user.getName(), "Karl");
+    }
+
+    @Test
+    public void equals(){
+        User userOne = new User("123", "bob");
+        Object userTwo = new Object();
+        assertNotEquals(userOne, userTwo);
     }
 }
 

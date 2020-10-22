@@ -3,7 +3,6 @@ package com.goayo.debtify.database;
 import com.goayo.debtify.model.GroupNotFoundException;
 import com.goayo.debtify.model.IDatabase;
 import com.goayo.debtify.model.IDebtSplitStrategy;
-import com.goayo.debtify.model.InvalidDebtException;
 import com.goayo.debtify.model.InvalidPaymentException;
 import com.goayo.debtify.model.JsonString;
 import com.goayo.debtify.model.LoginException;
@@ -70,7 +69,7 @@ public class RealDatabase implements IDatabase {
     }
 
     @Override
-    public void addPayment(String groupID, String debtID, BigDecimal amount, String id, Date date) throws GroupNotFoundException, InvalidDebtException, InvalidPaymentException, ConnectException {
+    public void addPayment(String groupID, String debtID, BigDecimal amount, String id, Date date) throws GroupNotFoundException, InvalidPaymentException, ConnectException {
         paymentFetcher.addPayment(groupID, debtID, amount, id, date);
     }
 
