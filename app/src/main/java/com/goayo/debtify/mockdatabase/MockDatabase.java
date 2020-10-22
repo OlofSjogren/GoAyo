@@ -16,6 +16,9 @@ import com.google.gson.Gson;
 
 import java.math.BigDecimal;
 import java.net.ConnectException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,10 +36,10 @@ public class MockDatabase implements IDatabase {
         users = new ArrayList<>();
         groups = new ArrayList<>();
         try {
-            registerUser("1231231230", ViewModelUtil.hashSha256("123"), "Olof Sjögren");
-            registerUser("1231231231", ViewModelUtil.hashSha256("123"), "Oscar Sanner");
-            registerUser("1231231232", ViewModelUtil.hashSha256("123"), "Alex Phu");
-            registerUser("1231231233", ViewModelUtil.hashSha256("123"), "Yenan Wang");
+            registerUser("1231231230", hashSha256("123"), "Olof Sjögren");
+            registerUser("1231231231", hashSha256("123"), "Oscar Sanner");
+            registerUser("1231231232", hashSha256("123"), "Alex Phu");
+            registerUser("1231231233", hashSha256("123"), "Yenan Wang");
 
             addContact("1231231230", "1231231231");
             addContact("1231231231", "1231231232");
@@ -253,5 +256,18 @@ public class MockDatabase implements IDatabase {
             }
         }
         g.debts = debts.toArray(new MockDbObject.Debt[debts.size()]);
+    }
+
+    private String hashSha256(String password){
+        MessageDigest digest;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+        byte[] encodedhash = digest.digest(
+                password.getBytes(StandardCharsets.UTF_8));
+        return new String(encodedhash);
     }
 }
