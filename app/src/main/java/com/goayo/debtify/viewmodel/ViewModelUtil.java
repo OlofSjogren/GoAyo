@@ -2,6 +2,9 @@ package com.goayo.debtify.viewmodel;
 
 import com.goayo.debtify.model.IUserData;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,6 +13,8 @@ import java.util.Set;
  * @date 2020-10-16
  * <p>
  * Singleton utility class that performs pointless calculations for other classes
+ *
+ * 2020-10-22 Modified by Oscar Sanner: Added method for hashing passwords.
  */
 public enum ViewModelUtil {
     ;
@@ -26,6 +31,19 @@ public enum ViewModelUtil {
             userNameSet.add(user.getPhoneNumber());
         }
         return userNameSet;
+    }
+
+    public static String hashSha256(String password){
+        MessageDigest digest;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+        byte[] encodedhash = digest.digest(
+                password.getBytes(StandardCharsets.UTF_8));
+        return new String(encodedhash);
     }
 
     /**

@@ -13,6 +13,7 @@ import com.goayo.debtify.model.RegistrationException;
 import com.goayo.debtify.model.UserAlreadyExistsException;
 import com.goayo.debtify.model.UserNotFoundException;
 import com.goayo.debtify.model.IUserData;
+import com.goayo.debtify.viewmodel.ViewModelUtil;
 import com.google.gson.Gson;
 
 import java.math.BigDecimal;
@@ -34,10 +35,10 @@ public class MockDatabase implements IDatabase {
         users = new ArrayList<>();
         groups = new ArrayList<>();
         try {
-            registerUser("1231231230", "123", "Olof Sjögren");
-            registerUser("1231231231", "123", "Oscar Sanner");
-            registerUser("1231231232", "123", "Alex Phu");
-            registerUser("1231231233", "123", "Yenan Wang");
+            registerUser("1231231230", ViewModelUtil.hashSha256("123"), "Olof Sjögren");
+            registerUser("1231231231", ViewModelUtil.hashSha256("123"), "Oscar Sanner");
+            registerUser("1231231232", ViewModelUtil.hashSha256("123"), "Alex Phu");
+            registerUser("1231231233", ViewModelUtil.hashSha256("123"), "Yenan Wang");
 
             addContact("1231231230", "1231231231");
             addContact("1231231231", "1231231232");

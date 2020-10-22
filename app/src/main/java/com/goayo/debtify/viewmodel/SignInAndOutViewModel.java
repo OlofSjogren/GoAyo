@@ -2,6 +2,10 @@ package com.goayo.debtify.viewmodel;
 
 import android.util.Log;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * @Author Oscar Sanner and Olof Sjögren
  * @date 2020-09-30
@@ -10,6 +14,7 @@ import android.util.Log;
  * <p>
  * 2020-10-14 Modified by Alex Phu: Implemented getCurrentLoggedInUsersName()
  * 2020-10-14 Modified by Yenan Wang: Changed super class to ModelEngineViewModel
+ * 2020-10-22 Modified by Oscar Sanner: This viewmodel will now hash passwords before sending them to the model.
  */
 public class SignInAndOutViewModel extends ModelEngineViewModel {
 
@@ -21,8 +26,9 @@ public class SignInAndOutViewModel extends ModelEngineViewModel {
      * @return true if login was successful, false if login failed.
      */
     public boolean logInUser(String phoneNumber, String password) {
+
         try {
-            getModel().logInUser(phoneNumber, password);
+            getModel().logInUser(phoneNumber, ViewModelUtil.hashSha256(password));
         } catch (Exception e) {
             Log.d(e.getMessage(), "logInUser: ");
             return false;
