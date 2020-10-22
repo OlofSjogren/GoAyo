@@ -28,7 +28,7 @@ import static org.junit.Assert.assertTrue;
 public class ModelEngineTest {
 
     private final Random rnd = new Random(System.nanoTime());
-    static final ModelEngine modelEngine = new ModelEngine(new MockDatabase());
+    static ModelEngine modelEngine = new ModelEngine(new MockDatabase());
     private final int amountOfUsers = 50;
     Map<String, String> passwordAndNumber;
     List<String> noFriendsUsers;
@@ -303,10 +303,14 @@ public class ModelEngineTest {
         modelEngine.addContact(noFriendsUsers.get(noFriendsUsers.size() - 1));
         String fakeGroupId = UUID.randomUUID().toString();
 
-        modelEngine.registerUser("1231231239", "duplicateName", "123");
+        int randomNumP = rnd.nextInt(99999 - 10000 + 1) + 10000;
+        int randomNumCompP = rnd.nextInt(99999 - 10000 + 1) + 10000;
+        String randomPhoneNumber = Integer.toString(randomNumCompP) + randomNumP;
+
+        modelEngine.registerUser(randomPhoneNumber, "duplicateName", "123");
         //Assert exception when trying to register two users with the same phone number.
         assertThrows(RegistrationException.class,
-                () -> modelEngine.registerUser("1231231239", "notDuplicateName", "321")
+                () -> modelEngine.registerUser(randomPhoneNumber, "notDuplicateName", "321")
         );
 
         assertThrows(GroupNotFoundException.class, () -> modelEngine.addUserToGroup(phoneNumberOfUserNotInGroup, fakeGroupId));

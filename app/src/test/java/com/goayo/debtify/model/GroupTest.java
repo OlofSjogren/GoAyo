@@ -137,6 +137,7 @@ public class GroupTest {
     public void testGetUserTotal() throws DebtException, UserNotFoundException {
         User user1 = new User("0760460051", "Alex");
         User user2 = new User("0760460052", "Axel");
+        User userNotInGroup = new User("0701234567", "Emma");
         Set<User> tempUserSet = new HashSet<>();
         tempUserSet.add(user1);
         tempUserSet.add(user2);
@@ -151,5 +152,11 @@ public class GroupTest {
         tempGroup.createDebt(user1, map1, new BigDecimal(random_int), "Test", DebtSplitFactory.createNoSplitStrategy(), new Date());
 
         assertEquals(new BigDecimal(random_int).setScale(2, RoundingMode.HALF_EVEN), tempGroup.getUserTotal("0760460051"));
+
+        //Assert exception when getting user total from a user who is not a member.
+        Assert.assertThrows(UserNotFoundException.class,
+                ()-> tempGroup.getUserTotal(userNotInGroup.getPhoneNumber())
+                );
     }
+
 }

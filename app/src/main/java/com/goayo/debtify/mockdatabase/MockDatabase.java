@@ -82,7 +82,7 @@ public class MockDatabase implements IDatabase {
     public void registerUser(String phoneNumber, String password, String name) throws ConnectException, RegistrationException {
         for (MockDbObject.User user : users){
             if (user.phonenumber.equals(phoneNumber)){
-                throw new RegistrationException("A user with that phone number already exists.");
+                throw new RegistrationException("A user with the phone number: " + phoneNumber + " already exists.");
             }
         }
         users.add(new MockDbObject.User(name, phoneNumber, password, new String[0]));
