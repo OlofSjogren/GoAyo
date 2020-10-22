@@ -2,6 +2,7 @@ package com.goayo.debtify.model;
 
 import com.goayo.debtify.mockdatabase.MockDatabase;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,13 +20,15 @@ import java.util.Set;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 public class ModelEngineTest {
 
     private final Random rnd = new Random(System.nanoTime());
-    static final ModelEngine modelEngine = new ModelEngine(new MockDatabase());
+    static ModelEngine modelEngine = new ModelEngine(new MockDatabase());
     private final int amountOfUsers = 50;
     Map<String, String> passwordAndNumber;
     List<String> noFriendsUsers;
@@ -151,7 +154,7 @@ public class ModelEngineTest {
     private IDebtData getRandomDebtFromGroup(IGroupData randomGroupData) {
         if (randomGroupData.getDebts().size() != 0) {
             int randomDebtIndex = rnd.nextInt(randomGroupData.getDebts().size()); //Bounds [0, 'randomGroupData.getDebts().size()')
-            System.out.println("FOUND A DEBT!");
+            //System.out.println("FOUND A DEBT!");
             return randomGroupData.getDebts().get(randomDebtIndex);
         } else {
             return null;
@@ -160,7 +163,7 @@ public class ModelEngineTest {
 
 
     private Set<String> getRandomSubsetOfPhoneNumberStringsFromIGroupData(IGroupData group) {
-        System.out.println("Amount of users in " + group.getGroupName() + ": " + group.getIUserDataSet().size());
+        //System.out.println("Amount of users in " + group.getGroupName() + ": " + group.getIUserDataSet().size());
 
         int sizeOfBorrowers;
         if (group.getIUserDataSet().size() < 3) {
@@ -280,6 +283,39 @@ public class ModelEngineTest {
         modelEngine.removeContact(contactToBeRemoved.getPhoneNumber());
     }
 
+    @Test
+    public void userIsNotLoggedIn() {
+        Assert.assertThrows(UserNotLoggedInException.class, () -> modelEngine.addContact("123"));
+    }
+
+    @Test
+    public void generalExceptions() throws LoginException, UserNotFoundException, ConnectException, UserAlreadyExistsException, RegistrationException {
+        Map.Entry<String, String> userEntity = getRandomUserFromHashMap();
+        modelEngine.logInUser(userEntity.getValue(), userEntity.getKey());
+
+        IUserData user = modelEngine.getContacts().iterator().next();
+        assertThrows(UserAlreadyExistsException.class, () -> modelEngine.addContact(user.getPhoneNumber()));
+        assertThrows(GroupNotFoundException.class, () -> modelEngine.getGroup(UUID.randomUUID().toString()));
+        assertThrows(LoginException.class, () -> modelEngine.logInUser("123", UUID.randomUUID().toString()));
+        assertThrows(UserNotFoundException.class, () -> modelEngine.removeContact("1111000000"));
+
+        String phoneNumberOfUserNotInGroup = noFriendsUsers.get(noFriendsUsers.size() - 1);
+        modelEngine.addContact(noFriendsUsers.get(noFriendsUsers.size() - 1));
+        String fakeGroupId = UUID.randomUUID().toString();
+
+        int randomNumP = rnd.nextInt(99999 - 10000 + 1) + 10000;
+        int randomNumCompP = rnd.nextInt(99999 - 10000 + 1) + 10000;
+        String randomPhoneNumber = Integer.toString(randomNumCompP) + randomNumP;
+
+        modelEngine.registerUser(randomPhoneNumber, "duplicateName", "123");
+        //Assert exception when trying to register two users with the same phone number.
+        assertThrows(RegistrationException.class,
+                () -> modelEngine.registerUser(randomPhoneNumber, "notDuplicateName", "321")
+        );
+
+        assertThrows(GroupNotFoundException.class, () -> modelEngine.addUserToGroup(phoneNumberOfUserNotInGroup, fakeGroupId));
+    }
+
 
     @Test
     public void leaveGroup() throws Exception {
@@ -379,5 +415,4 @@ public class ModelEngineTest {
         }
         throw new RuntimeException("amount of users never reached, method is either getRandomUserFromHashMap() is poorly written or setUp() is poorly written. Amount of users: " + amountOfUsers + "randomIndex: " + randomIndex);
     }
-
 }

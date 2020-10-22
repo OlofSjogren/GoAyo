@@ -26,6 +26,7 @@ import java.util.Set;
  * to handle persistence in dates.
  * 2020-10-16 Modified by Oscar Sanner and Olof Sjögren: Class now throws appropriate exceptions.
  * 2020-10-16 Modified by Alex Phu: Changed addPaymentsFromJsonDebtToGroup() where the date was set to the debt's date, not payment's date
+ * 2020-10-22 Modified by Oscar Sanner: Removed constructors from the internal classes as they are not used by Gson at all.
  */
 
 class FromJsonFactory {
@@ -190,82 +191,45 @@ class FromJsonFactory {
      */
 
     static class GroupJsonObject {
-        public GroupJsonObject(String name, String date, String groupId, UserJsonObject[] members, DebtJsonObject[] debts) {
-            this.name = name;
-            this.date = date;
-            this.id = groupId;
-            this.members = members;
-            this.debts = debts;
-        }
 
-        final String name;
-        final String date;
-        final String id;
-        final UserJsonObject[] members;
-        final DebtJsonObject[] debts;
+        String name;
+        String date;
+        String id;
+        UserJsonObject[] members;
+        DebtJsonObject[] debts;
     }
 
     static class UserJsonObject {
 
-        public UserJsonObject(String name, String phonenumber, String password, String[] contacts) {
-            this.name = name;
-            this.phonenumber = phonenumber;
-            this.password = password;
-            this.contacts = contacts;
-        }
-
-        final String name;
-        final String phonenumber;
-        final String password;
-        final String[] contacts;
+        String name;
+        String phonenumber;
+        String password;
+        String[] contacts;
     }
 
     static class ContactsJsonObject {
-        public ContactsJsonObject(UserJsonObject[] contacts) {
-            this.contacts = contacts;
-        }
-
-        final UserJsonObject[] contacts;
+        UserJsonObject[] contacts;
     }
 
     static class GroupsArrayJsonObject {
-        final GroupJsonObject[] groupJsonObjects;
-
-        public GroupsArrayJsonObject(GroupJsonObject[] groupJsonObjects) {
-            this.groupJsonObjects = groupJsonObjects;
-        }
+        GroupJsonObject[] groupJsonObjects;
     }
 
     static class DebtJsonObject {
-        public DebtJsonObject(UserJsonObject lender, UserJsonObject borrower, String owed, String debtId, PaymentJsonObject[] payments, String description, String date) {
-            this.lender = lender;
-            this.date = date;
-            this.borrower = borrower;
-            this.owed = owed;
-            this.id = debtId;
-            this.payments = payments;
-            this.description = description;
-        }
 
-
-        final String date;
-        final String description;
-        final UserJsonObject lender;
-        final UserJsonObject borrower;
-        final String owed;
-        final String id;
-        final PaymentJsonObject[] payments;
+        String date;
+        String description;
+        UserJsonObject lender;
+        UserJsonObject borrower;
+        String owed;
+        String id;
+        PaymentJsonObject[] payments;
     }
 
     static class PaymentJsonObject {
-        public PaymentJsonObject(String amount, String paymentId, String date) {
-            this.amount = amount;
-            this.id = paymentId;
-            this.date = date;
-        }
 
-        final String date;
-        final String amount;
-        final String id;
+        String date;
+        String amount;
+        String id;
     }
 }
