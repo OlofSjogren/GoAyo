@@ -5,8 +5,7 @@ package com.goayo.debtify.model;
  * @date 2020-09-22
  * <p>
  * Exception related to failing to find user in a collection.
- **/
-
+ */
 public class UserNotFoundException extends Exception {
 
     /**

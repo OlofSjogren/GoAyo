@@ -27,6 +27,7 @@ import java.util.Map;
  * 2020-10-16 Modified by Oscar Sanner: Debts and payments will now take in a date on creation. This has been adjusted for so that
  * dates are sent in via the parameters of the create/add methods.
  * 2020-10-16 Modified by Oscar Sanner and Olof Sjögren: Exceptions are now thrown as expected.
+ * 2020-10-22 Modified by Yenan Wang: Updated code formatting
  */
 class Ledger {
 
@@ -43,13 +44,18 @@ class Ledger {
      * @param date           the date of the new debt.
      * @throws DebtException thrown if the debt creation failed.
      */
-    public void createDebt(User lender, Map<User, String> borrowersAndId, BigDecimal owedTotal, String description, IDebtSplitStrategy splitStrategy, Date date) throws DebtException {
+    public void createDebt(User lender, Map<User, String> borrowersAndId, BigDecimal owedTotal,
+                           String description, IDebtSplitStrategy splitStrategy, Date date)
+            throws DebtException {
 
-        Map<User, Tuple<BigDecimal, String>> usersInDebt = splitStrategy.splitDebt(borrowersAndId, owedTotal);
+        Map<User, Tuple<BigDecimal, String>> usersInDebt =
+                splitStrategy.splitDebt(borrowersAndId, owedTotal);
         List<DebtTracker> debtList = new ArrayList<>();
 
         for (Map.Entry<User, Tuple<BigDecimal, String>> entry : usersInDebt.entrySet()) {
-            if (!debtList.add(new DebtTracker(usersInDebt.get(entry.getKey()).getFirst(), lender, entry.getKey(), description, entry.getValue().getSecond(), date))) {
+            if (!debtList.add(new DebtTracker(
+                    usersInDebt.get(entry.getKey()).getFirst(), lender, entry.getKey(),
+                    description, entry.getValue().getSecond(), date))) {
                 throw new DebtException("Failed to create the debt.");
             }
         }
@@ -68,7 +74,8 @@ class Ledger {
      * @param date          the date of the new debt.
      * @throws InvalidPaymentException thrown if the payment can't be handled.
      */
-    public void payOffDebt(BigDecimal amount, String debtTrackerID, Date date) throws InvalidPaymentException {
+    public void payOffDebt(BigDecimal amount, String debtTrackerID, Date date)
+            throws InvalidPaymentException {
         findDebtTracker(debtTrackerID).payOffDebt(amount, date);
     }
 

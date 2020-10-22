@@ -28,6 +28,7 @@ import java.util.Set;
  * 2020-10-16 Modified by Oscar Sanner and Olof Sjögren: Class now throws appropriate exceptions.
  * 2020-10-16 Modified by Oscar Sanner: A debt now takes in a date on creation instead of creating on itself.
  * This will further persistence. This applies to the create debt method. The same however also applies to payments.
+ * 2020-10-22 Modified by Yenan Wang: Updated code formatting
  */
 class Group implements IGroupData {
 
@@ -72,7 +73,8 @@ class Group implements IGroupData {
      */
     public void addUser(User newUser) throws UserAlreadyExistsException {
         if (groupMembers.contains(newUser)) {
-            throw new UserAlreadyExistsException("User " + newUser.getPhoneNumber() + " is already in group: " + groupName);
+            throw new UserAlreadyExistsException("User " + newUser.getPhoneNumber()
+                    + " is already in group: " + groupName);
         }
 
         groupMembers.add(newUser);
@@ -98,7 +100,8 @@ class Group implements IGroupData {
      */
     public void removeUser(User removeUser) throws UserNotFoundException {
         if (!groupMembers.contains(removeUser)) {
-            throw new UserNotFoundException("User " + removeUser.getPhoneNumber() + " was not found in group: " + groupName);
+            throw new UserNotFoundException("User " + removeUser.getPhoneNumber()
+                    + " was not found in group: " + groupName);
         }
         groupLedger.removeSpecificUserDebt(removeUser);
         groupMembers.remove(removeUser);
@@ -128,7 +131,9 @@ class Group implements IGroupData {
      * @param date          the creation date of the debt
      * @throws DebtException if the debt could not be created.
      */
-    public void createDebt(User lender, Map<User, String> borrowers, BigDecimal owed, String description, IDebtSplitStrategy splitStrategy, Date date) throws DebtException {
+    public void createDebt(User lender, Map<User, String> borrowers, BigDecimal owed,
+                           String description, IDebtSplitStrategy splitStrategy, Date date)
+            throws DebtException {
         groupLedger.createDebt(lender, borrowers, owed, description, splitStrategy, date);
     }
 
@@ -139,7 +144,8 @@ class Group implements IGroupData {
      * @param debtTrackerID ID used to retrieve the specific debtTracker.
      * @throws InvalidPaymentException if the payment could not be created.
      */
-    public void payOffDebt(BigDecimal amount, String debtTrackerID, Date date) throws InvalidPaymentException {
+    public void payOffDebt(BigDecimal amount, String debtTrackerID, Date date)
+            throws InvalidPaymentException {
         groupLedger.payOffDebt(amount, debtTrackerID, date);
     }
 
@@ -194,7 +200,8 @@ class Group implements IGroupData {
             }
         }
         if (user == null) {
-            throw new UserNotFoundException("User " + phoneNumber + " was not found in group: " + groupName);
+            throw new UserNotFoundException("User " + phoneNumber
+                    + " was not found in group: " + groupName);
         }
         return groupLedger.getUserTotal(user);
     }

@@ -5,8 +5,7 @@ package com.goayo.debtify.model;
  * @date 2020-09-22
  * <p>
  * Exception for when a payment is invalid.
- **/
-
+ */
 public class InvalidPaymentException extends Exception {
 
     /**

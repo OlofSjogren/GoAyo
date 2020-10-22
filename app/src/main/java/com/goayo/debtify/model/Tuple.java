@@ -11,7 +11,6 @@ package com.goayo.debtify.model;
  * <p>
  * 2020-10-13 Modified by Olof Sjögren: Minor change of parameter name for readability as well as JDOCs.
  */
-
 public class Tuple<T, U> {
 
     private final T first;

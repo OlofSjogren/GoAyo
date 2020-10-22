@@ -5,8 +5,7 @@ package com.goayo.debtify.model;
  * @date 2020-09-22
  * <p>
  * Exception for when trying to add a User to a collection but it already exists.
- **/
-
+ */
 public class UserAlreadyExistsException extends Exception {
 
     /**

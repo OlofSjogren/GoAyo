@@ -23,6 +23,7 @@ import java.util.Set;
  * 2020-10-12 Modified by Oscar Sanner: Added documentation for the specific json string.
  * 2020-10-14 Modified by Olof Sjögren: Updated JDocs. Also removed some redundant boolean return values.
  * 2020-10-14 Modified by Oscar Sanner: Removed documentation for how specific JsonStrings will be formatted.
+ * 2020-10-22 Modified by Yenan Wang: Updated code formatting
  */
 
 public interface IDatabase {
@@ -39,7 +40,8 @@ public interface IDatabase {
      * @throws UserNotFoundException thrown if a user with the given phoneNumber doesn't exist in the database.
      * @throws ConnectException      thrown if unable to make a database connection.
      */
-    JsonString.GroupArrayJsonString getGroups(String phoneNumber) throws UserNotFoundException, ConnectException;
+    JsonString.GroupArrayJsonString getGroups(String phoneNumber)
+            throws UserNotFoundException, ConnectException;
 
     /**
      * Returns a user with the given phone number.
@@ -52,7 +54,8 @@ public interface IDatabase {
      * @throws UserNotFoundException thrown if a user with the given phone number doesn't exist in the database.
      * @throws ConnectException      thrown if unable to make a database connection.
      */
-    JsonString.UserJsonString getUser(String phoneNumber) throws UserNotFoundException, ConnectException;
+    JsonString.UserJsonString getUser(String phoneNumber)
+            throws UserNotFoundException, ConnectException;
 
     /**
      * Register a new user in the database.
@@ -64,7 +67,8 @@ public interface IDatabase {
      * @throws ConnectException      thrown if unable to make a database connection.
      * @throws RegistrationException thrown if the registration of the user failed in the database.
      */
-    void registerUser(String phoneNumber, String password, String name) throws ConnectException, RegistrationException;
+    void registerUser(String phoneNumber, String password, String name)
+            throws ConnectException, RegistrationException;
 
 
     /**
@@ -77,7 +81,8 @@ public interface IDatabase {
      * @throws RegistrationException thrown if the registration of the group failed in the database.
      * @throws ConnectException      thrown if unable to make a database connection.
      */
-    void registerGroup(String name, Set<String> usersPhoneNumber, String id) throws RegistrationException, ConnectException;
+    void registerGroup(String name, Set<String> usersPhoneNumber, String id)
+            throws RegistrationException, ConnectException;
 
     /**
      * Adds a new debt in a group between two users.
@@ -92,7 +97,9 @@ public interface IDatabase {
      * @throws ConnectException       thrown if unable to make a database connection.
      * @throws GroupNotFoundException thrown if a group with the given group id can't be found in the database.
      */
-    void addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount, String description, IDebtSplitStrategy splitStrategy, Date date) throws ConnectException, GroupNotFoundException, UserNotFoundException;
+    void addDebt(String groupID, String lender, Map<IUserData, String> borrowers, BigDecimal amount,
+                 String description, IDebtSplitStrategy splitStrategy, Date date)
+            throws ConnectException, GroupNotFoundException, UserNotFoundException;
 
     /**
      * Adds a new contact to a users list of contacts.
@@ -102,7 +109,8 @@ public interface IDatabase {
      * @throws UserNotFoundException thrown if either of the phone numbers given does not match an existing user in the database.
      * @throws ConnectException      thrown if unable to make a database connection.
      */
-    void addContact(String userPhoneNumber, String phoneNumberOfContactToBeAdded) throws UserNotFoundException, ConnectException;
+    void addContact(String userPhoneNumber, String phoneNumberOfContactToBeAdded)
+            throws UserNotFoundException, ConnectException;
 
     /**
      * Removes a contact from a users contact list.
@@ -112,7 +120,8 @@ public interface IDatabase {
      * @throws UserNotFoundException thrown if either of the phone numbers given does not match an existing user in the database.
      * @throws ConnectException      thrown if unable to make a database connection.
      */
-    void removeContact(String userPhoneNumber, String phoneNumberOfContactToBeRemoved) throws UserNotFoundException, ConnectException;
+    void removeContact(String userPhoneNumber, String phoneNumberOfContactToBeRemoved)
+            throws UserNotFoundException, ConnectException;
 
     /**
      * Adds a payment towards a debt.
@@ -126,7 +135,8 @@ public interface IDatabase {
      * @throws InvalidPaymentException thrown if the payment failed to be made in the database.
      * @throws ConnectException        thrown if unable to make a database connection.
      */
-    void addPayment(String GroupID, String debtID, BigDecimal amount, String id, Date date) throws GroupNotFoundException, InvalidDebtException, InvalidPaymentException, ConnectException;
+    void addPayment(String GroupID, String debtID, BigDecimal amount, String id, Date date)
+            throws GroupNotFoundException, InvalidDebtException, InvalidPaymentException, ConnectException;
 
     /**
      * Adds a user to a specific group.
@@ -138,7 +148,8 @@ public interface IDatabase {
      * @throws ConnectException           thrown if unable to make a database connection.
      * @throws UserAlreadyExistsException thrown if the user which is to be added to the group already is a member of the group.
      */
-    void addUserToGroup(String groupID, String phoneNumber) throws UserNotFoundException, GroupNotFoundException, ConnectException, UserAlreadyExistsException;
+    void addUserToGroup(String groupID, String phoneNumber)
+            throws UserNotFoundException, GroupNotFoundException, ConnectException, UserAlreadyExistsException;
 
     /**
      * Checks if a password and a phone number matches, and returns the user with the provided
@@ -154,7 +165,8 @@ public interface IDatabase {
      * @throws LoginException   thrown if the attempt to login a user with the matching phone number and password failed.
      * @throws ConnectException thrown if unable to make a database connection.
      */
-    JsonString.UserJsonString getUserToBeLoggedIn(String phoneNumber, String password) throws LoginException, ConnectException;
+    JsonString.UserJsonString getUserToBeLoggedIn(String phoneNumber, String password)
+            throws LoginException, ConnectException;
 
     /**
      * Getter for a list of users in an other users contact list.
@@ -167,7 +179,8 @@ public interface IDatabase {
      * @throws UserNotFoundException thrown if a user with the given phone number can't be found in the database.
      * @throws ConnectException      thrown if unable to make a database connection.
      */
-    JsonString.UserArrayJsonString getContactList(String phoneNumber) throws UserNotFoundException, ConnectException;
+    JsonString.UserArrayJsonString getContactList(String phoneNumber)
+            throws UserNotFoundException, ConnectException;
 
     /**
      * Removes a user from a group.
@@ -178,6 +191,7 @@ public interface IDatabase {
      * @throws GroupNotFoundException thrown if a group with the given id can't be found in the database.
      * @throws ConnectException       thrown if unable to make a database connection.
      */
-    void removeUserFromGroup(String phoneNumber, String groupID) throws UserNotFoundException, GroupNotFoundException, ConnectException;
+    void removeUserFromGroup(String phoneNumber, String groupID)
+            throws UserNotFoundException, GroupNotFoundException, ConnectException;
 
 }

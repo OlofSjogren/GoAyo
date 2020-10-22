@@ -5,7 +5,7 @@ package com.goayo.debtify.model;
  * @date 2020-09-22
  * <p>
  * Exception related to empty selections.
- *
+ * <p>
  * 2020-10-08 Modified by Oscar Sanner and Olof Sjögren: Made exception a runtime exception
  **/
 
