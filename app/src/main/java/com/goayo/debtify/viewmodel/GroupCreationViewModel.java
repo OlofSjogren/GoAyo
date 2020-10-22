@@ -33,7 +33,7 @@ public class GroupCreationViewModel extends ModelEngineViewModel {
      * Create a group given a name and a Set of initial users to be added into the group
      *
      * @param groupName The name of the group to be created
-     * @param users The users to be added into the group to be created
+     * @param users     The users to be added into the group to be created
      * @throws RegistrationException thrown if the registration fails in the database.
      * @throws ConnectException      thrown if unable to connect to the database.
      * @throws UserNotFoundException if a group is created by the logged in user, but all of the members are not in the contact list of said user.
