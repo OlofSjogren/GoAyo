@@ -40,7 +40,12 @@ public class RealDatabase implements IDatabase {
 
     @Override
     public JsonString.UserJsonString getUser(String phoneNumber) throws UserNotFoundException, ConnectException {
-        return new JsonString.UserJsonString(userFetcher.fetchUserFromPhoneNumber(phoneNumber));
+        JsonString.UserJsonString retString = new JsonString.UserJsonString(userFetcher.fetchUserFromPhoneNumber(phoneNumber));
+        if(retString.getJson().equals("BAD REQUEST, INCORRECT NUMBER")){
+            throw new UserNotFoundException("UserNotInDB");
+        } else {
+            return retString;
+        }
     }
 
     @Override

@@ -15,7 +15,7 @@ import java.util.Map;
 
         Map<String, String> args = new HashMap<>();
         args.put("number", phoneNumber);
-        args.put("password", password);
+        args.put("password", intsPassword(password));
         String data = null;
         try {
             data = DatabaseConnector.getInstance().getData(args, "login");
@@ -28,7 +28,7 @@ import java.util.Map;
 
 
     public void registerUser(String phoneNumber, String password, String name) {
-        DbObject.User user = new DbObject.User(name, phoneNumber, password, new String[0]);
+        DbObject.User user = new DbObject.User(name, phoneNumber, intsPassword(password), new String[0]);
         Gson gson = new Gson();
         String data = gson.toJson(user);
         DatabaseConnector.getInstance().postData(data, "users");
@@ -48,4 +48,14 @@ import java.util.Map;
         return data;
     }
 
+     private String intsPassword(String room) {
+         char[] genArray = room.toCharArray();
+         StringBuilder id = new StringBuilder();
+         for (char c : genArray) {
+             id.append((int) c);
+         }
+         return id.toString();
+     }
+
 }
+
