@@ -4,7 +4,7 @@
   
 <!-- PROJECT LOGO -->
 <a href="https://github.com/OlofSjogren/GoAyo">
-<img src="app/src/main/res/drawable/whysplit.png" height="260px" align="right"/>
+<img src="https://user-images.githubusercontent.com/54896147/97000476-1256e000-1537-11eb-9689-b59765608d22.png" height="260px" align="right"/>
 </a>
 
 [![GitHub - License](https://img.shields.io/github/license/OlofSjogren/GoAyo)](LICENSE)
