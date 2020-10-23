@@ -21,7 +21,7 @@
 [![Github - Contributers](https://img.shields.io/github/contributors/OlofSjogren/GoAyo)](https://github.com/OlofSjogren/GoAyo/graphs/contributors)
 
 
-**Tested on Java versions ranging from 5 to 8-ea, Debtify** is a fully independent, advanced, free and open source Android Application and it facilitates the act of putting your friends in debt and much more.
+**Tested on Java versions ranging from 5 to 8-ea, Debtify** is an advanced, free and open source Android Application and it facilitates the act of putting your friends in debt and much more.
 
 
 
@@ -53,19 +53,16 @@
 
 Have you ever been in the situation where you've been dwelling on, "man if only we could go dutch for this lunch, my csn is already running out".
 
-Here's why you should devote yourself to the cult of Debtify:
+Here's why you should use the app Debtify:
 * Your time should be focused on creating everlasting experiences, not spending time on irrelevant math.
 * You shouldn't be doing the same tasks over and over like dividing debts from scratch.
-* Enjoy your meal :smile:
 
-Of course, we know there are people who like to skew the math during debt splits but do not fret. An option to change the ratio of the debt will be implemented in the near future.
+Of course, we know there are people who like to skew the math during debt splits but do not fret. An option to change the ratio of the debt is implemented for you guys!
 
 ### Built With
 The project was built with the following frameworks
 * [Android Studio](https://developer.android.com/studio)
 * [Java](https://www.java.com/en/download/)
-* [Node](https://nodejs.org/en/)
-* [Express](https://expressjs.com/)
 
 
 
@@ -89,9 +86,9 @@ Android Minimum SDK: API 21: Android 5.0 (lollipop)
 ```sh
 git clone https://github.com/OlofSjogren/GoAyo.git
 ```
-3. Install Android Studio
+2. Install Android Studio
 
-4. Launch the in-built emulator
+3. Launch the in-built emulator
 
 
 
@@ -99,7 +96,7 @@ git clone https://github.com/OlofSjogren/GoAyo.git
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-![image](https://user-images.githubusercontent.com/54896147/96278728-20a47980-0fd6-11eb-8dd9-7817f6f2bb6c.png)
+![image](https://user-images.githubusercontent.com/54896147/96999704-e8e98480-1535-11eb-8b4d-634211c7f921.jpg)
 
 
 _For more examples, please refer to the [Documentation](https://github.com/OlofSjogren/GoAyo/wiki)_
@@ -134,21 +131,6 @@ Editor preferences are available in the editor config for easy use in common tex
 
 Distributed under the MIT License. See [`LICENSE`](LICENSE) for more information.
 
-
-
-<!-- CONTACT -->
-## Contact
-
-Olof Sjögren      - olos@example.com
-
-Oscar Sanner      - oscs@example.com
-
-Alex Phu          - alep@example.com
-
-Yenan Wang        - yena@example.com
-
-Gabriel Brattgård - gabr@example.com
-
 Project Link: [https://github.com/OlofSjogren/GoAyo](https://github.com/OlofSjogren/GoAyo)
 
 
@@ -157,7 +139,7 @@ Project Link: [https://github.com/OlofSjogren/GoAyo](https://github.com/OlofSjog
 ## Acknowledgements
 * [Medium MVVM](https://medium.com/hongbeomi-dev/create-android-app-with-mvvm-pattern-simply-using-android-architecture-component-529d983eaabe)
 * [ChilledCow](https://chilledcow.com/password) For easing our souls
-* [WhySplit?](https://www.splitwise.com/) <img src="https://user-images.githubusercontent.com/54896147/96279791-7299cf00-0fd7-11eb-976b-5509f3565835.png" height="50px" align="right"/>
+* [WhySplit?](https://www.splitwise.com/) 
 
 
 
