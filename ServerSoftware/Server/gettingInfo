@@ -1,0 +1,43 @@
+User:
+    get: Include number="nnnnnnnnnn" in query.
+    responds with json file containing the user in response.
+    example: http://localhost:9000/users?number=0734266227
+
+    post: post a user object as request. Leave contacts empty.
+    example:
+
+    {
+        name: "name",
+        phonenumber: "0708123456",
+        password: "password2",
+        contacts: []
+    }
+
+Group:
+    get: Include number="nnnnnnnnnn" in query.
+    responds with json file containing the groups with sent
+    in number in response.
+    example: http://localhost:9000/users?number=0734266227
+
+    post: post a group object as request. Members doesn't have to be
+    empty but make sure the members are in the database before
+    sending them.
+    example:
+
+    {
+        "name": "Resa",
+        "date": "2020-09-20",
+        "members": [
+            "0708123456",
+            "0734266227",
+            "0708987654"
+        ],
+        "id": "1",
+        "debts": []
+    }
+
+login:
+    get: send number and password as query
+    example: http://localhost:9000/users?number=0734266227?password=password2
+
+
