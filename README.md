@@ -87,7 +87,8 @@ git clone https://github.com/OlofSjogren/GoAyo.git
 2. Install Android Studio
 
 3. Launch the in-built emulator
-* We recommend emulating using the Pixel 3A for the optimal user experience.
+
+_We recommend emulating using the Pixel 3A for the optimal user experience._
 
 
 
