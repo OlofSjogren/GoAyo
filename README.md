@@ -91,16 +91,6 @@ git clone https://github.com/OlofSjogren/GoAyo.git
 
 
 
-<!-- USAGE EXAMPLES -->
-## Usage
-
-![image](https://user-images.githubusercontent.com/54896147/96999704-e8e98480-1535-11eb-8b4d-634211c7f921.jpg)
-
-
-_For more examples, please refer to the [Documentation](https://github.com/OlofSjogren/GoAyo/wiki)_
-
-
-
 <!-- ROADMAP -->
 ## Roadmap
 
