@@ -34,11 +34,9 @@
 * [Getting Started](#getting-started)
   * [Prerequisites](#prerequisites)
   * [Installation](#installation)
-* [Usage](#usage)
 * [Roadmap](#roadmap)
 * [Contributing](#contributing)
 * [License](#license)
-* [Contact](#contact)
 * [Acknowledgements](#acknowledgements)
 
 
@@ -47,7 +45,7 @@
 ## About The Project
 <p align="center">
   <a>
-    <img src="https://user-images.githubusercontent.com/54896147/96275822-80992100-0fd2-11eb-89ef-a84d8cefd933.png" alt="Bootstrap logo">
+    <img src="https://user-images.githubusercontent.com/54896147/96999704-e8e98480-1535-11eb-8b4d-634211c7f921.jpg" alt="Bootstrap logo">
   </a>
 </p>
 
@@ -139,7 +137,6 @@ Project Link: [https://github.com/OlofSjogren/GoAyo](https://github.com/OlofSjog
 ## Acknowledgements
 * [Medium MVVM](https://medium.com/hongbeomi-dev/create-android-app-with-mvvm-pattern-simply-using-android-architecture-component-529d983eaabe)
 * [ChilledCow](https://chilledcow.com/password) For easing our souls
-* [WhySplit?](https://www.splitwise.com/) 
 
 
 
