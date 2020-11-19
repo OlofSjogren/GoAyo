@@ -108,11 +108,19 @@ Moreover, if your pull request contains Java patches or features, you must inclu
 
 Editor preferences are available in the editor config for easy use in common text editors. Read more and download plugins at https://editorconfig.org/.
 
+#### Create a pullrequest:
+
 1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+2. Create your own Fork (`i.e via github`)
+3. Clone it down to your computer.
+4. Commit your Changes to your upstream fork repository.
+5. Push to the Fork.
+6. Open a Pull Request and ask to have your fork merged.
+
+Note: Pullrequests are alot more likely to be accepted if they close or link to an issue.
+
+#### Create an issue
+Go to the issues tab here on github, press new issue and tell us what's on your mind! Please don't forget to tag it. If you're unsure of which tag to use, leave it empty and we'll slap one on there.
 
 
 <!-- LICENSE -->
